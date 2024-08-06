@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import 'ngx-toastr/toastr';
+@import "~aos/dist/aos.css";
 
+  mat-icon{
+    font-family: 'Material Icons' !important;
+  }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
