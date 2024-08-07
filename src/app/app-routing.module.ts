@@ -3,17 +3,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsComponent } from './components/forms/forms.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './core/AuthGuard';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   {
-    path:':id',
+    path:'',
+    component:FormsComponent
+  },
+  {
+    path:'forms:id',
     component:FormsComponent
   },
   {
     path:'home',
-    component:HomeComponent,
+    component:HomeComponent,canActivate:[AuthGuard]
   },
-
+  {
+    path:'',
+    component:NotFoundComponent
+  }
 ];
 
 @NgModule({
