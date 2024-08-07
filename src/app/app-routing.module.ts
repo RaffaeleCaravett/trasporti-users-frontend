@@ -2,23 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsComponent } from './components/forms/forms.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from './core/AuthGuard';
 
 const routes: Routes = [
   {
-    path:'',
-    component:FormsComponent
-  },
-  {
-    path:'forms:id',
+    path:':id',
     component:FormsComponent
   },
   {
     path:'home',
-    component:HomeComponent
+    component:HomeComponent, canActivate: [AuthGuard]
   },
   {
     path:'**',
-    component:FormsComponent
+    component:FormsComponent, canActivate: [AuthGuard]
   }
 ];
 
