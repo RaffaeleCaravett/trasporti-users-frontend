@@ -9,10 +9,11 @@
   }
 html, body { height: 100%; }
 body { margin: 0;
-  font-family: "Waiting for the Sunrise", cursive;
-  font-weight: 400;
+}
+*{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
   font-style: normal;
-
 }
 .btn{
   font-family: "Waiting for the Sunrise", cursive;
