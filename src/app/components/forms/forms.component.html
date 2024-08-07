@@ -31,8 +31,24 @@
       </form>
     </div>
     <ng-template #signupBlock>
-      <div class="col-md-6">
-        <button class="btn" (click)="section='login'">Login</button>
+      <div class="col-md-6 p-3">
+        <p class="fs-3">Registrati</p>
+        <form [formGroup]="signupForm" class="p-3 w-75 m-auto">
+          <div class="row border rounded p-1">
+            <div class="col-md-12">
+  <label class="py-3">Email</label>
+  <input type="email" class="form-control" formControlName="email">
+            </div>
+            <div class="col-md-12">
+  <label class="py-3">Password</label>
+  <input type="password" class="form-control" formControlName="password">
+  <button class="btn my-3" (click)="signup()">Register</button>
+  <p>or</p>
+  <hr>
+  <button class="btn" (click)="section='login'">Login</button>
+            </div>
+          </div>
+        </form>
       </div>
     </ng-template>
   </div>
