@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OfficeComponent } from './components/office/office.component';
 import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule
   ],
  providers: [
     provideAnimations(),
