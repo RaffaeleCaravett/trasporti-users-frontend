@@ -12,6 +12,7 @@ loginForm!:FormGroup
 signupForm!:FormGroup
 cities:any[]=[]
 typeFormValue:string=''
+trasportatoreForm!:FormGroup
 ngOnInit():void{
 this.loginForm=new FormGroup({
   email:new FormControl('',Validators.required),
@@ -25,6 +26,14 @@ this.signupForm=new FormGroup({
   email:new FormControl('',Validators.required),
   password:new FormControl('',[Validators.required,Validators.minLength(6)]),
   type:new FormControl('',Validators.required)
+})
+this.trasportatoreForm= new FormGroup({
+  nome:new FormControl('',Validators.required),
+  cognome:new FormControl('',Validators.required),
+  eta:new FormControl('',Validators.required),
+  codiceFiscale:new FormControl('',[Validators.required]),
+  partitaIva:new FormControl('',[Validators.required]),
+  flottaMezzi:new FormControl(0,Validators.required)
 })
 }
 login(){
