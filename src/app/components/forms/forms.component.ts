@@ -7,11 +7,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./forms.component.scss']
 })
 export class FormsComponent implements OnInit{
-section:string = 'login'
+section:string = 'signup'
 loginForm!:FormGroup
 signupForm!:FormGroup
 cities:any[]=[]
-
+typeFormValue:string=''
 ngOnInit():void{
 this.loginForm=new FormGroup({
   email:new FormControl('',Validators.required),
