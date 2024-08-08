@@ -36,12 +36,36 @@
         <form [formGroup]="signupForm" class="p-3 w-75 m-auto">
           <div class="row border rounded p-1">
             <div class="col-md-12">
-  <label class="py-3">Email</label>
+              <label class="py-3">Città</label>
+              <select type="text" class="form-select" formControlName="citta">
+              <option value=""></option>
+              <option [value]="c" *ngFor="let c of cities">{{c}}</option>
+              </select>
+              </div>
+                        <div class="col-md-12">
+              <label class="py-3">Regione</label>
+              <input type="text" class="form-control" formControlName="regione" readonly>
+              <label class="py-3">Indirizzo</label>
+  <input type="text" class="form-control" formControlName="indirizzo">
+            </div>
+            <div class="col-md-12">
+  <label class="py-3">Cap</label>
+  <input type="text" class="form-control" formControlName="cap" readonly>
+              <label class="py-3">Email</label>
   <input type="email" class="form-control" formControlName="email">
             </div>
             <div class="col-md-12">
   <label class="py-3">Password</label>
   <input type="password" class="form-control" formControlName="password">
+  <p class="py-1">
+     <label for="" class="py-3">Che tipo di utente sei?</label>
+    </p>
+  <p>
+  <input type="radio" formControlName="type" value="trasportatore" name="flexRadioDefault" id="type1" class="py-3"><label class="py-3 form-check-label" for="type1">Trasportatore</label>
+  </p>
+  <p>
+    <input type="radio" formControlName="type" value="azienda" name="flexRadioDefault" id="type2" class="py-3"><label class="py-3 form-check-label" for="type2">Azienda</label>
+  </p>
   <button class="btn my-3" (click)="signup()">Register</button>
   <p>or</p>
   <hr>
