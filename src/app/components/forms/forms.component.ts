@@ -13,6 +13,7 @@ signupForm!:FormGroup
 cities:any[]=[]
 typeFormValue:string=''
 trasportatoreForm!:FormGroup
+aziendaForm!:FormGroup
 ngOnInit():void{
 this.loginForm=new FormGroup({
   email:new FormControl('',Validators.required),
@@ -33,7 +34,14 @@ this.trasportatoreForm= new FormGroup({
   eta:new FormControl('',Validators.required),
   codiceFiscale:new FormControl('',[Validators.required]),
   partitaIva:new FormControl('',[Validators.required]),
-  flottaMezzi:new FormControl(0,Validators.required)
+  flottaMezzi:new FormControl('',Validators.required)
+})
+this.aziendaForm=  new FormGroup({
+  nomeAzienda:new FormControl('',Validators.required),
+  fatturatoMedio:new FormControl('',Validators.required),
+  numeroDipendenti:new FormControl('',Validators.required),
+  settore:new FormControl('',[Validators.required]),
+  partitaIva:new FormControl('',[Validators.required])
 })
 }
 login(){
