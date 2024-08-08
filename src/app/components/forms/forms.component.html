@@ -69,6 +69,12 @@
   </p>
             </div>
         </form>
+        <form action="" *ngIf="typeFormValue=='trasportatore'">
+          <p class="fs-4">Trasportatore</p>
+        </form>
+          <form action="" *ngIf="typeFormValue=='azienda'">
+            <p class="fs-4">Azienda</p>
+          </form>
         <button class="btn my-3" (click)="signup()">Register</button>
         <p>or</p>
         <hr>
