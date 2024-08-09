@@ -10,7 +10,7 @@ export class FormsService {
   private citta:string = '/citta'
   private settori:string = '/settori'
   private regione:string='/regione'
-
+  private login:string = '/login'
   constructor(private http:HttpClient) { }
 
 getCities(){
