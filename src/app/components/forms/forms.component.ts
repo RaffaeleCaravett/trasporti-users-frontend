@@ -75,6 +75,11 @@ this.settori=settori
 
 login(){
 this.submittedLogin=true
+if(this.loginForm.valid){
+
+}else{
+this.toastr.error("Assicurati di completare il form prima di accedere.")
+}
 }
 signup(){
   this.submitted=true
