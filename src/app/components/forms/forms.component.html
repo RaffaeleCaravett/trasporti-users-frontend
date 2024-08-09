@@ -44,7 +44,7 @@
   <form [formGroup]="signupForm">
             <div class="col-md-12">
               <label class="py-3">Città</label>
-              <select type="text" class="form-select" formControlName="citta">
+              <select type="text" class="form-select" formControlName="citta" (change)="getRegioneByCity(signupForm.controls['citta'].value)">
               <option value=""></option>
               <option [value]="c" *ngFor="let c of cities">{{c}}</option>
               </select>
@@ -147,7 +147,7 @@
             Inserisci un valore numerico
           </p>
           <label for="" class="py-3">Settore</label>
-          <select type="text" class="form-select" formControlName="settore" (change)="getRegioneByCity(aziendaForm.controls['settore'].value)">
+          <select type="text" class="form-select" formControlName="settore">
           <option value=""></option>
           <option [value]="s" *ngFor="let s of settori">{{s}}</option>
           </select>

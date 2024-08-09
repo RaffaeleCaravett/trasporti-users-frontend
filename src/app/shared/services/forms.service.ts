@@ -20,7 +20,7 @@ getSettori(){
   return this.http.get(environment.API_URL+this.auth+this.settori)
 }
 getRegionByCity(city:string){
-  return this.http.get(environment.API_URL+this.auth+this.regione+`/city`)
+  return this.http.get(environment.API_URL+this.auth+this.regione+`/${city}`,{ responseType: 'text' })
 }
 
 }

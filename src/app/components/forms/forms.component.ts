@@ -86,8 +86,10 @@ getRegioneByCity(city:string){
    this.formsService.getRegionByCity(city).subscribe({
     next:(regione:any)=>{
       regione=regione;
+      console.log(regione)
     },
     error:(err:any)=>{
+      console.log(err)
       this.toastr.error(err.error.message||err.error.messageList[0])
     },
     complete:()=>{}
