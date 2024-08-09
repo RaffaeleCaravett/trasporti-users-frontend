@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
   selector: 'app-forms',
@@ -11,11 +13,15 @@ section:string = 'signup'
 loginForm!:FormGroup
 signupForm!:FormGroup
 cities:any[]=[]
+settori:any[]=[]
 typeFormValue:string=''
 trasportatoreForm!:FormGroup
 aziendaForm!:FormGroup
 submitted:boolean=false
 submittedLogin:boolean=false
+
+constructor(private formsService:FormsService,private toastr:ToastrService){}
+
 ngOnInit():void{
 this.loginForm=new FormGroup({
   email:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
@@ -45,7 +51,28 @@ this.aziendaForm=  new FormGroup({
   settore:new FormControl('',[Validators.required]),
   partitaIva:new FormControl('',[Validators.required,Validators.minLength(11)])
 })
+
+
+this.formsService.getCities().subscribe({
+  next:(cities:any)=>{
+this.cities=cities
+  },
+  error:(err:any)=>{
+    this.toastr.error(err.error.message||err.error.messageList[0])
+  },
+  complete:()=>{}
+})
+this.formsService.getSettori().subscribe({
+  next:(settori:any)=>{
+this.settori=settori
+  },
+  error:(err:any)=>{
+    this.toastr.error(err.error.message||err.error.messageList[0])
+  },
+  complete:()=>{}
+})
 }
+
 login(){
 this.submittedLogin=true
 }
@@ -53,4 +80,20 @@ signup(){
   this.submitted=true
 console.log(this.trasportatoreForm)
 }
+
+getRegioneByCity(city:string){
+  let regione ;
+   this.formsService.getRegionByCity(city).subscribe({
+    next:(regione:any)=>{
+      regione=regione;
+    },
+    error:(err:any)=>{
+      this.toastr.error(err.error.message||err.error.messageList[0])
+    },
+    complete:()=>{}
+  })
+}
+
+
+
 }

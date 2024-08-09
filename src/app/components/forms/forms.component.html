@@ -147,7 +147,10 @@
             Inserisci un valore numerico
           </p>
           <label for="" class="py-3">Settore</label>
-          <input type="text" class="form-control" formControlName="settore">
+          <select type="text" class="form-select" formControlName="settore" (change)="getRegioneByCity(aziendaForm.controls['settore'].value)">
+          <option value=""></option>
+          <option [value]="s" *ngFor="let s of settori">{{s}}</option>
+          </select>
           <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['settore'].invalid">
             Seleziona un valore.
           </p>
