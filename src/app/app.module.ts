@@ -13,7 +13,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OfficeComponent } from './components/office/office.component';
 import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
  providers: [
     provideAnimations(),
