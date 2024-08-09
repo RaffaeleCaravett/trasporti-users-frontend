@@ -100,5 +100,10 @@ getRegioneByCity(city:string){
 }
 
 
-
+sectionChange(value:string){
+  this.section=''
+  setTimeout(()=>{
+this.section=value
+  },2000)
+}
 }

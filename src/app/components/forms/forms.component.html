@@ -11,7 +11,7 @@
 <img src="assets/forms/network.webp" alt="" class="w-75">
 <p class="fs-5">Crediamo nella condivisione di opportunità. <button class="btn" (click)="section='signup'">Registrati</button> e unisciti a noi!</p>
     </div>
-    <div class="col-md-6 p-3" *ngIf="section=='login' else signupBlock">
+    <div class="col-md-6 p-3" *ngIf="section=='login'">
       <p class="fs-3">Accedi</p>
       <form [formGroup]="loginForm" class="p-3 w-75 m-auto">
         <div class="row border rounded p-1">
@@ -31,13 +31,12 @@
 <button class="btn my-3" (click)="login()">Login</button>
 <p>or</p>
 <hr>
-<button class="btn" (click)="section='signup'">Register</button>
+<button class="btn" (click)="sectionChange('signup')">Register</button>
           </div>
         </div>
       </form>
     </div>
-    <ng-template #signupBlock>
-      <div class="col-md-6 p-3">
+      <div class="col-md-6 p-3" *ngIf="section=='signup'">
         <p class="fs-3">Registrati</p>
          <div class="p-3 w-75 m-auto">
           <div  class="row border rounded p-1">
@@ -163,10 +162,12 @@
         <button class="btn my-3" (click)="signup()">Register</button>
         <p>or</p>
         <hr>
-        <button class="btn" (click)="section='login'">Login</button>
+        <button class="btn" (click)="sectionChange('login')">Login</button>
        </div>
          </div>
       </div>
-    </ng-template>
+    <div class=" col-md-6 py-5" *ngIf="section==''">
+      <mat-spinner class="my-5 m-auto"></mat-spinner>
+    </div>
   </div>
 </div>

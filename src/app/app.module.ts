@@ -14,6 +14,8 @@ import { OfficeComponent } from './components/office/office.component';
 import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http'
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
  providers: [
     provideAnimations(),
