@@ -78,12 +78,16 @@ this.submittedLogin=true
 if(this.loginForm.valid){
 
 }else{
-this.toastr.error("Assicurati di completare il form prima di accedere.")
+this.toastr.error("Assicurati di completare il form prima di accedere.");
 }
 }
 signup(){
   this.submitted=true
-console.log(this.trasportatoreForm)
+if(this.signupForm.valid){
+
+}else{
+  this.toastr.error("Assicurati di inserire tutti i valori nei rispettivi campi.");
+}
 }
 
 getRegioneByCity(city:string){
