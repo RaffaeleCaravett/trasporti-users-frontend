@@ -48,38 +48,38 @@
               <option value=""></option>
               <option [value]="c" *ngFor="let c of cities">{{c}}</option>
               </select>
-              <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+              <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['citta'].invalid">
                 Seleziona un valore.
               </p>
               </div>
                         <div class="col-md-12">
               <label class="py-3">Regione</label>
               <input type="text" class="form-control" formControlName="regione" readonly>
-              <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+              <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['regione'].invalid">
                 Campo autocompilato. Selezione una città!
               </p>
               <label class="py-3">Indirizzo</label>
   <input type="text" class="form-control" formControlName="indirizzo">
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['indirizzo'].invalid">
     Inserisci il tuo indirizzo.
   </p>
             </div>
             <div class="col-md-12">
   <label class="py-3">Cap</label>
   <input type="text" class="form-control" formControlName="cap" readonly>
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['cap'].invalid">
     Campo autocompilato. Selezione una città!
   </p>
               <label class="py-3">Email</label>
   <input type="email" class="form-control" formControlName="email">
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['email'].invalid">
     Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
   </p>
             </div>
             <div class="col-md-12">
   <label class="py-3">Password</label>
   <input type="password" class="form-control" formControlName="password">
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['password'].invalid">
     Inserisci un valore con almeno 6 caratteri.
   </p>
   <p class="py-1">
@@ -91,7 +91,7 @@
   <p>
     <input type="radio" formControlName="type" value="azienda" name="type" id="type2" class="py-3" (change)="typeFormValue='azienda'"><label class="py-3 form-check-label" for="type2">Azienda</label>
   </p>
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['type'].invalid">
     Seleziona un valore.
   </p>
             </div>
@@ -100,32 +100,32 @@
           <p class="fs-4">Trasportatore</p>
           <label for="" class="py-3">Nome</label>
           <input type="text" class="form-control" formControlName="nome">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['nome'].invalid">
             Inserisci un valore.
           </p>
           <label for="" class="py-3">Cognome</label>
           <input type="text" class="form-control" formControlName="cognome">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['cognome'].invalid">
             Inserisci un valore.
           </p>
           <label for="" class="py-3">Età</label>
           <input type="number" class="form-control" formControlName="eta">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['eta'].invalid">
             Inserisci un valore superiore a 18.
           </p>
           <label for="" class="py-3">Codice fiscale</label>
           <input type="text" class="form-control" formControlName="codiceFiscale">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['codiceFiscale'].invalid">
             Inserisci un valore che rispetti il pattern del codice fiscale italiano.
           </p>
           <label for="" class="py-3">Partita Iva</label>
           <input type="text" class="form-control" formControlName="partitaIva">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['partitaIva'].invalid">
             Inserisci un valore che rispetti il pattern della partita iva italiana.
           </p>
           <label for="" class="py-3">Flotta mezzi</label>
           <input type="number" class="form-control" formControlName="flottaMezzi">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['flottaMezzi'].invalid">
             Inserisci un valore numerico.
           </p>
         </form>
@@ -133,27 +133,27 @@
             <p class="fs-4">Azienda</p>
             <label for="" class="py-3">Nome Azienda</label>
           <input type="text" class="form-control" formControlName="nomeAzienda">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['nomeAzienda'].invalid">
             Inserisci un valore.
           </p>
           <label for="" class="py-3">Fatturato Medio</label>
           <input type="number" class="form-control" formControlName="fatturatoMedio">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['fatturatoMedio'].invalid">
             Inserisci un valore numerico.
           </p>
           <label for="" class="py-3">Numero Dipendenti</label>
           <input type="number" class="form-control" formControlName="numeroDipendenti">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['numeroDipendenti'].invalid">
             Inserisci un valore numerico
           </p>
           <label for="" class="py-3">Settore</label>
           <input type="text" class="form-control" formControlName="settore">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['settore'].invalid">
             Seleziona un valore.
           </p>
           <label for="" class="py-3">Partita Iva</label>
           <input type="text" class="form-control" formControlName="partitaIva">
-          <p class="text-danger" *ngIf="submitted==true&&signupForm.controls[''].invalid">
+          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['partitaIva'].invalid">
             Inserisci un valore che rispetti il pattern della partita iva italiana.
           </p>
           </form>
