@@ -14,9 +14,11 @@ cities:any[]=[]
 typeFormValue:string=''
 trasportatoreForm!:FormGroup
 aziendaForm!:FormGroup
+submitted:boolean=false
+submittedLogin:boolean=false
 ngOnInit():void{
 this.loginForm=new FormGroup({
-  email:new FormControl('',Validators.required),
+  email:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
   password:new FormControl('',[Validators.required,Validators.minLength(6)])
 })
 this.signupForm=new FormGroup({
@@ -45,9 +47,10 @@ this.aziendaForm=  new FormGroup({
 })
 }
 login(){
-
+this.submittedLogin=true
 }
 signup(){
+  this.submitted=true
 console.log(this.trasportatoreForm)
 }
 }
