@@ -71,6 +71,18 @@
         </form>
         <form action="" *ngIf="typeFormValue=='trasportatore'" [formGroup]="trasportatoreForm">
           <p class="fs-4">Trasportatore</p>
+          <label for="">Nome</label>
+          <input type="text" class="form-control" formControlName="nome">
+          <label for="">Cognome</label>
+          <input type="text" class="form-control" formControlName="cognome">
+          <label for="">Età</label>
+          <input type="number" class="form-control" formControlName="eta">
+          <label for="">Codice fiscale</label>
+          <input type="text" class="form-control" formControlName="codiceFiscale">
+          <label for="">Partita Iva</label>
+          <input type="text" class="form-control" formControlName="partitaIva">
+          <label for="">Flotta mezzi</label>
+          <input type="number" class="form-control" formControlName="flottaMezzi">
         </form>
           <form action="" *ngIf="typeFormValue=='azienda'" [formGroup]="aziendaForm">
             <p class="fs-4">Azienda</p>
