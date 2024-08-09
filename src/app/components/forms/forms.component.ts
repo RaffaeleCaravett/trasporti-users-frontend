@@ -86,6 +86,9 @@ getRegioneByCity(city:string){
    this.formsService.getRegionByCity(city).subscribe({
     next:(regione:any)=>{
       regione=regione;
+      this.signupForm.controls['regione'].setValue(regione)
+      this.signupForm.controls['cap'].setValue("87050")
+      this.signupForm.updateValueAndValidity()
       console.log(regione)
     },
     error:(err:any)=>{
