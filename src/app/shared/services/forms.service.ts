@@ -11,6 +11,7 @@ export class FormsService {
   private settori:string = '/settori'
   private regione:string='/regione'
   private login:string = '/login'
+  private signup:string = '/signup'
   constructor(private http:HttpClient) { }
 
 getCities(){
@@ -21,6 +22,9 @@ getSettori(){
 }
 getRegionByCity(city:string){
   return this.http.get(environment.API_URL+this.auth+this.regione+`/${city}`,{ responseType: 'text' })
+}
+logIn(body:any){
+  return this.http.post(environment.API_URL+this.auth+this.login,body)
 }
 
 }
