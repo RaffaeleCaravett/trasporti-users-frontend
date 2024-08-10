@@ -76,9 +76,25 @@ this.settori=settori
 login(){
 this.submittedLogin=true
 if(this.loginForm.valid){
+let email=this.loginForm.controls['email'].value
+let password=this.loginForm.controls['password'].value
+
+this.formsService.logIn(
+ {
+  email:email,
+  password:password
+ }
+).subscribe({
+  next:(data)=>{
+console.log(data)
+  },
+  error:(error)=>{
+    this.toastr.error(error.error.message||error.error.messageList[0])
+  }
+})
 
 }else{
-this.toastr.error("Assicurati di completare il form prima di accedere.");
+this.toastr.error("Assicurati di completare correttamente il form prima di accedere.");
 }
 }
 signup(){

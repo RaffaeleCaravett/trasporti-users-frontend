@@ -13,8 +13,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OfficeComponent } from './components/office/office.component';
 import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AuthTokenInterceptor } from './core/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatProgressSpinnerModule
   ],
  providers: [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthTokenInterceptor,
+    multi: true,
+  },
     provideAnimations(),
     provideToastr()
 ],
