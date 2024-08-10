@@ -12,6 +12,9 @@ export class FormsService {
   private regione:string='/regione'
   private login:string = '/login'
   private signup:string = '/signup'
+  private token:string =''
+
+
   constructor(private http:HttpClient) { }
 
 getCities(){
@@ -28,5 +31,8 @@ logIn(body:any){
 }
 signUp(body:any){
   return this.http.post(environment.API_URL+this.auth+this.signup,body)
+}
+getToken(){
+  return this.token;
 }
 }
