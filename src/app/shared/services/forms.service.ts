@@ -26,5 +26,7 @@ getRegionByCity(city:string){
 logIn(body:any){
   return this.http.post(environment.API_URL+this.auth+this.login,body)
 }
-
+signUp(body:any){
+  return this.http.post(environment.API_URL+this.auth+this.signup,body)
+}
 }
