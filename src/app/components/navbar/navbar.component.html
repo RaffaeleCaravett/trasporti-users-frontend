@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-12 px-5 text-end">
       <button class="btn" routerLink="/" *ngIf="!isUserAuthenticated">Login</button>
-      <button class="btn" routerLink="/" *ngIf="isUserAuthenticated">Logout</button>
+      <button class="btn" *ngIf="isUserAuthenticated" (click)="logout()">Logout</button>
     </div>
   </div>
 </nav>

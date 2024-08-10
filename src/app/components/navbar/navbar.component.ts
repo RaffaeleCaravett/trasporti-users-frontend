@@ -15,5 +15,7 @@ constructor(private formsService:FormsService){
     this.isUserAuthenticated=value
   })
 }
+logout(){
 
+}
 }
