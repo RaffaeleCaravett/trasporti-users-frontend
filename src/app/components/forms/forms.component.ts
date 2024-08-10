@@ -122,7 +122,7 @@ let indirizzo= this.signupForm.controls['indirizzo'].value
 let cap= this.signupForm.controls['cap'].value
 let email= this.signupForm.controls['email'].value
 let password= this.signupForm.controls['password'].value
-if(this.signupForm.controls['type'].value=='trasportatore'){
+if(this.signupForm.controls['type'].value=='trasportatore'&&this.trasportatoreForm.valid){
   let nome= this.trasportatoreForm.controls['nome'].value
   let cognome= this.trasportatoreForm.controls['cognome'].value
   let eta= this.trasportatoreForm.controls['eta'].value
@@ -158,13 +158,42 @@ this.toastr.error(err.error.message||err.error.messageList[0])
   }
 })
 }else{
+  if(this.aziendaForm.valid&&this.signupForm.controls['type'].value=='azienda'){
   let nomeAzienda= this.aziendaForm.controls['nomeAzienda'].value
   let fatturatoMedio= this.aziendaForm.controls['fatturatoMedio'].value
   let numeroDipendenti= this.aziendaForm.controls['numeroDipendenti'].value
   let settore= this.aziendaForm.controls['settore'].value
   let partitaIva= this.aziendaForm.controls['partitaIva'].value
-}
+  this.formsService.AzsignUp(
+    {
+      citta:citta,
+  regione:regione,
+  indirizzo:indirizzo,
+  cap:cap,
+  email:email,
+  password:password,
+    nomeAzienda:nomeAzienda,
+    fatturatoMedio:fatturatoMedio,
+    numeroDipendenti:numeroDipendenti,
+    partitaIva:partitaIva,
+    settore:settore
+    }
+  ).subscribe({
+    next:(data)=>{
+     this.toastr.show("Complimenti! Ti sei registrato correttamente. Adesso effettua il login per scoprire cosa ti aspetta!")
+     this.section='login'
+    },
+    error:(err)=>{
+  this.toastr.error(err.error.message||err.error.messageList[0])
+    },
+    complete:()=>{
 
+    }
+  })
+}else{
+  this.toastr.error("Sembra che tu non abbia completato il form correttamente.")
+}
+}
 }else{
   this.toastr.error("Assicurati di inserire tutti i valori nei rispettivi campi.");
 }
