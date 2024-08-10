@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthGuard } from 'src/app/core/AuthGuard';
 import { environment } from 'src/app/core/environment';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class FormsService {
   private token:string =''
 
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private authGuard:AuthGuard) { }
 
 getCities(){
   return this.http.get(environment.API_URL+this.auth+this.citta)
@@ -42,5 +43,11 @@ AzsignUp(body:any){
 }
 getToken(){
   return this.token;
+}
+setToken(token:string){
+ this.token=token;
+}
+authenticateUser(boolean:any){
+  this.authGuard.authenticateUser(boolean)
 }
 }
