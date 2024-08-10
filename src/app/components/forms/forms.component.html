@@ -16,6 +16,20 @@
       <form [formGroup]="loginForm" class="p-3 w-75 m-auto">
         <div class="row border rounded p-1">
           <div class="col-md-12">
+            <p class="py-1">
+              <label for="" class="py-3">Che tipo di utente sei?</label>
+             </p>
+             <p>
+              <input type="radio" formControlName="value" value="trasportatore" name="value" id="type1" class="py-3" (change)="loginValue='T'"><label class="py-3 form-check-label" for="type1">Trasportatore</label>
+              </p>
+              <p>
+               <input type="radio" formControlName="value" value="azienda" name="value" id="type2" class="py-3" (change)="loginValue='A'"><label class="py-3 form-check-label" for="type2">Azienda</label>
+              </p>
+              <p class="text-danger" *ngIf="submittedLogin==true&&loginForm.controls['value'].invalid">
+               Seleziona un valore.
+              </p>
+          </div>
+          <div class="col-md-12">
 <label class="py-3">Email</label>
 <input type="email" class="form-control" formControlName="email">
 <p class="text-danger" *ngIf="submittedLogin==true&&loginForm.controls['email'].invalid">
@@ -28,7 +42,7 @@
 <p class="text-danger" *ngIf="submittedLogin==true&&loginForm.controls['password'].invalid">
   Valore invalido, prova ad inserire almeno 6 caratteri.
 </p>
-<button class="btn my-3" (click)="login()">Login</button>
+<button class="btn btn-dark w-75 m-auto my-3" (click)="login()">Login</button>
 <p>or</p>
 <hr>
 <button class="btn" (click)="sectionChange('signup')">Register</button>
@@ -159,7 +173,7 @@
             Inserisci un valore che rispetti il pattern della partita iva italiana.
           </p>
           </form>
-        <button class="btn my-3" (click)="signup()">Register</button>
+        <button class="btn btn-dark w-75 m-auto my-3" (click)="signup()">Register</button>
         <p>or</p>
         <hr>
         <button class="btn" (click)="sectionChange('login')">Login</button>

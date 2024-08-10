@@ -10,8 +10,8 @@ export class FormsService {
   private citta:string = '/citta'
   private settori:string = '/settori'
   private regione:string='/regione'
-  private Tlogin:string = '/Tlogin'
-  private Alogin:string = '/Alogin'
+  private Tlogin:string = '/TLogin'
+  private Alogin:string = '/AzLogin'
   private signup:string = '/signup'
   private token:string =''
 

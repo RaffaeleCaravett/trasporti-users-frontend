@@ -19,13 +19,14 @@ trasportatoreForm!:FormGroup
 aziendaForm!:FormGroup
 submitted:boolean=false
 submittedLogin:boolean=false
-
+loginValue=''
 constructor(private formsService:FormsService,private toastr:ToastrService){}
 
 ngOnInit():void{
 this.loginForm=new FormGroup({
   email:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
-  password:new FormControl('',[Validators.required,Validators.minLength(6)])
+  password:new FormControl('',[Validators.required,Validators.minLength(6)]),
+  value:new FormControl(this.loginValue||'',Validators.required)
 })
 this.signupForm=new FormGroup({
   citta:new FormControl('',Validators.required),
@@ -78,7 +79,7 @@ this.submittedLogin=true
 if(this.loginForm.valid){
 let email=this.loginForm.controls['email'].value
 let password=this.loginForm.controls['password'].value
-if(loginValue=='T'){
+if(this.loginValue=='T'){
 this.formsService.TlogIn(
  {
   email:email,
@@ -115,6 +116,26 @@ this.toastr.error("Assicurati di completare correttamente il form prima di acced
 signup(){
   this.submitted=true
 if(this.signupForm.valid){
+let citta= this.signupForm.controls['citta'].value
+let regione= this.signupForm.controls['regione'].value
+let indirizzo= this.signupForm.controls['indirizzo'].value
+let cap= this.signupForm.controls['cap'].value
+let email= this.signupForm.controls['email'].value
+let password= this.signupForm.controls['password'].value
+if(this.signupForm.controls['type'].value=='trasportatore'){
+  let nome= this.trasportatoreForm.controls['nome'].value
+  let cognome= this.trasportatoreForm.controls['cognome'].value
+  let eta= this.trasportatoreForm.controls['eta'].value
+  let codiceFiscale= this.trasportatoreForm.controls['codiceFiscale'].value
+  let partitaIva= this.trasportatoreForm.controls['partitaIva'].value
+  let flottaMezzi= this.trasportatoreForm.controls['flottaMezzi'].value
+}else{
+  let nomeAzienda= this.aziendaForm.controls['nomeAzienda'].value
+  let fatturatoMedio= this.aziendaForm.controls['fatturatoMedio'].value
+  let numeroDipendenti= this.aziendaForm.controls['numeroDipendenti'].value
+  let settore= this.aziendaForm.controls['settore'].value
+  let partitaIva= this.aziendaForm.controls['partitaIva'].value
+}
 
 }else{
   this.toastr.error("Assicurati di inserire tutti i valori nei rispettivi campi.");
