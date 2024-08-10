@@ -10,7 +10,8 @@ export class FormsService {
   private citta:string = '/citta'
   private settori:string = '/settori'
   private regione:string='/regione'
-  private login:string = '/login'
+  private Tlogin:string = '/Tlogin'
+  private Alogin:string = '/Alogin'
   private signup:string = '/signup'
   private token:string =''
 
@@ -26,8 +27,11 @@ getSettori(){
 getRegionByCity(city:string){
   return this.http.get(environment.API_URL+this.auth+this.regione+`/${city}`,{ responseType: 'text' })
 }
-logIn(body:any){
-  return this.http.post(environment.API_URL+this.auth+this.login,body)
+TlogIn(body:any){
+  return this.http.post(environment.API_URL+this.auth+this.Tlogin,body)
+}
+AlogIn(body:any){
+  return this.http.post(environment.API_URL+this.auth+this.Alogin,body)
 }
 signUp(body:any){
   return this.http.post(environment.API_URL+this.auth+this.signup,body)
