@@ -17,7 +17,7 @@ export class FormsService {
   private Tsignup:string = '/trasportatore'
   private Azsignup:string = '/azienda'
   private token:string =''
-  private isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
+  isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
 
