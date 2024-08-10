@@ -129,6 +129,34 @@ if(this.signupForm.controls['type'].value=='trasportatore'){
   let codiceFiscale= this.trasportatoreForm.controls['codiceFiscale'].value
   let partitaIva= this.trasportatoreForm.controls['partitaIva'].value
   let flottaMezzi= this.trasportatoreForm.controls['flottaMezzi'].value
+
+this.formsService.TsignUp(
+  {
+    citta:citta,
+regione:regione,
+indirizzo:indirizzo,
+cap:cap,
+email:email,
+password:password,
+  nome:nome,
+  cognome:cognome,
+  eta:eta,
+  codiceFiscale:codiceFiscale,
+  partitaIva:partitaIva,
+  flottaMezzi:flottaMezzi,
+  role:"Trasportatore"
+  }
+).subscribe({
+  next:(data)=>{
+    console.log(data)
+  },
+  error:(err)=>{
+    console.log(err)
+  },
+  complete:()=>{
+
+  }
+})
 }else{
   let nomeAzienda= this.aziendaForm.controls['nomeAzienda'].value
   let fatturatoMedio= this.aziendaForm.controls['fatturatoMedio'].value

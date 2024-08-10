@@ -12,7 +12,8 @@ export class FormsService {
   private regione:string='/regione'
   private Tlogin:string = '/TLogin'
   private Alogin:string = '/AzLogin'
-  private signup:string = '/signup'
+  private Tsignup:string = '/trasportatore'
+  private Azsignup:string = '/azienda'
   private token:string =''
 
 
@@ -33,8 +34,11 @@ TlogIn(body:any){
 AlogIn(body:any){
   return this.http.post(environment.API_URL+this.auth+this.Alogin,body)
 }
-signUp(body:any){
-  return this.http.post(environment.API_URL+this.auth+this.signup,body)
+TsignUp(body:any){
+  return this.http.post(environment.API_URL+this.auth+this.Tsignup,body)
+}
+AzsignUp(body:any){
+  return this.http.post(environment.API_URL+this.auth+this.Azsignup,body)
 }
 getToken(){
   return this.token;
