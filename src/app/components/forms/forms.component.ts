@@ -143,15 +143,15 @@ password:password,
   eta:eta,
   codiceFiscale:codiceFiscale,
   partitaIva:partitaIva,
-  flottaMezzi:flottaMezzi,
-  role:"Trasportatore"
+  flottaMezzi:flottaMezzi
   }
 ).subscribe({
   next:(data)=>{
-    console.log(data)
+   this.toastr.show("Complimenti! Ti sei registrato correttamente. Adesso effettua il login per scoprire cosa ti aspetta!")
+   this.section='login'
   },
   error:(err)=>{
-    console.log(err)
+this.toastr.error(err.error.message||err.error.messageList[0])
   },
   complete:()=>{
 
