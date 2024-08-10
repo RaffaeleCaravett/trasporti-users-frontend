@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { AuthGuard } from 'src/app/core/AuthGuard';
 import { environment } from 'src/app/core/environment';
 
@@ -16,7 +17,7 @@ export class FormsService {
   private Tsignup:string = '/trasportatore'
   private Azsignup:string = '/azienda'
   private token:string =''
-
+  private isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
 
@@ -48,6 +49,7 @@ setToken(token:string){
  this.token=token;
 }
 authenticateUser(boolean:any){
+  this.isAuthenticatedUser.next(boolean)
   this.authGuard.authenticateUser(boolean)
 }
 }
