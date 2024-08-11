@@ -16,6 +16,8 @@ constructor(private formsService:FormsService){
   })
 }
 logout(){
-
+localStorage.clear()
+this.formsService.authenticateUser(false)
+this.formsService.setToken('')
 }
 }
