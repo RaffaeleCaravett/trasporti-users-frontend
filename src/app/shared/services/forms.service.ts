@@ -19,6 +19,8 @@ export class FormsService {
   private token:string =''
   private tAccess:string='/AccessTToken'
   private azAccess:string ='/AccessAzToken'
+    private tRefresh:string='/RefreshTToken'
+  private azRefresh:string ='/RefreshAzToken'
   isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
@@ -60,5 +62,11 @@ verifyAziendaToken(token:string){
 }
 verifyTrasportatoreToken(token:string){
   return this.http.get(environment.API_URL+this.auth+this.tAccess+`/${token}`)
+}
+verifyAziendaRToken(token:string){
+  return this.http.get(environment.API_URL+this.auth+this.azRefresh+`/${token}`)
+}
+verifyTrasportatoreRToken(token:string){
+  return this.http.get(environment.API_URL+this.auth+this.tRefresh+`/${token}`)
 }
 }
