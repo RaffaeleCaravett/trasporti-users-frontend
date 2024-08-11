@@ -8,14 +8,14 @@ import { provideToastr, ToastrModule } from 'ngx-toastr';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsComponent } from './components/forms/forms.component';
-import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { OfficeComponent } from './components/office/office.component';
 import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AuthTokenInterceptor } from './core/token.interceptor';
+import { HomeComponent } from './components/home/home.component';
+import { OfficeComponent } from './components/office/office.component';
 
 @NgModule({
   declarations: [
@@ -23,10 +23,10 @@ import { AuthTokenInterceptor } from './core/token.interceptor';
     NavbarComponent,
     FooterComponent,
     FormsComponent,
-    HomeComponent,
     NotFoundComponent,
-    OfficeComponent,
-    AnnuncioInfoComponent
+    AnnuncioInfoComponent,
+    HomeComponent,
+    OfficeComponent
   ],
   imports: [
     BrowserModule,

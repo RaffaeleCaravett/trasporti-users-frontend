@@ -8,8 +8,8 @@ import { OfficeComponent } from './components/office/office.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component:FormsComponent
+    path: '',
+    component: FormsComponent
   },
   {
     path:'forms:id',
@@ -21,11 +21,15 @@ const routes: Routes = [
   },
   {
     path:'office',
-    component:OfficeComponent,canActivate:[AuthGuard]
+    loadChildren: () => import('./components/office/office.module').then(m => m.OfficeModule) ,canActivate:[AuthGuard]  },
+  {
+    path:'**',
+    component:NotFoundComponent
   },
   {
-    path:'',
-    component:NotFoundComponent
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];
 
