@@ -93,7 +93,7 @@ this.formsService.TlogIn(
       localStorage.setItem('Azienda',JSON.stringify(data.azienda))
      }
      localStorage.setItem('TrAccessToken',data.tokens.accessToken)
-     localStorage.setItem('RefreshToken',data.tokens.refreshToken)
+     localStorage.setItem('TrRefreshToken',data.tokens.refreshToken)
      this.formsService.setToken(data.tokens.accessToken)
      this.formsService.authenticateUser(true)
   },
@@ -116,7 +116,7 @@ else {
     localStorage.setItem('Trasportatore',JSON.stringify(data.trasportatore))
    }
    localStorage.setItem('AzAccessToken',data.tokens.accessToken)
-   localStorage.setItem('RefreshToken',data.tokens.refreshToken)
+   localStorage.setItem('AzRefreshToken',data.tokens.refreshToken)
    this.formsService.setToken(data.tokens.accessToken)
    this.formsService.authenticateUser(true)
      },
