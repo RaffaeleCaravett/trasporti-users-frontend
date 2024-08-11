@@ -9,7 +9,7 @@ import { FormsService } from 'src/app/shared/services/forms.service';
   styleUrls: ['./forms.component.scss']
 })
 export class FormsComponent implements OnInit{
-section:string = 'signup'
+section:string = 'login'
 loginForm!:FormGroup
 signupForm!:FormGroup
 cities:any[]=[]
@@ -86,8 +86,16 @@ this.formsService.TlogIn(
   password:password
  }
 ).subscribe({
-  next:(data)=>{
-console.log(data)
+  next:(data:any)=>{
+    if(data&&data.trasportatore){
+      localStorage.setItem('Trasportatore',JSON.stringify(data.trasportatore))
+     }else if(data&&data.azienda){
+      localStorage.setItem('Azienda',JSON.stringify(data.azienda))
+     }
+     localStorage.setItem('TrAccessToken',data.tokens.accessToken)
+     localStorage.setItem('RefreshToken',data.tokens.refreshToken)
+     this.formsService.setToken(data.tokens.accessToken)
+     this.formsService.authenticateUser(true)
   },
   error:(error)=>{
     this.toastr.error(error.error.message||error.error.messageList[0])
@@ -102,13 +110,12 @@ else {
     }
    ).subscribe({
      next:(data:any)=>{
-   console.log(data)
    if(data&&data.azienda){
     localStorage.setItem('Azienda',JSON.stringify(data.azienda))
    }else if(data&&data.trasportatore){
     localStorage.setItem('Trasportatore',JSON.stringify(data.trasportatore))
    }
-   localStorage.setItem('AccessToken',data.tokens.accessToken)
+   localStorage.setItem('AzAccessToken',data.tokens.accessToken)
    localStorage.setItem('RefreshToken',data.tokens.refreshToken)
    this.formsService.setToken(data.tokens.accessToken)
    this.formsService.authenticateUser(true)

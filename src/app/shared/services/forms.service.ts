@@ -17,6 +17,8 @@ export class FormsService {
   private Tsignup:string = '/trasportatore'
   private Azsignup:string = '/azienda'
   private token:string =''
+  private tAccess:string='/AccessTToken'
+  private azAccess:string ='/AccessAzToken'
   isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
@@ -51,5 +53,12 @@ setToken(token:string){
 authenticateUser(boolean:any){
   this.isAuthenticatedUser.next(boolean)
   this.authGuard.authenticateUser(boolean)
+}
+
+verifyAziendaToken(token:string){
+  return this.http.get(environment.API_URL+this.auth+this.azAccess+`/${token}`)
+}
+verifyTrasportatoreToken(token:string){
+  return this.http.get(environment.API_URL+this.auth+this.tAccess+`/${token}`)
 }
 }
