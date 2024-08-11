@@ -26,7 +26,7 @@ constructor(private formsService:FormsService,private toastr:ToastrService,priva
           localStorage.setItem('trasportatore',JSON.stringify(t))
           this.formsService.setToken(trasportatore!)
 this.formsService.authenticateUser(true)
-this.router.navigate([`${location||''}`])
+this.router.navigate([`${location||'/home'}`])
         },
         error:(error:any)=>{
 this.formsService.verifyTrasportatoreRToken(trasportatoreR!).subscribe({
@@ -35,7 +35,7 @@ localStorage.setItem('TrAccessToken',tokens.accessToken)
 localStorage.setItem('TrRefreshToken',tokens.refreshToken)
 this.formsService.setToken(tokens.accessToken)
 this.formsService.authenticateUser(true)
-this.router.navigate([`${location||''}`])
+this.router.navigate([`${location||'/home'}`])
 },
   error:(error:any)=>{
     this.toastr.error("Non è stato possibile verificare la tua identità.")
@@ -52,7 +52,7 @@ if(azienda){
       localStorage.setItem('azienda',JSON.stringify(a))
 this.formsService.setToken(azienda!)
 this.formsService.authenticateUser(true)
-this.router.navigate([`${location||''}`])
+this.router.navigate([`${location||'/home'}`])
     },
     error:(error:any)=>{
 this.formsService.verifyAziendaRToken(aziendaR!).subscribe({
@@ -61,7 +61,7 @@ localStorage.setItem('AzAccessToken',tokens.accessToken)
 localStorage.setItem('AzRefreshToken',tokens.refreshToken)
 this.formsService.setToken(tokens.accessToken)
 this.formsService.authenticateUser(true)
-this.router.navigate([`${location||''}`])
+this.router.navigate([`${location||'/home'}`])
 },
 error:(error:any)=>{
 this.toastr.error("Non è stato possibile verificare la tua identità.")

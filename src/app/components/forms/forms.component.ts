@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormsService } from 'src/app/shared/services/forms.service';
 
@@ -20,7 +21,7 @@ aziendaForm!:FormGroup
 submitted:boolean=false
 submittedLogin:boolean=false
 loginValue=''
-constructor(private formsService:FormsService,private toastr:ToastrService){}
+constructor(private formsService:FormsService,private toastr:ToastrService,private router:Router){}
 
 ngOnInit():void{
 this.loginForm=new FormGroup({
@@ -96,6 +97,7 @@ this.formsService.TlogIn(
      localStorage.setItem('TrRefreshToken',data.tokens.refreshToken)
      this.formsService.setToken(data.tokens.accessToken)
      this.formsService.authenticateUser(true)
+     this.router.navigate(['/home'])
   },
   error:(error)=>{
     this.toastr.error(error.error.message||error.error.messageList[0])
@@ -119,6 +121,7 @@ else {
    localStorage.setItem('AzRefreshToken',data.tokens.refreshToken)
    this.formsService.setToken(data.tokens.accessToken)
    this.formsService.authenticateUser(true)
+   this.router.navigate(['/home'])
      },
      error:(error)=>{
        this.toastr.error(error.error.message||error.error.messageList[0])

@@ -132,7 +132,7 @@
             Inserisci un valore che rispetti il pattern del codice fiscale italiano.
           </p>
           <label for="" class="py-3">Partita Iva</label>
-          <input type="text" class="form-control" formControlName="partitaIva">
+          <input type="number" class="form-control" formControlName="partitaIva">
           <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['partitaIva'].invalid">
             Inserisci un valore che rispetti il pattern della partita iva italiana.
           </p>
@@ -168,7 +168,7 @@
             Seleziona un valore.
           </p>
           <label for="" class="py-3">Partita Iva</label>
-          <input type="text" class="form-control" formControlName="partitaIva">
+          <input type="number" class="form-control" formControlName="partitaIva">
           <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['partitaIva'].invalid">
             Inserisci un valore che rispetti il pattern della partita iva italiana.
           </p>
