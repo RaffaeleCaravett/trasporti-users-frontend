@@ -5,13 +5,21 @@
         Drive, Delivery, Accomplish.
       </h1>
     </div>
-    <div class="col-md-3"></div>
-    <div class="col-md-3"></div>
-    <div class="col-md-3">
-      <button class="btn" *ngIf="isUserAuthenticated" (click)="logout()">Logout</button>
+    <div class="row"  *ngIf="isUserAuthenticated else login">
+      <div class="col-md-4">
+      <button class="btn" routerLink="/home">Home</button>
     </div>
-    <div class="col-md-12 px-5 text-end" *ngIf="!isUserAuthenticated">
+    <div class="col-md-4">
+      <button class="btn" routerLink="/office">Office</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn"(click)="logout()">Logout</button>
+    </div>
+    </div>
+    <ng-template #login>
+<div class="col-md-12 px-5 text-end">
       <button class="btn" routerLink="/" >Login</button>
     </div>
+    </ng-template>
   </div>
 </nav>
