@@ -7,3 +7,24 @@ h1{
 .fs-3{
   line-height: 1.05;
 }
+  ::-webkit-scrollbar {
+    width: 20px!important;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey!important;
+    border-radius: 10px!important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: gray!important;
+    border-radius: 10px!important;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: gray!important;
+}
+.row>*{
+  padding-top: 5%;
+  padding-bottom: 5%;
+}

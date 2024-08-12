@@ -3,5 +3,68 @@
     <div class="col-md-12">
       <h1>Benvenuto! Dai un'occhiata alle offerte disponibili.</h1>
     </div>
+    <div class="col-md-3 py-5">
+      <p class="fs-5">Le tue informazioni</p>
+      <div class="row text-start p-2 border rounded overflow-auto" *ngIf="isTrasportatore else azienda">
+<div class="col-md-6">{{user?.nome}}</div>
+<div class="col-md-6">{{user?.cognome}}</div>
+      </div>
+      <ng-template #azienda>
+<div class="row text-start p-2 border rounded overflow-auto">
+  <div class="col-md-12">
+    <span class="text-danger">
+      Tipo :
+    </span>
+    {{user?.role}}
+  </div>
+  <div class="col-md-12">
+    <span class="text-danger">
+      Nome azienda :
+    </span>
+    {{user?.nomeAzienda}}
+  </div>
+  <div class="col-md-12">
+    <span class="text-danger">
+      Città :
+    </span>
+    {{user?.citta}}
+  </div>
+  <div class="col-md-7">
+    {{user?.indirizzo}}
+  </div>
+  <div class="col-md-5">
+    {{user?.cap}}
+  </div>
+  <div class="col-md-12">
+    {{user?.regione}}
+  </div>
+  <div class="col-md-12">
+    <span class="text-danger">
+      N° dipendenti :
+    </span>
+    {{user?.numeroDipendenti}}
+  </div>
+  <div class="col-md-12">
+    <span class="text-danger">
+      Partita Iva :
+    </span>
+    {{user?.partitaIva}}
+  </div>
+  <div class="col-md-12">
+    <span class="text-danger">
+Settore :
+    </span>
+    {{user?.settore}}
+  </div>
+  <div class="col-md-12">{{user?.email}}</div>
+</div>
+      </ng-template>
+    </div>
+    <div class="col-md-6 p-1">
+      <div class="w-100 bg-light py-5"></div>
+    </div>
+    <div class="col-md-3">
+      <h1>col-2</h1>
+    </div>
   </div>
 </div>
