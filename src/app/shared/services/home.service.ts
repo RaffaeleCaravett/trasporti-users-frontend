@@ -7,16 +7,16 @@ import { environment } from "src/app/core/environment"
 })
 export class HomeService {
   private notifica:string = '/notifica'
-  private trasportatore:string ='/tr'
-  private azienda:string ='/az'
+  private trasportatore:string ='/trasportatore'
+  private azienda:string ='/azienda'
 
 
   constructor(private http:HttpClient) { }
 
 getNotificationByTransporterIdAndNotificationStateAndSender(transporterId:number,notificationState:string,sender:string){
-  return this.http.get(environment.API_URL+this.notifica+this.trasportatore+`/${transporterId}/${notificationState}/${sender}`)
+  return this.http.get(environment.API_URL+this.trasportatore+this.notifica+`/${transporterId}/${notificationState}/${sender}`)
 }
 getNotificationByAziendaIdAndNotificationStateAndSender(aziendaId:number,notificationState:string,sender:string){
-  return this.http.get(environment.API_URL+this.notifica+this.azienda+`/${aziendaId}/${notificationState}/${sender}`)
+  return this.http.get(environment.API_URL+this.azienda+this.notifica+`/${aziendaId}/${notificationState}/${sender}`)
 }
 }
