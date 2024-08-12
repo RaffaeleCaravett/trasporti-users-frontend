@@ -5,7 +5,7 @@ import { environment } from "src/app/core/environment"
 @Injectable({
   providedIn: 'root'
 })
-export class FormsService {
+export class HomeService {
   private notifica:string = '/notifica'
   private trasportatore:string ='/tr'
   private azienda:string ='/az'
@@ -13,10 +13,10 @@ export class FormsService {
 
   constructor(private http:HttpClient) { }
 
-getNotificationByTransporterIdAndNotificationState(transporterId:number,notificationState:string){
-  return this.http.get(environment.API_URL+this.notifica+this.trasportatore+`/${transporterId}/${notificationState}`)
+getNotificationByTransporterIdAndNotificationStateAndSender(transporterId:number,notificationState:string,sender:string){
+  return this.http.get(environment.API_URL+this.notifica+this.trasportatore+`/${transporterId}/${notificationState}/${sender}`)
 }
-getNotificationByAziendaIdAndNotificationState(aziendaId:number,notificationState:string){
-  return this.http.get(environment.API_URL+this.notifica+this.azienda+`/${aziendaId}/${notificationState}`)
+getNotificationByAziendaIdAndNotificationStateAndSender(aziendaId:number,notificationState:string,sender:string){
+  return this.http.get(environment.API_URL+this.notifica+this.azienda+`/${aziendaId}/${notificationState}/${sender}`)
 }
 }
