@@ -12,11 +12,9 @@
     <div class="col-md-2 py-5">
       <p class="fs-5">Cosa vuoi fare?</p>
       <div class="p-2 text-start">
-        <ul>
-          <li class="p-2" *ngFor="let a of azioni">
-            <button >{{a}}</button>
-          </li>
-        </ul>
+          <p class="p-2 " *ngFor="let a of azioni, index as i" >
+            <button class="p-{{i+6}}" (click)="setBackground(i+6)">{{a}}</button>
+          </p>
       </div>
     </div>
   </div>

@@ -18,4 +18,19 @@ export class OfficeComponent  implements OnInit{
         }
 
       }
+
+      setBackground(i:number){
+        let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement
+for(let a = 6 ;a<=10;a++){
+
+  if(a==i){
+  p.style.background='red'
+  p.style.color='white'
+}else{
+let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
+  otherP.style.background='white'
+  otherP.style.color='black'
+}
+}
+      }
     }
