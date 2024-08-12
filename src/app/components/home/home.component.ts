@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsService } from 'src/app/shared/services/forms.service';
+import { ToastrService } from 'ngx-toastr';
+import { HomeService } from 'src/app/shared/services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ export class HomeComponent implements OnInit{
 user:any
 isTrasportatore:boolean=false
 
-constructor(private formsService:FormsService){}
+constructor(private homeService:HomeService,private toastr:ToastrService){}
 
 ngOnInit():void{
     localStorage.setItem('location','/home')
@@ -22,8 +23,25 @@ if(this.user&&this.user.cognome){
 
 
 if(this.isTrasportatore){
-
+this.homeService.getNotificationByTransporterIdAndNotificationStateAndSender(this.user.id,'Emessa','az').subscribe({
+  next:(data:any)=>{
+    this.notifications=data
+  },
+  error:(error:any)=>{
+    this.toastr.error(error.error.message||error.error.messageList[0])
+  },
+  complete:()=>{}
+})
 }else{
+  this.homeService.getNotificationByAziendaIdAndNotificationStateAndSender(this.user.id,'Emessa','tr').subscribe({
+    next:(data:any)=>{
+      this.notifications=data
+    },
+    error:(error:any)=>{
+      this.toastr.error(error.error.message||error.error.messageList[0])
+    },
+    complete:()=>{}
+  })
 
 }
   }
