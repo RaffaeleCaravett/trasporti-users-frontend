@@ -16,6 +16,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AuthTokenInterceptor } from './core/token.interceptor';
 import { HomeComponent } from './components/home/home.component';
 import { OfficeComponent } from './components/office/office.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { OfficeComponent } from './components/office/office.component';
     NotFoundComponent,
     AnnuncioInfoComponent,
     HomeComponent,
-    OfficeComponent
+    OfficeComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
