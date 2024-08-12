@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,21 @@ export class HomeComponent implements OnInit{
 
 user:any
 isTrasportatore:boolean=false
-  ngOnInit():void{
+
+constructor(private formsService:FormsService){}
+
+ngOnInit():void{
     localStorage.setItem('location','/home')
 this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
-console.log(this.user
-)
 if(this.user&&this.user.cognome){
   this.isTrasportatore=true
+}
+
+
+if(this.isTrasportatore){
+
+}else{
+
 }
   }
 }
