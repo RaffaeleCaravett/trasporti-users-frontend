@@ -24,3 +24,13 @@ h1{
   ::-webkit-scrollbar-thumb:hover {
     background: gray!important;
 }
+button{
+  border:none;
+  background: none;
+  text-align: start;
+  transition:.5s;
+  &:hover{
+    color:red;
+    transition:.5s;
+  }
+}
