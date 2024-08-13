@@ -10,13 +10,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AnnuncioInfoComponent } from './components/annuncio-info/annuncio-info.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AuthTokenInterceptor } from './core/token.interceptor';
-import { HomeComponent } from './components/home/home.component';
-import { OfficeComponent } from './components/office/office.component';
-import { UserInfoComponent } from './components/user-info/user-info.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,18 +23,16 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     FormsComponent,
     NotFoundComponent,
     AnnuncioInfoComponent,
-    HomeComponent,
-    OfficeComponent,
-    UserInfoComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ReactiveFormsModule
   ],
  providers: [
   {

@@ -2,11 +2,18 @@ import { NgModule } from "@angular/core";
 import { HomeComponent } from "./home.component";
 import { CommonModule } from "@angular/common";
 import { HomeRoutingModule } from "./home-routing.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { UserInfoModule } from "../user-info/user-info.module";
 
 @NgModule({
+  declarations:[
+HomeComponent
+  ],
  imports: [
     CommonModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    ReactiveFormsModule,
+    UserInfoModule
   ],
  providers: [
 ],
