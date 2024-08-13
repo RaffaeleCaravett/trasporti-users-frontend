@@ -51,7 +51,7 @@
   <label for="" class="py-4">Inserisci la data massima in cui deve partire la spedizione :</label>
   <input type="date" class="form-control" formControlName="anno" [max]="todayPlusAYear.toISOString().split('T')[0]" [min]="today.toISOString().split('T')[0]" >
   <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['anno'].invalid">
-    Valori ammessi : da {{year}} a {{year+1}}
+    Inserisci un valore compreso tra oggi e un anno da oggi.
   </p>
   <label for="" class="py-4">Descrivi e inserisci i dettagli della spedizione</label>
   <textarea type="text" class="form-control" formControlName="testo">
