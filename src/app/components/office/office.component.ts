@@ -9,6 +9,7 @@ export class OfficeComponent  implements OnInit{
   user:any
   isTrasportatore:boolean=false
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
+  toDo:string=''
   ngOnInit():void{
     localStorage.setItem('location','/office')
 
@@ -19,7 +20,8 @@ export class OfficeComponent  implements OnInit{
 
       }
 
-      setBackground(i:number){
+      setBackground(i:number,toDo:string){
+        this.toDo=toDo
         let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement
 for(let a = 6 ;a<=10;a++){
 
