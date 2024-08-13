@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <h1>Il tuo ufficio</h1>
     </div>
-    <div class="col-md-2 py-5">
+    <div class="col-md-3 py-5">
       <p class="fs-5">Cosa vuoi fare?</p>
       <div class="p-2 text-start">
           <p class="p-2 " *ngFor="let a of azioni, index as i" >
@@ -11,7 +11,7 @@
           </p>
       </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-6">
 <div *ngIf="toDo==''" class="w-75 m-auto py-5">
 <p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
 <p class="fs-5">Qui crediamo che non solo lavorare ci rende più dignitosi, ma può anche elevarci spiritualmente, mentalmente e fisicamente.
@@ -33,26 +33,32 @@
 <div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
 <p class="fs-3">Aggiungi un annuncio</p>
 <form [formGroup]="aggiungiAnnuncioForm">
-  <label for="" class="py-1">Quanto offri per questa spedizione? </label>
+  <label for="" class="py-2">Quanto offri per questa spedizione? </label>
   <input type="text" class="form-control" formControlName="retribuzione">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
-  <label for="" class="py-1"></label>
-  <input type="text" class="form-control">
+  <label for="" class="py-2">Da dove parte la spedizione?</label>
+  <input type="text" class="form-control" formControlName="da">
+  <label for="" class="py-2">Dove deve arrivare?</label>
+  <input type="text" class="form-control" formControlName="a">
+  <label for="" class="py-2">Inserisci la data massima in cui deve partire la spedizione :</label>
+  <div class="d-flex justify-content-center">
+    <div>
+      <label for="" class="py-2">Giorno</label>
+    <input type="number" class="form-control" formControlName="giorno">
+    </div>
+    <div>
+  <label for="" class="py-2">Mese</label>
+  <input type="number" class="form-control" formControlName="mese">
+    </div>
+    <div>
+  <label for="" class="py-2">Anno</label>
+  <input type="number" class="form-control" formControlName="anno">
+    </div>
+  </div>
+  <label for="" class="py-2">Descrivi e inserisci i dettagli della spedizione</label>
+  <textarea type="text" class="form-control" formControlName="testo">
+  </textarea>
+  <label for="" class="py-2">Quante pedane devi spedire?</label>
+  <input type="number" class="form-control" formControlName="numeroPedane">
 </form>
 </div>
     </div>
