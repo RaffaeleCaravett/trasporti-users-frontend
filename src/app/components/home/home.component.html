@@ -4,24 +4,24 @@
       <h1>Benvenuto! Dai un'occhiata alle offerte disponibili.</h1>
     </div>
     <div class="col-md-3 py-5">
-      <app-user-info [user]="user" [isTrasportatore]="isTrasportatore"></app-user-info>
-    </div>
+      <p class="fs-5">Notifiche</p>
+           <div class="row p-2 border rounded overflow-auto" *ngIf="notifications && notifications.content>0 else nonotifications">
+     <h1>Notifiche</h1>
+           <p *ngFor="let n of notifications.content">
+             {{n.testo}}
+           </p>
+           </div>
+         <ng-template #nonotifications>
+             <div class="row p-2 border rounded overflow-auto">
+             <p>Non ci sono ancora notifiche da mostrarti.</p>
+             </div>
+         </ng-template>
+       </div>
     <div class="col-md-6 p-1">
       <div class="w-100 bg-light py-5"></div>
     </div>
-    <div class="col-md-3">
- <p class="fs-5">Notifiche</p>
-      <div class="row p-2 border rounded overflow-auto" *ngIf="notifications && notifications.content>0 else nonotifications">
-<h1>Notifiche</h1>
-      <p *ngFor="let n of notifications.content">
-        {{n.testo}}
-      </p>
-      </div>
-    <ng-template #nonotifications>
-        <div class="row p-2 border rounded overflow-auto">
-        <p>Non ci sono ancora notifiche da mostrarti.</p>
-        </div>
-    </ng-template>
+  <div class="col-md-3 py-5">
+    <app-user-info [user]="user" [isTrasportatore]="isTrasportatore"></app-user-info>
   </div>
 </div>
 </div>

@@ -3,12 +3,6 @@
     <div class="col-md-12">
       <h1>Il tuo ufficio</h1>
     </div>
-    <div class="col-md-3 py-5">
-      <app-user-info [isTrasportatore]="isTrasportatore" [user]="user"></app-user-info>
-    </div>
-    <div class="col-md-7">
-
-    </div>
     <div class="col-md-2 py-5">
       <p class="fs-5">Cosa vuoi fare?</p>
       <div class="p-2 text-start">
@@ -16,6 +10,12 @@
             <button class="p-{{i+6}}" (click)="setBackground(i+6)">{{a}}</button>
           </p>
       </div>
+    </div>
+    <div class="col-md-7">
+
+    </div>
+    <div class="col-md-3 py-5">
+      <app-user-info [isTrasportatore]="isTrasportatore" [user]="user"></app-user-info>
     </div>
   </div>
 </div>

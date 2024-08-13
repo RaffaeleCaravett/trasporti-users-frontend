@@ -24,6 +24,7 @@ export class OfficeComponent  implements OnInit{
 for(let a = 6 ;a<=10;a++){
 
   if(a==i){
+  p.style.borderRadius='.3rem'
   p.style.background='red'
   p.style.color='white'
 }else{
