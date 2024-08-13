@@ -33,7 +33,7 @@ this.aggiungiAnnuncioForm= new FormGroup({
   a:new FormControl('',Validators.required),
   giorno:new FormControl('',[Validators.required,Validators.max(31),Validators.min(1)]),
   mese:new FormControl('',[Validators.required,Validators.max(12),Validators.min(1)]),
-  anno:new FormControl('',[Validators.required,Validators.max(this.year),Validators.min(this.year)]),
+  anno:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
 })
@@ -64,7 +64,7 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
 if(this.aggiungiAnnuncioForm.valid){
 
 }else{
-this.toastr.error('Completa il form prima di inserire l\'annuncio')
+this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio')
 }
 
       }

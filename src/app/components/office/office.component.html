@@ -32,35 +32,59 @@
 </div>
 <div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
 <p class="fs-3">Aggiungi un annuncio</p>
-<form [formGroup]="aggiungiAnnuncioForm" (ngSubmit)="addAnnuncio()">
+<form [formGroup]="aggiungiAnnuncioForm">
   <label for="" class="py-2">Quanto offri per questa spedizione? </label>
   <input type="text" class="form-control" formControlName="retribuzione">
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['retribuzione'].invalid">
+    Assicurati di inserire un valore.
+  </p>
   <label for="" class="py-2">Da dove parte la spedizione?</label>
   <input type="text" class="form-control" formControlName="da">
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['da'].invalid">
+    Assicurati di inserire la destinazione di partenza.
+  </p>
   <label for="" class="py-2">Dove deve arrivare?</label>
   <input type="text" class="form-control" formControlName="a">
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['a'].invalid">
+    Dove vuoi che venga consegnata la merce?
+  </p>
   <label for="" class="py-2">Inserisci la data massima in cui deve partire la spedizione :</label>
   <div class="d-flex justify-content-center">
     <div>
       <label for="" class="py-2">Giorno</label>
     <input type="number" class="form-control" formControlName="giorno" max="31" min="1">
+    <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['giorno'].invalid">
+      Valori ammessi : da 1 a 31.
+    </p>
     </div>
     <div>
   <label for="" class="py-2">Mese</label>
   <input type="number" class="form-control" formControlName="mese" max="12" min="1">
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['mese'].invalid">
+    Valori ammessi : da 1 a 12
+  </p>
     </div>
     <div>
   <label for="" class="py-2">Anno</label>
   <input type="number" class="form-control" formControlName="anno" [max]="year" [min]="year">
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['anno'].invalid">
+    Valori ammessi : da {{year}} a {{year+1}}
+  </p>
     </div>
   </div>
   <label for="" class="py-2">Descrivi e inserisci i dettagli della spedizione</label>
   <textarea type="text" class="form-control" formControlName="testo">
   </textarea>
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['testo'].invalid">
+    Inserisci i dettagli della spedizione.
+  </p>
   <label for="" class="py-2">Quante pedane devi spedire?</label>
   <input type="number" class="form-control" formControlName="numeroPedane">
+  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['numeroPedane'].invalid">
+    Quante pedane devi spedire?
+  </p>
 </form>
-<button class="btn my-2 btn-dark" type="submit">Aggiungi</button>
+<button class="btn my-2 btn-dark" (click)="addAnnuncio()">Aggiungi</button>
 </div>
     </div>
     <div class="col-md-3 py-5">
