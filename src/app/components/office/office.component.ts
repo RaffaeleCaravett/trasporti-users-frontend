@@ -13,10 +13,16 @@ export class OfficeComponent  implements OnInit{
   user:any
   isTrasportatore:boolean=false
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
-  toDo:string=''
+  toDo:string='Aggiungi un annuncio'
   aggiungiAnnuncioForm!:FormGroup
   aggiungiAnnuncioSubmitted:boolean=false
   year:number=0
+  today = new Date()
+  today1 = new Date()
+  todayPlusAYear = new Date(this.today1.setDate(this.today1.getDate()+365))
+  giorni : number[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+  mesi : number[]=[1,2,3,4,5,6,7,8,9,10,11,12]
+  anni : number[]=[this.year,this.year+1]
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -31,8 +37,6 @@ this.aggiungiAnnuncioForm= new FormGroup({
   retribuzione: new FormControl('',Validators.required),
   da:new FormControl('',Validators.required),
   a:new FormControl('',Validators.required),
-  giorno:new FormControl('',[Validators.required,Validators.max(31),Validators.min(1)]),
-  mese:new FormControl('',[Validators.required,Validators.max(12),Validators.min(1)]),
   anno:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
@@ -67,5 +71,9 @@ if(this.aggiungiAnnuncioForm.valid){
 this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio')
 }
 
+      }
+      shw(value:string){
+let array = value.split('-')
+console.log(array)
       }
     }
