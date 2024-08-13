@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
@@ -25,6 +25,17 @@ constructor(private toastr:ToastrService,private officeService:OfficeService,pri
         if(this.user&&this.user.cognome){
           this.isTrasportatore=true
         }
+
+this.aggiungiAnnuncioForm= new FormGroup({
+  retribuzione: new FormControl('',Validators.required),
+  da:new FormControl('',Validators.required),
+  a:new FormControl('',Validators.required),
+  giorno:new FormControl('',Validators.required),
+  mese:new FormControl('',Validators.required),
+  anno:new FormControl('',Validators.required),
+  testo:new FormControl('',Validators.required),
+  numeroPedane:new FormControl('',Validators.required)
+})
 
       }
 
