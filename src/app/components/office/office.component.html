@@ -30,8 +30,30 @@
 <div *ngIf="toDo==''">
 
 </div>
-<div *ngIf="toDo=='Aggiungi un annuncio'">
-
+<div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
+<p class="fs-3">Aggiungi un annuncio</p>
+<form [formGroup]="aggiungiAnnuncioForm">
+  <label for="" class="py-1">Quanto offri per questa spedizione? </label>
+  <input type="text" class="form-control" formControlName="retribuzione">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+  <label for="" class="py-1"></label>
+  <input type="text" class="form-control">
+</form>
 </div>
     </div>
     <div class="col-md-3 py-5">

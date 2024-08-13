@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-office',
@@ -10,6 +11,7 @@ export class OfficeComponent  implements OnInit{
   isTrasportatore:boolean=false
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
   toDo:string=''
+  aggiungiAnnuncioForm!:FormGroup
   ngOnInit():void{
     localStorage.setItem('location','/office')
 
