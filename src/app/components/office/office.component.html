@@ -7,7 +7,7 @@
       <p class="fs-5">Cosa vuoi fare?</p>
       <div class="p-2 text-start">
           <p class="p-2 " *ngFor="let a of azioni, index as i" >
-            <button class="p-{{i+6}}" (click)="setBackground(i+6,a)">{{a}}</button>
+            <button class="button-list p-{{i+6}}" (click)="setBackground(i+6,a)">{{a}}</button>
           </p>
       </div>
     </div>
@@ -60,6 +60,7 @@
   <label for="" class="py-2">Quante pedane devi spedire?</label>
   <input type="number" class="form-control" formControlName="numeroPedane">
 </form>
+<button class="btn my-2 btn-dark" (click)="addAnnuncio()">Aggiungi</button>
 </div>
     </div>
     <div class="col-md-3 py-5">

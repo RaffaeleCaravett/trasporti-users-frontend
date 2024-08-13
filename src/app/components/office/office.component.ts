@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { OfficeService } from 'src/app/shared/services/office.service';
 
 @Component({
   selector: 'app-office',
@@ -12,6 +15,9 @@ export class OfficeComponent  implements OnInit{
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
   toDo:string=''
   aggiungiAnnuncioForm!:FormGroup
+
+constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
+
   ngOnInit():void{
     localStorage.setItem('location','/office')
 
@@ -37,5 +43,15 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
   otherP.style.color='black'
 }
 }
+      }
+
+
+      addAnnuncio(){
+if(this.aggiungiAnnuncioForm.valid){
+
+}else{
+
+}
+
       }
     }
