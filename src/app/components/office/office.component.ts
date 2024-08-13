@@ -15,12 +15,13 @@ export class OfficeComponent  implements OnInit{
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
   toDo:string=''
   aggiungiAnnuncioForm!:FormGroup
-
+  aggiungiAnnuncioSubmitted:boolean=false
+  year:number=0
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
     localStorage.setItem('location','/office')
-
+this.year = new Date().getFullYear()
         this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
         if(this.user&&this.user.cognome){
           this.isTrasportatore=true
@@ -30,9 +31,9 @@ this.aggiungiAnnuncioForm= new FormGroup({
   retribuzione: new FormControl('',Validators.required),
   da:new FormControl('',Validators.required),
   a:new FormControl('',Validators.required),
-  giorno:new FormControl('',Validators.required),
-  mese:new FormControl('',Validators.required),
-  anno:new FormControl('',Validators.required),
+  giorno:new FormControl('',[Validators.required,Validators.max(31),Validators.min(1)]),
+  mese:new FormControl('',[Validators.required,Validators.max(12),Validators.min(1)]),
+  anno:new FormControl('',[Validators.required,Validators.max(this.year),Validators.min(this.year)]),
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
 })
@@ -41,6 +42,7 @@ this.aggiungiAnnuncioForm= new FormGroup({
 
       setBackground(i:number,toDo:string){
         this.toDo=toDo
+        this.aggiungiAnnuncioSubmitted=false
         let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement
 for(let a = 6 ;a<=10;a++){
 
@@ -58,10 +60,11 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
 
 
       addAnnuncio(){
+        this.aggiungiAnnuncioSubmitted=true
 if(this.aggiungiAnnuncioForm.valid){
 
 }else{
-
+this.toastr.error('Completa il form prima di inserire l\'annuncio')
 }
 
       }

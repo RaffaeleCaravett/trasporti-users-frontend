@@ -32,7 +32,7 @@
 </div>
 <div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
 <p class="fs-3">Aggiungi un annuncio</p>
-<form [formGroup]="aggiungiAnnuncioForm">
+<form [formGroup]="aggiungiAnnuncioForm" (ngSubmit)="addAnnuncio()">
   <label for="" class="py-2">Quanto offri per questa spedizione? </label>
   <input type="text" class="form-control" formControlName="retribuzione">
   <label for="" class="py-2">Da dove parte la spedizione?</label>
@@ -43,15 +43,15 @@
   <div class="d-flex justify-content-center">
     <div>
       <label for="" class="py-2">Giorno</label>
-    <input type="number" class="form-control" formControlName="giorno">
+    <input type="number" class="form-control" formControlName="giorno" max="31" min="1">
     </div>
     <div>
   <label for="" class="py-2">Mese</label>
-  <input type="number" class="form-control" formControlName="mese">
+  <input type="number" class="form-control" formControlName="mese" max="12" min="1">
     </div>
     <div>
   <label for="" class="py-2">Anno</label>
-  <input type="number" class="form-control" formControlName="anno">
+  <input type="number" class="form-control" formControlName="anno" [max]="year" [min]="year">
     </div>
   </div>
   <label for="" class="py-2">Descrivi e inserisci i dettagli della spedizione</label>
@@ -60,7 +60,7 @@
   <label for="" class="py-2">Quante pedane devi spedire?</label>
   <input type="number" class="form-control" formControlName="numeroPedane">
 </form>
-<button class="btn my-2 btn-dark" (click)="addAnnuncio()">Aggiungi</button>
+<button class="btn my-2 btn-dark" type="submit">Aggiungi</button>
 </div>
     </div>
     <div class="col-md-3 py-5">
