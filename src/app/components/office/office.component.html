@@ -34,7 +34,7 @@
 <p class="fs-3">Aggiungi un annuncio</p>
 <form [formGroup]="aggiungiAnnuncioForm">
   <label for="" class="py-4">Quanto offri per questa spedizione? </label>
-  <input type="text" class="form-control" formControlName="retribuzione">
+  <input type="number" class="form-control" formControlName="retribuzione">
   <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['retribuzione'].invalid">
     Assicurati di inserire un valore.
   </p>

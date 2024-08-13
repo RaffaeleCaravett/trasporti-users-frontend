@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
+import { AnnuncioInfoComponent } from '../annuncio-info/annuncio-info.component';
 
 @Component({
   selector: 'app-office',
@@ -66,7 +67,7 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
       addAnnuncio(){
         this.aggiungiAnnuncioSubmitted=true
 if(this.aggiungiAnnuncioForm.valid){
-
+this.matDialog.open(AnnuncioInfoComponent)
 }else{
 this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio')
 }
