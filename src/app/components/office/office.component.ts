@@ -72,8 +72,5 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
 }
 
       }
-      shw(value:string){
-let array = value.split('-')
-console.log(array)
-      }
+
     }
