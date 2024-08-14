@@ -38,7 +38,7 @@ this.aggiungiAnnuncioForm= new FormGroup({
   retribuzione: new FormControl('',Validators.required),
   da:new FormControl('',Validators.required),
   a:new FormControl('',Validators.required),
-  anno:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
+  data:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
 })
@@ -70,7 +70,7 @@ if(this.aggiungiAnnuncioForm.valid){
 const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm.controls})
 dialog.afterClosed().subscribe((data:any)=>{
   if(data){
-
+this.toastr.show('L\'annuncio è stato inserito correttamente')
   }else{
     this.toastr.error('Non è stato inserito nessun annuncio.')
   }
