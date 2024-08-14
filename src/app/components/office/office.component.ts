@@ -67,7 +67,14 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
       addAnnuncio(){
         this.aggiungiAnnuncioSubmitted=true
 if(this.aggiungiAnnuncioForm.valid){
-this.matDialog.open(AnnuncioInfoComponent)
+const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm})
+dialog.afterClosed().subscribe((data:any)=>{
+  if(data){
+
+  }else{
+    this.toastr.error('Non è stato inserito nessun annuncio.')
+  }
+})
 }else{
 this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio')
 }
