@@ -27,8 +27,9 @@
 <div *ngIf="toDo==''">
 
 </div>
-<div *ngIf="toDo==''">
-
+<div *ngIf="toDo=='Monitora un annuncio'" class="py-5">
+  <p class="fs-3">Monitora i tuoi annunci</p>
+<div *ngIf="annunciByAzienda&&annunciByAzienda.content"></div>
 </div>
 <div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
 <p class="fs-3">Aggiungi un annuncio</p>

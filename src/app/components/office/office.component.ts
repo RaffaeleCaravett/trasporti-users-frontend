@@ -14,7 +14,7 @@ export class OfficeComponent  implements OnInit{
   user:any
   isTrasportatore:boolean=false
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
-  toDo:string='Aggiungi un annuncio'
+  toDo:string='Monitora un annuncio'
   aggiungiAnnuncioForm!:FormGroup
   aggiungiAnnuncioSubmitted:boolean=false
   year:number=0
@@ -24,6 +24,8 @@ export class OfficeComponent  implements OnInit{
   giorni : number[]=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
   mesi : number[]=[1,2,3,4,5,6,7,8,9,10,11,12]
   anni : number[]=[this.year,this.year+1]
+  annunciByAzienda:any
+  searchAnnunciByAzienda!:FormGroup
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -33,6 +35,7 @@ this.year = new Date().getFullYear()
         if(this.user&&this.user.cognome){
           this.isTrasportatore=true
         }
+        console.log(this.user)
 
 this.aggiungiAnnuncioForm= new FormGroup({
   retribuzione: new FormControl('',Validators.required),
@@ -41,6 +44,18 @@ this.aggiungiAnnuncioForm= new FormGroup({
   data:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
+})
+
+this.officeService.getByAziendaId(this.user.id).subscribe({
+  next:(data:any)=>{
+this.annunciByAzienda = data
+  },
+  error:(error:any)=>{
+
+  },
+  complete:()=>{
+
+  }
 })
 
       }
@@ -84,8 +99,8 @@ azienda_id:this.user.id
 next:(data:any)=>{
 this.officeService.publicAnnuncio({
   retribuzione:this.aggiungiAnnuncioForm.controls['retribuzione'].value,
-  azienda_id:this.user.id,
-  spedizione_id:data.id
+  aziendaId:this.user.id,
+  spedizioneId:data.id
 }).subscribe({
   next:(data:any)=>{
     this.toastr.show("Annuncio inserito correttamente")

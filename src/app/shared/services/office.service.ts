@@ -35,4 +35,7 @@ getByData(anno1:number,mese1:number,giorno1:number,anno2:number,mese2:number,gio
 postSpedizione(spedizioneDTO:any){
   return this.httpClient.post(environment.API_URL+this.spedizioneAzienda,spedizioneDTO)
 }
+getByAziendaId(aziendaId:number){
+  return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+`Id/${aziendaId}`)
+}
 }
