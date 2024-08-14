@@ -67,7 +67,7 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
       addAnnuncio(){
         this.aggiungiAnnuncioSubmitted=true
 if(this.aggiungiAnnuncioForm.valid){
-const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm})
+const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm.controls})
 dialog.afterClosed().subscribe((data:any)=>{
   if(data){
 
