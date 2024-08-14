@@ -67,10 +67,42 @@ let otherP = document.getElementsByClassName(`p-${a}`)[0] as HTMLElement
       addAnnuncio(){
         this.aggiungiAnnuncioSubmitted=true
 if(this.aggiungiAnnuncioForm.valid){
+  let dataDaSpedire = this.aggiungiAnnuncioForm.controls['data'].value.split('-')
 const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm.controls})
 dialog.afterClosed().subscribe((data:any)=>{
   if(data){
-this.toastr.show('L\'annuncio è stato inserito correttamente')
+this.officeService.postSpedizione({
+da:this.aggiungiAnnuncioForm.controls['da'].value,
+a:this.aggiungiAnnuncioForm.controls['a'].value,
+daSpedireAnno:dataDaSpedire[0],
+daSpedireMese:dataDaSpedire[1],
+daSpedireGiorno:dataDaSpedire[2],
+descrizione:this.aggiungiAnnuncioForm.controls['testo'].value,
+numeroPedane:this.aggiungiAnnuncioForm.controls['numeroPedane'].value,
+azienda_id:this.user.id
+}).subscribe({
+next:(data:any)=>{
+this.officeService.publicAnnuncio({
+  retribuzione:this.aggiungiAnnuncioForm.controls['retribuzione'].value,
+  azienda_id:this.user.id,
+  spedizione_id:data.id
+}).subscribe({
+  next:(data:any)=>{
+    this.toastr.show("Annuncio inserito correttamente")
+    this.aggiungiAnnuncioForm.reset()
+    this.aggiungiAnnuncioSubmitted=false
+  },
+  error:(error:any)=>{
+    this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è andato storto nell'elaborazione della richiesta.")
+  },
+  complete:()=>{}
+})
+},
+error:(error:any)=>{
+  this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è andato storto nell'elaborazione della richiesta.")
+},
+complete:()=>{}
+})
   }else{
     this.toastr.error('Non è stato inserito nessun annuncio.')
   }
