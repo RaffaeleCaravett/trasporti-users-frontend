@@ -4,32 +4,33 @@
   <div class="row">
     <div class="col-md-12">
       <span class="text-danger"> Retribuzione : </span>
-      <p>{{data.retribuzione.value}}</p>
+      <p>{{data.retribuzione?.value||data.retribuzione}} euro</p>
     </div>
     <div class="col-md-6">
       <span class="text-danger"> La spedizione partirà da : </span>
-      <p>{{data.da.value}}</p>
+      <p>{{data.da?.value||data.spedizione?.da}}</p>
     </div>
     <div class="col-md-6">
       <span class="text-danger"> Dovrà arrivare a  : </span>
-      <p>{{data.a.value}}</p>
+      <p>{{data.a?.value||data.spedizione?.a}}</p>
     </div>
     <div class="col-md-12">
       <span class="text-danger"> Quando dovrà partire la spedizione massimo?  </span>
-      <p>{{data.data.value}}</p>
+      <p>{{data.data?.value||data.spedizione?.daSpedire}}</p>
     </div>
     <div class="col-md-12">
       <span class="text-danger"> Dettagli della spedizione : </span>
-      <p>{{data.testo.value}}</p>
+      <p>{{data.testo?.value||data.spedizione?.descrizioneMerce}}</p>
     </div>
     <div class="col-md-12">
       <span class="text-danger"> Numero delle pedane da spedire : </span>
-      <p>{{data.numeroPedane.value}}</p>
+      <p>{{data.numeroPedane?.value||data.spedizione.numeroPedane}}</p>
     </div>
   </div>
 </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true" class="btn m-1">Conferma</button>
+  <button mat-button [mat-dialog-close]="true" class="btn m-1" *ngIf="data.retribuzione?.value">Conferma</button>
+  <button mat-button [mat-dialog-close]="true" class="btn m-1" *ngIf="data.spedizione">Modifica</button>
   <button mat-button [mat-dialog-close]="false" class="btn btn-danger m-1">Chiudi</button>
 </mat-dialog-actions>

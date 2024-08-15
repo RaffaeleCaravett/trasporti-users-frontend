@@ -156,8 +156,11 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
 
           },
           complete:()=>{
-
           }
         })
+      }
+
+      showAnnuncio(annuncio:any){
+        const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:annuncio})
       }
     }
