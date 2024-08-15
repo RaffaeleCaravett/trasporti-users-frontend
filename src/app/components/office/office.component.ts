@@ -53,25 +53,14 @@ this.searchAnnunciByAzienda= new FormGroup({
   size:new FormControl(''),
   orderBy:new FormControl('')
 })
-this.officeService.getAnnunciByAziendaIdAndStatoPubblicata(this.user.id).subscribe({
-  next:(data:any)=>{
-this.annunciByAziendaAndPubblicati = data
-  },
-  error:(error:any)=>{
-
-  },
-  complete:()=>{
-
-  }
-})
-
-this.updateAnnunciByAzienda()
+this.getAnnunci()
 
 
 
       }
 
       setBackground(i:number,toDo:string){
+        this.getAnnunci()
         this.toDo=toDo
         this.aggiungiAnnuncioSubmitted=false
         let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement
@@ -162,5 +151,20 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
 
       showAnnuncio(annuncio:any){
         const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:annuncio})
+      }
+      getAnnunci(){
+        this.officeService.getAnnunciByAziendaIdAndStatoPubblicata(this.user.id).subscribe({
+          next:(data:any)=>{
+        this.annunciByAziendaAndPubblicati = data
+          },
+          error:(error:any)=>{
+
+          },
+          complete:()=>{
+
+          }
+        })
+
+        this.updateAnnunciByAzienda()
       }
     }
