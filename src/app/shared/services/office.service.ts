@@ -14,7 +14,7 @@ private byRetribuzioneId:string ='/byRetribuzioneId'
 private byData:string ='/byData'
 private spedizione:string = '/spedizione'
 private spedizioneAzienda:string = '/azienda/spedizione'
-private andStato:string = '/AndStato'
+private andStato:string = 'AndStato'
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){

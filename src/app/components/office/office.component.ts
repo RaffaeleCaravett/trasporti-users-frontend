@@ -26,6 +26,7 @@ export class OfficeComponent  implements OnInit{
   anni : number[]=[this.year,this.year+1]
   annunciByAzienda:any
   searchAnnunciByAzienda!:FormGroup
+  annunciByAziendaAndPubblicati:number=0
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -44,6 +45,18 @@ this.aggiungiAnnuncioForm= new FormGroup({
   data:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
+})
+
+this.officeService.getAnnunciByAziendaIdAndStatoPubblicata(this.user.id).subscribe({
+  next:(data:any)=>{
+this.annunciByAziendaAndPubblicati = data
+  },
+  error:(error:any)=>{
+
+  },
+  complete:()=>{
+
+  }
 })
 
 this.officeService.getAnnunciByAziendaId(this.user.id).subscribe({

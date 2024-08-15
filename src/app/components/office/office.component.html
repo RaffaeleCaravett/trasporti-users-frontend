@@ -29,8 +29,9 @@
 </div>
 <div *ngIf="toDo=='Monitora un annuncio'" class="py-5">
   <p class="fs-3">Monitora i tuoi annunci</p>
+  <p class="fs-6">Hai n° {{annunciByAziendaAndPubblicati}} {{annunciByAziendaAndPubblicati==1?' annuncio':' annunci'}} ancora da assegnare.</p>
 <div *ngIf="annunciByAzienda&&annunciByAzienda.content">
-  <form [formGroup]="searchAnnunciByAzienda">
+  <!-- <form [formGroup]="searchAnnunciByAzienda">
     <div class="d-flex">
       <div>
         <label for="">Pagina</label>
@@ -47,7 +48,7 @@
     </div>
 
 
-  </form>
+  </form> -->
 </div>
 </div>
 <div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
