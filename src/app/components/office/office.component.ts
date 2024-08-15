@@ -36,7 +36,6 @@ this.year = new Date().getFullYear()
         if(this.user&&this.user.cognome){
           this.isTrasportatore=true
         }
-        console.log(this.user)
 
 this.aggiungiAnnuncioForm= new FormGroup({
   retribuzione: new FormControl('',Validators.required),
@@ -69,6 +68,12 @@ this.annunciByAzienda = data
   complete:()=>{
 
   }
+})
+
+this.searchAnnunciByAzienda= new FormGroup({
+  page:new FormControl(''),
+  size:new FormControl(''),
+  orderBy:new FormControl('')
 })
 
       }

@@ -29,26 +29,33 @@
 </div>
 <div *ngIf="toDo=='Monitora un annuncio'" class="py-5">
   <p class="fs-3">Monitora i tuoi annunci</p>
-  <p class="fs-6">Hai n° {{annunciByAziendaAndPubblicati}} {{annunciByAziendaAndPubblicati==1?' annuncio':' annunci'}} ancora da assegnare.</p>
+  <p class="fs-6">Hai {{annunciByAziendaAndPubblicati}} {{annunciByAziendaAndPubblicati==1?' annuncio':' annunci'}} ancora in stato "Pubblicato".</p>
 <div *ngIf="annunciByAzienda&&annunciByAzienda.content">
-  <!-- <form [formGroup]="searchAnnunciByAzienda">
+  <form [formGroup]="searchAnnunciByAzienda" class="my-2 p-2 bg-light border rounded shadow">
+    <p class="fs-3">Modifica la ricerca</p>
     <div class="d-flex">
       <div>
         <label for="">Pagina</label>
-    <input type="number" class="form-control w-75 m-auto">
+    <input type="number" class="form-control w-75 m-auto" formControlName="page">
       </div>
       <div>
-   <label for="">Elementi per pagina </label>
-    <input type="number" class="form-control w-75 m-auto">
+   <label for="">Elementi</label>
+    <input type="number" class="form-control w-75 m-auto" formControlName="size">
       </div>
       <div>
-        <label for="">Ordina in base a  </label>
-        <input type="text" class="form-control w-75 m-auto">
+        <label for="">Ordina per</label>
+        <input type="text" class="form-control w-75 m-auto" formControlName="orderBy">
       </div>
     </div>
-
-
-  </form> -->
+    <button class="btn m-auto">Cerca</button>
+  </form>
+  <ul>
+    <p class="fs-5">Annunci pubblicati :</p>
+    <li *ngFor="let a of annunciByAzienda.content" class="py-4">
+      Id {{a.id}} - Del {{a.dataPubblicazione}}
+       <button class="btn btn-dark">Mostra</button>
+    </li>
+  </ul>
 </div>
 </div>
 <div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
