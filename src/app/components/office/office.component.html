@@ -33,18 +33,27 @@
 <div *ngIf="annunciByAzienda&&annunciByAzienda.content">
   <form [formGroup]="searchAnnunciByAzienda" class="my-2 p-2 bg-light border rounded shadow">
     <p class="fs-3">Modifica la ricerca</p>
-    <div class="d-flex">
-      <div>
+    <div class="d-flex row">
+      <div class="col-md-4">
         <label for="">Pagina</label>
-    <input type="number" class="form-control w-75 m-auto" formControlName="page">
+    <select class="form-select m-auto" formControlName="page" (change)="updateAnnunciByAzienda()">
+    <option value=""></option>
+    <option value="{{p}}" *ngFor="let p of annunciByAziendaPages">{{p}}</option>
+    </select>
       </div>
-      <div>
+      <div class="col-md-4">
    <label for="">Elementi</label>
-    <input type="number" class="form-control w-75 m-auto" formControlName="size">
+   <select class="form-select m-auto" formControlName="size" (change)="updateAnnunciByAzienda()">
+    <option value=""></option>
+    <option value="{{p}}" *ngFor="let p of annunciByAziendaElementi">{{p}}</option>
+    </select>
       </div>
-      <div>
-        <label for="">Ordina per</label>
-        <input type="text" class="form-control w-75 m-auto" formControlName="orderBy">
+      <div class="col-md-4">
+        <label for="">Ordina </label>
+        <select class="form-select m-auto" formControlName="orderBy" (change)="updateAnnunciByAzienda()">
+          <option value=""></option>
+          <option value="{{p}}" *ngFor="let p of annunciByAziendaOrderBy">{{p}}</option>
+          </select>
       </div>
     </div>
     <button class="btn m-auto">Cerca</button>

@@ -140,6 +140,9 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
       }
 
       updateAnnunciByAzienda(){
+        this.annunciByAziendaPages=[]
+        this.annunciByAziendaElementi=[]
+        this.annunciByAziendaOrderBy= []
         this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzienda.controls['page'].value||0,this.searchAnnunciByAzienda.controls['size'].value||0,this.searchAnnunciByAzienda.controls['orderBy'].value||"id").subscribe({
           next:(data:any)=>{
         this.annunciByAzienda = data
