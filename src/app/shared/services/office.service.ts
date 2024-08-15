@@ -14,7 +14,7 @@ private byRetribuzioneId:string ='/byRetribuzioneId'
 private byData:string ='/byData'
 private spedizione:string = '/spedizione'
 private spedizioneAzienda:string = '/azienda/spedizione'
-
+private andStato:string = '/AndStato'
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){
@@ -35,7 +35,13 @@ getByData(anno1:number,mese1:number,giorno1:number,anno2:number,mese2:number,gio
 postSpedizione(spedizioneDTO:any){
   return this.httpClient.post(environment.API_URL+this.spedizioneAzienda,spedizioneDTO)
 }
-getByAziendaId(aziendaId:number){
+getAnnunciByAziendaId(aziendaId:number){
   return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+`Id/${aziendaId}`)
+}
+getAnnunciByAziendaIdAndStato(aziendaId:number,stato:string){
+  return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+'Id'+this.andStato+`/${aziendaId}/${stato}`)
+}
+getAnnunciByAziendaIdAndStatoPubblicata(aziendaId:number){
+  return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+'Id'+this.andStato+`Pubblicata/${aziendaId}`)
 }
 }

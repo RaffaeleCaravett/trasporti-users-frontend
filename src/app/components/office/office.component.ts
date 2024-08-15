@@ -46,7 +46,7 @@ this.aggiungiAnnuncioForm= new FormGroup({
   numeroPedane:new FormControl('',Validators.required)
 })
 
-this.officeService.getByAziendaId(this.user.id).subscribe({
+this.officeService.getAnnunciByAziendaId(this.user.id).subscribe({
   next:(data:any)=>{
 this.annunciByAzienda = data
   },
