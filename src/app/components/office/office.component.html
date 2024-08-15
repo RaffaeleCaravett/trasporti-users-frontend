@@ -69,6 +69,9 @@
   <input value="2000" matSliderStartThumb (change)="updateSlider($event,'da')">
   <input value="7000" matSliderEndThumb (change)="updateSlider($event,'a')">
 </mat-slider>
+<div class="d-flex justify-content-around">
+  <button class="btn">{{searchAnnunciByAziendaRetrMin}}</button><button class="btn">{{searchAnnunciByAziendaRetrMax}}</button>
+</div>
 </div>
 <div *ngIf="typeFormValue=='dataPubblicazione'">
   <p class="fs-5">Inserisci le date</p>

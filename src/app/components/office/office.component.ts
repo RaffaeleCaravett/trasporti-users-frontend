@@ -31,6 +31,8 @@ export class OfficeComponent  implements OnInit{
   annunciByAziendaElementi:number[]=[]
   annunciByAziendaOrderBy:string[]= []
   typeFormValue:string=''
+  searchAnnunciByAziendaRetrMax:number=7000
+  searchAnnunciByAziendaRetrMin:number=2000
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -170,6 +172,18 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
         this.updateAnnunciByAzienda()
       }
       updateSlider(event:any, from:string){
-console.log(event.target.value)
+        switch(from){
+          case('da'):{
+           this.searchAnnunciByAziendaRetrMin=event?.target?.value||this.searchAnnunciByAziendaRetrMin
+          }
+          break;
+          case('a'):{
+           this.searchAnnunciByAziendaRetrMax=event?.target?.value||this.searchAnnunciByAziendaRetrMax
+          }
+          break;
+          default:{
+
+          }
+        }
       }
     }
