@@ -57,11 +57,14 @@
       </div>
     </div>
     <p class="fs-5 pt-3">Puoi anche cercare per : </p>
-    <p>
+     <p>
       <input type="radio" formControlName="type" value="retribuzione" name="type" id="type1" class="py-3" (change)="typeFormValue='retribuzione'"><label class="py-3 form-check-label" for="type1">Retribuzione</label>
       </p>
       <p>
         <input type="radio" formControlName="type" value="dataPubblicazione" name="type" id="type2" class="py-3" (change)="typeFormValue='dataPubblicazione'"><label class="py-3 form-check-label" for="type2">Data</label>
+      </p>
+      <p>
+        <input type="radio" formControlName="type" value="" name="type" id="type3" class="py-3" (change)="typeFormValue=''"><label class="py-3 form-check-label" for="type3">Azzera</label>
       </p>
 <div *ngIf="typeFormValue=='retribuzione'">
  <p class="fs-5">Inserisci la retribuzione</p>
