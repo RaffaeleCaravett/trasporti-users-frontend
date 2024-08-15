@@ -65,6 +65,10 @@
       </p>
 <div *ngIf="typeFormValue=='retribuzione'">
  <p class="fs-5">Inserisci la retribuzione</p>
+ <mat-slider min="0" max="10000" class="w-75 m-auto">
+  <input value="2000" matSliderStartThumb (change)="updateSlider($event,'da')">
+  <input value="7000" matSliderEndThumb (change)="updateSlider($event,'a')">
+</mat-slider>
 </div>
 <div *ngIf="typeFormValue=='dataPubblicazione'">
   <p class="fs-5">Inserisci le date</p>

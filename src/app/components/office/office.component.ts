@@ -169,4 +169,7 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
 
         this.updateAnnunciByAzienda()
       }
+      updateSlider(event:any, from:string){
+console.log(event.target.value)
+      }
     }

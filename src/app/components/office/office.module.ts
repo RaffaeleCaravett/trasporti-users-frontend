@@ -4,6 +4,7 @@ import { OfficeComponent } from "./office.component";
 import { OfficeRoutingModule } from "./office-routing.module";
 import { UserInfoModule } from "../user-info/user-info.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     CommonModule,
     OfficeRoutingModule,
     UserInfoModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSliderModule
   ],
  providers: [
 ],
