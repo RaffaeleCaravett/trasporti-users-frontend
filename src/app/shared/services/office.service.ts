@@ -35,8 +35,8 @@ getByData(anno1:number,mese1:number,giorno1:number,anno2:number,mese2:number,gio
 postSpedizione(spedizioneDTO:any){
   return this.httpClient.post(environment.API_URL+this.spedizioneAzienda,spedizioneDTO)
 }
-getAnnunciByAziendaId(aziendaId:number){
-  return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+`Id/${aziendaId}`)
+getAnnunciByAziendaId(aziendaId:number,page?:number,size?:number,orderBy?:string){
+  return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+`Id/${aziendaId}?page=${page||0}&size=${size||10}&orderBy=${orderBy||"id"}`)
 }
 getAnnunciByAziendaIdAndStato(aziendaId:number,stato:string){
   return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+'Id'+this.andStato+`/${aziendaId}/${stato}`)

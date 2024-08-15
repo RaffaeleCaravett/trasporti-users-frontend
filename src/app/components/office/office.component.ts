@@ -27,6 +27,9 @@ export class OfficeComponent  implements OnInit{
   annunciByAzienda:any
   searchAnnunciByAzienda!:FormGroup
   annunciByAziendaAndPubblicati:number=0
+  annunciByAziendaPages:number[]=[]
+  annunciByAziendaElementi:number[]=[]
+  annunciByAziendaOrderBy:string[]= []
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -45,7 +48,11 @@ this.aggiungiAnnuncioForm= new FormGroup({
   testo:new FormControl('',Validators.required),
   numeroPedane:new FormControl('',Validators.required)
 })
-
+this.searchAnnunciByAzienda= new FormGroup({
+  page:new FormControl(''),
+  size:new FormControl(''),
+  orderBy:new FormControl('')
+})
 this.officeService.getAnnunciByAziendaIdAndStatoPubblicata(this.user.id).subscribe({
   next:(data:any)=>{
 this.annunciByAziendaAndPubblicati = data
@@ -58,23 +65,9 @@ this.annunciByAziendaAndPubblicati = data
   }
 })
 
-this.officeService.getAnnunciByAziendaId(this.user.id).subscribe({
-  next:(data:any)=>{
-this.annunciByAzienda = data
-  },
-  error:(error:any)=>{
+this.updateAnnunciByAzienda()
 
-  },
-  complete:()=>{
 
-  }
-})
-
-this.searchAnnunciByAzienda= new FormGroup({
-  page:new FormControl(''),
-  size:new FormControl(''),
-  orderBy:new FormControl('')
-})
 
       }
 
@@ -146,4 +139,22 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
 
       }
 
+      updateAnnunciByAzienda(){
+        this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzienda.controls['page'].value||0,this.searchAnnunciByAzienda.controls['size'].value||0,this.searchAnnunciByAzienda.controls['orderBy'].value||"id").subscribe({
+          next:(data:any)=>{
+        this.annunciByAzienda = data
+        for(let i = 0; i<=data.totalPages-1;i++){
+          this.annunciByAziendaPages.push(i)
+          this.annunciByAziendaElementi=[10,50,100]
+          this.annunciByAziendaOrderBy= ['id','retribuzione']
+        }
+          },
+          error:(error:any)=>{
+
+          },
+          complete:()=>{
+
+          }
+        })
+      }
     }
