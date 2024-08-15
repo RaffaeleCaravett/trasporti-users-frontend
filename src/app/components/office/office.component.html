@@ -65,9 +65,9 @@
       </p>
 <div *ngIf="typeFormValue=='retribuzione'">
  <p class="fs-5">Inserisci la retribuzione</p>
- <mat-slider min="0" max="10000" class="w-75 m-auto">
+ <mat-slider min="0" max="20000" class="w-75 m-auto">
   <input value="2000" matSliderStartThumb (change)="updateSlider($event,'da')">
-  <input value="7000" matSliderEndThumb (change)="updateSlider($event,'a')">
+  <input value="14000" matSliderEndThumb (change)="updateSlider($event,'a')">
 </mat-slider>
 <div class="d-flex justify-content-around">
   <button class="btn">{{searchAnnunciByAziendaRetrMin}}</button><button class="btn">{{searchAnnunciByAziendaRetrMax}}</button>

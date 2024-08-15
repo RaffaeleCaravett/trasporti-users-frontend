@@ -31,7 +31,7 @@ export class OfficeComponent  implements OnInit{
   annunciByAziendaElementi:number[]=[]
   annunciByAziendaOrderBy:string[]= []
   typeFormValue:string=''
-  searchAnnunciByAziendaRetrMax:number=7000
+  searchAnnunciByAziendaRetrMax:number=14000
   searchAnnunciByAziendaRetrMin:number=2000
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
@@ -136,7 +136,8 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
         this.annunciByAziendaPages=[]
         this.annunciByAziendaElementi=[]
         this.annunciByAziendaOrderBy= []
-        this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzienda.controls['page'].value||0,this.searchAnnunciByAzienda.controls['size'].value||0,this.searchAnnunciByAzienda.controls['orderBy'].value||"id").subscribe({
+        if(this.searchAnnunciByAzienda.controls['type'].value==''){
+this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzienda.controls['page'].value||0,this.searchAnnunciByAzienda.controls['size'].value||10,this.searchAnnunciByAzienda.controls['orderBy'].value||"id").subscribe({
           next:(data:any)=>{
         this.annunciByAzienda = data
         for(let i = 0; i<=data.totalPages-1;i++){
@@ -151,6 +152,24 @@ this.toastr.error('Completa correttamente il form prima di inserire l\'annuncio'
           complete:()=>{
           }
         })
+        }else if(this.searchAnnunciByAzienda.controls['type'].value=='retribuzione'){
+          this.officeService.getByRetribuzione(this.searchAnnunciByAziendaRetrMin,this.searchAnnunciByAziendaRetrMax, this.searchAnnunciByAzienda.controls['page'].value||0,this.searchAnnunciByAzienda.controls['size'].value||10,this.searchAnnunciByAzienda.controls['orderBy'].value||"id").subscribe({
+            next:(data:any)=>{
+          this.annunciByAzienda = data
+          for(let i = 0; i<=data.totalPages-1;i++){
+            this.annunciByAziendaPages.push(i)
+            this.annunciByAziendaElementi=[10,50,100]
+            this.annunciByAziendaOrderBy= ['id','retribuzione']
+          }
+            },
+            error:(error:any)=>{
+
+            },
+            complete:()=>{
+            }
+          })
+        }
+
       }
 
       showAnnuncio(annuncio:any){
