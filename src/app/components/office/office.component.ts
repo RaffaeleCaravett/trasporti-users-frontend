@@ -30,6 +30,7 @@ export class OfficeComponent  implements OnInit{
   annunciByAziendaPages:number[]=[]
   annunciByAziendaElementi:number[]=[]
   annunciByAziendaOrderBy:string[]= []
+  typeFormValue:string=''
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -51,7 +52,8 @@ this.aggiungiAnnuncioForm= new FormGroup({
 this.searchAnnunciByAzienda= new FormGroup({
   page:new FormControl(''),
   size:new FormControl(''),
-  orderBy:new FormControl('')
+  orderBy:new FormControl(''),
+  type:new FormControl('')
 })
 this.getAnnunci()
 
