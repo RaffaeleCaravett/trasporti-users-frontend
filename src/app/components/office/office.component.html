@@ -78,6 +78,18 @@
 </div>
 <div *ngIf="typeFormValue=='dataPubblicazione'">
   <p class="fs-5">Inserisci le date</p>
+  <div class="d-flex justify-content-around">
+    <p>
+<label class="pb-2">Da </label>
+<br>
+<input type="date" class="form-control" formControlName="da">
+  </p>
+  <p>
+<label class="pb-2">A</label>
+<br>
+<input type="date" class="form-control" formControlName="a">
+  </p>
+  </div>
 </div>
     <button class="btn m-auto" (click)="updateAnnunciByAzienda()">Cerca</button>
   </form>

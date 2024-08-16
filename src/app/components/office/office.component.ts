@@ -55,7 +55,9 @@ this.searchAnnunciByAzienda= new FormGroup({
   page:new FormControl(''),
   size:new FormControl(''),
   orderBy:new FormControl(''),
-  type:new FormControl('')
+  type:new FormControl(''),
+  da:new FormControl(''),
+  a:new FormControl('')
 })
 this.getAnnunci()
 
@@ -168,6 +170,30 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
             complete:()=>{
             }
           })
+        }else if(this.searchAnnunciByAzienda.controls['type'].value=='dataPubblicazione'&&this.searchAnnunciByAzienda.controls['da'].value&&this.searchAnnunciByAzienda.controls['a'].value){
+          let da =this.searchAnnunciByAzienda.controls['da'].value.split('-')
+          let a = this.searchAnnunciByAzienda.controls['a'].value.split('-')
+          var fromDate = Date.parse(da);
+          var toDate = Date.parse(a);
+        if(fromDate<toDate){
+          this.officeService.getByData(da[0],da[1],da[2],a[0],a[1],a[2], this.searchAnnunciByAzienda.controls['page'].value||0,this.searchAnnunciByAzienda.controls['size'].value||10,this.searchAnnunciByAzienda.controls['orderBy'].value||"id").subscribe({
+            next:(data:any)=>{
+          this.annunciByAzienda = data
+          for(let i = 0; i<=data.totalPages-1;i++){
+            this.annunciByAziendaPages.push(i)
+            this.annunciByAziendaElementi=[10,50,100]
+            this.annunciByAziendaOrderBy= ['id','retribuzione']
+          }
+            },
+            error:(error:any)=>{
+
+            },
+            complete:()=>{
+            }
+          })
+        }else{
+          this.toastr.error("La data 'Da' non può essere superiore alla data 'A'")
+        }
         }
 
       }
