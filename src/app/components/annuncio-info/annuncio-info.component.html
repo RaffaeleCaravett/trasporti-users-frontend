@@ -51,6 +51,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="'conferma'" class="btn m-1" *ngIf="data.retribuzione?.value">Conferma</button>
-  <button mat-button class="btn m-1" [mat-dialog-close]="annuncioForm.controls" *ngIf="data.spedizione" [disabled]="annuncioForm.invalid">Modifica</button>
+  <button mat-button class="btn m-1" [mat-dialog-close]="[annuncioForm.controls,data.spedizione.id]" *ngIf="data.spedizione" [disabled]="annuncioForm.invalid">Modifica</button>
   <button mat-button [mat-dialog-close]="false" class="btn btn-danger m-1">Chiudi</button>
 </mat-dialog-actions>

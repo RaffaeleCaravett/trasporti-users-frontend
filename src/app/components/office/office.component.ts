@@ -91,8 +91,7 @@ if(this.aggiungiAnnuncioForm.valid){
   let dataDaSpedire = this.aggiungiAnnuncioForm.controls['data'].value.split('-')
 const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm.controls})
 dialog.afterClosed().subscribe((data:any)=>{
-  console.log(data)
-  if(data&&data=='conferma'){
+  if(data&&!data[0]&&data=='conferma'){
 this.officeService.postSpedizione({
 da:this.aggiungiAnnuncioForm.controls['da'].value,
 a:this.aggiungiAnnuncioForm.controls['a'].value,
@@ -125,8 +124,23 @@ error:(error:any)=>{
 },
 complete:()=>{}
 })
-  }else if(data&&data=='modifica'){
-  this.toastr.show(data)
+  }else if(data&&data[0].da&&data[0].retribuzione){
+ this.officeService.putSpedizioneByAzienda(
+  {
+    da:data.da.value,
+    a:data.a.value,
+    daSpedireAnno:dataDaSpedire[0],
+    daSpedireMese:dataDaSpedire[1],
+    daSpedireGiorno:dataDaSpedire[2],
+    descrizione:data.testo.value,
+    numeroPedane:data.numeroPedane.value,
+    azienda_id:this.user.id
+  },
+data[1]
+ ).subscribe({
+
+ })
+
   }else{
     this.toastr.error('Non è stato inserito nessun annuncio.')
   }
