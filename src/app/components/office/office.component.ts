@@ -91,7 +91,7 @@ if(this.aggiungiAnnuncioForm.valid){
   let dataDaSpedire = this.aggiungiAnnuncioForm.controls['data'].value.split('-')
 const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm.controls})
 dialog.afterClosed().subscribe((data:any)=>{
-  if(data&&!data[0]&&data=='conferma'){
+  if(data&&data=='conferma'){
 this.officeService.postSpedizione({
 da:this.aggiungiAnnuncioForm.controls['da'].value,
 a:this.aggiungiAnnuncioForm.controls['a'].value,
@@ -124,24 +124,8 @@ error:(error:any)=>{
 },
 complete:()=>{}
 })
-  }else if(data&&data[0].da&&data[0].retribuzione){
- this.officeService.putSpedizioneByAzienda(
-  {
-    da:data.da.value,
-    a:data.a.value,
-    daSpedireAnno:dataDaSpedire[0],
-    daSpedireMese:dataDaSpedire[1],
-    daSpedireGiorno:dataDaSpedire[2],
-    descrizione:data.testo.value,
-    numeroPedane:data.numeroPedane.value,
-    azienda_id:this.user.id
-  },
-data[1]
- ).subscribe({
-
- })
-
-  }else{
+  }
+  else{
     this.toastr.error('Non è stato inserito nessun annuncio.')
   }
 })
@@ -217,6 +201,51 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
 
       showAnnuncio(annuncio:any){
         const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:annuncio})
+        dialog.afterClosed().subscribe((data:any)=>{
+         if(data&&data[0].da&&data[0].retribuzione){
+          let dataDaSpedire = data[0].data.value.split('-')
+            this.officeService.putSpedizioneByAzienda(
+             {
+               da:data[0].da.value,
+               a:data[0].a.value,
+               daSpedireAnno:dataDaSpedire[0],
+               daSpedireMese:dataDaSpedire[1],
+               daSpedireGiorno:dataDaSpedire[2],
+               descrizione:data[0].testo.value,
+               numeroPedane:data[0].numeroPedane.value,
+               azienda_id:this.user.id
+             },
+           data[1]
+            ).subscribe({
+             next:(spedizione:any)=>{
+               this.officeService.putAnnuncioByAzienda({
+                 retribuzione:data[0].retribuzione.value,
+                 aziendaId:this.user.id,
+                 spedizioneId:spedizione.id
+               },
+             data[2],
+           this.user.id).subscribe({
+                 next:(data:any)=>{
+                   this.toastr.show("Annuncio modificato correttamente")
+                   this.updateAnnunciByAzienda()
+                 },
+                 error:(error:any)=>{
+                   this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è andato storto nell'elaborazione della richiesta.")
+                 },
+                 complete:()=>{}
+               })
+               },
+               error:(error:any)=>{
+                 this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è andato storto nell'elaborazione della richiesta.")
+               },
+               complete:()=>{}
+            })
+
+        }else{
+          this.toastr.error("Non è stato modificato nessun annuncio.")
+                }
+      })
+
       }
       getAnnunci(){
         this.officeService.getAnnunciByAziendaIdAndStatoPubblicata(this.user.id).subscribe({
