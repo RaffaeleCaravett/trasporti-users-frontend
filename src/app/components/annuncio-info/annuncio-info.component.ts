@@ -15,17 +15,17 @@ constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
 ngOnInit():void{
-  let input = document.getElementById('d') as HTMLInputElement
 this.year=new Date().getFullYear()
+console.log(this.data)
 this.annuncioForm = new FormGroup({
-  retribuzione: new FormControl('',Validators.required),
-  da:new FormControl('',Validators.required),
-  a:new FormControl('',Validators.required),
-  data:new FormControl('',[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
-  testo:new FormControl('',Validators.required),
-  numeroPedane:new FormControl('',Validators.required)
+  retribuzione: new FormControl(this.data.retribuzione?.value||this.data.retribuzione,Validators.required),
+  da:new FormControl(this.data.da?.value||this.data.da,Validators.required),
+  a:new FormControl(this.data.a?.value||this.data.a,Validators.required),
+  data:new FormControl(this.data.data?.value||this.data.data,[Validators.required,Validators.max(this.year+1),Validators.min(this.year)]),
+  testo:new FormControl(this.data.testo?.value||this.data.testo,Validators.required),
+  numeroPedane:new FormControl(this.data.testo?.value||this.data.testo,Validators.required)
 })
 
-  console.log(this.data)
+
 }
 }
