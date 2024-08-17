@@ -2,35 +2,55 @@
 <mat-dialog-content>
 <div class="container">
   <div class="row">
+    <form [formGroup]="annuncioForm">
     <div class="col-md-12">
-      <span class="text-danger"> Retribuzione : </span>
-      <p>{{data.retribuzione?.value||data.retribuzione}} euro</p>
+      <span class="text-warning"> Retribuzione : </span>
+      <input type="number" class="form-control" formControlName="retribuzione" [readOnly]="readonly">
+      <p class="text-danger fw-bolder" *ngIf="annuncioForm.controls['retribuzione'].invalid">
+        Assicurati di inserire un valore numerico.
+      </p>
     </div>
     <div class="col-md-6">
-      <span class="text-danger"> La spedizione partirà da : </span>
-      <p>{{data.da?.value||data.spedizione?.da}}</p>
+      <span class="text-warning"> La spedizione partirà da : </span>
+      <input type="text" class="form-control" formControlName="da" [readOnly]="readonly">
+      <p class="text-danger fw-bolder" *ngIf="annuncioForm.controls['da'].invalid">
+        Assicurati di inserire la destinazione di partenza.
+      </p>
     </div>
     <div class="col-md-6">
-      <span class="text-danger"> Dovrà arrivare a  : </span>
-      <p>{{data.a?.value||data.spedizione?.a}}</p>
+      <span class="text-warning"> Dovrà arrivare a  : </span>
+      <input type="text" class="form-control" formControlName="a" [readOnly]="readonly">
+      <p class="text-danger fw-bolder" *ngIf="annuncioForm.controls['a'].invalid">
+        Dove vuoi che venga consegnata la merce?
+      </p>
     </div>
     <div class="col-md-12">
-      <span class="text-danger"> Quando dovrà partire la spedizione massimo?  </span>
-      <p>{{data.data?.value||data.spedizione?.daSpedire}}</p>
+      <span class="text-warning"> Quando dovrà partire la spedizione massimo?  </span>
+      <input type="date" class="form-control" formControlName="data" [readOnly]="readonly" [max]="todayPlusAYear.toISOString().split('T')[0]" [min]="today.toISOString().split('T')[0]" >
+      <p class="text-danger fw-bolder" *ngIf="annuncioForm.controls['data'].invalid">
+        Inserisci un valore compreso tra oggi e un anno da oggi.
+      </p>
     </div>
     <div class="col-md-12">
-      <span class="text-danger"> Dettagli della spedizione : </span>
-      <p>{{data.testo?.value||data.spedizione?.descrizioneMerce}}</p>
-    </div>
+      <span class="text-warning"> Dettagli della spedizione : </span>
+      <textarea type="text" class="form-control" formControlName="testo" [readOnly]="readonly">
+      </textarea>
+      <p class="text-danger fw-bolder" *ngIf="annuncioForm.controls['testo'].invalid">
+        Inserisci i dettagli della spedizione.
+      </p>    </div>
     <div class="col-md-12">
-      <span class="text-danger"> Numero delle pedane da spedire : </span>
-      <p>{{data.numeroPedane?.value||data.spedizione.numeroPedane}}</p>
+      <span class="text-warning"> Numero delle pedane da spedire : </span>
+      <input type="number" class="form-control" formControlName="numeroPedane" [readOnly]="readonly">
+      <p class="text-danger fw-bolder" *ngIf="annuncioForm.controls['numeroPedane'].invalid">
+        Quante pedane devi spedire?
+      </p>
     </div>
+  </form>
   </div>
 </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true" class="btn m-1" *ngIf="data.retribuzione?.value">Conferma</button>
-  <button mat-button [mat-dialog-close]="true" class="btn m-1" *ngIf="data.spedizione">Modifica</button>
+  <button mat-button [mat-dialog-close]="'conferma'" class="btn m-1" *ngIf="data.retribuzione?.value">Conferma</button>
+  <button mat-button class="btn m-1" [mat-dialog-close]="'modifica'" *ngIf="data.spedizione" [disabled]="annuncioForm.invalid">Modifica</button>
   <button mat-button [mat-dialog-close]="false" class="btn btn-danger m-1">Chiudi</button>
 </mat-dialog-actions>

@@ -91,7 +91,8 @@ if(this.aggiungiAnnuncioForm.valid){
   let dataDaSpedire = this.aggiungiAnnuncioForm.controls['data'].value.split('-')
 const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:this.aggiungiAnnuncioForm.controls})
 dialog.afterClosed().subscribe((data:any)=>{
-  if(data){
+  console.log(data)
+  if(data&&data=='conferma'){
 this.officeService.postSpedizione({
 da:this.aggiungiAnnuncioForm.controls['da'].value,
 a:this.aggiungiAnnuncioForm.controls['a'].value,
@@ -124,6 +125,8 @@ error:(error:any)=>{
 },
 complete:()=>{}
 })
+  }else if(data&&data=='modifica'){
+  this.toastr.show(data)
   }else{
     this.toastr.error('Non è stato inserito nessun annuncio.')
   }
