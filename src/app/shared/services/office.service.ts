@@ -23,6 +23,9 @@ publicAnnuncio(annuncioDTO:any){
 putAnnuncioByAzienda(annuncioDTO:any,annuncioId:number,aziendaId:number){
   return this.httpClient.put(environment.API_URL+this.annuncioAzienda+`/${aziendaId}/${annuncioId}`,annuncioDTO)
 }
+putSpedizioneByAzienda(spedizioneDTO:any,spedizioneId:number){
+  return this.httpClient.put(environment.API_URL+this.spedizioneAzienda+`/${spedizioneId}`,spedizioneDTO)
+}
 deleteAnnuncioByAzienda(annuncioId:number,aziendaId:number){
   return this.httpClient.delete(environment.API_URL+this.annuncioAzienda+this.byAzienda+`/${aziendaId}/${annuncioId}`)
 }

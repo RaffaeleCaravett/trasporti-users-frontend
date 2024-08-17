@@ -11,12 +11,11 @@ export class AnnuncioInfoComponent implements OnInit{
 
   annuncioForm!:FormGroup
   year:number=0
-  aggiungiAnnuncioSubmitted:boolean=false
   today = new Date()
   today1 = new Date()
   todayPlusAYear = new Date(this.today1.setDate(this.today1.getDate()+365))
   readonly:boolean=false
-constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef:MatDialogRef<AnnuncioInfoComponent>) { }
+constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
 ngOnInit():void{
@@ -35,11 +34,6 @@ if(this.data&&!this.data.spedizione&&this.data.da){
 
 }
 
-modify(){
-  this.aggiungiAnnuncioSubmitted=true
-  if(this.annuncioForm.valid){
-    console.log('modifica')
-  this.dialogRef.close('modifica')
-  }
-}
+
+
 }
