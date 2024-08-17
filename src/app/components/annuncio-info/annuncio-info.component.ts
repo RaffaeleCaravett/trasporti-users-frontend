@@ -11,6 +11,10 @@ export class AnnuncioInfoComponent implements OnInit{
 
   annuncioForm!:FormGroup
   year:number=0
+  aggiungiAnnuncioSubmitted:boolean=false
+  today = new Date()
+  today1 = new Date()
+  todayPlusAYear = new Date(this.today1.setDate(this.today1.getDate()+365))
 constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
