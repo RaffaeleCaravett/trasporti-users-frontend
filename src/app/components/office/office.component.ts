@@ -244,8 +244,12 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
         }else if(data&&data=='elimina'){
         this.officeService.deleteAnnuncioByAzienda(annuncio.id,this.user.id).subscribe({
           next:(data:any)=>{
+            if(data){
             this.toastr.show("Annuncio eliminato correttamente")
             this.updateAnnunciByAzienda()
+            }else{
+            this.toastr.error("Non è stato possibile eliminare l'annuncio. Lavoreremo per risolvere il problema.")
+           }
           },
           error:(error:any)=>{
             this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è andato storto nell'elaborazione della richiesta.")
