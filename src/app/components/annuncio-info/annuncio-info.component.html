@@ -30,6 +30,7 @@
       <p class="text-warning fw-bolder" *ngIf="annuncioForm.controls['data'].invalid">
         Inserisci un valore compreso tra oggi e un anno da oggi.
       </p>
+      <p class="text-warning fw-bolder">{{warningDateMessage}}</p>
     </div>
     <div class="col-md-12">
       <span class="text-danger"> Dettagli della spedizione : </span>

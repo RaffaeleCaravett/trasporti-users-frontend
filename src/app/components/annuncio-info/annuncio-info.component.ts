@@ -16,6 +16,7 @@ export class AnnuncioInfoComponent implements OnInit{
   todayPlusAYear = new Date(this.today1.setDate(this.today1.getDate()+365))
   readonly:boolean=false
   showConfirm:boolean=false
+  warningDateMessage:string=""
 constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
@@ -32,7 +33,13 @@ this.annuncioForm = new FormGroup({
 if(this.data&&!this.data.spedizione&&this.data.da){
   this.readonly=true
 }
-
+if(this.today.toISOString().split('T')[0]>(this.data.data?.value||this.data.spedizione?.daSpedire)){
+  this.warningDateMessage="Attenzione, la data di spedizione è scaduta."
+}else if(this.today.toISOString().split('T')[0]==(this.data.data?.value||this.data.spedizione?.daSpedire)){
+  this.warningDateMessage="Attenzione, la data di spedizione scade oggi."
+}else{
+  this.warningDateMessage=""
+}
 }
 
 
