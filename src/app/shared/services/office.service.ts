@@ -49,7 +49,7 @@ getAnnunciByAziendaIdAndStatoPubblicata(aziendaId:number){
   return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+'Id'+this.andStato+`Pubblicata/${aziendaId}`)
 }
 putAziendaById(aziendaId:number,aziendaDTO:{}){
-  return this.httpClient.patch(environment.API_URL+this.azienda+"/me",aziendaDTO)
+  return this.httpClient.put(environment.API_URL+this.azienda+`${'/'+aziendaId||'/me'}`,aziendaDTO)
 }
 }
 

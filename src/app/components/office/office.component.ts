@@ -342,6 +342,28 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
         })
       }
 modifyProfilo(){
-
+if(this.modifyProfile.valid){
+  this.officeService.putAziendaById(this.user.id,{
+    citta:this.modifyProfile.controls['citta'].value,
+  regione:this.modifyProfile.controls['regione'].value,
+  indirizzo:this.modifyProfile.controls['indirizzo'].value,
+  cap:this.modifyProfile.controls['cap'].value,
+  email:this.modifyProfile.controls['email'].value,
+  nomeAzienda:this.modifyProfile.controls['nomeAzienda'].value,
+  fatturatoMedio:this.modifyProfile.controls['fatturatoMedio'].value,
+  numeroDipendenti:this.modifyProfile.controls['numeroDipendenti'].value,
+  settore:this.modifyProfile.controls['settore'].value,
+  partitaIva:this.modifyProfile.controls['partitaIva'].value
+  }).subscribe({
+    next:(data:any)=>{
+this.user=data
+this.toastr.success("Azienda modificata correttamente.")
+    },
+    error:(error:any)=>{
+      this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
+    },
+    complete:()=>{}
+  })
+}
 }
     }
