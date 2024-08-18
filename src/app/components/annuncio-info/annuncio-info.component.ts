@@ -15,6 +15,7 @@ export class AnnuncioInfoComponent implements OnInit{
   today1 = new Date()
   todayPlusAYear = new Date(this.today1.setDate(this.today1.getDate()+365))
   readonly:boolean=false
+  showConfirm:boolean=false
 constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
