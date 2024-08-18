@@ -341,5 +341,7 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
           complete:()=>{}
         })
       }
+modifyProfilo(){
 
+}
     }
