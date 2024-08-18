@@ -202,7 +202,7 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
       showAnnuncio(annuncio:any){
         const dialog = this.matDialog.open(AnnuncioInfoComponent,{data:annuncio})
         dialog.afterClosed().subscribe((data:any)=>{
-         if(data&&data[0].da&&data[0].retribuzione){
+         if(data&&data[0].da&&data[0].retribuzione&&data!='elimina'){
           let dataDaSpedire = data[0].data.value.split('-')
             this.officeService.putSpedizioneByAzienda(
              {
@@ -241,8 +241,19 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
                complete:()=>{}
             })
 
+        }else if(data&&data=='elimina'){
+        this.officeService.deleteAnnuncioByAzienda(annuncio.id,this.user.id).subscribe({
+          next:(data:any)=>{
+            this.toastr.show("Annuncio eliminato correttamente")
+            this.updateAnnunciByAzienda()
+          },
+          error:(error:any)=>{
+            this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è andato storto nell'elaborazione della richiesta.")
+          },
+          complete:()=>{}
+        })
         }else{
-          this.toastr.error("Non è stato modificato nessun annuncio.")
+          this.toastr.error("Non è stato modificato nè eliminato nessun annuncio.")
                 }
       })
 
