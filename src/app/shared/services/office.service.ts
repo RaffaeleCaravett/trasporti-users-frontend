@@ -8,6 +8,7 @@ import { environment } from "src/app/core/environment";
 export class OfficeService{
 
 private annuncio:string = '/annuncio'
+private azienda:string = '/azienda'
 private annuncioAzienda:string = '/azienda/annuncio'
 private byAzienda:string ='/byAzienda'
 private byRetribuzione:string ='/byRetribuzione'
@@ -47,4 +48,8 @@ getAnnunciByAziendaIdAndStato(aziendaId:number,stato:string){
 getAnnunciByAziendaIdAndStatoPubblicata(aziendaId:number){
   return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+'Id'+this.andStato+`Pubblicata/${aziendaId}`)
 }
+putAziendaById(aziendaId:number,aziendaDTO:{}){
+  return this.httpClient.patch(environment.API_URL+this.azienda+"/me",aziendaDTO)
 }
+}
+

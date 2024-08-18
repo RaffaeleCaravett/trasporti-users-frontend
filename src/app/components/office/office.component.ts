@@ -73,8 +73,8 @@ this.modifyProfile= new FormGroup({
   nomeAzienda:new FormControl(this.user?.nomeAzienda,Validators.required),
   fatturatoMedio:new FormControl(this.user?.fatturatoMedio,Validators.required),
   numeroDipendenti:new FormControl(this.user?.numeroDipendenti,Validators.required),
-  settore:new FormControl(this.user?.settore,[Validators.required]),
-  partitaIva:new FormControl(this.user?.partitaIva,[Validators.required,Validators.minLength(11)])
+  settore:new FormControl(this.user?.settore,Validators.required),
+  partitaIva:new FormControl(this.user?.partitaIva,[Validators.required,Validators.pattern(/^[0-9]{11}$/)])
 })
 this.formsService.getCities().subscribe({
   next:(cities:any)=>{
