@@ -95,6 +95,7 @@
   </form>
   <ul>
     <p class="fs-5">Annunci pubblicati :</p>
+    <p class="fs-5 py-5" *ngIf="!annunciByAzienda||(annunciByAzienda&&annunciByAzienda.content.length==0)">Non ci sono annunci pubblicati.</p>
     <li *ngFor="let a of annunciByAzienda.content" class="py-4">
       Id {{a.id}} - Del {{a.dataPubblicazione}}
        <button class="btn btn-dark" (click)="showAnnuncio(a)">Mostra</button>
