@@ -48,8 +48,8 @@ getAnnunciByAziendaIdAndStato(aziendaId:number,stato:string){
 getAnnunciByAziendaIdAndStatoPubblicata(aziendaId:number){
   return this.httpClient.get(environment.API_URL+this.annuncioAzienda+this.byAzienda+'Id'+this.andStato+`Pubblicata/${aziendaId}`)
 }
-putAziendaById(aziendaId:number,aziendaDTO:{}){
-  return this.httpClient.put(environment.API_URL+this.azienda+`${'/'+aziendaId||'/me'}`,aziendaDTO)
+putAziendaById(aziendaDTO:{},aziendaId?:number){
+  return this.httpClient.put(environment.API_URL+this.azienda+`${aziendaId!=null&&aziendaId!=undefined&&aziendaId!=0&&aziendaId?'/'+aziendaId:'/me'}`,aziendaDTO)
 }
 }
 

@@ -343,7 +343,7 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
       }
 modifyProfilo(){
 if(this.modifyProfile.valid){
-  this.officeService.putAziendaById(this.user.id,{
+  this.officeService.putAziendaById({
     citta:this.modifyProfile.controls['citta'].value,
   regione:this.modifyProfile.controls['regione'].value,
   indirizzo:this.modifyProfile.controls['indirizzo'].value,
