@@ -33,6 +33,7 @@ export class OfficeComponent  implements OnInit{
   typeFormValue:string=''
   searchAnnunciByAziendaRetrMax:number=14000
   searchAnnunciByAziendaRetrMin:number=2000
+  modifyProfile!:FormGroup
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
   ngOnInit():void{
@@ -59,10 +60,21 @@ this.searchAnnunciByAzienda= new FormGroup({
   da:new FormControl(''),
   a:new FormControl('')
 })
+
+this.modifyProfile= new FormGroup({
+  citta:new FormControl(this.user.citta,Validators.required),
+  regione:new FormControl(this.user.regione,Validators.required),
+  indirizzo:new FormControl(this.user.indirizzo,Validators.required),
+  cap:new FormControl(this.user.cap,Validators.required),
+  email:new FormControl(this.user.email,[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
+  nomeAzienda:new FormControl(this.user?.nomeAzienda,Validators.required),
+  fatturatoMedio:new FormControl(this.user?.fatturatoMedio,Validators.required),
+  numeroDipendenti:new FormControl(this.user?.numeroDipendenti,Validators.required),
+  settore:new FormControl(this.user?.settore,[Validators.required]),
+  partitaIva:new FormControl(this.user?.partitaIva,[Validators.required,Validators.minLength(11)])
+})
+
 this.getAnnunci()
-
-
-
       }
 
       setBackground(i:number,toDo:string){
