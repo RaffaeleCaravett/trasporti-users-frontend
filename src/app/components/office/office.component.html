@@ -11,7 +11,7 @@
           </p>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="toDo!='Modifica il profilo'">
 <div *ngIf="toDo==''" class="w-75 m-auto py-5">
 <p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
 <p class="fs-5">Qui crediamo che non solo lavorare ci rende più dignitosi, ma può anche elevarci spiritualmente, mentalmente e fisicamente.
@@ -141,7 +141,10 @@
 <button class="btn my-2 btn-dark" (click)="addAnnuncio()">Aggiungi</button>
 </div>
     </div>
-    <div class="col-md-3 py-5">
+    <div class="col-md-3 py-5" *ngIf="toDo!='Modifica il profilo'">
+      <app-user-info [isTrasportatore]="isTrasportatore" [user]="user"></app-user-info>
+    </div>
+    <div class="col-md-9 py-5" *ngIf="toDo=='Modifica il profilo'">
       <app-user-info [isTrasportatore]="isTrasportatore" [user]="user"></app-user-info>
     </div>
   </div>
