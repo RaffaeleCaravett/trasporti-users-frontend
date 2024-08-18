@@ -226,7 +226,6 @@ getRegioneByCity(city:string){
       this.signupForm.controls['regione'].setValue(regione)
       this.signupForm.controls['cap'].setValue("87050")
       this.signupForm.updateValueAndValidity()
-      console.log(regione)
     },
     error:(err:any)=>{
       console.log(err)

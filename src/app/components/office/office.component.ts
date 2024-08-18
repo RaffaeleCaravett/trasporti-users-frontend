@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { AnnuncioInfoComponent } from '../annuncio-info/annuncio-info.component';
+import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
   selector: 'app-office',
@@ -34,7 +35,8 @@ export class OfficeComponent  implements OnInit{
   searchAnnunciByAziendaRetrMax:number=14000
   searchAnnunciByAziendaRetrMin:number=2000
   modifyProfile!:FormGroup
-constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
+  cities:any[]=[]
+constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog,private formsService:FormsService){}
 
   ngOnInit():void{
     localStorage.setItem('location','/office')
@@ -73,7 +75,15 @@ this.modifyProfile= new FormGroup({
   settore:new FormControl(this.user?.settore,[Validators.required]),
   partitaIva:new FormControl(this.user?.partitaIva,[Validators.required,Validators.minLength(11)])
 })
-
+this.formsService.getCities().subscribe({
+  next:(cities:any)=>{
+this.cities=cities
+  },
+  error:(err:any)=>{
+    this.toastr.error(err.error.message||err.error.messageList[0])
+  },
+  complete:()=>{}
+})
 this.getAnnunci()
       }
 
@@ -303,5 +313,21 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
 
           }
         }
+      }
+      getRegioneByCity(city:string){
+        let regione ;
+         this.formsService.getRegionByCity(city).subscribe({
+          next:(regione:any)=>{
+            regione=regione;
+            this.modifyProfile.controls['regione'].setValue(regione)
+            this.modifyProfile.controls['cap'].setValue("87050")
+            this.modifyProfile.updateValueAndValidity()
+          },
+          error:(err:any)=>{
+            console.log(err)
+            this.toastr.error(err.error.message||err.error.messageList[0])
+          },
+          complete:()=>{}
+        })
       }
     }
