@@ -36,6 +36,7 @@ export class OfficeComponent  implements OnInit{
   searchAnnunciByAziendaRetrMin:number=2000
   modifyProfile!:FormGroup
   cities:any[]=[]
+  settori:any[]=[]
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog,private formsService:FormsService){}
 
   ngOnInit():void{
@@ -78,6 +79,15 @@ this.modifyProfile= new FormGroup({
 this.formsService.getCities().subscribe({
   next:(cities:any)=>{
 this.cities=cities
+  },
+  error:(err:any)=>{
+    this.toastr.error(err.error.message||err.error.messageList[0])
+  },
+  complete:()=>{}
+})
+this.formsService.getSettori().subscribe({
+  next:(settori:any)=>{
+this.settori=settori
   },
   error:(err:any)=>{
     this.toastr.error(err.error.message||err.error.messageList[0])
@@ -314,6 +324,7 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
           }
         }
       }
+
       getRegioneByCity(city:string){
         let regione ;
          this.formsService.getRegionByCity(city).subscribe({
@@ -330,4 +341,5 @@ this.officeService.getAnnunciByAziendaId(this.user.id, this.searchAnnunciByAzien
           complete:()=>{}
         })
       }
+
     }

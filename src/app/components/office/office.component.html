@@ -147,40 +147,87 @@
     <div class="col-md-9 py-5" *ngIf="toDo=='Modifica il profilo'">
      <p class="fs-3">Modifica il tuo profilo</p>
      <form [formGroup]="modifyProfile">
-      <div class="col-md-12">
-        <label class="py-3">Città</label>
-        <select type="text" class="form-select" formControlName="citta" (change)="getRegioneByCity(modifyProfile.controls['citta'].value)">
-        <option value=""></option>
-        <option [value]="c" *ngFor="let c of cities">{{c}}</option>
-        </select>
-        <p class="text-danger" *ngIf="modifyProfile.controls['citta'].invalid">
-          Seleziona un valore.
-        </p>
+      <div class="row">
+        <div class="col-md-6">
+          <label class="py-3">Città</label>
+          <select type="text" class="form-select" formControlName="citta" (change)="getRegioneByCity(modifyProfile.controls['citta'].value)">
+          <option value=""></option>
+          <option [value]="c" *ngFor="let c of cities">{{c}}</option>
+          </select>
+          <p class="text-danger" *ngIf="modifyProfile.controls['citta'].invalid">
+            Seleziona un valore.
+          </p>
+          </div>
+                    <div class="col-md-3">
+          <label class="py-3">Regione</label>
+          <input type="text" class="form-control" formControlName="regione" readonly>
+          <p class="text-danger" *ngIf="modifyProfile.controls['regione'].invalid">
+            Campo autocompilato. Selezione una città!
+          </p>
+                    </div>
+                    <div class="col-md-3">
+          <label class="py-3">Indirizzo</label>
+  <input type="text" class="form-control" formControlName="indirizzo">
+  <p class="text-danger" *ngIf="modifyProfile.controls['indirizzo'].invalid">
+  Inserisci il tuo indirizzo.
+  </p>
         </div>
-                  <div class="col-md-12">
-        <label class="py-3">Regione</label>
-        <input type="text" class="form-control" formControlName="regione" readonly>
-        <p class="text-danger" *ngIf="modifyProfile.controls['regione'].invalid">
-          Campo autocompilato. Selezione una città!
-        </p>
-        <label class="py-3">Indirizzo</label>
-<input type="text" class="form-control" formControlName="indirizzo">
-<p class="text-danger" *ngIf="modifyProfile.controls['indirizzo'].invalid">
-Inserisci il tuo indirizzo.
-</p>
-      </div>
-      <div class="col-md-12">
-<label class="py-3">Cap</label>
-<input type="text" class="form-control" formControlName="cap" readonly>
-<p class="text-danger" *ngIf="modifyProfile.controls['cap'].invalid">
-Campo autocompilato. Selezione una città!
-</p>
-        <label class="py-3">Email</label>
-<input type="email" class="form-control" formControlName="email">
-<p class="text-danger" *ngIf="modifyProfile.controls['email'].invalid">
-Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
-</p>
-      </div>
+        <div class="col-md-3">
+  <label class="py-3">Cap</label>
+  <input type="text" class="form-control" formControlName="cap" readonly>
+  <p class="text-danger" *ngIf="modifyProfile.controls['cap'].invalid">
+  Campo autocompilato. Selezione una città!
+  </p>
+        </div>
+        <div class="col-md-9">
+          <label class="py-3">Email</label>
+  <input type="email" class="form-control" formControlName="email">
+  <p class="text-danger" *ngIf="modifyProfile.controls['email'].invalid">
+  Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
+  </p>
+        </div>
+        <div class="col-md-12">
+          <label for="" class="py-3">Nome Azienda</label>
+            <input type="text" class="form-control" formControlName="nomeAzienda">
+            <p class="text-danger" *ngIf="modifyProfile.controls['nomeAzienda'].invalid">
+              Inserisci un valore.
+            </p>
+        </div>
+        <div class="col-md-6">
+          <label for="" class="py-3">Fatturato Medio</label>
+          <input type="number" class="form-control" formControlName="fatturatoMedio">
+          <p class="text-danger" *ngIf="modifyProfile.controls['fatturatoMedio'].invalid">
+            Inserisci un valore numerico.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <label for="" class="py-3">Numero Dipendenti</label>
+          <input type="number" class="form-control" formControlName="numeroDipendenti">
+          <p class="text-danger" *ngIf="modifyProfile.controls['numeroDipendenti'].invalid">
+            Inserisci un valore numerico
+          </p>
+        </div>
+            <div class="col-md-6">
+              <label for="" class="py-3">Settore</label>
+            <select type="text" class="form-select" formControlName="settore">
+            <option value=""></option>
+            <option [value]="s" *ngFor="let s of settori">{{s}}</option>
+            </select>
+            <p class="text-danger" *ngIf="modifyProfile.controls['settore'].invalid">
+              Seleziona un valore.
+            </p>
+            </div>
+            <div class="col-md-6">
+  <label for="" class="py-3">Partita Iva</label>
+            <input type="number" class="form-control" formControlName="partitaIva">
+            <p class="text-danger" *ngIf="modifyProfile.controls['partitaIva'].invalid">
+              Inserisci un valore che rispetti il pattern della partita iva italiana.
+            </p>
+            </div>
+     <div class="col-md-12 py-5">
+    <button class="btn" [disabled]="modifyProfile.invalid">Modifica</button>
+    </div>
+          </div>
      </form>
     </div>
   </div>
