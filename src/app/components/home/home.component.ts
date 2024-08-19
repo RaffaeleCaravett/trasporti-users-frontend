@@ -16,7 +16,7 @@ constructor(private homeService:HomeService,private toastr:ToastrService){}
 
 ngOnInit():void{
     localStorage.setItem('location','/home')
-this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
+this.user=JSON.parse(localStorage.getItem('Trasportatore')!)||JSON.parse(localStorage.getItem('Azienda')!)
 if(this.user&&this.user.cognome){
   this.isTrasportatore=true
 }
@@ -32,7 +32,7 @@ this.homeService.getNotificationByTransporterIdAndNotificationStateAndSender(thi
   complete:()=>{}
 })
 }else{
-  this.homeService.getNotificationByAziendaIdAndNotificationStateAndSender(this.user.id,'Emessa','tr').subscribe({
+  this.homeService.getNotificationByAziendaIdAndNotificationStateAndSender(this.user?.id,'Emessa','tr').subscribe({
     next:(data:any)=>{
       this.notifications=data
     },

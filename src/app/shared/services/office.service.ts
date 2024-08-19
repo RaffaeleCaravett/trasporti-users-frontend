@@ -9,6 +9,7 @@ export class OfficeService{
 
 private annuncio:string = '/annuncio'
 private azienda:string = '/azienda'
+private trasportatore:string = '/trasportatore'
 private annuncioAzienda:string = '/azienda/annuncio'
 private byAzienda:string ='/byAzienda'
 private byRetribuzione:string ='/byRetribuzione'
@@ -50,6 +51,12 @@ getAnnunciByAziendaIdAndStatoPubblicata(aziendaId:number){
 }
 putAziendaById(aziendaDTO:{},aziendaId?:number){
   return this.httpClient.put(environment.API_URL+this.azienda+`${aziendaId!=null&&aziendaId!=undefined&&aziendaId!=0&&aziendaId?'/'+aziendaId:'/me'}`,aziendaDTO)
+}
+deleteProfile(){
+
+}
+getAllTrasportatori(){
+return this.httpClient.get(environment.API_URL+this.trasportatore)
 }
 }
 

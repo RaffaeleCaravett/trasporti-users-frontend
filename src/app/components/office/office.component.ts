@@ -14,8 +14,8 @@ import { FormsService } from 'src/app/shared/services/forms.service';
 export class OfficeComponent  implements OnInit{
   user:any
   isTrasportatore:boolean=false
-  azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Blocca un Trasportatore','Monitora le tue statistiche']
-  toDo:string='Monitora un annuncio'
+  azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Cerca un Trasportatore','Monitora le tue statistiche']
+  toDo:string='Modifica il profilo'
   aggiungiAnnuncioForm!:FormGroup
   aggiungiAnnuncioSubmitted:boolean=false
   year:number=0
@@ -37,12 +37,13 @@ export class OfficeComponent  implements OnInit{
   modifyProfile!:FormGroup
   cities:any[]=[]
   settori:any[]=[]
+  changePasswordForm!:FormGroup
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog,private formsService:FormsService){}
 
   ngOnInit():void{
     localStorage.setItem('location','/office')
 this.year = new Date().getFullYear()
-        this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
+        this.user=JSON.parse(localStorage.getItem('Trasportatore')!)||JSON.parse(localStorage.getItem('Azienda')!)
         if(this.user&&this.user.cognome){
           this.isTrasportatore=true
         }
@@ -75,6 +76,9 @@ this.modifyProfile= new FormGroup({
   numeroDipendenti:new FormControl(this.user?.numeroDipendenti,Validators.required),
   settore:new FormControl(this.user?.settore,Validators.required),
   partitaIva:new FormControl(this.user?.partitaIva,[Validators.required,Validators.pattern(/^[0-9]{11}$/)])
+})
+this.changePasswordForm=new FormGroup({
+
 })
 this.formsService.getCities().subscribe({
   next:(cities:any)=>{
