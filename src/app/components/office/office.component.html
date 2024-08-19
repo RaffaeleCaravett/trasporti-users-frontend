@@ -232,12 +232,12 @@
      <p class="fs-5">Vuoi cambiare la password?</p>
      <form [formGroup]="changePasswordForm">
       <label class="p-2">Inserisci qui la tua password attuale</label>
-      <input type="password" formControlName="oldPassword" class="form-control">
+      <input type="password" formControlName="oldPassword" class="form-control w-75 m-auto">
       <label class="p-2">Riscrivila qui</label>
-      <input type="password" formControlName="repeteOldPassword" class="form-control">
-      <div *ngIf="changePasswordForm.controls['oldPassword'].valid&&changePasswordForm.controls['repeteOldPassword'].valid &&changePasswordForm.controls['oldPassword'].valid==changePasswordForm.controls['repeteOldPassword'].valid">
+      <input type="password" formControlName="repeteOldPassword" class="form-control w-75 m-auto">
+      <div *ngIf="changePasswordForm.controls['oldPassword'].valid&&changePasswordForm.controls['repeteOldPassword'].valid && changePasswordForm.controls['oldPassword'].value==changePasswordForm.controls['repeteOldPassword'].value">
         <label class="p-2">Inserisci la nuova password</label>
-        <input type="password" formControlName="newPassword" class="form-control">
+        <input type="password" formControlName="newPassword" class="form-control w-75 m-auto">
       </div>
      </form>
     </div>
