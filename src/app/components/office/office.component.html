@@ -230,6 +230,16 @@
           </div>
      </form>
      <p class="fs-5">Vuoi cambiare la password?</p>
+     <form [formGroup]="changePasswordForm">
+      <label class="p-2">Inserisci qui la tua password attuale</label>
+      <input type="password" formControlName="oldPassword" class="form-control">
+      <label class="p-2">Riscrivila qui</label>
+      <input type="password" formControlName="repeteOldPassword" class="form-control">
+      <div *ngIf="changePasswordForm.controls['oldPassword'].valid&&changePasswordForm.controls['repeteOldPassword'].valid &&changePasswordForm.controls['oldPassword'].valid==changePasswordForm.controls['repeteOldPassword'].valid">
+        <label class="p-2">Inserisci la nuova password</label>
+        <input type="password" formControlName="newPassword" class="form-control">
+      </div>
+     </form>
     </div>
   </div>
 </div>
