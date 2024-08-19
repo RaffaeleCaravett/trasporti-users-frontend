@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { environment } from "src/app/core/environment";
 
 @Injectable({
@@ -17,6 +17,7 @@ private byData:string ='/byData'
 private spedizione:string = '/spedizione'
 private spedizioneAzienda:string = '/azienda/spedizione'
 private andStato:string = 'AndStato'
+private reset:string = '/reset'
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){
@@ -57,6 +58,9 @@ deleteProfile(){
 }
 getAllTrasportatori(){
 return this.httpClient.get(environment.API_URL+this.trasportatore)
+}
+changePasswordByProfile(oltPassword:string,newPassword:string){
+return this.httpClient.get(environment.API_URL+this.azienda+this.reset+`/${newPassword}/${oltPassword}/me`)
 }
 }
 
