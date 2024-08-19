@@ -78,7 +78,9 @@ this.modifyProfile= new FormGroup({
   partitaIva:new FormControl(this.user?.partitaIva,[Validators.required,Validators.pattern(/^[0-9]{11}$/)])
 })
 this.changePasswordForm=new FormGroup({
-
+oldPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
+repeteOldPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
+newPassword:new FormControl('',[Validators.required,Validators.minLength(6)])
 })
 this.formsService.getCities().subscribe({
   next:(cities:any)=>{
