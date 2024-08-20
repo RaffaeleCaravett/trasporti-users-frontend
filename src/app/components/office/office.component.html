@@ -238,6 +238,7 @@
       <div class="inserisciPassword noned" >
         <label class="p-2">Inserisci la nuova password</label>
         <input type="password" formControlName="newPassword" class="form-control w-75 m-auto">
+        <button class="btn btn-light my-3" (click)="resetPassword(changePasswordForm.controls['oldPassword'].value,changePasswordForm.controls['newPassword'].value)">Cambia password</button>
       </div>
      </form>
     </div>

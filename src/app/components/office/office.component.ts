@@ -384,4 +384,7 @@ if(ps1.valid&&ps2.valid&&ps1.value==ps2.value){
 }
 }
 
+resetPasswor(psw1:string,psw2:string){
+
+}
     }
