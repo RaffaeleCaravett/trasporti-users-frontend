@@ -37,4 +37,13 @@ h1{
 textarea{
   height: 100px!important;
 }
-
+.blocked{
+transition: 1s;
+height: 200px;
+overflow:hidden
+}
+.noned{
+  transition: 1s;
+  height: 0px;
+  overflow:hidden
+}

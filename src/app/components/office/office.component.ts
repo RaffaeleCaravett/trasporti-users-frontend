@@ -372,4 +372,16 @@ this.toastr.success("Azienda modificata correttamente.")
   })
 }
 }
+
+checkPasswords(ps1:any,ps2:any){
+let div = document.querySelector('.inserisciPassword') as HTMLDivElement
+if(ps1.valid&&ps2.valid&&ps1.value==ps2.value){
+  div.classList.add('blocked')
+  div.classList.remove('noned')
+}else{
+  div.classList.add('noned')
+  div.classList.remove('blocked')
+}
+}
+
     }
