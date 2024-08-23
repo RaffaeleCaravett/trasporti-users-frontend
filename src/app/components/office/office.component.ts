@@ -384,7 +384,18 @@ if(ps1.valid&&ps2.valid&&ps1.value==ps2.value){
 }
 }
 
-resetPasswor(psw1:string,psw2:string){
+resetPassword(psw1:string,psw2:string){
 
+this.officeService.changePasswordByProfile(psw1,psw2).subscribe({
+  next:()=>{
+
+  },
+  error:()=>{
+
+  },
+  complete:()=>{
+    
+  }
+})
 }
     }

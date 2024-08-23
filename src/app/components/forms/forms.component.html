@@ -8,180 +8,410 @@
     </div>
     <div class="col-md-6 p-3">
       <p class="fs-3">Connessione. Condivisione. Obiettivo.</p>
-<img src="assets/forms/network.webp" alt="" class="w-75">
-<p class="fs-5">Crediamo nella condivisione di opportunità. <button class="btn" (click)="section='signup'">Registrati</button> e unisciti a noi!</p>
+      <img src="assets/forms/network.webp" alt="" class="w-75" />
+      <p class="fs-5">
+        Crediamo nella condivisione di opportunità.
+        <button class="btn" (click)="section = 'signup'">Registrati</button> e
+        unisciti a noi!
+      </p>
     </div>
-    <div class="col-md-6 p-3" *ngIf="section=='login'">
+    <div class="col-md-6 p-3" *ngIf="section == 'login'">
       <p class="fs-3">Accedi</p>
       <form [formGroup]="loginForm" class="p-3 w-75 m-auto">
         <div class="row border rounded p-1">
           <div class="col-md-12">
             <p class="py-1">
               <label for="" class="py-3">Che tipo di utente sei?</label>
-             </p>
-             <p>
-              <input type="radio" formControlName="value" value="trasportatore" name="value" id="type1" class="py-3" (change)="loginValue='T'"><label class="py-3 form-check-label" for="type1">Trasportatore</label>
-              </p>
-              <p>
-               <input type="radio" formControlName="value" value="azienda" name="value" id="type2" class="py-3" (change)="loginValue='A'"><label class="py-3 form-check-label" for="type2">Azienda</label>
-              </p>
-              <p class="text-danger" *ngIf="submittedLogin==true&&loginForm.controls['value'].invalid">
-               Seleziona un valore.
-              </p>
+            </p>
+            <p>
+              <input
+                type="radio"
+                formControlName="value"
+                value="trasportatore"
+                name="value"
+                id="type1"
+                class="py-3"
+                (change)="loginValue = 'T'"
+              /><label class="py-3 form-check-label" for="type1"
+                >Trasportatore</label
+              >
+            </p>
+            <p>
+              <input
+                type="radio"
+                formControlName="value"
+                value="azienda"
+                name="value"
+                id="type2"
+                class="py-3"
+                (change)="loginValue = 'A'"
+              /><label class="py-3 form-check-label" for="type2">Azienda</label>
+            </p>
+            <p
+              class="text-danger"
+              *ngIf="
+                submittedLogin == true && loginForm.controls['value'].invalid
+              "
+            >
+              Seleziona un valore.
+            </p>
           </div>
           <div class="col-md-12">
-<label class="py-3">Email</label>
-<input type="email" class="form-control" formControlName="email">
-<p class="text-danger" *ngIf="submittedLogin==true&&loginForm.controls['email'].invalid">
-  Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
-</p>
+            <label class="py-3">Email</label>
+            <input type="email" class="form-control" formControlName="email" />
+            <p
+              class="text-danger"
+              *ngIf="
+                submittedLogin == true && loginForm.controls['email'].invalid
+              "
+            >
+              Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
+            </p>
           </div>
           <div class="col-md-12">
-<label class="py-3">Password</label>
-<input type="password" class="form-control" formControlName="password">
-<p class="text-danger" *ngIf="submittedLogin==true&&loginForm.controls['password'].invalid">
-  Valore invalido, prova ad inserire almeno 6 caratteri.
-</p>
-<button class="btn btn-dark w-75 m-auto my-3" (click)="login()">Login</button>
-<p>or</p>
-<hr>
-<button class="btn" (click)="sectionChange('signup')">Register</button>
+            <label class="py-3">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submittedLogin == true && loginForm.controls['password'].invalid
+              "
+            >
+              Valore invalido, prova ad inserire almeno 6 caratteri.
+            </p>
+            <button class="btn btn-dark w-75 m-auto my-3" (click)="login()">
+              Login
+            </button>
+            <p>or</p>
+            <hr />
+            <button class="btn" (click)="sectionChange('signup')">
+              Register
+            </button>
           </div>
         </div>
       </form>
     </div>
-      <div class="col-md-6 p-3" *ngIf="section=='signup'">
-        <p class="fs-3">Registrati</p>
-         <div class="p-3 w-75 m-auto">
-          <div  class="row border rounded p-1">
-  <form [formGroup]="signupForm">
+    <div class="col-md-6 p-3" *ngIf="section == 'signup'">
+      <p class="fs-3">Registrati</p>
+      <div class="p-3 w-75 m-auto">
+        <div class="row border rounded p-1">
+          <form [formGroup]="signupForm">
             <div class="col-md-12">
               <label class="py-3">Città</label>
-              <select type="text" class="form-select" formControlName="citta" (change)="getRegioneByCity(signupForm.controls['citta'].value)">
-              <option value=""></option>
-              <option [value]="c" *ngFor="let c of cities">{{c}}</option>
+              <select
+                type="text"
+                class="form-select"
+                formControlName="citta"
+                (change)="getRegioneByCity(signupForm.controls['citta'].value)"
+              >
+                <option value=""></option>
+                <option [value]="c" *ngFor="let c of cities">{{ c }}</option>
               </select>
-              <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['citta'].invalid">
+              <p
+                class="text-danger"
+                *ngIf="
+                  submitted == true && signupForm.controls['citta'].invalid
+                "
+              >
                 Seleziona un valore.
               </p>
-              </div>
-                        <div class="col-md-12">
+            </div>
+            <div class="col-md-12">
               <label class="py-3">Regione</label>
-              <input type="text" class="form-control" formControlName="regione" readonly>
-              <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['regione'].invalid">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="regione"
+                readonly
+              />
+              <p
+                class="text-danger"
+                *ngIf="
+                  submitted == true && signupForm.controls['regione'].invalid
+                "
+              >
                 Campo autocompilato. Selezione una città!
               </p>
               <label class="py-3">Indirizzo</label>
-  <input type="text" class="form-control" formControlName="indirizzo">
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['indirizzo'].invalid">
-    Inserisci il tuo indirizzo.
-  </p>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="indirizzo"
+              />
+              <p
+                class="text-danger"
+                *ngIf="
+                  submitted == true && signupForm.controls['indirizzo'].invalid
+                "
+              >
+                Inserisci il tuo indirizzo.
+              </p>
             </div>
             <div class="col-md-12">
-  <label class="py-3">Cap</label>
-  <input type="text" class="form-control" formControlName="cap" readonly>
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['cap'].invalid">
-    Campo autocompilato. Selezione una città!
-  </p>
+              <label class="py-3">Cap</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cap"
+                readonly
+              />
+              <p
+                class="text-danger"
+                *ngIf="submitted == true && signupForm.controls['cap'].invalid"
+              >
+                Campo autocompilato. Selezione una città!
+              </p>
               <label class="py-3">Email</label>
-  <input type="email" class="form-control" formControlName="email">
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['email'].invalid">
-    Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
-  </p>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+              />
+              <p
+                class="text-danger"
+                *ngIf="
+                  submitted == true && signupForm.controls['email'].invalid
+                "
+              >
+                Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
+              </p>
             </div>
             <div class="col-md-12">
-  <label class="py-3">Password</label>
-  <input type="password" class="form-control" formControlName="password">
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['password'].invalid">
-    Inserisci un valore con almeno 6 caratteri.
-  </p>
-  <p class="py-1">
-     <label for="" class="py-3">Che tipo di utente sei?</label>
-    </p>
-  <p>
-  <input type="radio" formControlName="type" value="trasportatore" name="type" id="type1" class="py-3" (change)="typeFormValue='trasportatore'"><label class="py-3 form-check-label" for="type1">Trasportatore</label>
-  </p>
-  <p>
-    <input type="radio" formControlName="type" value="azienda" name="type" id="type2" class="py-3" (change)="typeFormValue='azienda'"><label class="py-3 form-check-label" for="type2">Azienda</label>
-  </p>
-  <p class="text-danger" *ngIf="submitted==true&&signupForm.controls['type'].invalid">
-    Seleziona un valore.
-  </p>
+              <label class="py-3">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                formControlName="password"
+              />
+              <p
+                class="text-danger"
+                *ngIf="
+                  submitted == true && signupForm.controls['password'].invalid
+                "
+              >
+                Inserisci un valore con almeno 6 caratteri.
+              </p>
+              <p class="py-1">
+                <label for="" class="py-3">Che tipo di utente sei?</label>
+              </p>
+              <p>
+                <input
+                  type="radio"
+                  formControlName="type"
+                  value="trasportatore"
+                  name="type"
+                  id="type1"
+                  class="py-3"
+                  (change)="typeFormValue = 'trasportatore'"
+                /><label class="py-3 form-check-label" for="type1"
+                  >Trasportatore</label
+                >
+              </p>
+              <p>
+                <input
+                  type="radio"
+                  formControlName="type"
+                  value="azienda"
+                  name="type"
+                  id="type2"
+                  class="py-3"
+                  (change)="typeFormValue = 'azienda'"
+                /><label class="py-3 form-check-label" for="type2"
+                  >Azienda</label
+                >
+              </p>
+              <p
+                class="text-danger"
+                *ngIf="submitted == true && signupForm.controls['type'].invalid"
+              >
+                Seleziona un valore.
+              </p>
             </div>
-        </form>
-        <form action="" *ngIf="typeFormValue=='trasportatore'" [formGroup]="trasportatoreForm">
-          <p class="fs-4">Trasportatore</p>
-          <label for="" class="py-3">Nome</label>
-          <input type="text" class="form-control" formControlName="nome">
-          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['nome'].invalid">
-            Inserisci un valore.
-          </p>
-          <label for="" class="py-3">Cognome</label>
-          <input type="text" class="form-control" formControlName="cognome">
-          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['cognome'].invalid">
-            Inserisci un valore.
-          </p>
-          <label for="" class="py-3">Età</label>
-          <input type="number" class="form-control" formControlName="eta">
-          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['eta'].invalid">
-            Inserisci un valore superiore a 18.
-          </p>
-          <label for="" class="py-3">Codice fiscale</label>
-          <input type="text" class="form-control" formControlName="codiceFiscale">
-          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['codiceFiscale'].invalid">
-            Inserisci un valore che rispetti il pattern del codice fiscale italiano.
-          </p>
-          <label for="" class="py-3">Partita Iva</label>
-          <input type="number" class="form-control" formControlName="partitaIva">
-          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['partitaIva'].invalid">
-            Inserisci un valore che rispetti il pattern della partita iva italiana.
-          </p>
-          <label for="" class="py-3">Flotta mezzi</label>
-          <input type="number" class="form-control" formControlName="flottaMezzi">
-          <p class="text-danger" *ngIf="submitted==true&&trasportatoreForm.controls['flottaMezzi'].invalid">
-            Inserisci un valore numerico.
-          </p>
-        </form>
-          <form action="" *ngIf="typeFormValue=='azienda'" [formGroup]="aziendaForm">
+          </form>
+          <form
+            action=""
+            *ngIf="typeFormValue == 'trasportatore'"
+            [formGroup]="trasportatoreForm"
+          >
+            <p class="fs-4">Trasportatore</p>
+            <label for="" class="py-3">Nome</label>
+            <input type="text" class="form-control" formControlName="nome" />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true && trasportatoreForm.controls['nome'].invalid
+              "
+            >
+              Inserisci un valore.
+            </p>
+            <label for="" class="py-3">Cognome</label>
+            <input type="text" class="form-control" formControlName="cognome" />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true &&
+                trasportatoreForm.controls['cognome'].invalid
+              "
+            >
+              Inserisci un valore.
+            </p>
+            <label for="" class="py-3">Età</label>
+            <input type="number" class="form-control" formControlName="eta" />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true && trasportatoreForm.controls['eta'].invalid
+              "
+            >
+              Inserisci un valore superiore a 18.
+            </p>
+            <label for="" class="py-3">Codice fiscale</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="codiceFiscale"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true &&
+                trasportatoreForm.controls['codiceFiscale'].invalid
+              "
+            >
+              Inserisci un valore che rispetti il pattern del codice fiscale
+              italiano.
+            </p>
+            <label for="" class="py-3">Partita Iva</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="partitaIva"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true &&
+                trasportatoreForm.controls['partitaIva'].invalid
+              "
+            >
+              Inserisci un valore che rispetti il pattern della partita iva
+              italiana.
+            </p>
+            <label for="" class="py-3">Flotta mezzi</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="flottaMezzi"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true &&
+                trasportatoreForm.controls['flottaMezzi'].invalid
+              "
+            >
+              Inserisci un valore numerico.
+            </p>
+          </form>
+          <form
+            action=""
+            *ngIf="typeFormValue == 'azienda'"
+            [formGroup]="aziendaForm"
+          >
             <p class="fs-4">Azienda</p>
             <label for="" class="py-3">Nome Azienda</label>
-          <input type="text" class="form-control" formControlName="nomeAzienda">
-          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['nomeAzienda'].invalid">
-            Inserisci un valore.
-          </p>
-          <label for="" class="py-3">Fatturato Medio</label>
-          <input type="number" class="form-control" formControlName="fatturatoMedio">
-          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['fatturatoMedio'].invalid">
-            Inserisci un valore numerico.
-          </p>
-          <label for="" class="py-3">Numero Dipendenti</label>
-          <input type="number" class="form-control" formControlName="numeroDipendenti">
-          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['numeroDipendenti'].invalid">
-            Inserisci un valore numerico
-          </p>
-          <label for="" class="py-3">Settore</label>
-          <select type="text" class="form-select" formControlName="settore">
-          <option value=""></option>
-          <option [value]="s" *ngFor="let s of settori">{{s}}</option>
-          </select>
-          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['settore'].invalid">
-            Seleziona un valore.
-          </p>
-          <label for="" class="py-3">Partita Iva</label>
-          <input type="number" class="form-control" formControlName="partitaIva">
-          <p class="text-danger" *ngIf="submitted==true&&aziendaForm.controls['partitaIva'].invalid">
-            Inserisci un valore che rispetti il pattern della partita iva italiana.
-          </p>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nomeAzienda"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true && aziendaForm.controls['nomeAzienda'].invalid
+              "
+            >
+              Inserisci un valore.
+            </p>
+            <label for="" class="py-3">Fatturato Medio</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="fatturatoMedio"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true &&
+                aziendaForm.controls['fatturatoMedio'].invalid
+              "
+            >
+              Inserisci un valore numerico.
+            </p>
+            <label for="" class="py-3">Numero Dipendenti</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="numeroDipendenti"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true &&
+                aziendaForm.controls['numeroDipendenti'].invalid
+              "
+            >
+              Inserisci un valore numerico
+            </p>
+            <label for="" class="py-3">Settore</label>
+            <select type="text" class="form-select" formControlName="settore">
+              <option value=""></option>
+              <option [value]="s" *ngFor="let s of settori">{{ s }}</option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true && aziendaForm.controls['settore'].invalid
+              "
+            >
+              Seleziona un valore.
+            </p>
+            <label for="" class="py-3">Partita Iva</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="partitaIva"
+            />
+            <p
+              class="text-danger"
+              *ngIf="
+                submitted == true && aziendaForm.controls['partitaIva'].invalid
+              "
+            >
+              Inserisci un valore che rispetti il pattern della partita iva
+              italiana.
+            </p>
           </form>
-        <button class="btn btn-dark w-75 m-auto my-3" (click)="signup()">Register</button>
-        <p>or</p>
-        <hr>
-        <button class="btn" (click)="sectionChange('login')">Login</button>
-       </div>
-         </div>
+          <button class="btn btn-dark w-75 m-auto my-3" (click)="signup()">
+            Register
+          </button>
+          <p>or</p>
+          <hr />
+          <button class="btn" (click)="sectionChange('login')">Login</button>
+        </div>
       </div>
-    <div class=" col-md-6 py-5" *ngIf="section==''">
-      <mat-spinner class="my-5 m-auto" color="warn" ></mat-spinner>
+    </div>
+    <div class="col-md-6 py-5" *ngIf="section == ''">
+      <mat-spinner class="my-5 m-auto" color="warn"></mat-spinner>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 my-5">
+      <p>**Hai dimenticato la password?</p>
+      <button class="btn btn-light">Clicca qui</button>
     </div>
   </div>
 </div>
