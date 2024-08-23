@@ -15,6 +15,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AuthTokenInterceptor } from './core/token.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsComponent,
     NotFoundComponent,
     AnnuncioInfoComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [
