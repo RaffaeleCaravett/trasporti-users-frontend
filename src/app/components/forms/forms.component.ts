@@ -21,6 +21,7 @@ aziendaForm!:FormGroup
 submitted:boolean=false
 submittedLogin:boolean=false
 loginValue=''
+showResetPassword:boolean=false
 constructor(private formsService:FormsService,private toastr:ToastrService,private router:Router){}
 
 ngOnInit():void{
