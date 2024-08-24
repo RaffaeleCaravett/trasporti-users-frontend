@@ -243,4 +243,7 @@ sectionChange(value:string){
 this.section=value
   },2000)
 }
+onReceiveResetPassword(rP:boolean){
+this.showResetPassword=rP
+}
 }

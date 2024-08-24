@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-reset-password',
@@ -6,5 +6,14 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent {
-@Input() user:any
+  @Output() resetPassword :EventEmitter<boolean> = new EventEmitter<boolean>
+
+
+
+
+
+
+  close(){
+    this.resetPassword.emit(false)
+  }
 }

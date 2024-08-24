@@ -411,10 +411,10 @@
     <div class="col-md-6"></div>
     <div class="col-md-6 my-5">
       <p>**Hai dimenticato la password?</p>
-      <button class="btn btn-light">Clicca qui</button>
+      <button class="btn btn-light" (click)="showResetPassword=!showResetPassword">Clicca qui</button>
     </div>
     <div class="col-md-12">
-      <app-reset-password *ngIf="showResetPassword"></app-reset-password>
+      <app-reset-password *ngIf="showResetPassword" (resetPassword)="onReceiveResetPassword($event)"></app-reset-password>
     </div>
   </div>
 </div>
