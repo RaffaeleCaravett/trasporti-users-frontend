@@ -22,6 +22,8 @@ export class FormsService {
   private tRefresh:string='/RefreshTToken'
   private azRefresh:string ='/RefreshAzToken'
   private resetPassword:string ='/resetPassword'
+  private testSecretCode:string = '/testSecretCode'
+  private changePassBySecretCode:string = '/changePassBySecretCode'
   isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
@@ -70,9 +72,13 @@ verifyAziendaRToken(token:string){
 verifyTrasportatoreRToken(token:string){
   return this.http.get(environment.API_URL+this.auth+this.tRefresh+`/${token}`)
 }
-verifyEmail(email:any,id:number){
-return this.http.post(environment.API_URL+this.auth+this.resetPassword+`/${id}`,email)
+verifyEmail(email:any){
+return this.http.post(environment.API_URL+this.auth+this.resetPassword,email)
 }
-verifyCode(code:string){}
-changePassword(password:string){}
+verifyCode(code:any){
+  return this.http.post(environment.API_URL+this.auth+this.testSecretCode,code)
+}
+changePassword(newPsw:string,email:string){
+  return this.http.get(environment.API_URL+this.auth+this.changePassBySecretCode+`/${newPsw}/${email}`)
+}
 }
