@@ -19,8 +19,9 @@ export class FormsService {
   private token:string =''
   private tAccess:string='/AccessTToken'
   private azAccess:string ='/AccessAzToken'
-    private tRefresh:string='/RefreshTToken'
+  private tRefresh:string='/RefreshTToken'
   private azRefresh:string ='/RefreshAzToken'
+  private resetPassword:string ='/resetPassword'
   isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
@@ -69,4 +70,9 @@ verifyAziendaRToken(token:string){
 verifyTrasportatoreRToken(token:string){
   return this.http.get(environment.API_URL+this.auth+this.tRefresh+`/${token}`)
 }
+verifyEmail(email:any,id:number){
+return this.http.post(environment.API_URL+this.auth+this.resetPassword+`/${id}`,email)
+}
+verifyCode(code:string){}
+changePassword(password:string){}
 }

@@ -11,7 +11,6 @@ export class ResetPasswordComponent implements OnInit {
   reset!: FormGroup;
   emailSended:boolean=false
   codeVerified:boolean=false
-
   ngOnInit(): void {
     this.reset=new FormGroup({
       email:new FormControl('',[Validators.required,Validators.pattern('^[A-Za-z]{6}[0-9]{2}[A-Za-z]{1}[0-9]{2}[A-Za-z]{1}[0-9]{3}[A-Za-z]{1}$')]),
@@ -23,5 +22,14 @@ export class ResetPasswordComponent implements OnInit {
 
   close() {
     this.resetPassword.emit(false);
+  }
+  verifyEmail(email:string){
+
+  }
+  verifyCode(code:string){
+
+  }
+  changePassword(psw:string,newPsw:string){
+
   }
 }
