@@ -94,11 +94,12 @@ this.toastr.error("Il codice che hai inserito sembra non coincidere con quello c
       {
 this.formsService.changePassword(
   psw,
-  newPsw,
+  this.reset.controls['email'].value,
   code
 ).subscribe({
   next:(user)=>{
     this.toastr.show("Password cambiata correttamente.")
+    this.resetPassword.emit(false)
   },
   error:(error:any)=>{
     this.toastr.error(error.error.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
