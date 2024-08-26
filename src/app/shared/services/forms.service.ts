@@ -78,7 +78,7 @@ return this.http.post(environment.API_URL+this.auth+this.resetPassword,email)
 verifyCode(code:any){
   return this.http.post(environment.API_URL+this.auth+this.testSecretCode,code)
 }
-changePassword(newPsw:string,email:string){
-  return this.http.get(environment.API_URL+this.auth+this.changePassBySecretCode+`/${newPsw}/${email}`)
+changePassword(newPsw:string,email:string,code:string){
+  return this.http.get(environment.API_URL+this.auth+this.changePassBySecretCode+`/${newPsw}/${email}/${code}`)
 }
 }

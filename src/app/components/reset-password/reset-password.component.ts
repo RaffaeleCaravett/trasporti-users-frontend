@@ -88,13 +88,14 @@ this.toastr.error("Il codice che hai inserito sembra non coincidere con quello c
   })
 }
   }
-  changePassword(psw: string, newPsw: string) {
+  changePassword(psw: string, newPsw: string,code:string) {
     if(this.reset.valid){
-      if(this.reset.controls['nuovaPassword'].value==this.reset.controls['ripetiNuovaPassword'].value)
+      if(psw==newPsw)
       {
 this.formsService.changePassword(
-  this.reset.controls['nuovaPassword'].value,
-  this.reset.controls['email'].value
+  psw,
+  newPsw,
+  code
 ).subscribe({
   next:(user)=>{
     this.toastr.show("Password cambiata correttamente.")
