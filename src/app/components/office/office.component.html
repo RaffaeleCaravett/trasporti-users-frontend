@@ -24,8 +24,12 @@
 <div *ngIf="toDo==''">
 
 </div>
-<div *ngIf="toDo==''">
+<div *ngIf="toDo=='Cerca un Trasportatore'" class="py-5">
+<p class="fs-3">Cerca un trasportatore</p>
+<p>Stringi contatti, chiedi informazioni, proponi sfide.</p>
+<form [formGroup]="searchTrasportatori">
 
+</form>
 </div>
 <div *ngIf="toDo=='Monitora un annuncio'" class="py-5">
   <p class="fs-3">Monitora i tuoi annunci</p>

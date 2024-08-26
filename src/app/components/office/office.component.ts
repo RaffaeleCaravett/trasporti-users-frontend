@@ -38,6 +38,7 @@ export class OfficeComponent  implements OnInit{
   cities:any[]=[]
   settori:any[]=[]
   changePasswordForm!:FormGroup
+  searchTrasportatori!:FormGroup
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog,private formsService:FormsService){}
 
   ngOnInit():void{
@@ -394,7 +395,7 @@ this.officeService.changePasswordByProfile(psw1,psw2).subscribe({
 
   },
   complete:()=>{
-    
+
   }
 })
 }
