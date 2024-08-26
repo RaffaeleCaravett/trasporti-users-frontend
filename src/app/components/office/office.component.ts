@@ -83,6 +83,11 @@ oldPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
 repeteOldPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
 newPassword:new FormControl('',[Validators.required,Validators.minLength(6)])
 })
+this.searchTrasportatori=new FormGroup({
+  citta:new FormControl(''),
+  nome:new FormControl(''),
+  cognome:new FormControl('')
+})
 this.formsService.getCities().subscribe({
   next:(cities:any)=>{
 this.cities=cities
