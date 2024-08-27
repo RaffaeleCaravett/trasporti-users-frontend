@@ -15,7 +15,7 @@ export class OfficeComponent  implements OnInit{
   user:any
   isTrasportatore:boolean=false
   azioni:string[]=['Aggiungi un annuncio','Monitora un annuncio','Modifica il profilo','Cerca un Trasportatore','Monitora le tue statistiche']
-  toDo:string='Modifica il profilo'
+  toDo:string=''
   aggiungiAnnuncioForm!:FormGroup
   aggiungiAnnuncioSubmitted:boolean=false
   year:number=0

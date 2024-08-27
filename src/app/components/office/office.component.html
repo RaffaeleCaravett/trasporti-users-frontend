@@ -6,245 +6,512 @@
     <div class="col-md-3 py-5">
       <p class="fs-5">Cosa vuoi fare?</p>
       <div class="p-2 text-start">
-          <p class="p-2 " *ngFor="let a of azioni, index as i" >
-            <button class="button-list p-{{i+6}}" (click)="setBackground(i+6,a)">{{a}}</button>
-          </p>
+        <p class="p-2" *ngFor="let a of azioni; index as i">
+          <button
+            class="button-list p-{{ i + 6 }}"
+            (click)="setBackground(i + 6, a)"
+          >
+            {{ a }}
+          </button>
+        </p>
       </div>
     </div>
-    <div class="col-md-6" *ngIf="toDo!='Modifica il profilo'">
-<div *ngIf="toDo==''" class="w-75 m-auto py-5">
-<p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
-<p class="fs-5">Qui crediamo che non solo lavorare ci rende più dignitosi, ma può anche elevarci spiritualmente, mentalmente e fisicamente.
-  Il giorno in cui smettiamo di dedicarci a qualcosa, è  il giorno in cui smettiamo di vivere.
-</p>
-</div>
-<div *ngIf="toDo==''">
-
-</div>
-<div *ngIf="toDo==''">
-
-</div>
-<div *ngIf="toDo=='Cerca un Trasportatore'" class="py-5">
-<p class="fs-3">Cerca un trasportatore</p>
-<p>Stringi contatti, chiedi informazioni, proponi sfide.</p>
-<form [formGroup]="searchTrasportatori">
-
-</form>
-</div>
-<div *ngIf="toDo=='Monitora un annuncio'" class="py-5">
-  <p class="fs-3">Monitora i tuoi annunci</p>
-  <p class="fs-6">Hai {{annunciByAziendaAndPubblicati}} {{annunciByAziendaAndPubblicati==1?' annuncio':' annunci'}} ancora in stato "Pubblicato".</p>
-<div *ngIf="annunciByAzienda&&annunciByAzienda.content">
-  <form [formGroup]="searchAnnunciByAzienda" class="my-2 p-2 bg-light border rounded shadow">
-    <p class="fs-3">Modifica la ricerca</p>
-    <div class="d-flex row">
-      <div class="col-md-4">
-        <label for="">Pagina</label>
-    <select class="form-select m-auto" formControlName="page" >
-    <option value=""></option>
-    <option value="{{p}}" *ngFor="let p of annunciByAziendaPages">{{p}}</option>
-    </select>
+    <div class="col-md-6" *ngIf="toDo != 'Modifica il profilo'">
+      <div *ngIf="toDo == ''" class="w-75 m-auto py-5">
+        <p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
+        <p class="fs-5">
+          Qui crediamo che non solo lavorare ci rende più dignitosi, ma può
+          anche elevarci spiritualmente, mentalmente e fisicamente. Il giorno in
+          cui smettiamo di dedicarci a qualcosa, è il giorno in cui smettiamo di
+          vivere.
+        </p>
       </div>
-      <div class="col-md-4">
-   <label for="">Elementi</label>
-   <select class="form-select m-auto" formControlName="size" >
-    <option value=""></option>
-    <option value="{{p}}" *ngFor="let p of annunciByAziendaElementi">{{p}}</option>
-    </select>
-      </div>
-      <div class="col-md-4">
-        <label for="">Ordina </label>
-        <select class="form-select m-auto" formControlName="orderBy" >
-          <option value=""></option>
-          <option value="{{p}}" *ngFor="let p of annunciByAziendaOrderBy">{{p}}</option>
-          </select>
-      </div>
-    </div>
-    <p class="fs-5 pt-3">Puoi anche cercare per : </p>
-     <p>
-      <input type="radio" formControlName="type" value="retribuzione" name="type" id="type1" class="py-3" (change)="typeFormValue='retribuzione'"><label class="py-3 form-check-label" for="type1">Retribuzione</label>
-      </p>
-      <p>
-        <input type="radio" formControlName="type" value="dataPubblicazione" name="type" id="type2" class="py-3" (change)="typeFormValue='dataPubblicazione'"><label class="py-3 form-check-label" for="type2">Data</label>
-      </p>
-      <p>
-        <input type="radio" formControlName="type" value="" name="type" id="type3" class="py-3" (change)="typeFormValue=''"><label class="py-3 form-check-label" for="type3">Azzera</label>
-      </p>
-<div *ngIf="typeFormValue=='retribuzione'">
- <p class="fs-5">Inserisci la retribuzione</p>
- <mat-slider min="0" max="20000" class="w-75 m-auto">
-  <input value="2000" matSliderStartThumb (change)="updateSlider($event,'da')">
-  <input value="14000" matSliderEndThumb (change)="updateSlider($event,'a')">
-</mat-slider>
-<div class="d-flex justify-content-around">
-  <button class="btn">{{searchAnnunciByAziendaRetrMin}}</button><button class="btn">{{searchAnnunciByAziendaRetrMax}}</button>
-</div>
-</div>
-<div *ngIf="typeFormValue=='dataPubblicazione'">
-  <p class="fs-5">Inserisci le date</p>
-  <div class="d-flex justify-content-around">
-    <p>
-<label class="pb-2">Da </label>
-<br>
-<input type="date" class="form-control" formControlName="da">
-  </p>
-  <p>
-<label class="pb-2">A</label>
-<br>
-<input type="date" class="form-control" formControlName="a">
-  </p>
-  </div>
-</div>
-    <button class="btn m-auto" (click)="updateAnnunciByAzienda()">Cerca</button>
-  </form>
-  <ul>
-    <p class="fs-5">Annunci pubblicati :</p>
-    <p class="fs-5 py-5" *ngIf="!annunciByAzienda||(annunciByAzienda&&annunciByAzienda.content.length==0)">Non ci sono annunci pubblicati.</p>
-    <li *ngFor="let a of annunciByAzienda.content" class="py-4">
-      Id {{a.id}} - Del {{a.dataPubblicazione}}
-       <button class="btn btn-dark" (click)="showAnnuncio(a)">Mostra</button>
-    </li>
-  </ul>
-</div>
-</div>
-<div *ngIf="toDo=='Aggiungi un annuncio'" class="py-5">
-<p class="fs-3">Aggiungi un annuncio</p>
-<form [formGroup]="aggiungiAnnuncioForm">
-  <label for="" class="py-4">Quanto offri per questa spedizione? </label>
-  <input type="number" class="form-control" formControlName="retribuzione">
-  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['retribuzione'].invalid">
-    Assicurati di inserire un valore numerico.
-  </p>
-  <label for="" class="py-4">Da dove parte la spedizione?</label>
-  <input type="text" class="form-control" formControlName="da">
-  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['da'].invalid">
-    Assicurati di inserire la destinazione di partenza.
-  </p>
-  <label for="" class="py-4">Dove deve arrivare?</label>
-  <input type="text" class="form-control" formControlName="a">
-  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['a'].invalid">
-    Dove vuoi che venga consegnata la merce?
-  </p>
-  <label for="" class="py-4">Inserisci la data massima in cui deve partire la spedizione :</label>
-  <input type="date" class="form-control" formControlName="data" [max]="todayPlusAYear.toISOString().split('T')[0]" [min]="today.toISOString().split('T')[0]" >
-  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['data'].invalid">
-    Inserisci un valore compreso tra oggi e un anno da oggi.
-  </p>
-  <label for="" class="py-4">Descrivi e inserisci i dettagli della spedizione</label>
-  <textarea type="text" class="form-control" formControlName="testo">
-  </textarea>
-  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['testo'].invalid">
-    Inserisci i dettagli della spedizione.
-  </p>
-  <label for="" class="py-4">Quante pedane devi spedire?</label>
-  <input type="number" class="form-control" formControlName="numeroPedane">
-  <p class="text-danger" *ngIf="aggiungiAnnuncioSubmitted&&aggiungiAnnuncioForm.controls['numeroPedane'].invalid">
-    Quante pedane devi spedire?
-  </p>
-</form>
-<button class="btn my-2 btn-dark" (click)="addAnnuncio()">Aggiungi</button>
-</div>
-    </div>
-    <div class="col-md-3 py-5" *ngIf="toDo!='Modifica il profilo'">
-      <app-user-info [isTrasportatore]="isTrasportatore" [user]="user"></app-user-info>
-    </div>
-    <div class="col-md-9 py-5" *ngIf="toDo=='Modifica il profilo'">
-     <p class="fs-3">Modifica il tuo profilo</p>
-     <form [formGroup]="modifyProfile">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="py-3">Città</label>
-          <select type="text" class="form-select" formControlName="citta" (change)="getRegioneByCity(modifyProfile.controls['citta'].value)">
-          <option value=""></option>
-          <option [value]="c" *ngFor="let c of cities">{{c}}</option>
-          </select>
-          <p class="text-danger" *ngIf="modifyProfile.controls['citta'].invalid">
-            Seleziona un valore.
-          </p>
+      <div *ngIf="toDo == ''"></div>
+      <div *ngIf="toDo == ''"></div>
+      <div *ngIf="toDo == 'Cerca un Trasportatore'" class="py-5">
+        <p class="fs-3">Cerca un trasportatore</p>
+        <p>Stringi contatti, chiedi informazioni, proponi sfide.</p>
+        <form [formGroup]="searchTrasportatori">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="py-3">Città</label>
+              <select name="" id="" class="form-select" formControlName="citta"></select>
+            </div>
+            <div class="col-md-4">
+              <label class="py-3">Nome</label>
+              <input type="text" class="form-control"  formControlName="nome"/>
+            </div>
+            <div class="col-md-4">
+              <label class="py-3">Cognome</label>
+              <input type="text" class="form-control"  formControlName="cognome"/>
+            </div>
           </div>
-                    <div class="col-md-3">
-          <label class="py-3">Regione</label>
-          <input type="text" class="form-control" formControlName="regione" readonly>
-          <p class="text-danger" *ngIf="modifyProfile.controls['regione'].invalid">
-            Campo autocompilato. Selezione una città!
-          </p>
-                    </div>
-                    <div class="col-md-3">
-          <label class="py-3">Indirizzo</label>
-  <input type="text" class="form-control" formControlName="indirizzo">
-  <p class="text-danger" *ngIf="modifyProfile.controls['indirizzo'].invalid">
-  Inserisci il tuo indirizzo.
-  </p>
-        </div>
-        <div class="col-md-3">
-  <label class="py-3">Cap</label>
-  <input type="text" class="form-control" formControlName="cap" readonly>
-  <p class="text-danger" *ngIf="modifyProfile.controls['cap'].invalid">
-  Campo autocompilato. Selezione una città!
-  </p>
-        </div>
-        <div class="col-md-9">
-          <label class="py-3">Email</label>
-  <input type="email" class="form-control" formControlName="email">
-  <p class="text-danger" *ngIf="modifyProfile.controls['email'].invalid">
-  Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
-  </p>
-        </div>
-        <div class="col-md-12">
-          <label for="" class="py-3">Nome Azienda</label>
-            <input type="text" class="form-control" formControlName="nomeAzienda">
-            <p class="text-danger" *ngIf="modifyProfile.controls['nomeAzienda'].invalid">
-              Inserisci un valore.
+          <div class="col-md-12 py-2">
+            <button class="btn">
+              Cerca Trasportatore
+            </button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="toDo == 'Monitora un annuncio'" class="py-5">
+        <p class="fs-3">Monitora i tuoi annunci</p>
+        <p class="fs-6">
+          Hai {{ annunciByAziendaAndPubblicati }}
+          {{
+            annunciByAziendaAndPubblicati == 1 ? " annuncio" : " annunci"
+          }}
+          ancora in stato "Pubblicato".
+        </p>
+        <div *ngIf="annunciByAzienda && annunciByAzienda.content">
+          <form
+            [formGroup]="searchAnnunciByAzienda"
+            class="my-2 p-2 bg-light border rounded shadow"
+          >
+            <p class="fs-3">Modifica la ricerca</p>
+            <div class="d-flex row">
+              <div class="col-md-4">
+                <label for="">Pagina</label>
+                <select class="form-select m-auto" formControlName="page">
+                  <option value=""></option>
+                  <option
+                    value="{{ p }}"
+                    *ngFor="let p of annunciByAziendaPages"
+                  >
+                    {{ p }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="">Elementi</label>
+                <select class="form-select m-auto" formControlName="size">
+                  <option value=""></option>
+                  <option
+                    value="{{ p }}"
+                    *ngFor="let p of annunciByAziendaElementi"
+                  >
+                    {{ p }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="">Ordina </label>
+                <select class="form-select m-auto" formControlName="orderBy">
+                  <option value=""></option>
+                  <option
+                    value="{{ p }}"
+                    *ngFor="let p of annunciByAziendaOrderBy"
+                  >
+                    {{ p }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <p class="fs-5 pt-3">Puoi anche cercare per :</p>
+            <p>
+              <input
+                type="radio"
+                formControlName="type"
+                value="retribuzione"
+                name="type"
+                id="type1"
+                class="py-3"
+                (change)="typeFormValue = 'retribuzione'"
+              /><label class="py-3 form-check-label" for="type1"
+                >Retribuzione</label
+              >
             </p>
+            <p>
+              <input
+                type="radio"
+                formControlName="type"
+                value="dataPubblicazione"
+                name="type"
+                id="type2"
+                class="py-3"
+                (change)="typeFormValue = 'dataPubblicazione'"
+              /><label class="py-3 form-check-label" for="type2">Data</label>
+            </p>
+            <p>
+              <input
+                type="radio"
+                formControlName="type"
+                value=""
+                name="type"
+                id="type3"
+                class="py-3"
+                (change)="typeFormValue = ''"
+              /><label class="py-3 form-check-label" for="type3">Azzera</label>
+            </p>
+            <div *ngIf="typeFormValue == 'retribuzione'">
+              <p class="fs-5">Inserisci la retribuzione</p>
+              <mat-slider min="0" max="20000" class="w-75 m-auto">
+                <input
+                  value="2000"
+                  matSliderStartThumb
+                  (change)="updateSlider($event, 'da')"
+                />
+                <input
+                  value="14000"
+                  matSliderEndThumb
+                  (change)="updateSlider($event, 'a')"
+                />
+              </mat-slider>
+              <div class="d-flex justify-content-around">
+                <button class="btn">{{ searchAnnunciByAziendaRetrMin }}</button
+                ><button class="btn">
+                  {{ searchAnnunciByAziendaRetrMax }}
+                </button>
+              </div>
+            </div>
+            <div *ngIf="typeFormValue == 'dataPubblicazione'">
+              <p class="fs-5">Inserisci le date</p>
+              <div class="d-flex justify-content-around">
+                <p>
+                  <label class="pb-2">Da </label>
+                  <br />
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="da"
+                  />
+                </p>
+                <p>
+                  <label class="pb-2">A</label>
+                  <br />
+                  <input type="date" class="form-control" formControlName="a" />
+                </p>
+              </div>
+            </div>
+            <button class="btn m-auto" (click)="updateAnnunciByAzienda()">
+              Cerca
+            </button>
+          </form>
+          <ul>
+            <p class="fs-5">Annunci pubblicati :</p>
+            <p
+              class="fs-5 py-5"
+              *ngIf="
+                !annunciByAzienda ||
+                (annunciByAzienda && annunciByAzienda.content.length == 0)
+              "
+            >
+              Non ci sono annunci pubblicati.
+            </p>
+            <li *ngFor="let a of annunciByAzienda.content" class="py-4">
+              Id {{ a.id }} - Del {{ a.dataPubblicazione }}
+              <button class="btn btn-dark" (click)="showAnnuncio(a)">
+                Mostra
+              </button>
+            </li>
+          </ul>
         </div>
-        <div class="col-md-6">
-          <label for="" class="py-3">Fatturato Medio</label>
-          <input type="number" class="form-control" formControlName="fatturatoMedio">
-          <p class="text-danger" *ngIf="modifyProfile.controls['fatturatoMedio'].invalid">
-            Inserisci un valore numerico.
+      </div>
+      <div *ngIf="toDo == 'Aggiungi un annuncio'" class="py-5">
+        <p class="fs-3">Aggiungi un annuncio</p>
+        <form [formGroup]="aggiungiAnnuncioForm">
+          <label for="" class="py-4"
+            >Quanto offri per questa spedizione?
+          </label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="retribuzione"
+          />
+          <p
+            class="text-danger"
+            *ngIf="
+              aggiungiAnnuncioSubmitted &&
+              aggiungiAnnuncioForm.controls['retribuzione'].invalid
+            "
+          >
+            Assicurati di inserire un valore numerico.
           </p>
-        </div>
-        <div class="col-md-6">
-          <label for="" class="py-3">Numero Dipendenti</label>
-          <input type="number" class="form-control" formControlName="numeroDipendenti">
-          <p class="text-danger" *ngIf="modifyProfile.controls['numeroDipendenti'].invalid">
-            Inserisci un valore numerico
+          <label for="" class="py-4">Da dove parte la spedizione?</label>
+          <input type="text" class="form-control" formControlName="da" />
+          <p
+            class="text-danger"
+            *ngIf="
+              aggiungiAnnuncioSubmitted &&
+              aggiungiAnnuncioForm.controls['da'].invalid
+            "
+          >
+            Assicurati di inserire la destinazione di partenza.
           </p>
-        </div>
-            <div class="col-md-6">
-              <label for="" class="py-3">Settore</label>
-            <select type="text" class="form-select" formControlName="settore">
-            <option value=""></option>
-            <option [value]="s" *ngFor="let s of settori">{{s}}</option>
+          <label for="" class="py-4">Dove deve arrivare?</label>
+          <input type="text" class="form-control" formControlName="a" />
+          <p
+            class="text-danger"
+            *ngIf="
+              aggiungiAnnuncioSubmitted &&
+              aggiungiAnnuncioForm.controls['a'].invalid
+            "
+          >
+            Dove vuoi che venga consegnata la merce?
+          </p>
+          <label for="" class="py-4"
+            >Inserisci la data massima in cui deve partire la spedizione
+            :</label
+          >
+          <input
+            type="date"
+            class="form-control"
+            formControlName="data"
+            [max]="todayPlusAYear.toISOString().split('T')[0]"
+            [min]="today.toISOString().split('T')[0]"
+          />
+          <p
+            class="text-danger"
+            *ngIf="
+              aggiungiAnnuncioSubmitted &&
+              aggiungiAnnuncioForm.controls['data'].invalid
+            "
+          >
+            Inserisci un valore compreso tra oggi e un anno da oggi.
+          </p>
+          <label for="" class="py-4"
+            >Descrivi e inserisci i dettagli della spedizione</label
+          >
+          <textarea type="text" class="form-control" formControlName="testo">
+          </textarea>
+          <p
+            class="text-danger"
+            *ngIf="
+              aggiungiAnnuncioSubmitted &&
+              aggiungiAnnuncioForm.controls['testo'].invalid
+            "
+          >
+            Inserisci i dettagli della spedizione.
+          </p>
+          <label for="" class="py-4">Quante pedane devi spedire?</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="numeroPedane"
+          />
+          <p
+            class="text-danger"
+            *ngIf="
+              aggiungiAnnuncioSubmitted &&
+              aggiungiAnnuncioForm.controls['numeroPedane'].invalid
+            "
+          >
+            Quante pedane devi spedire?
+          </p>
+        </form>
+        <button class="btn my-2 btn-dark" (click)="addAnnuncio()">
+          Aggiungi
+        </button>
+      </div>
+    </div>
+    <div class="col-md-3 py-5" *ngIf="toDo != 'Modifica il profilo'">
+      <app-user-info
+        [isTrasportatore]="isTrasportatore"
+        [user]="user"
+      ></app-user-info>
+    </div>
+    <div class="col-md-9 py-5" *ngIf="toDo == 'Modifica il profilo'">
+      <p class="fs-3">Modifica il tuo profilo</p>
+      <form [formGroup]="modifyProfile">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="py-3">Città</label>
+            <select
+              type="text"
+              class="form-select"
+              formControlName="citta"
+              (change)="getRegioneByCity(modifyProfile.controls['citta'].value)"
+            >
+              <option value=""></option>
+              <option [value]="c" *ngFor="let c of cities">{{ c }}</option>
             </select>
-            <p class="text-danger" *ngIf="modifyProfile.controls['settore'].invalid">
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['citta'].invalid"
+            >
               Seleziona un valore.
             </p>
-            </div>
-            <div class="col-md-6">
-  <label for="" class="py-3">Partita Iva</label>
-            <input type="number" class="form-control" formControlName="partitaIva">
-            <p class="text-danger" *ngIf="modifyProfile.controls['partitaIva'].invalid">
-              Inserisci un valore che rispetti il pattern della partita iva italiana.
-            </p>
-            </div>
-     <div class="col-md-12 py-5">
-    <button class="btn btn-light" [disabled]="modifyProfile.invalid" (click)="modifyProfilo()">Modifica</button>
-    </div>
           </div>
-     </form>
-     <p class="fs-5">Vuoi cambiare la password?</p>
-     <form [formGroup]="changePasswordForm">
-      <label class="p-2">Inserisci qui la tua password attuale</label>
-      <input type="password" formControlName="oldPassword" class="form-control w-75 m-auto" (input)="checkPasswords(changePasswordForm.controls['oldPassword'],changePasswordForm.controls['repeteOldPassword'])">
-      <label class="p-2">Riscrivila qui</label>
-      <input type="password" formControlName="repeteOldPassword" class="form-control w-75 m-auto" (input)="checkPasswords(changePasswordForm.controls['oldPassword'],changePasswordForm.controls['repeteOldPassword'])">
-      <div class="inserisciPassword noned" >
-        <label class="p-2">Inserisci la nuova password</label>
-        <input type="password" formControlName="newPassword" class="form-control w-75 m-auto">
-        <button class="btn btn-light my-3" (click)="resetPassword(changePasswordForm.controls['oldPassword'].value,changePasswordForm.controls['newPassword'].value)">Cambia password</button>
-      </div>
-     </form>
+          <div class="col-md-3">
+            <label class="py-3">Regione</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="regione"
+              readonly
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['regione'].invalid"
+            >
+              Campo autocompilato. Selezione una città!
+            </p>
+          </div>
+          <div class="col-md-3">
+            <label class="py-3">Indirizzo</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="indirizzo"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['indirizzo'].invalid"
+            >
+              Inserisci il tuo indirizzo.
+            </p>
+          </div>
+          <div class="col-md-3">
+            <label class="py-3">Cap</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="cap"
+              readonly
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['cap'].invalid"
+            >
+              Campo autocompilato. Selezione una città!
+            </p>
+          </div>
+          <div class="col-md-9">
+            <label class="py-3">Email</label>
+            <input type="email" class="form-control" formControlName="email" />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['email'].invalid"
+            >
+              Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
+            </p>
+          </div>
+          <div class="col-md-12">
+            <label for="" class="py-3">Nome Azienda</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nomeAzienda"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['nomeAzienda'].invalid"
+            >
+              Inserisci un valore.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Fatturato Medio</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="fatturatoMedio"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['fatturatoMedio'].invalid"
+            >
+              Inserisci un valore numerico.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Numero Dipendenti</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="numeroDipendenti"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['numeroDipendenti'].invalid"
+            >
+              Inserisci un valore numerico
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Settore</label>
+            <select type="text" class="form-select" formControlName="settore">
+              <option value=""></option>
+              <option [value]="s" *ngFor="let s of settori">{{ s }}</option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['settore'].invalid"
+            >
+              Seleziona un valore.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Partita Iva</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="partitaIva"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['partitaIva'].invalid"
+            >
+              Inserisci un valore che rispetti il pattern della partita iva
+              italiana.
+            </p>
+          </div>
+          <div class="col-md-12 py-5">
+            <button
+              class="btn btn-light"
+              [disabled]="modifyProfile.invalid"
+              (click)="modifyProfilo()"
+            >
+              Modifica
+            </button>
+          </div>
+        </div>
+      </form>
+      <p class="fs-5">Vuoi cambiare la password?</p>
+      <form [formGroup]="changePasswordForm">
+        <label class="p-2">Inserisci qui la tua password attuale</label>
+        <input
+          type="password"
+          formControlName="oldPassword"
+          class="form-control w-75 m-auto"
+          (input)="
+            checkPasswords(
+              changePasswordForm.controls['oldPassword'],
+              changePasswordForm.controls['repeteOldPassword']
+            )
+          "
+        />
+        <label class="p-2">Riscrivila qui</label>
+        <input
+          type="password"
+          formControlName="repeteOldPassword"
+          class="form-control w-75 m-auto"
+          (input)="
+            checkPasswords(
+              changePasswordForm.controls['oldPassword'],
+              changePasswordForm.controls['repeteOldPassword']
+            )
+          "
+        />
+        <div class="inserisciPassword noned">
+          <label class="p-2">Inserisci la nuova password</label>
+          <input
+            type="password"
+            formControlName="newPassword"
+            class="form-control w-75 m-auto"
+          />
+          <button
+            class="btn btn-light my-3"
+            (click)="
+              resetPassword(
+                changePasswordForm.controls['oldPassword'].value,
+                changePasswordForm.controls['newPassword'].value
+              )
+            "
+          >
+            Cambia password
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
