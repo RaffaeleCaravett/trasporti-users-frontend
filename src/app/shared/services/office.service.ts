@@ -18,6 +18,9 @@ private spedizione:string = '/spedizione'
 private spedizioneAzienda:string = '/azienda/spedizione'
 private andStato:string = 'AndStato'
 private reset:string = '/reset'
+private findByCitta:string ='/findByCitta'
+private findByNomeAndCognomeContaining:string ='/findByNomeAndCognomeContaining'
+private findByCittaAndNomeAndCognomeContaining:String ='/findByCittaAndNomeAndCognomeContaining'
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){
