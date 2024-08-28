@@ -396,7 +396,8 @@ this.officeService.changePasswordByProfile(psw1,psw2).subscribe({
   next:()=>{
 
   },
-  error:()=>{
+  error:(error:any)=>{
+    this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
 
   },
   complete:()=>{
@@ -404,10 +405,50 @@ this.officeService.changePasswordByProfile(psw1,psw2).subscribe({
   }
 })
 }
-searchT(){
+searchT(page:number,size:number,orderBy:string){
   if(!this.searchTrasportatori.controls['citta'].value&&!this.searchTrasportatori.controls['nome'].value&&!this.searchTrasportatori.controls['cognome'].value){
     this.toastr.error("Non hai inserito nessun valore di ricerca")
   }else{
+    let citta = this.searchTrasportatori.controls['citta'].value
+    let nome = this.searchTrasportatori.controls['nome'].value
+    let cognome = this.searchTrasportatori.controls['cognome'].value
+    if(citta&&!nome&&!cognome){
+      this.officeService.getTrByCitta(citta,page,size,orderBy).subscribe({
+        next:()=>{
+
+        },
+        error:(error:any)=>{
+          this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
+        },
+        complete:()=>{
+
+        }
+      })
+    }else if(!citta&&(nome&&cognome||!nome&&cognome||nome&&!cognome)){
+      this.officeService.getTrByNomeAndCognome(nome,cognome,page,size,orderBy).subscribe({
+        next:()=>{
+
+        },
+        error:(error:any)=>{
+          this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
+        },
+        complete:()=>{
+
+        }
+      })
+    }else{
+      this.officeService.getTrByNomeAndCognomeAndCitta(nome,cognome,citta,page,size,orderBy).subscribe({
+        next:()=>{
+
+        },
+        error:(error:any)=>{
+          this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
+        },
+        complete:()=>{
+
+        }
+      })
+    }
   }
 }
     }
