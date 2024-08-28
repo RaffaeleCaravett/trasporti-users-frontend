@@ -39,6 +39,7 @@ export class OfficeComponent  implements OnInit{
   settori:any[]=[]
   changePasswordForm!:FormGroup
   searchTrasportatori!:FormGroup
+  trasporters:any
 constructor(private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog,private formsService:FormsService){}
 
   ngOnInit():void{
@@ -414,8 +415,8 @@ searchT(page:number,size:number,orderBy:string){
     let cognome = this.searchTrasportatori.controls['cognome'].value
     if(citta&&!nome&&!cognome){
       this.officeService.getTrByCitta(citta,page,size,orderBy).subscribe({
-        next:()=>{
-
+        next:(tr:any)=>{
+this.trasporters=tr
         },
         error:(error:any)=>{
           this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
@@ -424,10 +425,22 @@ searchT(page:number,size:number,orderBy:string){
 
         }
       })
-    }else if(!citta&&(nome&&cognome||!nome&&cognome||nome&&!cognome)){
+    }else if(!citta&&(nome&&cognome)){
       this.officeService.getTrByNomeAndCognome(nome,cognome,page,size,orderBy).subscribe({
-        next:()=>{
+        next:(tr:any)=>{
+this.trasporters=tr
+        },
+        error:(error:any)=>{
+          this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
+        },
+        complete:()=>{
 
+        }
+      })
+    }else if(citta&&nome&&cognome){
+      this.officeService.getTrByNomeAndCognomeAndCitta(nome,cognome,citta,page,size,orderBy).subscribe({
+        next:(tr:any)=>{
+this.trasporters=tr
         },
         error:(error:any)=>{
           this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
@@ -437,17 +450,7 @@ searchT(page:number,size:number,orderBy:string){
         }
       })
     }else{
-      this.officeService.getTrByNomeAndCognomeAndCitta(nome,cognome,citta,page,size,orderBy).subscribe({
-        next:()=>{
-
-        },
-        error:(error:any)=>{
-          this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
-        },
-        complete:()=>{
-
-        }
-      })
+      this.toastr.error("Inserisci la città o nome e cognome o città,nome e cognome insieme")
     }
   }
 }
