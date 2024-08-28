@@ -65,14 +65,14 @@ return this.httpClient.get(environment.API_URL+this.trasportatore)
 changePasswordByProfile(oltPassword:string,newPassword:string){
 return this.httpClient.get(environment.API_URL+this.azienda+this.reset+`/${newPassword}/${oltPassword}/me`)
 }
-getTrByCitta(citta:string){
-  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCitta+`/${citta}`)
+getTrByCitta(citta:string,page:number,size:number,orderBy:number){
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCitta+`/${citta}?page=${page}&size=${size}&orderBy=${orderBy}`)
 }
-getTrByNomeAndCognome(nome:string,cognome:string){
-  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByNomeAndCognomeContaining+`/${nome}/${cognome}`)
+getTrByNomeAndCognome(nome:string,cognome:string,page:number,size:number,orderBy:number){
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByNomeAndCognomeContaining+`/${nome}/${cognome}?page=${page}&size=${size}&orderBy=${orderBy}`)
 }
-getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string){
-  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCittaAndNomeAndCognomeContaining+`/${nome}/${cognome}/${citta}`)
+getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string,page:number,size:number,orderBy:number){
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCittaAndNomeAndCognomeContaining+`/${nome}/${cognome}/${citta}?page=${page}&size=${size}&orderBy=${orderBy}`)
 }
 }
 
