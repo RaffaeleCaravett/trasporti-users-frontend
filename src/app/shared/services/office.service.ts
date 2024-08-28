@@ -65,5 +65,8 @@ return this.httpClient.get(environment.API_URL+this.trasportatore)
 changePasswordByProfile(oltPassword:string,newPassword:string){
 return this.httpClient.get(environment.API_URL+this.azienda+this.reset+`/${newPassword}/${oltPassword}/me`)
 }
+getTrByCitta(citta:string){
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCitta+`${citta}`)
+}
 }
 
