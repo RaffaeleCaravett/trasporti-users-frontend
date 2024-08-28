@@ -66,7 +66,13 @@ changePasswordByProfile(oltPassword:string,newPassword:string){
 return this.httpClient.get(environment.API_URL+this.azienda+this.reset+`/${newPassword}/${oltPassword}/me`)
 }
 getTrByCitta(citta:string){
-  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCitta+`${citta}`)
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCitta+`/${citta}`)
+}
+getTrByNomeAndCognome(nome:string,cognome:string){
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByNomeAndCognomeContaining+`/${nome}/${cognome}`)
+}
+getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string){
+  return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCittaAndNomeAndCognomeContaining+`/${nome}/${cognome}/${citta}`)
 }
 }
 
