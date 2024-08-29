@@ -515,6 +515,14 @@
             formControlName="newPassword1"
             class="form-control w-75 m-auto"
           />
+          <p class="text-danger" *ngIf="changePasswordForm.controls['newPassword'].value!=changePasswordForm.controls['newPassword1'].value&&
+          changePasswordForm.controls['newPassword'].valid&&changePasswordForm.controls['newPassword1'].valid">
+Le password non coincidono.
+          </p>
+          <p class="text-success" *ngIf="changePasswordForm.controls['newPassword'].value==changePasswordForm.controls['newPassword1'].value&&
+          changePasswordForm.controls['newPassword'].valid&&changePasswordForm.controls['newPassword1'].valid">
+Le password coincidono.
+          </p>
           <button
             class="btn btn-light my-3"
             (click)="
