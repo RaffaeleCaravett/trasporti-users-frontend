@@ -82,7 +82,8 @@ this.modifyProfile= new FormGroup({
 this.changePasswordForm=new FormGroup({
 oldPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
 repeteOldPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
-newPassword:new FormControl('',[Validators.required,Validators.minLength(6)])
+newPassword:new FormControl('',[Validators.required,Validators.minLength(6)]),
+newPassword1:new FormControl('',[Validators.required,Validators.minLength(6)])
 })
 this.searchTrasportatori=new FormGroup({
   citta:new FormControl(''),
@@ -392,14 +393,16 @@ if(ps1.valid&&ps2.valid&&ps1.value==ps2.value){
 }
 
 resetPassword(psw1:string,psw2:string,userRole:string){
+  if(this.changePasswordForm.valid){
+    if(this.changePasswordForm.controls['newPassword'].value==this.changePasswordForm.controls['newPassword1'].value){
 if(userRole=='Azienda'){
 this.officeService.changePasswordByProfileAz(psw1,psw2).subscribe({
   next:()=>{
-
-  },
+this.toastr.success("Password modificata correttamente.")
+this.changePasswordForm.reset()
+},
   error:(error:any)=>{
     this.toastr.error(error.error.message||error.error.messageList[0]||"Qualcosa è successo nell'elaborazione della richiesta.")
-
   },
   complete:()=>{
 
@@ -408,6 +411,12 @@ this.officeService.changePasswordByProfileAz(psw1,psw2).subscribe({
 }else{
   console.log(userRole)
 }
+    }else{
+      this.toastr.error("Le nuove password non coincidono.")
+    }
+  }else{
+    this.toastr.error("Completa prima il form correttamente,le password devono avere minimo 6 caratteri.")
+  }
 }
 searchT(page:number,size:number,orderBy:string){
   if(!this.searchTrasportatori.controls['citta'].value&&!this.searchTrasportatori.controls['nome'].value&&!this.searchTrasportatori.controls['cognome'].value){

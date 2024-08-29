@@ -509,12 +509,18 @@
             formControlName="newPassword"
             class="form-control w-75 m-auto"
           />
+          <label class="p-2">Ripeti la nuova password</label>
+          <input
+            type="password"
+            formControlName="newPassword1"
+            class="form-control w-75 m-auto"
+          />
           <button
             class="btn btn-light my-3"
             (click)="
               resetPassword(
-                changePasswordForm.controls['newPassword'].value,
                 changePasswordForm.controls['oldPassword'].value,
+                changePasswordForm.controls['newPassword'].value,
                 user?.role
               )
             "
