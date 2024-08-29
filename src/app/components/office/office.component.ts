@@ -454,4 +454,7 @@ this.trasporters=tr
     }
   }
 }
+openT(t:any){
+
+}
     }
