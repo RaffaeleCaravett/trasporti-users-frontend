@@ -513,8 +513,8 @@
             class="btn btn-light my-3"
             (click)="
               resetPassword(
-                changePasswordForm.controls['oldPassword'].value,
                 changePasswordForm.controls['newPassword'].value,
+                changePasswordForm.controls['oldPassword'].value,
                 user?.role
               )
             "
