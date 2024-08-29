@@ -391,9 +391,9 @@ if(ps1.valid&&ps2.valid&&ps1.value==ps2.value){
 }
 }
 
-resetPassword(psw1:string,psw2:string){
-
-this.officeService.changePasswordByProfile(psw1,psw2).subscribe({
+resetPassword(psw1:string,psw2:string,userRole:string){
+if(userRole=='Azienda'){
+this.officeService.changePasswordByProfileAz(psw1,psw2).subscribe({
   next:()=>{
 
   },
@@ -405,6 +405,9 @@ this.officeService.changePasswordByProfile(psw1,psw2).subscribe({
 
   }
 })
+}else{
+  console.log(userRole)
+}
 }
 searchT(page:number,size:number,orderBy:string){
   if(!this.searchTrasportatori.controls['citta'].value&&!this.searchTrasportatori.controls['nome'].value&&!this.searchTrasportatori.controls['cognome'].value){

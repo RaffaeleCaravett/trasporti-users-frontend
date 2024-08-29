@@ -62,7 +62,7 @@ deleteProfile(){
 getAllTrasportatori(){
 return this.httpClient.get(environment.API_URL+this.trasportatore)
 }
-changePasswordByProfile(oltPassword:string,newPassword:string){
+changePasswordByProfileAz(oltPassword:string,newPassword:string){
 return this.httpClient.get(environment.API_URL+this.azienda+this.reset+`/${newPassword}/${oltPassword}/me`)
 }
 getTrByCitta(citta:string,page:number,size:number,orderBy:string){
