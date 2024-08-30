@@ -47,7 +47,7 @@
             </div>
           </div>
           <div class="col-md-12 py-2">
-            <button class="btn" (click)="searchT(trasporters?.page,trasporters?.elements,'id')">
+            <button class="btn" (click)="searchT(trasporters?.content?.number+1,trasporters?.content?.size,'id')">
               Cerca Trasportatore
             </button>
           </div>
@@ -58,6 +58,9 @@
     {{t.nome + " " + t.cognome}}
   </li>
 </ul>
+<div *ngIf="trasporters?.content?.totalPages>1">
+  <button class="btn" *ngIf="">Indietro</button><button class="btn"></button>
+</div>
         </div>
         <ng-template #noT>
 <p class="fs-3">Al momento non ci sono trasportatori disponibili.</p>
