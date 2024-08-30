@@ -437,7 +437,7 @@ this.trasporters=tr
 
         }
       })
-    }else if(!citta&&(nome&&cognome)){
+    }else if(!citta&&nome&&cognome){
       this.officeService.getTrByNomeAndCognome(nome,cognome,page,size,orderBy).subscribe({
         next:(tr:any)=>{
 this.trasporters=tr

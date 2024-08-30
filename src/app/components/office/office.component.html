@@ -47,7 +47,8 @@
             </div>
           </div>
           <div class="col-md-12 py-2">
-            <button class="btn" (click)="searchT(trasporters?.content?.number+1,trasporters?.content?.size,'id')">
+            {{trasporters?.content?.length}}
+            <button class="btn" (click)="searchT(trasporters?.number+1,trasporters?.size,'id')">
               Cerca Trasportatore
             </button>
           </div>
@@ -59,7 +60,8 @@
   </li>
 </ul>
 <div *ngIf="trasporters?.content?.totalPages>1">
-  <button class="btn" *ngIf="">Indietro</button><button class="btn"></button>
+  <button class="btn" *ngIf="trasporters?.number>0" (click)="searchT(trasporters?.number,trasporters?.size,'id')">Indietro</button>
+  <button class="btn" *ngIf="trasporters?.number+1<trasporters?.totalPages" (click)="searchT(trasporters?.number+2,trasporters?.size,'id')">Avanti</button>
 </div>
         </div>
         <ng-template #noT>
