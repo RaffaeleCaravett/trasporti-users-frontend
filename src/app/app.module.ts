@@ -16,6 +16,7 @@ import { AuthTokenInterceptor } from './core/token.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     NotFoundComponent,
     AnnuncioInfoComponent,
     ResetPasswordComponent,
+    ProfileComponent,
 
   ],
   imports: [
