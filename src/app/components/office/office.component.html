@@ -61,9 +61,9 @@
     {{t.nome + " " + t.cognome}}
   </li>
 </ul>
-<div *ngIf="trasporters?.content?.totalPages>1">
-  <button class="btn" *ngIf="trasporters?.number>0" (click)="searchT(trasporters?.number,trasporters?.size,'id')">Indietro</button>
-  <button class="btn" *ngIf="trasporters?.number+1<trasporters?.totalPages" (click)="searchT(trasporters?.number+2,trasporters?.size,'id')">Avanti</button>
+<div *ngIf="trasporters?.totalPages>1">
+  <button class="btn" *ngIf="trasporters?.number>0" (click)="searchT(trasporters?.number-1,trasporters?.size,'id')">Indietro</button>
+  <button class="btn" *ngIf="trasporters?.number+1<trasporters?.totalPages" (click)="searchT(trasporters?.number+1,trasporters?.size,'id')">Avanti</button>
 </div>
         </div>
         <ng-template #noT>
