@@ -109,6 +109,16 @@ this.settori=settori
   complete:()=>{}
 })
 this.getAnnunci()
+
+this.formsService.getCities().subscribe({
+  next:(cities:any)=>{
+this.cities=cities
+  },
+  error:(err:any)=>{
+    this.toastr.error(err.error.message||err.error.messageList[0])
+  },
+  complete:()=>{}
+})
       }
 
       setBackground(i:number,toDo:string){
