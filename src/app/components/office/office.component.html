@@ -55,9 +55,15 @@
             </button>
           </div>
         </form>
-        <div *ngIf="trasporters&&trasporters?.content?.length>0 else noT">
+        <div>
+          <ul *ngIf="trasportatoreLoader">
+            <li>
+              <app-skeleton-loader Cwidth="w-50" Cheight="30"></app-skeleton-loader>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="trasporters&&trasporters?.content?.length>0&&!trasportatoreLoader else noT">
 <ul>
-  <app-skeleton-loader Cwidth="w-50" Cheight="30"></app-skeleton-loader>
   <li *ngFor="let t of trasporters?.content" (click)="openT(t)">
     {{t.nome + " " + t.cognome}}
   </li>

@@ -50,6 +50,7 @@ export class OfficeComponent implements OnInit {
   changePasswordForm!: FormGroup;
   searchTrasportatori!: FormGroup;
   trasporters: any;
+  trasportatoreLoader:boolean=false
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
@@ -566,6 +567,7 @@ export class OfficeComponent implements OnInit {
       let citta = this.searchTrasportatori.controls['citta'].value;
       let nome = this.searchTrasportatori.controls['nome'].value;
       let cognome = this.searchTrasportatori.controls['cognome'].value;
+      this.trasportatoreLoader=true
       if (citta && !nome && !cognome) {
         this.officeService.getTrByCitta(citta, page, size, orderBy).subscribe({
           next: (tr: any) => {
@@ -578,7 +580,9 @@ export class OfficeComponent implements OnInit {
                 "Qualcosa è successo nell'elaborazione della richiesta."
             );
           },
-          complete: () => {},
+          complete: () => {      this.trasportatoreLoader=true
+setTimeout(()=>{this.trasportatoreLoader=false},1000)
+          },
         });
       } else if (!citta && nome && cognome) {
         this.officeService
@@ -594,7 +598,9 @@ export class OfficeComponent implements OnInit {
                   "Qualcosa è successo nell'elaborazione della richiesta."
               );
             },
-            complete: () => {},
+            complete: () => {      this.trasportatoreLoader=true
+setTimeout(()=>{this.trasportatoreLoader=false},1000)
+            },
           });
       } else if (citta && nome && cognome) {
         this.officeService
@@ -617,7 +623,9 @@ export class OfficeComponent implements OnInit {
                   "Qualcosa è successo nell'elaborazione della richiesta."
               );
             },
-            complete: () => {},
+            complete: () => {      this.trasportatoreLoader=true
+setTimeout(()=>{this.trasportatoreLoader=false},1000)
+            },
           });
       } else {
         this.toastr.error(

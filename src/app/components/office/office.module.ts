@@ -5,7 +5,7 @@ import { OfficeRoutingModule } from "./office-routing.module";
 import { UserInfoModule } from "../user-info/user-info.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import {MatSliderModule} from '@angular/material/slider';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SkeletonModuleModule } from "src/app/shared/modules/skeleton-module.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     UserInfoModule,
     ReactiveFormsModule,
     MatSliderModule,
-    NgxSkeletonLoaderModule,
+    SkeletonModuleModule
   ],
  providers: [
 ],
