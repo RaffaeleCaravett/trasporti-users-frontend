@@ -1,1 +1,45 @@
-<p>profile works!</p>
+<div mat-dialog-title>
+  <h1>Informazioni</h1>
+</div>
+<div mat-dialog-content>
+  <div class="container">
+    <div class="row">
+  <div class="col-md-5">
+{{data?.nome}}
+  </div>
+  <div class="col-md-5">
+    {{data?.cognome}}
+  </div>
+  <div class="col-md-2">
+    {{ data?.eta + " anni."}}
+  </div>
+  <div class="col-md-12">
+  {{data?.codiceFiscale}}
+  </div>
+  <div class="col-md-4">
+    {{data?.indirizzo}}
+  </div>
+  <div class="col-md-4">
+    {{data?.citta}}
+  </div>
+  <div class="col-md-4">
+    {{data?.cap}}
+  </div>
+  <div class="col-md-12">
+    {{data?.regione}}
+  </div>
+  <div class="col-md-6">
+    {{data?.email}}
+  </div>
+  <div class="col-md-6">
+{{data?.partitaIva}}
+  </div>
+  <div class="col-md-6">
+    {{data?.role}}
+  </div>
+  <div class="col-md-6">
+   Mezzi : {{data?.flottaMezzi}}
+  </div>
+    </div>
+  </div>
+</div>
