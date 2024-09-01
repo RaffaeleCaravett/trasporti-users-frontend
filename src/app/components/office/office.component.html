@@ -57,6 +57,7 @@
         </form>
         <div *ngIf="trasporters&&trasporters?.content?.length>0 else noT">
 <ul>
+  <app-skeleton-loader Cwidth="w-50" Cheight="30"></app-skeleton-loader>
   <li *ngFor="let t of trasporters?.content" (click)="openT(t)">
     {{t.nome + " " + t.cognome}}
   </li>

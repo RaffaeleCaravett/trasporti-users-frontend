@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SkeletonLoaderComponent } from './shared/components/skeleton-loader/skeleton-loader.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     NotFoundComponent,
     AnnuncioInfoComponent,
     ResetPasswordComponent,
-    ProfileComponent,
-
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
