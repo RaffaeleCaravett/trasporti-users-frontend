@@ -645,7 +645,7 @@ setTimeout(()=>{this.trasportatoreLoader=false},1000)
   getStatistica(){
     this.officeService.getStatisticaByAziendaId(this.user.id).subscribe({
 next:(sta:any)=>{
-
+this.statistica=sta
 },
 error:(error:any)=>{
   this.toastr.error(
