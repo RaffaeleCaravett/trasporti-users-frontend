@@ -51,6 +51,7 @@ export class OfficeComponent implements OnInit {
   searchTrasportatori!: FormGroup;
   trasporters: any;
   trasportatoreLoader:boolean=false
+  statistica:any
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
@@ -184,6 +185,9 @@ export class OfficeComponent implements OnInit {
         otherP.style.background = 'white';
         otherP.style.color = 'black';
       }
+    }
+    if(toDo=='Monitora le tue statistiche'){
+    this.getStatistica()
     }
   }
 
@@ -637,5 +641,20 @@ setTimeout(()=>{this.trasportatoreLoader=false},1000)
   openT(t: any) {
     const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
     dialogRef.afterClosed().subscribe((data:any)=>{})
+  }
+  getStatistica(){
+    this.officeService.getStatisticaByAziendaId(this.user.id).subscribe({
+next:(sta:any)=>{
+
+},
+error:(error:any)=>{
+  this.toastr.error(
+    error.error.message ||
+      error.error.messageList[0] ||
+      "Qualcosa è successo nell'elaborazione della richiesta."
+  );
+},
+complete:()=>{}
+    })
   }
 }
