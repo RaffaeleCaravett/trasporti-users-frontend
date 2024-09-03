@@ -155,7 +155,6 @@ export class OfficeComponent implements OnInit {
       },
       complete: () => {},
     });
-    this.getAnnunci();
 
     this.formsService.getCities().subscribe({
       next: (cities: any) => {
@@ -169,7 +168,6 @@ export class OfficeComponent implements OnInit {
   }
 
   setBackground(i: number, toDo: string) {
-    this.getAnnunci();
     this.toDo = toDo;
     this.aggiungiAnnuncioSubmitted = false;
     let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement;
@@ -188,6 +186,8 @@ export class OfficeComponent implements OnInit {
     }
     if(toDo=='Monitora le tue statistiche'){
     this.getStatistica()
+    }else if (toDo == 'Monitora un annuncio'){
+      this.getAnnunci();
     }
   }
 

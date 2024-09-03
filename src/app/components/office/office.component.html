@@ -16,7 +16,7 @@
         </p>
       </div>
     </div>
-    <div class="col-md-6" *ngIf="toDo != 'Modifica il profilo'">
+    <div class="col-md-6" *ngIf="toDo != 'Modifica il profilo' && user?.role=='Azienda'">
       <div *ngIf="toDo == ''" class="w-75 m-auto py-5">
         <p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
         <p class="fs-5">
@@ -127,7 +127,7 @@
           </div>
         </div>
         <ng-template #noT>
-          <p class="fs-3">Al momento non ci sono trasportatori disponibili.</p>
+          <p class="fs-3">Lista trasportatori attualmente vuota. Ricerca.</p>
         </ng-template>
       </div>
       <div *ngIf="toDo == 'Monitora un annuncio'" class="py-5">
@@ -261,17 +261,19 @@
               Cerca
             </button>
           </form>
-          <ul>
-            <p class="fs-5">Annunci pubblicati :</p>
-            <p
-              class="fs-5 py-5"
-              *ngIf="
-                !annunciByAzienda ||
-                (annunciByAzienda && annunciByAzienda.content.length == 0)
-              "
-            >
-              Non ci sono annunci pubblicati.
-            </p>
+          <p class="fs-5">Annunci pubblicati :</p>
+          <p
+            class="fs-5 py-5"
+            *ngIf="
+              !annunciByAzienda ||
+              (annunciByAzienda && annunciByAzienda.content.length == 0)
+            "
+          >
+            Non ci sono annunci pubblicati.
+          </p>
+          <ul *ngIf="
+          annunciByAzienda && annunciByAzienda.content.length > 0
+        ">
             <li *ngFor="let a of annunciByAzienda.content" class="py-4">
               Id {{ a.id }} - Del {{ a.dataPubblicazione }}
               <button class="btn btn-dark" (click)="showAnnuncio(a)">
@@ -384,7 +386,7 @@
         [user]="user"
       ></app-user-info>
     </div>
-    <div class="col-md-9 py-5" *ngIf="toDo == 'Modifica il profilo'">
+    <div class="col-md-9 py-5" *ngIf="toDo == 'Modifica il profilo'&& user?.role=='Azienda'">
       <p class="fs-3">Modifica il tuo profilo</p>
       <form [formGroup]="modifyProfile">
         <div class="row">
