@@ -21,6 +21,7 @@ private reset:string = '/reset'
 private findByCitta:string ='/findByCitta'
 private findByNomeAndCognomeContaining:string ='/findByNomeAndCognomeContaining'
 private findByCittaAndNomeAndCognomeContaining:String ='/findByCittaAndNomeAndCognomeContaining'
+private aziendaStatistica:string ='/azienda/statistica'
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){
@@ -76,6 +77,9 @@ getTrByNomeAndCognome(nome:string,cognome:string,page:number,size:number,orderBy
 }
 getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string,page:number,size:number,orderBy:string){
   return this.httpClient.get(environment.API_URL+this.azienda+this.trasportatore+this.findByCittaAndNomeAndCognomeContaining+`/${nome}/${cognome}/${citta}?page=${page||0}&size=${size||5}&orderBy=${orderBy||'id'}`)
+}
+getStatisticaByAziendaId(id:number){
+  return this.httpClient.get(environment.API_URL+this.aziendaStatistica+`/${id}`)
 }
 }
 

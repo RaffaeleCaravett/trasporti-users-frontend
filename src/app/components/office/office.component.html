@@ -26,8 +26,15 @@
           vivere.
         </p>
       </div>
-      <div *ngIf="toDo == ''"></div>
-      <div *ngIf="toDo == ''"></div>
+      <div *ngIf="toDo == 'Monitora le tue statistiche'" class="py-5">
+        <p class="fs-3">Un po' di statistiche</p>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="fs-5">Annunci pubblicati : </p>
+
+          </div>
+        </div>
+      </div>
       <div *ngIf="toDo == 'Cerca un Trasportatore'" class="py-5">
         <p class="fs-3">Cerca un trasportatore</p>
         <p>Stringi contatti, chiedi informazioni, proponi sfide.</p>
@@ -37,20 +44,29 @@
               <label class="py-3">Città</label>
               <select name="" id="" class="form-select" formControlName="citta">
                 <option value=""></option>
-                <option value="{{c}}" *ngFor="let c of cities">{{c}}</option>
+                <option value="{{ c }}" *ngFor="let c of cities">
+                  {{ c }}
+                </option>
               </select>
             </div>
             <div class="col-md-4">
               <label class="py-3">Nome</label>
-              <input type="text" class="form-control"  formControlName="nome"/>
+              <input type="text" class="form-control" formControlName="nome" />
             </div>
             <div class="col-md-4">
               <label class="py-3">Cognome</label>
-              <input type="text" class="form-control"  formControlName="cognome"/>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="cognome"
+              />
             </div>
           </div>
           <div class="col-md-12 py-2">
-            <button class="btn" (click)="searchT(trasporters?.number,trasporters?.size,'id')">
+            <button
+              class="btn"
+              (click)="searchT(trasporters?.number, trasporters?.size, 'id')"
+            >
               Cerca Trasportatore
             </button>
           </div>
@@ -58,32 +74,56 @@
         <div>
           <ul *ngIf="trasportatoreLoader">
             <li>
-              <app-skeleton-loader Cwidth="w-50" Cheight="30"></app-skeleton-loader>
+              <app-skeleton-loader
+                Cwidth="w-50"
+                Cheight="30"
+              ></app-skeleton-loader>
             </li>
           </ul>
         </div>
-        <div *ngIf="trasporters&&trasporters?.content?.length>0&&!trasportatoreLoader else noT">
-<ul>
-  <li *ngFor="let t of trasporters?.content" (click)="openT(t)">
-    {{t.nome + " " + t.cognome}}
-  </li>
-</ul>
-<div *ngIf="trasporters?.totalPages>1">
-  <button class="btn" *ngIf="trasporters?.number>0" (click)="searchT(trasporters?.number-1,trasporters?.size,'id')">Indietro</button>
-  <button class="btn" *ngIf="trasporters?.number+1<trasporters?.totalPages" (click)="searchT(trasporters?.number+1,trasporters?.size,'id')">Avanti</button>
-</div>
+        <div
+          *ngIf="
+            trasporters &&
+              trasporters?.content?.length > 0 &&
+              !trasportatoreLoader;
+            else noT
+          "
+        >
+          <ul>
+            <li *ngFor="let t of trasporters?.content" (click)="openT(t)">
+              {{ t.nome + " " + t.cognome }}
+            </li>
+          </ul>
+          <div *ngIf="trasporters?.totalPages > 1">
+            <button
+              class="btn"
+              *ngIf="trasporters?.number > 0"
+              (click)="
+                searchT(trasporters?.number - 1, trasporters?.size, 'id')
+              "
+            >
+              Indietro
+            </button>
+            <button
+              class="btn"
+              *ngIf="trasporters?.number + 1 < trasporters?.totalPages"
+              (click)="
+                searchT(trasporters?.number + 1, trasporters?.size, 'id')
+              "
+            >
+              Avanti
+            </button>
+          </div>
         </div>
         <ng-template #noT>
-<p class="fs-3">Al momento non ci sono trasportatori disponibili.</p>
+          <p class="fs-3">Al momento non ci sono trasportatori disponibili.</p>
         </ng-template>
       </div>
       <div *ngIf="toDo == 'Monitora un annuncio'" class="py-5">
         <p class="fs-3">Monitora i tuoi annunci</p>
         <p class="fs-6">
           Hai {{ annunciByAziendaAndPubblicati }}
-          {{
-            annunciByAziendaAndPubblicati == 1 ? " annuncio" : " annunci"
-          }}
+          {{ annunciByAziendaAndPubblicati == 1 ? " annuncio" : " annunci" }}
           ancora in stato "Pubblicato".
         </p>
         <div *ngIf="annunciByAzienda && annunciByAzienda.content">
@@ -529,13 +569,27 @@
             formControlName="newPassword1"
             class="form-control w-75 m-auto"
           />
-          <p class="text-danger" *ngIf="changePasswordForm.controls['newPassword'].value!=changePasswordForm.controls['newPassword1'].value&&
-          changePasswordForm.controls['newPassword'].valid&&changePasswordForm.controls['newPassword1'].valid">
-Le password non coincidono.
+          <p
+            class="text-danger"
+            *ngIf="
+              changePasswordForm.controls['newPassword'].value !=
+                changePasswordForm.controls['newPassword1'].value &&
+              changePasswordForm.controls['newPassword'].valid &&
+              changePasswordForm.controls['newPassword1'].valid
+            "
+          >
+            Le password non coincidono.
           </p>
-          <p class="text-success" *ngIf="changePasswordForm.controls['newPassword'].value==changePasswordForm.controls['newPassword1'].value&&
-          changePasswordForm.controls['newPassword'].valid&&changePasswordForm.controls['newPassword1'].valid">
-Le password coincidono.
+          <p
+            class="text-success"
+            *ngIf="
+              changePasswordForm.controls['newPassword'].value ==
+                changePasswordForm.controls['newPassword1'].value &&
+              changePasswordForm.controls['newPassword'].valid &&
+              changePasswordForm.controls['newPassword1'].valid
+            "
+          >
+            Le password coincidono.
           </p>
           <button
             class="btn btn-light my-3"
