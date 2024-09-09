@@ -5,7 +5,7 @@ import { environment } from "src/app/core/environment"
 @Injectable({
   providedIn: 'root'
 })
-export class FormsService {
+export class ProfileService {
   private T:string = '/trasportatore'
   private Az:string = '/azienda'
   private recensione:string = '/recensione'

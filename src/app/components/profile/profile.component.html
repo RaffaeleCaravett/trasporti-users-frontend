@@ -52,7 +52,7 @@
   <label class="p-2">Come classifichi questa recensione?</label>
   <select name="" id="" class="form-select" formControlName="polo">
     <option value=""></option>
-    <option value="" *ngFor="let p of poli">{{p}}</option>
+    <option value="{{p}}" *ngFor="let p of poli">{{p}}</option>
   </select>
   <label class="p-2">Scrivi qualcosa sulla tua esperienza con {{data?.nome + ' ' + data?.cognome}}</label>
   <textarea type="text" class="form-control" formControlName="message">

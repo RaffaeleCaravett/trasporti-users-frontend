@@ -17,6 +17,7 @@ export class FormsService {
   private Tsignup:string = '/trasportatore'
   private Azsignup:string = '/azienda'
   private token:string =''
+  private user:any
   private tAccess:string='/AccessTToken'
   private azAccess:string ='/AccessAzToken'
   private tRefresh:string='/RefreshTToken'
@@ -54,6 +55,12 @@ getToken(){
 }
 setToken(token:string){
  this.token=token;
+}
+getUser(){
+  return this.user;
+}
+setUser(user:any){
+ this.user=user;
 }
 authenticateUser(boolean:any){
   this.isAuthenticatedUser.next(boolean)
