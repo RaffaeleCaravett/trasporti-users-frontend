@@ -3,7 +3,7 @@
 </div>
 <div mat-dialog-content>
   <div class="container">
-    <div class="row">
+    <div class="row p-2 bg-light rounded">
   <div class="col-md-5">
 {{data?.nome}}
   </div>
@@ -40,21 +40,26 @@
   <div class="col-md-6">
    Mezzi : {{data?.flottaMezzi}}
   </div>
-  <div class="col-md-12 text-center">
-    <p class="fs-5">Recensisci trasportatore</p>
-  </div>
-  <div class="col-md-12">
-    <form [formGroup]="recensioneTForm" class="w-50 m-auto border rounded p-3">
-<label class="p-2">Valore recensione</label>
-<select name="" id="" class="form-select">
-  <option value=""></option>
-  <option value="" *ngFor="let p of poli">{{p}}</option>
-</select>
-<label class="p-2">Messaggio </label>
-<textarea type="text" class="form-control">
-</textarea>
-</form>
-  </div>
     </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+      <p class="fs-5">Recensisci trasportatore</p>
+    </div>
+    </div>
+<div class="row p-2 rounded bg-light">
+   <div class="col-md-12">
+      <form [formGroup]="recensioneTForm" class="w-50 m-auto border rounded p-3">
+  <label class="p-2">Valore recensione</label>
+  <select name="" id="" class="form-select">
+    <option value=""></option>
+    <option value="" *ngFor="let p of poli">{{p}}</option>
+  </select>
+  <label class="p-2">Messaggio </label>
+  <textarea type="text" class="form-control">
+  </textarea>
+  </form>
+    </div>
+</div>
+
   </div>
 </div>
