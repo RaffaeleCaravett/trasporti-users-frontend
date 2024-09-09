@@ -37,6 +37,15 @@ export class ProfileComponent implements OnInit {
           message: this.recensioneTForm.controls['message'].value || '',
           polo: this.recensioneTForm.controls['polo'].value,
           trasportatore_id: this.data.id,
+          azienda_id:this.user.id
+        }).subscribe({
+          next:(rece:any)=>{
+            this.updateReces()
+          },
+          error:(error:any)=>{
+            this.toastr.error(error?.message||error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
+          },
+          complete:()=>{}
         });
       } else {
       }
@@ -44,4 +53,8 @@ export class ProfileComponent implements OnInit {
       this.toastr.show('Inserisci la valutazione');
     }
   }
+
+updateReces(){
+
+}
 }
