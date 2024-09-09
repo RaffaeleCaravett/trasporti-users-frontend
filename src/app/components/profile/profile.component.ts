@@ -55,6 +55,6 @@ export class ProfileComponent implements OnInit {
   }
 
 updateReces(){
-
+this.profileService.getTRecensioni(this.data.id,0,10,"id")
 }
 }
