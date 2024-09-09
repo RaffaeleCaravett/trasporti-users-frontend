@@ -11,7 +11,12 @@ export class ProfileComponent {
 
   recensioneTForm!:FormGroup
   poli:string[]=['Positiva','Negativa']
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     console.log(data)
   }
+
+inviaRecensione(){
+
+}
 }
