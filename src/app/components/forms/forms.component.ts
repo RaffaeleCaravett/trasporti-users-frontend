@@ -90,9 +90,11 @@ this.formsService.TlogIn(
 ).subscribe({
   next:(data:any)=>{
     if(data&&data.trasportatore){
-      localStorage.setItem('Trasportatore',JSON.stringify(data.trasportatore))
+      localStorage.setItem('trasportatore',JSON.stringify(data.trasportatore))
+      this.formsService.setUser(JSON.parse(localStorage.getItem('trasportatore')!))
      }else if(data&&data.azienda){
-      localStorage.setItem('Azienda',JSON.stringify(data.azienda))
+      localStorage.setItem('azienda',JSON.stringify(data.azienda))
+      this.formsService.setUser(JSON.parse(localStorage.getItem('azienda')!))
      }
      localStorage.setItem('TrAccessToken',data.tokens.accessToken)
      localStorage.setItem('TrRefreshToken',data.tokens.refreshToken)
@@ -114,9 +116,11 @@ else {
    ).subscribe({
      next:(data:any)=>{
    if(data&&data.azienda){
-    localStorage.setItem('Azienda',JSON.stringify(data.azienda))
+    localStorage.setItem('azienda',JSON.stringify(data.azienda))
+    this.formsService.setUser(JSON.parse(localStorage.getItem('azienda')!))
    }else if(data&&data.trasportatore){
-    localStorage.setItem('Trasportatore',JSON.stringify(data.trasportatore))
+    localStorage.setItem('trasportatore',JSON.stringify(data.trasportatore))
+    this.formsService.setUser(JSON.parse(localStorage.getItem('trasportatore')!))
    }
    localStorage.setItem('AzAccessToken',data.tokens.accessToken)
    localStorage.setItem('AzRefreshToken',data.tokens.refreshToken)
