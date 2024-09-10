@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
             this.updateReces()
           },
           error:(error:any)=>{
-            this.toastr.error(error?.message||error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
+            this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
           },
           complete:()=>{}
         });
@@ -55,6 +55,14 @@ export class ProfileComponent implements OnInit {
   }
 
 updateReces(){
-this.profileService.getTRecensioni(this.data.id,0,10,"id")
+this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
+  next:(reces:any)=>{
+    this.recensioniT=reces
+  },
+  error:(error:any)=>{
+    this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
+  },
+  complete:()=>{}
+})
 }
 }
