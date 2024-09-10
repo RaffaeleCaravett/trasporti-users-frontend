@@ -48,7 +48,31 @@
     </div>
     <div class="row p-2 rounded bg-light"  *ngIf="recensioniT && recensioniT?.content.length>0">
       <div class="col-md-12">
-
+<form [formGroup]="recensioneTFormPagination" class="d-flex">
+<div class="row">
+  <div class="col-md-4">
+    <label for="">Pagina</label>
+    <button class="btn">Indietro</button>
+    <button class="btn">Avanti</button>
+  </div>
+  <div class="col-md-4">
+    <label for=""> Recensioni</label>
+    <select name="" id="" class="form-select">
+      <option value=""></option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+   <label for=""> Ordina per</label>
+   <select name="" id="" class="form-select">
+    <option value=""></option>
+    <option value="id">Id</option>
+    <option value="message">Commento</option>
+   </select>
+  </div>
+</div>
+</form>
       </div>
     </div>
     <div class="row">

@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   recensioneTForm!: FormGroup;
   poli: string[] = ['positiva', 'negativa'];
   user: any;
+  recensioneTFormPagination!: FormGroup;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private profileService: ProfileService,
@@ -26,7 +27,12 @@ export class ProfileComponent implements OnInit {
     this.user = this.formsService.getUser();
     this.recensioneTForm = new FormGroup({
       polo: new FormControl('', Validators.required),
-      message: new FormControl(''),
+      message: new FormControl('')
+    });
+    this.recensioneTFormPagination = new FormGroup({
+      page: new FormControl(''),
+      size: new FormControl(''),
+      orderBy: new FormControl('')
     });
   }
 
