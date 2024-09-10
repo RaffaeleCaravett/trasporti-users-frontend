@@ -30,10 +30,10 @@ export class ProfileComponent implements OnInit {
       message: new FormControl('')
     });
     this.recensioneTFormPagination = new FormGroup({
-      page: new FormControl(''),
       size: new FormControl(''),
       orderBy: new FormControl('')
     });
+    this.updateReces()
   }
 
   inviaRecensione() {

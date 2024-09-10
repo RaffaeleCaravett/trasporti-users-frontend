@@ -14,10 +14,10 @@ export class ProfileService {
   constructor(private http:HttpClient) { }
 
 getAzRecensioniStated(azId:number,stato:string,page:number,size:number,orderBy:string){
-  return this.http.get(environment.API_URL+this.T+this.recensione+'Az'+this.paginated+'AndStato'+`/${azId+'/'+stato+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
+  return this.http.get(environment.API_URL+this.T+this.recensione+this.paginated+'AndStato'+`/${azId+'/'+stato+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 getAzRecensioni(azId:number,page:number,size:number,orderBy:string){
-  return this.http.get(environment.API_URL+this.T+this.recensione+'Az'+this.paginated+`/${azId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
+  return this.http.get(environment.API_URL+this.T+this.recensione+this.paginated+`/${azId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 postAzRecensione(recensione:any){
   return this.http.post(environment.API_URL+this.T+this.recensione,recensione)
@@ -29,10 +29,10 @@ deleteAzRecensione(TId:number,receId:number){
   return this.http.delete(environment.API_URL+this.T+this.recensione+`/${TId}/${receId}`)
 }
 getTRecensioniStated(tId:number,stato:string,page:number,size:number,orderBy:string){
-  return this.http.get(environment.API_URL+this.Az+this.recensione+'T'+this.paginated+'AndStato'+`/${tId+'/'+stato+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
+  return this.http.get(environment.API_URL+this.Az+this.recensione+this.paginated+'AndStato'+`/${tId+'/'+stato+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 getTRecensioni(tId:number,page:number,size:number,orderBy:string){
-  return this.http.get(environment.API_URL+this.Az+this.recensione+'T'+this.paginated+`/${tId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
+  return this.http.get(environment.API_URL+this.Az+this.recensione+this.paginated+`/${tId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 postTRecensione(recensione:any){
   return this.http.post(environment.API_URL+this.Az+this.recensione,recensione)
