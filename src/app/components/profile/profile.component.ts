@@ -13,7 +13,7 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 export class ProfileComponent implements OnInit {
   recensioniT:any
   recensioneTForm!: FormGroup;
-  poli: string[] = ['Positiva', 'Negativa'];
+  poli: string[] = ['positiva', 'negativa'];
   user: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
