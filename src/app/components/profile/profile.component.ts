@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { FormsService } from 'src/app/shared/services/forms.service';
-import { OfficeService } from 'src/app/shared/services/office.service';
 import { ProfileService } from 'src/app/shared/services/profile.service';
 
 @Component({
@@ -12,6 +11,7 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+  recensioniT:any
   recensioneTForm!: FormGroup;
   poli: string[] = ['Positiva', 'Negativa'];
   user: any;

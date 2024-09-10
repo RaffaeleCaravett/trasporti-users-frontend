@@ -55,6 +55,7 @@ this.router.navigate([`${location||'/home'}`])
       })
     }
 if(azienda){
+  debugger
   this.formsService.verifyAziendaToken(azienda).subscribe({
     next:(a:any)=>{
       localStorage.setItem('azienda',JSON.stringify(a))
@@ -87,6 +88,7 @@ complete:()=>{}
     },
     complete:()=>{}
   })
+  debugger
 }
   }
 }
