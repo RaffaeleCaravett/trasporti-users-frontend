@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-updateReces(){
+updateReces(page?:number,size?:number,orderBy?:string){
 this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
   next:(reces:any)=>{
     this.recensioniT=reces
