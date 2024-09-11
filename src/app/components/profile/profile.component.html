@@ -48,6 +48,25 @@
       class="row p-2 rounded bg-light"
       *ngIf="recensioniT && recensioniT?.content.length > 0"
     >
+    <div class="col-md-12">
+      <div class="row" *ngFor="let r of recensioniT.content">
+        <div class="col-md-4">
+          <p [ngClass]="r.poloRecensione=='positiva'?'text-success':'text-danger'">
+            {{r.poloRecensione}}
+          </p>
+        </div>
+        <div class="col-md-8 px-2">
+        <p>
+          {{r.commento}}
+        </p>
+        </div>
+<div class="col-md-12">
+  <p>
+    Effettuata il {{r.localDate}} da fare
+  </p>
+</div>
+      </div>
+    </div>
       <div class="col-md-12">
         <form [formGroup]="recensioneTFormPagination" class="d-flex">
           <div class="row">
@@ -90,7 +109,7 @@
               </select>
             </div>
             <div class="col-md-4">
-              <label for=""> Ordina per</label>
+              <label for=""> Ordina</label>
               <select
                 name=""
                 id=""
