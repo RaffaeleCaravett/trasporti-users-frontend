@@ -33,10 +33,10 @@
       <p class="fs-3">Cerca un trasportatore</p>
       <p>Stringi contatti, chiedi informazioni, proponi sfide.</p>
       <form [formGroup]="searchTrasportatori">
-        <div class="row">
+        <div class="row py-2">
           <div class="col-md-4">
             <label class="py-3">Città</label>
-            <select name="" id="" class="form-select" formControlName="citta">
+            <select name="" id="" class="form-select" formControlName="citta" (change)="searchT(trasporters?.number, trasporters?.size, 'id')">
               <option value=""></option>
               <option value="{{ c }}" *ngFor="let c of cities">
                 {{ c }}
@@ -45,25 +45,25 @@
           </div>
           <div class="col-md-4">
             <label class="py-3">Nome</label>
-            <input type="text" class="form-control" formControlName="nome" />
+            <input type="text" class="form-control" formControlName="nome" (input)="searchT(trasporters?.number, trasporters?.size, 'id')" />
           </div>
           <div class="col-md-4">
             <label class="py-3">Cognome</label>
             <input
               type="text"
               class="form-control"
-              formControlName="cognome"
+              formControlName="cognome" (input)="searchT(trasporters?.number, trasporters?.size, 'id')"
             />
           </div>
         </div>
-        <div class="col-md-12 py-2">
-          <button
+      <!--  <div class="col-md-12 py-2">
+           <button
             class="btn"
             (click)="searchT(trasporters?.number, trasporters?.size, 'id')"
           >
             Cerca Trasportatore
           </button>
-        </div>
+        </div> -->
       </form>
       <div>
         <ul *ngIf="trasportatoreLoader">
