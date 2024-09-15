@@ -71,4 +71,20 @@ this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
   complete:()=>{}
 })
 }
+deleteRece(receId:number,userId:number){
+  this.profileService.deleteTRecensione(userId,receId).subscribe({
+    next:(data:any)=>{
+      if(data){
+       this.toastr.success("Recensione eliminata con successo.")
+       this.updateReces()
+      }else{
+        this.toastr.error("C'è stato un problema nell'elaborazione della richiesta.")
+      }
+    },
+    error:(error:any)=>{
+this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
+    },
+    complete:()=>{}
+  })
+}
 }

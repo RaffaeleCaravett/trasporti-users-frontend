@@ -51,6 +51,11 @@
     <div class="col-md-12">
       <div class="p-3">
   <div class="row rounded shadow-sm bg-personal" *ngFor="let r of recensioniT.content">
+    <div class="col-md-12 text-end">
+      <button class="btn" *ngIf="user?.id==r?.da?.id" (click)="deleteRece(r.id,user.id)" title="Elimina">
+        ❌
+      </button>
+    </div>
         <div class="col-md-4">
           <p [ngClass]="r.poloRecensione=='positiva'?'text-success':'text-danger'">
             {{r.poloRecensione}}
