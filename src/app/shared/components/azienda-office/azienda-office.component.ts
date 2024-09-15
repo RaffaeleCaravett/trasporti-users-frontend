@@ -308,7 +308,7 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
           });
       } else {
         this.toastr.error(
-          "La data 'Da' non può essere superiore alla data 'A'"
+          "La data 'Da' non può essere superiore o uguale alla data 'A'"
         );
       }
     }
