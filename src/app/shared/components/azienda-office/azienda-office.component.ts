@@ -18,6 +18,8 @@ export class AziendaOfficeComponent implements OnInit,OnChanges{
 @Input() user:any
 @Input() aggiungiAnnuncioFormSubmitted:boolean=false
 @Input() statistica:any
+@Input() cities:string[]=[]
+@Input() settori:string[]=[]
   aggiungiAnnuncioForm!: FormGroup;
   year: number = 0;
   today = new Date();
@@ -39,8 +41,6 @@ export class AziendaOfficeComponent implements OnInit,OnChanges{
   searchAnnunciByAziendaRetrMax: number = 14000;
   searchAnnunciByAziendaRetrMin: number = 2000;
   modifyProfile!: FormGroup;
-  cities: any[] = [];
-  settori: any[] = [];
   changePasswordForm!: FormGroup;
   searchTrasportatori!: FormGroup;
   trasporters: any;
@@ -77,82 +77,14 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
       da: new FormControl(''),
       a: new FormControl(''),
     });
-
-    this.modifyProfile = new FormGroup({
-      citta: new FormControl(this.user.citta, Validators.required),
-      regione: new FormControl(this.user.regione, Validators.required),
-      indirizzo: new FormControl(this.user.indirizzo, Validators.required),
-      cap: new FormControl(this.user.cap, Validators.required),
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
-      ]),
-      nomeAzienda: new FormControl(this.user?.nomeAzienda, Validators.required),
-      fatturatoMedio: new FormControl(
-        this.user?.fatturatoMedio,
-        Validators.required
-      ),
-      numeroDipendenti: new FormControl(
-        this.user?.numeroDipendenti,
-        Validators.required
-      ),
-      settore: new FormControl(this.user?.settore, Validators.required),
-      partitaIva: new FormControl(this.user?.partitaIva, [
-        Validators.required,
-        Validators.pattern(/^[0-9]{11}$/),
-      ]),
-    });
-    this.changePasswordForm = new FormGroup({
-      oldPassword: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      repeteOldPassword: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      newPassword: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      newPassword1: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-    });
     this.searchTrasportatori = new FormGroup({
       citta: new FormControl(''),
       nome: new FormControl(''),
       cognome: new FormControl(''),
     });
-    this.formsService.getCities().subscribe({
-      next: (cities: any) => {
-        this.cities = cities;
-      },
-      error: (err: any) => {
-        this.toastr.error(err.error.message || err.error.messageList[0]);
-      },
-      complete: () => {},
-    });
-    this.formsService.getSettori().subscribe({
-      next: (settori: any) => {
-        this.settori = settori;
-      },
-      error: (err: any) => {
-        this.toastr.error(err.error.message || err.error.messageList[0]);
-      },
-      complete: () => {},
-    });
 
-    this.formsService.getCities().subscribe({
-      next: (cities: any) => {
-        this.cities = cities;
-      },
-      error: (err: any) => {
-        this.toastr.error(err.error.message || err.error.messageList[0]);
-      },
-      complete: () => {},
-    });
+
+
   }
 
 

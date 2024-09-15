@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-office',
@@ -44,6 +44,69 @@ export class OfficeComponent implements OnInit {
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
     }
+    this.formsService.getCities().subscribe({
+      next: (cities: any) => {
+        this.cities = cities;
+        console.log(this.cities)
+      },
+      error: (err: any) => {
+        this.toastr.error(err.error.message || err.error.messageList[0]);
+      },
+      complete: () => {
+
+      },
+    });
+    this.formsService.getSettori().subscribe({
+      next: (settori: any) => {
+        this.settori = settori;
+      },
+      error: (err: any) => {
+        this.toastr.error(err.error.message || err.error.messageList[0]);
+      },
+      complete: () => {this.modifyProfile = new FormGroup({
+        citta: new FormControl(this.user.citta, Validators.required),
+        regione: new FormControl(this.user.regione, Validators.required),
+        indirizzo: new FormControl(this.user.indirizzo, Validators.required),
+        cap: new FormControl(this.user.cap, Validators.required),
+        email: new FormControl(this.user.email, [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
+        ]),
+        nomeAzienda: new FormControl(this.user?.nomeAzienda, Validators.required),
+        fatturatoMedio: new FormControl(
+          this.user?.fatturatoMedio,
+          Validators.required
+        ),
+        numeroDipendenti: new FormControl(
+          this.user?.numeroDipendenti,
+          Validators.required
+        ),
+        settore: new FormControl(this.user?.settore, Validators.required),
+        partitaIva: new FormControl(this.user?.partitaIva, [
+          Validators.required,
+          Validators.pattern(/^[0-9]{11}$/),
+        ]),
+      });
+      this.changePasswordForm = new FormGroup({
+        oldPassword: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        repeteOldPassword: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        newPassword: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        newPassword1: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+      });},
+    });
+
   }
 
   modifyProfilo() {
