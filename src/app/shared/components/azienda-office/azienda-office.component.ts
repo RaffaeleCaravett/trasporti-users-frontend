@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-azienda-office',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./azienda-office.component.scss']
 })
 export class AziendaOfficeComponent {
+@Input() toDo:string=''
+@Input() azioni:string[]=[]
+
 
 }
