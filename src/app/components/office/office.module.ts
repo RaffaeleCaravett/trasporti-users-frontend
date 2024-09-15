@@ -6,10 +6,14 @@ import { UserInfoModule } from "../user-info/user-info.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import {MatSliderModule} from '@angular/material/slider';
 import { SkeletonModuleModule } from "src/app/shared/modules/skeleton-module.module";
+import { AziendaOfficeComponent } from "src/app/shared/components/azienda-office/azienda-office.component";
+import { TrasportatoreOfficeComponent } from "src/app/shared/components/trasportatore-office/trasportatore-office.component";
 
 @NgModule({
   declarations: [
     OfficeComponent,
+    AziendaOfficeComponent,
+    TrasportatoreOfficeComponent
   ],
   imports: [
     CommonModule,
@@ -20,6 +24,10 @@ import { SkeletonModuleModule } from "src/app/shared/modules/skeleton-module.mod
     SkeletonModuleModule
   ],
  providers: [
+],
+exports: [
+  AziendaOfficeComponent,
+  TrasportatoreOfficeComponent
 ],
   bootstrap: [OfficeComponent]
 })
