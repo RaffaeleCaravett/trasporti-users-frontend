@@ -18,6 +18,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SkeletonLoaderComponent } from './shared/components/skeleton-loader/skeleton-loader.component';
+import { TrasportatoreOfficeComponent } from './shared/components/trasportatore-office/trasportatore-office.component';
+import { AziendaOfficeComponent } from './shared/components/azienda-office/azienda-office.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { SkeletonLoaderComponent } from './shared/components/skeleton-loader/ske
     NotFoundComponent,
     AnnuncioInfoComponent,
     ResetPasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    TrasportatoreOfficeComponent,
+    AziendaOfficeComponent
   ],
   imports: [
     BrowserModule,
