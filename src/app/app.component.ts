@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
 constructor(private formsService:FormsService,private toastr:ToastrService,private router:Router){}
 
   ngOnInit(): void {
-    let trasportatore = localStorage.getItem('TAccessToken')
+    let trasportatore = localStorage.getItem('TrAccessToken')
     let azienda = localStorage.getItem('AzAccessToken')
     let trasportatoreR = localStorage.getItem('TrRefreshToken')
     let aziendaR = localStorage.getItem('AzRefreshToken')

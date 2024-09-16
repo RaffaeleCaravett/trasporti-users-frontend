@@ -1,7 +1,38 @@
 <p class="fs-5">Le tue informazioni</p>
 <div class="row text-start p-2 border rounded overflow-auto" *ngIf="isTrasportatore else azienda">
-<div class="col-md-6">{{user?.nome}}</div>
-<div class="col-md-6">{{user?.cognome}}</div>
+<div class="col-md-12"><span class="text-danger">
+
+</span>{{user?.role}}</div>
+  <div class="col-md-6"><span class="text-danger">
+Nome :
+  </span>{{user?.nome + ' '}} </div>
+<div class="col-md-6"><span class="text-danger">
+Cognome :
+</span>{{user?.cognome}}</div>
+<div class="col-md-5"><span class="text-danger">
+Città :
+</span>{{user?.citta}} </div>
+<div class="col-md-5"><span class="text-danger">
+Regione :
+</span>{{user?.regione}} </div>
+<div class="col-md-2"><span class="text-danger">
+Cap :
+</span>{{user?.cap}}</div>
+<div class="col-md-12"><span class="text-danger">
+Indirizzo :
+</span>{{user?.indirizzo}}</div>
+<div class="col-md-12"><span class="text-danger">
+Email :
+</span>{{user?.email}}</div>
+<div class="col-md-6"><span class="text-danger">
+Anni :
+</span>{{user.eta}}</div>
+<div class="col-md-6"><span class="text-danger">
+C.F.
+</span>{{user?.codiceFiscale}}</div>
+<div class="col-md-12"><span class="text-danger">
+  Flotta mezzi :
+</span> {{user?.flottaMezzi}}</div>
 </div>
 <ng-template #azienda>
 <div class="row text-start p-2 border rounded overflow-auto">

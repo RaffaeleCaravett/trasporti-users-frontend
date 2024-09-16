@@ -17,6 +17,7 @@ constructor(private homeService:HomeService,private toastr:ToastrService){}
 ngOnInit():void{
     localStorage.setItem('location','/home')
 this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
+console.log(this.user)
 if(this.user&&this.user.cognome){
   this.isTrasportatore=true
 }
