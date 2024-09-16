@@ -2,8 +2,8 @@
   <h1 class="border-bottom p-2">Informazioni</h1>
 </div>
 <div mat-dialog-content>
-  <div class="container">
-    <div class="row p-2 bg-light rounded">
+  <div class="container" *ngIf="isTrasportatore else azienda">
+    <div class="row p-2 bg-light rounded" >
       <div class="col-md-5">
         {{ data?.nome }}
       </div>
@@ -168,4 +168,11 @@
       </div>
     </div>
   </div>
+  <ng-template #azienda>
+    <div class="container">
+      <div class="row p-2 bg-light rounded">
+
+      </div>
+    </div>
+  </ng-template>
 </div>
