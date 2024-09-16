@@ -39,15 +39,14 @@ export class OfficeComponent implements OnInit {
     localStorage.setItem('location', '/office');
 
     this.user =
-      JSON.parse(localStorage.getItem('Trasportatore')!) ||
-      JSON.parse(localStorage.getItem('Azienda')!);
+      JSON.parse(localStorage.getItem('trasportatore')!) ||
+      JSON.parse(localStorage.getItem('azienda')!);
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
     }
     this.formsService.getCities().subscribe({
       next: (cities: any) => {
         this.cities = cities;
-        console.log(this.cities)
       },
       error: (err: any) => {
         this.toastr.error(err.error.message || err.error.messageList[0]);
