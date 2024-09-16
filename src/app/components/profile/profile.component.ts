@@ -27,7 +27,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.formsService.getUser();
     this.isTrasportatore=this.data.role=='Trasportatore'
-    console.log(this.isTrasportatore)
     this.recensioneTForm = new FormGroup({
       polo: new FormControl('', Validators.required),
       message: new FormControl('')
