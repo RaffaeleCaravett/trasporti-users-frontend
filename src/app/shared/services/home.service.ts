@@ -19,4 +19,8 @@ getNotificationByTransporterIdAndNotificationStateAndSender(transporterId:number
 getNotificationByAziendaIdAndNotificationStateAndSender(aziendaId:number,notificationState:string,sender:string){
   return this.http.get(environment.API_URL+this.azienda+this.notifica+`/${aziendaId}/${notificationState}/${sender}`)
 }
+getAnnunciByCity(){}
+getAnnunci(){}
+getAnnunciByPrice(){}
+getAnnunciByCategoria(){}
 }
