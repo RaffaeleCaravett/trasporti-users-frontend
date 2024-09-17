@@ -7,4 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class TrasportatoreOfficeComponent {
 @Input() user:any
+@Input() toDo:string=''
+@Input() azioni:string[]=[]
 }
