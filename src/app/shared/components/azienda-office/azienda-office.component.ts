@@ -189,7 +189,8 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
           this.searchAnnunciByAziendaRetrMax,
           this.searchAnnunciByAzienda.controls['page'].value || 0,
           this.searchAnnunciByAzienda.controls['size'].value || 10,
-          this.searchAnnunciByAzienda.controls['orderBy'].value || 'id'
+          this.searchAnnunciByAzienda.controls['orderBy'].value || 'id',
+          true
         )
         .subscribe({
           next: (data: any) => {
@@ -224,7 +225,8 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
             a[2],
             this.searchAnnunciByAzienda.controls['page'].value || 0,
             this.searchAnnunciByAzienda.controls['size'].value || 10,
-            this.searchAnnunciByAzienda.controls['orderBy'].value || 'id'
+            this.searchAnnunciByAzienda.controls['orderBy'].value || 'id',
+            true
           )
           .subscribe({
             next: (data: any) => {
