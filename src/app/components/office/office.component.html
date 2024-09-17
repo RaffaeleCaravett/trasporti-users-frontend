@@ -34,7 +34,11 @@
         [statistica]="statistica"
       ></app-azienda-office>
     </div>
-    <ng-template #tOffice></ng-template>
+    <ng-template #tOffice>
+      <div class="col-md-6">
+        <app-trasportatore-office></app-trasportatore-office>
+      </div>
+    </ng-template>
     <div class="col-md-3 py-5" *ngIf="toDo != 'Modifica il profilo'">
       <app-user-info
         [isTrasportatore]="isTrasportatore"
