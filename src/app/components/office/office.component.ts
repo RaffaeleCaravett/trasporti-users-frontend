@@ -14,13 +14,7 @@ export class OfficeComponent implements OnInit {
   user: any;
   isTrasportatore: boolean = false;
   toDo:string=''
-  azioni: string[] = [
-    'Aggiungi un annuncio',
-    'Monitora un annuncio',
-    'Modifica il profilo',
-    'Cerca un Trasportatore',
-    'Monitora le tue statistiche',
-  ];
+  azioni: string[] = [];
   modifyProfile!: FormGroup;
   cities: any[] = [];
   settori: any[] = [];
@@ -43,6 +37,20 @@ export class OfficeComponent implements OnInit {
       JSON.parse(localStorage.getItem('azienda')!);
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
+      this.azioni= [
+        'Cerca un annuncio',
+        'Cerca un\'azienda',
+        'Modifica il profilo',
+        'Monitora le tue statistiche',
+      ];
+    }else{
+      this.azioni= [
+        'Aggiungi un annuncio',
+        'Monitora un annuncio',
+        'Modifica il profilo',
+        'Cerca un Trasportatore',
+        'Monitora le tue statistiche',
+      ];
     }
     this.formsService.getCities().subscribe({
       next: (cities: any) => {
