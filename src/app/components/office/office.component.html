@@ -15,7 +15,18 @@
           </button>
         </p>
       </div>
-      <ng-template #tMenu></ng-template>
+      <ng-template #tMenu>
+        <div class="p-2 text-start">
+          <p class="p-2" *ngFor="let a of azioni; index as i">
+            <button
+              class="button-list p-{{ i + 5 }}"
+              (click)="setBackground(i + 5, a)"
+            >
+              {{ a }}
+            </button>
+          </p>
+        </div>
+      </ng-template>
     </div>
     <div
       class="col-md-6"
