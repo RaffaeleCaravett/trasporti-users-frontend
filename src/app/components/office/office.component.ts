@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'app-office',
@@ -212,7 +213,13 @@ export class OfficeComponent implements OnInit {
     this.toDo = toDo;
     this.aggiungiAnnuncioSubmitted = false;
     let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement;
-    for (let a = 6; a <= 10; a++) {
+    let maxIt=0
+    if(this.isTrasportatore){
+        maxIt=9
+    }else{
+maxIt=10
+    }
+    for (let a = 6; a <= maxIt; a++) {
       if (a == i) {
         p.style.borderRadius = '.3rem';
         p.style.background = 'red';
@@ -228,6 +235,7 @@ export class OfficeComponent implements OnInit {
     if(toDo=='Monitora le tue statistiche'){
     this.getStatistica()
     }
+
   }
   getStatistica(){
     this.officeService.getStatisticaByAziendaId(this.user.id).subscribe({
