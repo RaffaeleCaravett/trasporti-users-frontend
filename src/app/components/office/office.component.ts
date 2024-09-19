@@ -238,6 +238,7 @@ maxIt=10
 
   }
   getStatistica(){
+    if(!this.isTrasportatore){
     this.officeService.getStatisticaByAziendaId(this.user.id).subscribe({
 next:(sta:any)=>{
 this.statistica=sta
@@ -251,6 +252,9 @@ error:(error:any)=>{
 },
 complete:()=>{}
     })
+  }else{
+    console.log("isT")
   }
+}
 }
 
