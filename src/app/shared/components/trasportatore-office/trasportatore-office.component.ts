@@ -27,7 +27,17 @@ this.filters=[
 }
 
 
-setButtonBg(className:string){
+setButtonBg(index:number){
+let div:HTMLCollection = document.getElementsByClassName('btn-personal')as HTMLCollection
+for(let i = 0; i <=div.length-1;i++){
+if(i==index){
+  let singleDiv=  document.getElementsByClassName('btn-personal')[index] as HTMLDivElement
+  singleDiv.style.background='gray'
+}else{
+  (document.getElementsByClassName('btn-personal')[i] as HTMLDivElement).style.background='rgb(245, 245, 245)'
+  console.log(document.getElementsByClassName('btn-personal')[i])
+}
+}
 
 }
 }
