@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { OfficeService } from '../../services/office.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-trasportatore-office',
@@ -11,6 +13,9 @@ export class TrasportatoreOfficeComponent implements OnChanges{
 @Input() azioni:string[]=[]
 filters:string[]=[]
 isLoading:boolean=false
+
+constructor(private officeService:OfficeService,private toastr:ToastrService){}
+
 ngOnChanges():void{
 if(this.toDo=='Cerca un annuncio'){
 this.filters=[
@@ -62,6 +67,16 @@ this.isLoading=false
 }
 
 getAllAnnunci(){
+this.officeService.getAllAnnunci().subscribe({
+  next:()=>{
 
+  },
+  error:()=>{
+
+  },
+  complete:()=>{
+    this.isLoading=false
+  }
+})
 }
 }
