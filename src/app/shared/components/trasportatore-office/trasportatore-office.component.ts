@@ -10,7 +10,7 @@ export class TrasportatoreOfficeComponent implements OnChanges{
 @Input() toDo:string=''
 @Input() azioni:string[]=[]
 filters:string[]=[]
-
+isLoading:boolean=false
 ngOnChanges():void{
 if(this.toDo=='Cerca un annuncio'){
 this.filters=[
@@ -27,17 +27,22 @@ this.filters=[
 }
 
 
-setButtonBg(index:number){
+setButtonBg(index:number,action:string){
 let div:HTMLCollection = document.getElementsByClassName('btn-personal')as HTMLCollection
 for(let i = 0; i <=div.length-1;i++){
 if(i==index){
   let singleDiv=  document.getElementsByClassName('btn-personal')[index] as HTMLDivElement
-  singleDiv.style.background='gray'
+  singleDiv.style.background='rgb(212, 212, 212)'
 }else{
   (document.getElementsByClassName('btn-personal')[i] as HTMLDivElement).style.background='rgb(245, 245, 245)'
-  console.log(document.getElementsByClassName('btn-personal')[i])
 }
 }
+this.isLoading=true
+setTimeout(()=>{
+this.isLoading=false
+},1000)
 
 }
+
+
 }

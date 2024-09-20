@@ -8,6 +8,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { SkeletonModuleModule } from "src/app/shared/modules/skeleton-module.module";
 import { AziendaOfficeComponent } from "src/app/shared/components/azienda-office/azienda-office.component";
 import { TrasportatoreOfficeComponent } from "src/app/shared/components/trasportatore-office/trasportatore-office.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TrasportatoreOfficeComponent } from "src/app/shared/components/trasport
     UserInfoModule,
     ReactiveFormsModule,
     MatSliderModule,
-    SkeletonModuleModule
+    SkeletonModuleModule,
+    MatProgressSpinnerModule
   ],
  providers: [
 ],

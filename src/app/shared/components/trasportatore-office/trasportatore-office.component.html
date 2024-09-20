@@ -3,7 +3,10 @@
     <p class="fs-3">{{ toDo }}</p>
     <div class="row">
       <div class="d-flex justify-content-around overflow-auto">
-        <button class="btn rounded-pill btn-personal" (click)="setButtonBg(i)" *ngFor="let f of filters, index as i">{{f}}</button>
+        <button class="btn rounded-pill btn-personal" (click)="setButtonBg(i,f)" *ngFor="let f of filters, index as i">{{f}}</button>
+      </div>
+      <div class="col-md-12 py-5 my-5" *ngIf="isLoading">
+        <mat-spinner class="m-auto" color="warn"></mat-spinner>
       </div>
     </div>
   </div>
