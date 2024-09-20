@@ -25,4 +25,9 @@ this.filters=[
   this.filters=[]
 }
 }
+
+
+setButtonBg(className:string){
+
+}
 }
