@@ -91,6 +91,8 @@ getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string,page:numbe
 getStatisticaByAziendaId(id:number){
   return this.httpClient.get(environment.API_URL+this.aziendaStatistica+`/${id}`)
 }
-
+getAllAnnunci(){
+  return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio)
+}
 }
 
