@@ -9,8 +9,20 @@ export class TrasportatoreOfficeComponent implements OnChanges{
 @Input() user:any
 @Input() toDo:string=''
 @Input() azioni:string[]=[]
+filters:string[]=[]
 
 ngOnChanges():void{
-  console.log(this.toDo)
+if(this.toDo=='Cerca un annuncio'){
+this.filters=[
+  'Tutti',
+  'Retribuzione',
+  'Data annuncio',
+  'Data spedizione',
+  'Nome azienda',
+  'Numero pedane'
+]
+}else{
+  this.filters=[]
+}
 }
 }

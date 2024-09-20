@@ -1,19 +1,19 @@
 <div class="row">
-  <div class="col-md-12 py-5 my-5" *ngIf="toDo=='Cerca un annuncio'">
-<p class="fs-3">{{toDo}}</p>
-<div class="row">
-  <div class="col-sm-3">
-    <a  class="rounded-pill p-2 text-dark">Azione</a>
+  <div class="col-md-12 py-5 my-5" *ngIf="toDo == 'Cerca un annuncio'">
+    <p class="fs-3">{{ toDo }}</p>
+    <div class="row">
+      <div class="d-flex justify-content-around overflow-auto">
+        <button class="btn rounded-pill bg-light" *ngFor="let f of filters">{{f}}</button>
+      </div>
+    </div>
   </div>
-</div>
+  <div class="col-md-12" *ngIf="toDo == 'Cerca un\'azienda'">
+    <p class="fs-3">{{ toDo }}</p>
   </div>
-  <div class="col-md-12" *ngIf="toDo=='Cerca un\'azienda'">
-<p class="fs-3">{{toDo}}</p>
+  <div class="col-md-12" *ngIf="toDo == 'Modifica il profilo'">
+    <p class="fs-3">{{ toDo }}</p>
   </div>
-  <div class="col-md-12" *ngIf="toDo=='Modifica il profilo'">
-<p class="fs-3">{{toDo}}</p>
-  </div>
-  <div class="col-md-12" *ngIf="toDo=='Monitora le tue statistiche'">
-<p class="fs-3">{{toDo}}</p>
+  <div class="col-md-12" *ngIf="toDo == 'Monitora le tue statistiche'">
+    <p class="fs-3">{{ toDo }}</p>
   </div>
 </div>
