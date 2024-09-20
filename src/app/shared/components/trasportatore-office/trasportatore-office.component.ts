@@ -38,11 +38,30 @@ if(i==index){
 }
 }
 this.isLoading=true
+switch(action){
+  case('Tutti'):
+  this.getAllAnnunci()
+  break;
+  case('Retribuzione'):
+  break;
+  case('Data annuncio'):
+  break;
+  case('Data spedizione'):
+  break;
+  case('Nome azienda'):
+  break;
+  case('Numero pedane'):
+  break;
+  default:
+    break;
+}
 setTimeout(()=>{
 this.isLoading=false
 },1000)
 
 }
 
+getAllAnnunci(){
 
+}
 }
