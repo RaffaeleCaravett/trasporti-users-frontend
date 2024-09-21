@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { OfficeService } from '../../services/office.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { errors } from 'src/app/core/errors';
 
 @Component({
   selector: 'app-trasportatore-office',
@@ -13,7 +14,7 @@ export class TrasportatoreOfficeComponent implements OnChanges{
 @Input() azioni:string[]=[]
 filters:string[]=[]
 isLoading:boolean=false
-
+annunci: any
 constructor(private officeService:OfficeService,private toastr:ToastrService){}
 
 ngOnChanges():void{
@@ -68,11 +69,11 @@ this.isLoading=false
 
 getAllAnnunci(){
 this.officeService.getAllAnnunci().subscribe({
-  next:()=>{
-
+  next:(data:any)=>{
+this.annunci = data
   },
-  error:()=>{
-
+  error:(error:any)=>{
+this.toastr.error(error?.message||error?.error?.message||errors.request_error)
   },
   complete:()=>{
     this.isLoading=false
