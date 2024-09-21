@@ -9,8 +9,14 @@
         <mat-spinner class="m-auto" color="warn"></mat-spinner>
       </div>
       <ng-template #annc>
-        <div class="col-md-12" *ngFor="let a of annunci?.content">
-          <p class="footer">Pubblicato il {{a.dataPubblicazione}}</p>
+        <div class="col-md-11 m-auto border rounded my-2 p-2 shadow" *ngFor="let a of annunci?.content">
+          <p class="text-end"></p>
+          <p class="text-start">Retribuzione : {{a.retribuzione}} </p>
+          <p><span class="text-danger">Partenza da : </span> {{a.spedizione.da}}</p>
+          <p><span class="text-danger">Arrivo a : </span> {{a.spedizione.a}}</p>
+          <p><span class="text-danger">Quando deve partire la spedizione? </span> {{a.spedizione.daSpedire}}</p>
+          <p><span class="text-danger">Informazioni aggiuntive : </span> {{a.spedizione.descrizioneMerce}} - N° {{a.spedizione.numeroPedane}} {{a.spedizione.numeroPedane==1?" pedana":" pedane"}}</p>
+          <p class="footer">Pubblicato il {{a.dataPubblicazione}} da {{a.azienda.nomeAzienda}}</p>
         </div>
       </ng-template>
     </div>
