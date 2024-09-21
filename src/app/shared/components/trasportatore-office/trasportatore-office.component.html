@@ -5,9 +5,14 @@
       <div class="d-flex justify-content-around overflow-auto">
         <button class="btn rounded-pill btn-personal" (click)="setButtonBg(i,f)" *ngFor="let f of filters, index as i">{{f}}</button>
       </div>
-      <div class="col-md-12 py-5 my-5" *ngIf="isLoading">
+      <div class="col-md-12 py-5 my-5" *ngIf="isLoading else annc">
         <mat-spinner class="m-auto" color="warn"></mat-spinner>
       </div>
+      <ng-template #annc>
+        <div class="col-md-12" *ngFor="let a of annunci?.content">
+          <p class="footer">Pubblicato il {{a.dataPubblicazione}}</p>
+        </div>
+      </ng-template>
     </div>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Cerca un\'azienda'">
