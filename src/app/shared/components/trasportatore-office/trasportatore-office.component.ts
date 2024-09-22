@@ -72,6 +72,7 @@ getAllAnnunci(){
 this.officeService.getAllAnnunci().subscribe({
   next:(data:any)=>{
 this.annunci = data
+this.annunciCopy=this.annunci?.content
   },
   error:(error:any)=>{
 this.toastr.error(error?.message||error?.error?.message||errors.request_error)
