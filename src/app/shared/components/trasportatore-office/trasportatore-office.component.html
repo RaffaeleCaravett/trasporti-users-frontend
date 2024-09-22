@@ -11,10 +11,15 @@
       <ng-template #annc>
         <div class="col-md-11 m-auto border rounded my-2 p-2 shadow" *ngFor="let a of annunciCopy">
           <p class="text-end">
-            <button class="btn">
+            <button class="btn" (click)="changeAnnunciOption(annunciOption[0],a.id)">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
             </svg>
+            </button>
+          </p>
+          <p class="text-end" *ngIf="annunciOption[0]&&annunciOption[1]==a.id">
+            <button class="btn-bg-light p-2 shadow rounded">
+            Richiedi assegnazione.
             </button>
           </p>
           <p class="text-start">Retribuzione : {{a.retribuzione}} </p>

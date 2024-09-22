@@ -16,6 +16,8 @@ filters:string[]=[]
 isLoading:boolean=false
 annunci: any
 annunciCopy:any[]=[]
+annunciOption:any[]=[false,0]
+
 constructor(private officeService:OfficeService,private toastr:ToastrService){}
 
 ngOnChanges():void{
@@ -82,4 +84,9 @@ this.toastr.error(error?.message||error?.error?.message||errors.request_error)
   }
 })
 }
+
+changeAnnunciOption(value:boolean,id:number){
+this.annunciOption=[!value,id]
+}
+
 }
