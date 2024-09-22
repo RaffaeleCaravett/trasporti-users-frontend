@@ -15,6 +15,7 @@ export class TrasportatoreOfficeComponent implements OnChanges{
 filters:string[]=[]
 isLoading:boolean=false
 annunci: any
+annunciCopy:any[]=[]
 constructor(private officeService:OfficeService,private toastr:ToastrService){}
 
 ngOnChanges():void{
