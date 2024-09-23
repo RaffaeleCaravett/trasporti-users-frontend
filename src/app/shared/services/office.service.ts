@@ -22,6 +22,7 @@ private findByCitta:string ='/findByCitta'
 private findByNomeAndCognomeContaining:string ='/findByNomeAndCognomeContaining'
 private findByCittaAndNomeAndCognomeContaining:String ='/findByCittaAndNomeAndCognomeContaining'
 private aziendaStatistica:string ='/azienda/statistica'
+private richiedi:string = '/richiedi'
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){
@@ -93,6 +94,9 @@ getStatisticaByAziendaId(id:number){
 }
 getAllAnnunci(){
   return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio)
+}
+richiediSpedizione(spedizioneId:number){
+  return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione+this.richiedi+`/${spedizioneId}/me`)
 }
 }
 

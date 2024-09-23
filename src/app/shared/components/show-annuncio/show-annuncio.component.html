@@ -30,7 +30,7 @@
 <div mat-dialog-actions>
   <div class="row">
     <div class="col-md-6">
-      <button class="btn btn-secondary">
+      <button class="btn btn-secondary" (click)="richiedi()">
 Richiedi assegnazione
       </button>
       <p class="personal-font-size">
@@ -38,7 +38,7 @@ Richiedi assegnazione
       </p>
     </div>
     <div class="col-md-6">
-      <button class="btn btn-danger">
+      <button class="btn btn-danger" [mat-dialog-close]="false">
 Chiudi
       </button>
       <p class="personal-font-size">
