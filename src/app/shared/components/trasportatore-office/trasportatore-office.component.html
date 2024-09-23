@@ -18,7 +18,7 @@
             </button>
           </p>
           <p class="text-end" *ngIf="annunciOption[0]&&annunciOption[1]==a.id">
-            <button class="btn-bg-light p-2 shadow rounded">
+            <button class="btn-bg-light p-2 rounded" (click)="openAnnunciInfo(a)">
             Richiedi assegnazione.
             </button>
           </p>

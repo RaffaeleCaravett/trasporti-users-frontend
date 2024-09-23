@@ -88,5 +88,7 @@ this.toastr.error(error?.message||error?.error?.message||errors.request_error)
 changeAnnunciOption(value:boolean,id:number){
 this.annunciOption=[!value,id]
 }
+openAnnunciInfo(annuncio:any){
 
+}
 }
