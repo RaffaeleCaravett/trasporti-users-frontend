@@ -2,6 +2,8 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { OfficeService } from '../../services/office.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { errors } from 'src/app/core/errors';
+import { MatDialog } from '@angular/material/dialog';
+import { ShowAnnuncioComponent } from '../show-annuncio/show-annuncio.component';
 
 @Component({
   selector: 'app-trasportatore-office',
@@ -18,7 +20,7 @@ annunci: any
 annunciCopy:any[]=[]
 annunciOption:any[]=[false,0]
 
-constructor(private officeService:OfficeService,private toastr:ToastrService){}
+constructor(private officeService:OfficeService,private toastr:ToastrService,private matDialog:MatDialog){}
 
 ngOnChanges():void{
 if(this.toDo=='Cerca un annuncio'){
@@ -89,6 +91,13 @@ changeAnnunciOption(value:boolean,id:number){
 this.annunciOption=[!value,id]
 }
 openAnnunciInfo(annuncio:any){
+const dialogRef = this.matDialog.open(ShowAnnuncioComponent,{data:annuncio})
+dialogRef.afterClosed().subscribe((data)=>{
+  if(data){
 
+  }else{
+
+  }
+})
 }
 }
