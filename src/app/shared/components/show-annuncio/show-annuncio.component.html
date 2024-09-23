@@ -1,9 +1,49 @@
 <div mat-dialog-title>
-Richiedi di effettuare questa spedizione.
+  <h1>Richiedi di effettuare questa spedizione.</h1>
 </div>
 <div mat-dialog-content>
-
+  <div class="row">
+    <p class="text-start">
+      <span class="text-danger">Retribuzione :</span> {{ data.retribuzione }}
+    </p>
+    <p>
+      <span class="text-danger">Partenza da : </span> {{ data.spedizione.da }}
+    </p>
+    <p><span class="text-danger">Arrivo a : </span> {{ data.spedizione.a }}</p>
+    <p>
+      <span class="text-danger">Quando deve partire la spedizione? </span>
+      {{ data.spedizione.daSpedire }}
+    </p>
+    <p>
+      <span class="text-danger">Informazioni aggiuntive : </span>
+      {{ data.spedizione.descrizioneMerce }} - N°
+      {{ data.spedizione.numeroPedane }}
+      {{ data.spedizione.numeroPedane == 1 ? " pedana" : " pedane" }}
+    </p>
+    <p class="footer">
+      <span class="text-danger">Pubblicato</span> il
+      {{ data.dataPubblicazione }} <span class="text-danger">da</span>
+      {{ data.azienda.nomeAzienda }}
+    </p>
+  </div>
 </div>
 <div mat-dialog-actions>
-
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-secondary">
+Richiedi assegnazione
+      </button>
+      <p class="personal-font-size">
+        Verrà inviata una notifica al proprietario dell'annuncio con la richiesta che questa spedizione possa essere assegnata a te. Forniremo al proprietario i tuoi contatti e verrai contattato.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-danger">
+Chiudi
+      </button>
+      <p class="personal-font-size">
+Tornerai indietro e non avviseremo il proprietario dell'annuncio
+      </p>
+    </div>
+  </div>
 </div>
