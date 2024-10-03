@@ -34,7 +34,7 @@ export class OfficeComponent implements OnInit , OnDestroy{
   ngOnInit(): void {
 
     this.client = new Client({
-      brokerURL: `${environment.WEBSOCKET_API_URL}/trasporti-chat`,
+      brokerURL: `${environment.WEBSOCKET_API_URL}${this.user?.role=='Azienda'?'/azienda':'/trasportatore'}/trasporti-chat`,
   });
   this.client.onConnect= (frame:any) => {
     this.client.subscribe('/topic/update', (message) =>
