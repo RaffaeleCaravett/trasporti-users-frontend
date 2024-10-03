@@ -25,6 +25,7 @@ showResetPassword:boolean=false
 constructor(private formsService:FormsService,private toastr:ToastrService,private router:Router){}
 
 ngOnInit():void{
+  localStorage.clear()
 this.loginForm=new FormGroup({
   email:new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]),
   password:new FormControl('',[Validators.required,Validators.minLength(6)]),

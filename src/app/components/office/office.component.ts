@@ -5,6 +5,7 @@ import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client } from '@stomp/stompjs';
+import { environment } from 'src/app/core/environment';
 
 @Component({
   selector: 'app-office',
@@ -33,7 +34,7 @@ export class OfficeComponent implements OnInit , OnDestroy{
   ngOnInit(): void {
 
     this.client = new Client({
-      brokerURL: 'ws://localhost:8080/trasporti-chat',
+      brokerURL: `${environment.API_URL}/trasporti-chat`,
   });
   this.client.onConnect= (frame:any) => {
     this.client.subscribe('/topic/update', (message) =>
