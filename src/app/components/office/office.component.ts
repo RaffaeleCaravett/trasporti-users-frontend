@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { max } from 'rxjs';
+import { Client } from '@stomp/stompjs';
 
 @Component({
   selector: 'app-office',
   templateUrl: './office.component.html',
   styleUrls: ['./office.component.scss'],
 })
-export class OfficeComponent implements OnInit {
+export class OfficeComponent implements OnInit , OnDestroy{
   user: any;
   isTrasportatore: boolean = false;
   toDo:string=''
@@ -22,7 +22,7 @@ export class OfficeComponent implements OnInit {
   changePasswordForm!: FormGroup;
   statistica:any
   aggiungiAnnuncioSubmitted: boolean = false;
-
+  client!:Client
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
@@ -31,6 +31,24 @@ export class OfficeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.client = new Client({
+      brokerURL: 'ws://localhost:8080/trasporti-chat',
+  });
+  this.client.onConnect= (frame:any) => {
+    this.client.subscribe('/topic/update', (message) =>
+      console.log(`Received: ${message}`)
+    );
+    this.client.publish({ destination: '/topic/test01', body: 'First Message' });
+  }
+  this.client.onWebSocketError=(error)=>{
+    console.error('Error with websocket', error);
+  }
+  this.client.onStompError = (frame) => {
+    console.error('Broker reported error: ' + frame.headers['message']);
+    console.error('Additional details: ' + frame.body);
+};
+    this.client.activate();
     localStorage.setItem('location', '/office');
 
     this.user =
@@ -115,6 +133,9 @@ export class OfficeComponent implements OnInit {
       });},
     });
 
+  }
+  ngOnDestroy(): void {
+      this.client.deactivate()
   }
 
   modifyProfilo() {
