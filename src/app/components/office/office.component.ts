@@ -12,18 +12,18 @@ import { environment } from 'src/app/core/environment';
   templateUrl: './office.component.html',
   styleUrls: ['./office.component.scss'],
 })
-export class OfficeComponent implements OnInit , OnDestroy{
+export class OfficeComponent implements OnInit, OnDestroy {
   user: any;
   isTrasportatore: boolean = false;
-  toDo:string=''
+  toDo: string = '';
   azioni: string[] = [];
   modifyProfile!: FormGroup;
   cities: any[] = [];
   settori: any[] = [];
   changePasswordForm!: FormGroup;
-  statistica:any
+  statistica: any;
   aggiungiAnnuncioSubmitted: boolean = false;
-  client!:Client
+  client!: Client;
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
@@ -33,23 +33,29 @@ export class OfficeComponent implements OnInit , OnDestroy{
 
   ngOnInit(): void {
 
+let a = [1,2,3,4,5,6]
+let b:any
+
     this.client = new Client({
-      brokerURL: `${environment.WEBSOCKET_API_URL}${this.user?.role=='Azienda'?'/azienda':'/trasportatore'}/trasporti-chat`,
-  });
-  this.client.onConnect= (frame:any) => {
-    this.client.subscribe('/topic/update', (message) =>
-      console.log(`Received: ${message}`)
-    );
-    this.client.publish({ destination: '/topic/test01', body: 'First Message' });
-  }
-  this.client.onWebSocketError=(error)=>{
-    console.error('Error with websocket', error);
-  }
-  this.client.onStompError = (frame) => {
-    console.error('Broker reported error: ' + frame.headers['message']);
-    console.error('Additional details: ' + frame.body);
-};
-    this.client.activate();
+      brokerURL: `${environment.WEBSOCKET_API_URL}/trasporti-chat`,
+    });
+    this.client.onConnect = (frame: any) => {
+      this.client.subscribe('/topic/update', (message) =>
+        console.log(`Received: ${message}`)
+      );
+      this.client.publish({
+        destination: '/topic/test01',
+        body: 'First Message',
+      });
+    };
+    this.client.onWebSocketError = (error) => {
+      console.error('Error with websocket', error);
+    };
+    this.client.onStompError = (frame) => {
+      console.error('Broker reported error: ' + frame.headers['message']);
+      console.error('Additional details: ' + frame.body);
+    };
+    // this.client.activate();
     localStorage.setItem('location', '/office');
 
     this.user =
@@ -57,14 +63,14 @@ export class OfficeComponent implements OnInit , OnDestroy{
       JSON.parse(localStorage.getItem('azienda')!);
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
-      this.azioni= [
+      this.azioni = [
         'Cerca un annuncio',
-        'Cerca un\'azienda',
+        "Cerca un'azienda",
         'Modifica il profilo',
         'Monitora le tue statistiche',
       ];
-    }else{
-      this.azioni= [
+    } else {
+      this.azioni = [
         'Aggiungi un annuncio',
         'Monitora un annuncio',
         'Modifica il profilo',
@@ -79,9 +85,7 @@ export class OfficeComponent implements OnInit , OnDestroy{
       error: (err: any) => {
         this.toastr.error(err.error.message || err.error.messageList[0]);
       },
-      complete: () => {
-
-      },
+      complete: () => {},
     });
     this.formsService.getSettori().subscribe({
       next: (settori: any) => {
@@ -90,53 +94,59 @@ export class OfficeComponent implements OnInit , OnDestroy{
       error: (err: any) => {
         this.toastr.error(err.error.message || err.error.messageList[0]);
       },
-      complete: () => {this.modifyProfile = new FormGroup({
-        citta: new FormControl(this.user.citta, Validators.required),
-        regione: new FormControl(this.user.regione, Validators.required),
-        indirizzo: new FormControl(this.user.indirizzo, Validators.required),
-        cap: new FormControl(this.user.cap, Validators.required),
-        email: new FormControl(this.user.email, [
-          Validators.required,
-          Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
-        ]),
-        nomeAzienda: new FormControl(this.user?.nomeAzienda, Validators.required),
-        fatturatoMedio: new FormControl(
-          this.user?.fatturatoMedio,
-          Validators.required
-        ),
-        numeroDipendenti: new FormControl(
-          this.user?.numeroDipendenti,
-          Validators.required
-        ),
-        settore: new FormControl(this.user?.settore, Validators.required),
-        partitaIva: new FormControl(this.user?.partitaIva, [
-          Validators.required,
-          Validators.pattern(/^[0-9]{11}$/),
-        ]),
-      });
-      this.changePasswordForm = new FormGroup({
-        oldPassword: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-        repeteOldPassword: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-        newPassword: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-        newPassword1: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-      });},
+      complete: () => {
+        this.modifyProfile = new FormGroup({
+          citta: new FormControl(this.user.citta, Validators.required),
+          regione: new FormControl(this.user.regione, Validators.required),
+          indirizzo: new FormControl(this.user.indirizzo, Validators.required),
+          cap: new FormControl(this.user.cap, Validators.required),
+          email: new FormControl(this.user.email, [
+            Validators.required,
+            Validators.pattern(
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+            ),
+          ]),
+          nomeAzienda: new FormControl(
+            this.user?.nomeAzienda,
+            Validators.required
+          ),
+          fatturatoMedio: new FormControl(
+            this.user?.fatturatoMedio,
+            Validators.required
+          ),
+          numeroDipendenti: new FormControl(
+            this.user?.numeroDipendenti,
+            Validators.required
+          ),
+          settore: new FormControl(this.user?.settore, Validators.required),
+          partitaIva: new FormControl(this.user?.partitaIva, [
+            Validators.required,
+            Validators.pattern(/^[0-9]{11}$/),
+          ]),
+        });
+        this.changePasswordForm = new FormGroup({
+          oldPassword: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6),
+          ]),
+          repeteOldPassword: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6),
+          ]),
+          newPassword: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6),
+          ]),
+          newPassword1: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6),
+          ]),
+        });
+      },
     });
-
   }
   ngOnDestroy(): void {
-      this.client.deactivate()
+    this.client.deactivate();
   }
 
   modifyProfilo() {
@@ -150,8 +160,7 @@ export class OfficeComponent implements OnInit , OnDestroy{
           email: this.modifyProfile.controls['email'].value,
           nomeAzienda: this.modifyProfile.controls['nomeAzienda'].value,
           fatturatoMedio: this.modifyProfile.controls['fatturatoMedio'].value,
-          numeroDipendenti:
-            this.modifyProfile.controls['numeroDipendenti'].value,
+          numeroDipendenti:this.modifyProfile.controls['numeroDipendenti'].value,
           settore: this.modifyProfile.controls['settore'].value,
           partitaIva: this.modifyProfile.controls['partitaIva'].value,
         })
@@ -235,11 +244,11 @@ export class OfficeComponent implements OnInit , OnDestroy{
     this.toDo = toDo;
     this.aggiungiAnnuncioSubmitted = false;
     let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement;
-    let maxIt=0
-    if(this.isTrasportatore){
-        maxIt=9
-    }else{
-maxIt=10
+    let maxIt = 0;
+    if (this.isTrasportatore) {
+      maxIt = 9;
+    } else {
+      maxIt = 10;
     }
     for (let a = 6; a <= maxIt; a++) {
       if (a == i) {
@@ -254,29 +263,27 @@ maxIt=10
         otherP.style.color = 'black';
       }
     }
-    if(toDo=='Monitora le tue statistiche'){
-    this.getStatistica()
+    if (toDo == 'Monitora le tue statistiche') {
+      this.getStatistica();
     }
-
   }
-  getStatistica(){
-    if(!this.isTrasportatore){
-    this.officeService.getStatisticaByAziendaId(this.user.id).subscribe({
-next:(sta:any)=>{
-this.statistica=sta
-},
-error:(error:any)=>{
-  this.toastr.error(
-    error.error.message ||
-      error.error.messageList[0] ||
-      "Qualcosa è successo nell'elaborazione della richiesta."
-  );
-},
-complete:()=>{}
-    })
-  }else{
-    console.log("isT")
+  getStatistica() {
+    if (!this.isTrasportatore) {
+      this.officeService.getStatisticaByAziendaId(this.user.id).subscribe({
+        next: (sta: any) => {
+          this.statistica = sta;
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "Qualcosa è successo nell'elaborazione della richiesta."
+          );
+        },
+        complete: () => {},
+      });
+    } else {
+      console.log('isT');
+    }
   }
 }
-}
-
