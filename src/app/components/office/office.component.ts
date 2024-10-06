@@ -181,7 +181,7 @@ let b:any
     }
   }
 
-  checkPasswords(ps1: any, ps2: any) {
+  checkPasswords(ps1: FormControl, ps2: FormControl) {
     let div = document.querySelector('.inserisciPassword') as HTMLDivElement;
     if (ps1.valid && ps2.valid && ps1.value == ps2.value) {
       div.classList.add('blocked');
