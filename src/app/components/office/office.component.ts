@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client } from '@stomp/stompjs';
 import { environment } from 'src/app/core/environment';
 
@@ -27,14 +27,10 @@ export class OfficeComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
-    private matDialog: MatDialog,
     private formsService: FormsService
   ) {}
 
   ngOnInit(): void {
-
-let a = [1,2,3,4,5,6]
-let b:any
 
     this.client = new Client({
       brokerURL: `${environment.WEBSOCKET_API_URL}/trasporti-chat`,
@@ -181,7 +177,7 @@ let b:any
     }
   }
 
-  checkPasswords(ps1: FormControl, ps2: FormControl) {
+  checkPasswords(ps1: AbstractControl<any, any>, ps2: AbstractControl<any, any>) {
     let div = document.querySelector('.inserisciPassword') as HTMLDivElement;
     if (ps1.valid && ps2.valid && ps1.value == ps2.value) {
       div.classList.add('blocked');
