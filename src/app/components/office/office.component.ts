@@ -4,8 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Client } from '@stomp/stompjs';
+import { Client, Stomp } from '@stomp/stompjs';
 import { environment } from 'src/app/core/environment';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-office',
@@ -23,7 +24,8 @@ export class OfficeComponent implements OnInit, OnDestroy {
   changePasswordForm!: FormGroup;
   statistica: any;
   aggiungiAnnuncioSubmitted: boolean = false;
-  client!: Client;
+  stompClient: any;
+  msg: string[] = [];
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
@@ -32,26 +34,6 @@ export class OfficeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.client = new Client({
-      brokerURL: `${environment.WEBSOCKET_API_URL}/trasporti-chat`,
-    });
-    this.client.onConnect = (frame: any) => {
-      this.client.subscribe('/topic/update', (message) =>
-        console.log(`Received: ${message}`)
-      );
-      this.client.publish({
-        destination: '/topic/test01',
-        body: 'First Message',
-      });
-    };
-    this.client.onWebSocketError = (error) => {
-      console.error('Error with websocket', error);
-    };
-    this.client.onStompError = (frame) => {
-      console.error('Broker reported error: ' + frame.headers['message']);
-      console.error('Additional details: ' + frame.body);
-    };
-    // this.client.activate();
     localStorage.setItem('location', '/office');
 
     this.user =
@@ -140,9 +122,11 @@ export class OfficeComponent implements OnInit, OnDestroy {
         });
       },
     });
+    // this.initializeWebSocketConnection()
   }
+
+
   ngOnDestroy(): void {
-    this.client.deactivate();
   }
 
   modifyProfilo() {
