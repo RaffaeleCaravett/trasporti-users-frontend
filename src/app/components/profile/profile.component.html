@@ -88,6 +88,9 @@
                 >
                   ⏪
                 </button>
+                <select class="form-select" (change)="updateReces(recePageNumber.value)">
+                  <option value="{{n}}" #recePageNumber *ngFor="let n of recePageNumbers">{{n}}</option>
+                </select>
                 <button
                   class="btn"
                   *ngIf="recensioniT.last == false"

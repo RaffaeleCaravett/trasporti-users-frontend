@@ -91,4 +91,7 @@ this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato
     complete:()=>{}
   })
 }
+Number(value:string){
+  return Number(value);
 }
+
