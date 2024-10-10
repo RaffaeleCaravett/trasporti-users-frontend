@@ -48,9 +48,11 @@ export class ProfileComponent implements OnInit {
           azienda_id:this.user.id
         }).subscribe({
           next:(rece:any)=>{
+            this.recensioneTForm.reset()
             this.updateReces()
           },
           error:(error:any)=>{
+            this.recensioneTForm.reset()
             this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
           },
           complete:()=>{}
