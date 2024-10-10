@@ -49,26 +49,36 @@
       *ngIf="recensioniT && recensioniT?.content.length > 0"
     >
     <div class="col-md-12">
-      <div class="p-3">
-  <div class="row rounded shadow-sm bg-personal" *ngFor="let r of recensioniT.content">
-    <div class="col-md-12 text-end">
+      <div class="p-2">
+  <div class="row border shadow-sm bg-personal" *ngFor="let r of recensioniT.content">
+    <div class="col-md-12 text-end p-0">
       <button class="btn" *ngIf="user?.id==r?.da?.id" (click)="deleteRece(r.id,user.id)" title="Elimina">
         ❌
       </button>
     </div>
-        <div class="col-md-4">
-          <p [ngClass]="r.poloRecensione=='positiva'?'text-success':'text-danger'">
+    <div class="col-md-12 p-0">
+      <h2 class="bg-dark p-2 text-white">Recensione effettuata da : </h2>
+      <p class="px-2">
+        {{r?.da?.nomeAzienda}}
+      </p>
+    </div>
+        <div class="col-md-4 p-0">
+          <h2 class="bg-dark p-2 text-white">Esito recensione : </h2>
+          <p [ngClass]="r.poloRecensione=='positiva'?'text-success':'text-danger'" class="px-2 fw-bold">
             {{r.poloRecensione}}
           </p>
         </div>
-        <div class="col-md-8 px-2" *ngIf="r.commento">
-          <p>
+        <div class="col-md-8 p-0 px-2" *ngIf="r.commento">
+          <h2 class="bg-dark p-2 text-white">
+            Commento :
+          </h2>
+          <p class="px-2">
           {{r.commento}}
         </p>
         </div>
-<div class="col-md-12">
-  <p>
-    Effettuata il {{r.localDate}} da {{r.da.nomeAzienda}}
+<div class="col-md-12 p-0">
+  <p class="px-2">
+   Il {{r.localDate}}
   </p>
 </div>
       </div>
