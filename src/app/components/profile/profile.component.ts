@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   poli: string[] = ['positiva', 'negativa'];
   user: any;
   recensioneTFormPagination!: FormGroup;
+  recePageNumbers:number[]=[]
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private profileService: ProfileService,
@@ -68,6 +69,10 @@ updateReces(page?:number,size?:number,orderBy?:string){
 this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
   next:(reces:any)=>{
     this.recensioniT=reces
+
+    for(let i = 1; i <=this.recensioniT.totalPages;i++){
+this.recePageNumbers.push(i)
+    }
   },
   error:(error:any)=>{
     this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
@@ -94,4 +99,4 @@ this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato
 Number(value:string){
   return Number(value);
 }
-
+}

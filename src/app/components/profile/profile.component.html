@@ -77,7 +77,7 @@
     </div>
       <div class="col-md-12">
         <form [formGroup]="recensioneTFormPagination" class="d-flex">
-          <div class="row">
+          <div class="row w-100">
             <div class="col-md-4">
               <label class="personal-label">Pagina {{recensioniT?.number+1 +' of ' + recensioniT?.totalPages}}</label>
               <div class="d-flex justify-content-around">
@@ -88,8 +88,8 @@
                 >
                   ⏪
                 </button>
-                <select class="form-select" (change)="updateReces(recePageNumber.value)">
-                  <option value="{{n}}" #recePageNumber *ngFor="let n of recePageNumbers">{{n}}</option>
+                <select class="form-select" #recePageNumber (change)="updateReces(Number(recePageNumber.value))">
+                  <option value="{{n}}"  *ngFor="let n of recePageNumbers">{{n}}</option>
                 </select>
                 <button
                   class="btn"
