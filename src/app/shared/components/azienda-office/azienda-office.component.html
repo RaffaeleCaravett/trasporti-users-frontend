@@ -1,11 +1,14 @@
 <div class="row">
-  <div class="col-md-12" *ngIf="toDo != 'Modifica il profilo' && user?.role=='Azienda'">
+  <div
+    class="col-md-12"
+    *ngIf="toDo != 'Modifica il profilo' && user?.role == 'Azienda'"
+  >
     <div *ngIf="toDo == ''" class="w-75 m-auto py-5">
       <p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
       <p class="fs-5">
-        Qui crediamo che non solo lavorare ci rende più dignitosi, ma può
-        anche elevarci spiritualmente, mentalmente e fisicamente. Il giorno in
-        cui smettiamo di dedicarci a qualcosa, è il giorno in cui smettiamo di
+        Qui crediamo che non solo lavorare ci rende più dignitosi, ma può anche
+        elevarci spiritualmente, mentalmente e fisicamente. Il giorno in cui
+        smettiamo di dedicarci a qualcosa, è il giorno in cui smettiamo di
         vivere.
       </p>
     </div>
@@ -13,19 +16,18 @@
       <p class="fs-3">Un po' di statistiche</p>
       <div class="row">
         <div class="col-md-12">
-          <p class="fs-5">Annunci pubblicati : </p>
-<p class="fs-3">{{statistica?.annunciPubblicati}}</p>
-<p class="fs-5">Annunci in corso : </p>
-<p class="fs-3">{{statistica?.annunciInCorso
-}}</p>
-<p class="fs-5">Annunci presi in carico : </p>
-<p class="fs-3">{{statistica?.annunciPresiInCarico}}</p>
-<p class="fs-5">Annunci stoppati : </p>
-<p class="fs-3">{{statistica?.annunciStoppati}}</p>
-<p class="fs-5">Annunci in guasto : </p>
-<p class="fs-3">{{statistica?.annunciGuasti}}</p>
-<p class="fs-5">Annunci terminati : </p>
-<p class="fs-3">{{statistica?.annunciATermine}}</p>
+          <p class="fs-5">Annunci pubblicati :</p>
+          <p class="fs-3">{{ statistica?.annunciPubblicati }}</p>
+          <p class="fs-5">Annunci in corso :</p>
+          <p class="fs-3">{{ statistica?.annunciInCorso }}</p>
+          <p class="fs-5">Annunci presi in carico :</p>
+          <p class="fs-3">{{ statistica?.annunciPresiInCarico }}</p>
+          <p class="fs-5">Annunci stoppati :</p>
+          <p class="fs-3">{{ statistica?.annunciStoppati }}</p>
+          <p class="fs-5">Annunci in guasto :</p>
+          <p class="fs-3">{{ statistica?.annunciGuasti }}</p>
+          <p class="fs-5">Annunci terminati :</p>
+          <p class="fs-3">{{ statistica?.annunciATermine }}</p>
         </div>
       </div>
     </div>
@@ -36,7 +38,13 @@
         <div class="row py-2">
           <div class="col-md-4">
             <label class="py-3">Città</label>
-            <select name="" id="" class="form-select" formControlName="citta" (change)="searchT(trasporters?.number, trasporters?.size, 'id')">
+            <select
+              name=""
+              id=""
+              class="form-select"
+              formControlName="citta"
+              (change)="searchT(trasporters?.number, trasporters?.size, 'id')"
+            >
               <option value=""></option>
               <option value="{{ c }}" *ngFor="let c of cities">
                 {{ c }}
@@ -45,18 +53,24 @@
           </div>
           <div class="col-md-4">
             <label class="py-3">Nome</label>
-            <input type="text" class="form-control" formControlName="nome" (input)="searchT(trasporters?.number, trasporters?.size, 'id')" />
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nome"
+              (input)="searchT(trasporters?.number, trasporters?.size, 'id')"
+            />
           </div>
           <div class="col-md-4">
             <label class="py-3">Cognome</label>
             <input
               type="text"
               class="form-control"
-              formControlName="cognome" (input)="searchT(trasporters?.number, trasporters?.size, 'id')"
+              formControlName="cognome"
+              (input)="searchT(trasporters?.number, trasporters?.size, 'id')"
             />
           </div>
         </div>
-      <!--  <div class="col-md-12 py-2">
+        <!--  <div class="col-md-12 py-2">
            <button
             class="btn"
             (click)="searchT(trasporters?.number, trasporters?.size, 'id')"
@@ -92,18 +106,14 @@
           <button
             class="btn"
             *ngIf="trasporters?.number > 0"
-            (click)="
-              searchT(trasporters?.number - 1, trasporters?.size, 'id')
-            "
+            (click)="searchT(trasporters?.number - 1, trasporters?.size, 'id')"
           >
             Indietro
           </button>
           <button
             class="btn"
             *ngIf="trasporters?.number + 1 < trasporters?.totalPages"
-            (click)="
-              searchT(trasporters?.number + 1, trasporters?.size, 'id')
-            "
+            (click)="searchT(trasporters?.number + 1, trasporters?.size, 'id')"
           >
             Avanti
           </button>
@@ -131,10 +141,7 @@
               <label for="">Pagina</label>
               <select class="form-select m-auto" formControlName="page">
                 <option value=""></option>
-                <option
-                  value="{{ p }}"
-                  *ngFor="let p of annunciByAziendaPages"
-                >
+                <option value="{{ p }}" *ngFor="let p of annunciByAziendaPages">
                   {{ p }}
                 </option>
               </select>
@@ -227,11 +234,7 @@
               <p>
                 <label class="pb-2">Da </label>
                 <br />
-                <input
-                  type="date"
-                  class="form-control"
-                  formControlName="da"
-                />
+                <input type="date" class="form-control" formControlName="da" />
               </p>
               <p>
                 <label class="pb-2">A</label>
@@ -240,7 +243,10 @@
               </p>
             </div>
           </div>
-          <button class="btn m-auto btn-dark" (click)="updateAnnunciByAzienda()">
+          <button
+            class="btn m-auto btn-dark"
+            (click)="updateAnnunciByAzienda()"
+          >
             Cerca
           </button>
         </form>
@@ -254,24 +260,30 @@
         >
           Non ci sono annunci pubblicati.
         </p>
-        <ul *ngIf="
-        annunciByAzienda && annunciByAzienda.content.length > 0
-      ">
-          <li *ngFor="let a of annunciByAzienda.content" class="py-4">
-            Id {{ a.id }} - Del {{ a.dataPubblicazione }}
-            <button class="btn btn-dark" (click)="showAnnuncio(a)">
-              Mostra
-            </button>
-          </li>
-        </ul>
+        <table *ngIf="annunciByAzienda && annunciByAzienda.content.length > 0" class="w-100 table table-striped">
+          <thead >
+            <th>Id</th>
+            <th>Data</th>
+            <th>Azioni</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of annunciByAzienda.content" class="py-4">
+              <td>{{ a.id }}</td>
+              <td>{{ a.dataPubblicazione }}</td>
+              <td>
+                <button class="btn btn-dark" (click)="showAnnuncio(a)">
+                  Mostra
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div *ngIf="toDo == 'Aggiungi un annuncio'" class="py-5">
       <p class="fs-3">Aggiungi un annuncio</p>
       <form [formGroup]="aggiungiAnnuncioForm">
-        <label for="" class="py-4"
-          >Quanto offri per questa spedizione?
-        </label>
+        <label for="" class="py-4">Quanto offri per questa spedizione? </label>
         <input
           type="number"
           class="form-control"
@@ -309,8 +321,7 @@
           Dove vuoi che venga consegnata la merce?
         </p>
         <label for="" class="py-4"
-          >Inserisci la data massima in cui deve partire la spedizione
-          :</label
+          >Inserisci la data massima in cui deve partire la spedizione :</label
         >
         <input
           type="date"
