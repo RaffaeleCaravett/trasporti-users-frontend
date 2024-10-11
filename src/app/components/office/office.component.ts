@@ -266,4 +266,8 @@ export class OfficeComponent implements OnInit, OnDestroy {
       console.log('isT');
     }
   }
+
+  updateInputType(input:HTMLInputElement){
+input.type=='text'?input.type='passowrd':input.type='text'
+  }
 }
