@@ -60,7 +60,7 @@
       ></app-user-info>
     </div>
     <div
-      class="col-md-9 py-5"
+      class="col-md-9 py-5 bg-light"
       *ngIf="toDo == 'Modifica il profilo' && user?.role == 'Azienda'"
     >
       <p class="fs-3">Modifica il tuo profilo</p>
@@ -210,9 +210,10 @@
           </div>
           <div class="col-md-12 py-5">
             <button
-              class="btn btn-light"
+              class="btn btn-dark text-danger"
               [disabled]="modifyProfile.invalid"
               (click)="modifyProfilo()"
+              title="Stai modificando le informazioni del tuo profilo"
             >
               Modifica
             </button>
@@ -281,7 +282,7 @@
             Le password coincidono.
           </p>
           <button
-            class="btn btn-light my-3"
+            class="btn btn-dark my-3 text-danger"
             (click)="
               resetPassword(
                 changePasswordForm.controls['oldPassword'].value,
