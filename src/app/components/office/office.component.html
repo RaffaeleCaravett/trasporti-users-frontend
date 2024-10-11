@@ -233,8 +233,6 @@
               changePasswordForm.controls['repeteOldPassword']
             )
           "
-          #showOld1
-          (click)="updateInputType(showOld1)"
         />
         <label class="p-2">Riscrivila qui</label>
         <input
@@ -247,8 +245,6 @@
               changePasswordForm.controls['repeteOldPassword']
             )
           "
-          #showOld2
-          (click)="updateInputType(showOld2)"
         />
         <div class="inserisciPassword noned">
           <label class="p-2">Inserisci la nuova password</label>
@@ -257,7 +253,6 @@
             formControlName="newPassword"
             class="form-control w-75 m-auto"
             #showNew1
-            (click)="updateInputType(showNew1)"
           />
           <label class="p-2">Ripeti la nuova password</label>
           <input
@@ -265,7 +260,6 @@
             formControlName="newPassword1"
             class="form-control w-75 m-auto"
             #showNew2
-            (click)="updateInputType(showNew2)"
           />
           <p
             class="text-danger"

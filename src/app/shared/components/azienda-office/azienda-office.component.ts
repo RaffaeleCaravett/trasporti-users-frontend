@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../../services/forms.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './azienda-office.component.html',
   styleUrls: ['./azienda-office.component.scss']
 })
-export class AziendaOfficeComponent implements OnInit,OnChanges{
+export class AziendaOfficeComponent implements OnInit,OnChanges,AfterViewInit{
 @Input() toDo:string=''
 @Input() azioni:string[]=[]
 @Input() user:any
@@ -49,6 +49,11 @@ export class AziendaOfficeComponent implements OnInit,OnChanges{
 
 constructor(private formsService:FormsService, private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
 
+ngAfterViewInit(): void {
+  if(this.toDo == 'Monitora un annuncio'){
+        this.getAnnunci();
+      }
+}
   ngOnChanges(changes: SimpleChanges): void {
       if(this.toDo == 'Monitora un annuncio'){
         this.getAnnunci();
@@ -160,13 +165,13 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
     this.annunciByAziendaPages = [];
     this.annunciByAziendaElementi = [];
     this.annunciByAziendaOrderBy = [];
-    if (this.searchAnnunciByAzienda.controls['type'].value == '') {
+    if (this.searchAnnunciByAzienda?.controls['type']?.value == '') {
       this.officeService
         .getAnnunciByAziendaId(
           this.user.id,
-          this.searchAnnunciByAzienda.controls['page'].value || 0,
-          this.searchAnnunciByAzienda.controls['size'].value || 10,
-          this.searchAnnunciByAzienda.controls['orderBy'].value || 'id'
+          this.searchAnnunciByAzienda?.controls['page']?.value || 0,
+          this.searchAnnunciByAzienda?.controls['size']?.value || 10,
+          this.searchAnnunciByAzienda?.controls['orderBy']?.value || 'id'
         )
         .subscribe({
           next: (data: any) => {
@@ -181,15 +186,15 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
           complete: () => {},
         });
     } else if (
-      this.searchAnnunciByAzienda.controls['type'].value == 'retribuzione'
+      this.searchAnnunciByAzienda?.controls['type']?.value == 'retribuzione'
     ) {
       this.officeService
         .getByRetribuzione(
           this.searchAnnunciByAziendaRetrMin,
           this.searchAnnunciByAziendaRetrMax,
-          this.searchAnnunciByAzienda.controls['page'].value || 0,
-          this.searchAnnunciByAzienda.controls['size'].value || 10,
-          this.searchAnnunciByAzienda.controls['orderBy'].value || 'id',
+          this.searchAnnunciByAzienda?.controls['page']?.value || 0,
+          this.searchAnnunciByAzienda?.controls['size']?.value || 10,
+          this.searchAnnunciByAzienda?.controls['orderBy']?.value || 'id',
           true
         )
         .subscribe({
@@ -205,13 +210,13 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
           complete: () => {},
         });
     } else if (
-      this.searchAnnunciByAzienda.controls['type'].value ==
+      this.searchAnnunciByAzienda?.controls['type']?.value ==
         'dataPubblicazione' &&
-      this.searchAnnunciByAzienda.controls['da'].value &&
-      this.searchAnnunciByAzienda.controls['a'].value
+      this.searchAnnunciByAzienda?.controls['da']?.value &&
+      this.searchAnnunciByAzienda?.controls['a']?.value
     ) {
-      let da = this.searchAnnunciByAzienda.controls['da'].value.split('-');
-      let a = this.searchAnnunciByAzienda.controls['a'].value.split('-');
+      let da = this.searchAnnunciByAzienda?.controls['da']?.value.split('-');
+      let a = this.searchAnnunciByAzienda?.controls['a']?.value.split('-');
       var fromDate = Date.parse(da);
       var toDate = Date.parse(a);
       if (fromDate < toDate) {
@@ -223,9 +228,9 @@ constructor(private formsService:FormsService, private toastr:ToastrService,priv
             a[0],
             a[1],
             a[2],
-            this.searchAnnunciByAzienda.controls['page'].value || 0,
-            this.searchAnnunciByAzienda.controls['size'].value || 10,
-            this.searchAnnunciByAzienda.controls['orderBy'].value || 'id',
+            this.searchAnnunciByAzienda?.controls['page']?.value || 0,
+            this.searchAnnunciByAzienda?.controls['size']?.value || 10,
+            this.searchAnnunciByAzienda?.controls['orderBy']?.value || 'id',
             true
           )
           .subscribe({

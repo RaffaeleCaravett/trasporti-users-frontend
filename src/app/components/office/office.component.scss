@@ -52,3 +52,28 @@ ul{
     cursor: pointer;
   }
 }
+
+.position-relative{
+  padding: 10px;
+  .view{
+  background: url('../../../assets/office/v_off.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 9vh;
+  z-index:2;
+}
+.view-off{
+  background: url('../../../assets/office/v_on.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 9vh;
+  z-index:2;
+}
+.password{
+  position: absolute;
+  left: 9vh;
+  z-index: 1;
+}
+}

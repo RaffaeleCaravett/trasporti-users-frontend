@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
@@ -13,7 +13,7 @@ import * as SockJS from 'sockjs-client';
   templateUrl: './office.component.html',
   styleUrls: ['./office.component.scss'],
 })
-export class OfficeComponent implements OnInit, OnDestroy {
+export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
   user: any;
   isTrasportatore: boolean = false;
   toDo: string = '';
@@ -29,8 +29,13 @@ export class OfficeComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
-    private formsService: FormsService
+    private formsService: FormsService,
+    private cdRef:ChangeDetectorRef
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+      this.cdRef.detectChanges()
+  }
 
   ngOnInit(): void {
 
@@ -221,7 +226,6 @@ export class OfficeComponent implements OnInit, OnDestroy {
     });
   }
   setBackground(i: number, toDo: string) {
-    this.toDo = toDo;
     this.aggiungiAnnuncioSubmitted = false;
     let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement;
     let maxIt = 0;
@@ -246,6 +250,9 @@ export class OfficeComponent implements OnInit, OnDestroy {
     if (toDo == 'Monitora le tue statistiche') {
       this.getStatistica();
     }
+    this.toDo = toDo;
+    this.cdRef.detectChanges()
+
   }
   getStatistica() {
     if (!this.isTrasportatore) {
@@ -267,7 +274,5 @@ export class OfficeComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateInputType(input:HTMLInputElement){
-input.type=='text'?input.type='passowrd':input.type='text'
-  }
+
 }
