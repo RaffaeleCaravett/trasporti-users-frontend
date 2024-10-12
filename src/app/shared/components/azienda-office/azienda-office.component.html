@@ -4,7 +4,7 @@
     *ngIf="toDo != 'Modifica il profilo' && user?.role == 'Azienda'"
   >
     <div *ngIf="toDo == ''" class="w-75 m-auto py-5">
-      <p class="fs-3">Fare un ottimo lavoro è una scelta.</p>
+      <p class="fs-3 default-title">Fare un ottimo lavoro è una scelta.</p>
       <p class="fs-5">
         Qui crediamo che non solo lavorare ci rende più dignitosi, ma può anche
         elevarci spiritualmente, mentalmente e fisicamente. Il giorno in cui
@@ -174,125 +174,6 @@
         ancora in stato "Pubblicato".
       </p>
       <div *ngIf="annunciByAzienda && annunciByAzienda.content">
-        <form
-          [formGroup]="searchAnnunciByAzienda"
-          class="my-2 p-2 bg-light border rounded shadow overflow-auto"
-        >
-          <p class="fs-3">Modifica la ricerca</p>
-          <div class="d-flex row">
-            <div class="col-md-4">
-              <label for="">Pagina</label>
-              <select class="form-select m-auto" formControlName="page">
-                <option value=""></option>
-                <option value="{{ p }}" *ngFor="let p of annunciByAziendaPages">
-                  {{ p }}
-                </option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label for="">Elementi</label>
-              <select class="form-select m-auto" formControlName="size">
-                <option value=""></option>
-                <option
-                  value="{{ p }}"
-                  *ngFor="let p of annunciByAziendaElementi"
-                >
-                  {{ p }}
-                </option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label for="">Ordina </label>
-              <select class="form-select m-auto" formControlName="orderBy">
-                <option value=""></option>
-                <option
-                  value="{{ p }}"
-                  *ngFor="let p of annunciByAziendaOrderBy"
-                >
-                  {{ p }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <p class="fs-5 pt-3">Puoi anche cercare per :</p>
-          <p>
-            <input
-              type="radio"
-              formControlName="type"
-              value="retribuzione"
-              name="type"
-              id="type1"
-              class="py-3"
-              (change)="typeFormValue = 'retribuzione'"
-            /><label class="py-3 form-check-label" for="type1"
-              >Retribuzione</label
-            >
-          </p>
-          <p>
-            <input
-              type="radio"
-              formControlName="type"
-              value="dataPubblicazione"
-              name="type"
-              id="type2"
-              class="py-3"
-              (change)="typeFormValue = 'dataPubblicazione'"
-            /><label class="py-3 form-check-label" for="type2">Data</label>
-          </p>
-          <p>
-            <input
-              type="radio"
-              formControlName="type"
-              value=""
-              name="type"
-              id="type3"
-              class="py-3"
-              (change)="typeFormValue = ''"
-            /><label class="py-3 form-check-label" for="type3">Azzera</label>
-          </p>
-          <div *ngIf="typeFormValue == 'retribuzione'">
-            <p class="fs-5">Inserisci la retribuzione</p>
-            <mat-slider min="0" max="20000" class="w-75 m-auto">
-              <input
-                value="2000"
-                matSliderStartThumb
-                (change)="updateSlider($event, 'da')"
-              />
-              <input
-                value="14000"
-                matSliderEndThumb
-                (change)="updateSlider($event, 'a')"
-              />
-            </mat-slider>
-            <div class="d-flex justify-content-around">
-              <button class="btn">{{ searchAnnunciByAziendaRetrMin }}</button
-              ><button class="btn">
-                {{ searchAnnunciByAziendaRetrMax }}
-              </button>
-            </div>
-          </div>
-          <div *ngIf="typeFormValue == 'dataPubblicazione'">
-            <p class="fs-5">Inserisci le date</p>
-            <div class="d-flex justify-content-around">
-              <p>
-                <label class="pb-2">Da </label>
-                <br />
-                <input type="date" class="form-control" formControlName="da" />
-              </p>
-              <p>
-                <label class="pb-2">A</label>
-                <br />
-                <input type="date" class="form-control" formControlName="a" />
-              </p>
-            </div>
-          </div>
-          <button
-            class="btn m-auto btn-dark"
-            (click)="updateAnnunciByAzienda()"
-          >
-            Cerca
-          </button>
-        </form>
         <p class="fs-5">Annunci pubblicati :</p>
         <p
           class="fs-5 py-5"
@@ -306,7 +187,7 @@
         <table *ngIf="annunciByAzienda && annunciByAzienda.content.length > 0" class="w-100 table table-striped">
           <thead >
             <th>Id</th>
-            <th>Data</th>
+            <th>Data pubblicazione</th>
             <th>Azioni</th>
           </thead>
           <tbody>
@@ -321,6 +202,123 @@
             </tr>
           </tbody>
         </table>
+        <form
+        [formGroup]="searchAnnunciByAzienda"
+        class="my-2 p-2 overflow-auto"
+      >
+       <div class="d-flex row">
+          <div class="col-md-3">
+            <label for="">Pagina</label>
+            <select class="form-select m-auto" formControlName="page">
+              <option value=""></option>
+              <option value="{{ p }}" *ngFor="let p of annunciByAziendaPages">
+                {{ p }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="">Elementi</label>
+            <select class="form-select m-auto" formControlName="size">
+              <option value=""></option>
+              <option
+                value="{{ p }}"
+                *ngFor="let p of annunciByAziendaElementi"
+              >
+                {{ p }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="">Ordina </label>
+            <select class="form-select m-auto" formControlName="orderBy">
+              <option value=""></option>
+              <option
+                value="{{ p }}"
+                *ngFor="let p of annunciByAziendaOrderBy"
+              >
+                {{ p }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <p>
+          <input
+            type="radio"
+            formControlName="type"
+            value="retribuzione"
+            name="type"
+            id="type1"
+            class="py-3"
+            (change)="typeFormValue = 'retribuzione'"
+          /><label class="py-3 form-check-label" for="type1"
+            >Retribuzione</label
+          >
+        </p>
+        <p>
+          <input
+            type="radio"
+            formControlName="type"
+            value="dataPubblicazione"
+            name="type"
+            id="type2"
+            class="py-3"
+            (change)="typeFormValue = 'dataPubblicazione'"
+          /><label class="py-3 form-check-label" for="type2">Data</label>
+        </p>
+        <p>
+          <input
+            type="radio"
+            formControlName="type"
+            value=""
+            name="type"
+            id="type3"
+            class="py-3"
+            (change)="typeFormValue = ''"
+          /><label class="py-3 form-check-label" for="type3">Azzera</label>
+        </p>
+        <div *ngIf="typeFormValue == 'retribuzione'">
+          <p class="fs-5">Inserisci la retribuzione</p>
+          <mat-slider min="0" max="20000" class="w-75 m-auto">
+            <input
+              value="2000"
+              matSliderStartThumb
+              (change)="updateSlider($event, 'da')"
+            />
+            <input
+              value="14000"
+              matSliderEndThumb
+              (change)="updateSlider($event, 'a')"
+            />
+          </mat-slider>
+          <div class="d-flex justify-content-around">
+            <button class="btn">{{ searchAnnunciByAziendaRetrMin }}</button
+            ><button class="btn">
+              {{ searchAnnunciByAziendaRetrMax }}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="typeFormValue == 'dataPubblicazione'">
+          <p class="fs-5">Inserisci le date</p>
+          <div class="d-flex justify-content-around">
+            <p>
+              <label class="pb-2">Da </label>
+              <br />
+              <input type="date" class="form-control" formControlName="da" />
+            </p>
+            <p>
+              <label class="pb-2">A</label>
+              <br />
+              <input type="date" class="form-control" formControlName="a" [min]="searchAnnunciByAzienda.controls['da'].value||null"/>
+            </p>
+          </div>
+        </div>
+        <button
+          class="btn m-auto btn-dark"
+          (click)="updateAnnunciByAzienda()"
+        >
+          Cerca
+        </button>
+      </form>
       </div>
     </div>
     <div *ngIf="toDo == 'Aggiungi un annuncio'" class="py-5">

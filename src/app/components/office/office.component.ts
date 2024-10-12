@@ -252,7 +252,6 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
     }
     this.toDo = toDo;
     this.cdRef.detectChanges()
-
   }
   getStatistica() {
     if (!this.isTrasportatore) {
