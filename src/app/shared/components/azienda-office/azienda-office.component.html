@@ -80,14 +80,45 @@
         </div> -->
       </form>
       <div>
-        <ul *ngIf="trasportatoreLoader">
-          <li>
-            <app-skeleton-loader
-              Cwidth="w-50"
-              Cheight="30"
-            ></app-skeleton-loader>
-          </li>
-        </ul>
+        <table class="w-100 table table-striped" *ngIf="trasportatoreLoader">
+          <thead class="text-center">
+            <th>
+              <app-skeleton-loader
+              Cwidth="w-25"
+              Cheight="10"
+            ></app-skeleton-loader></th>
+            <th>
+              <app-skeleton-loader
+              Cwidth="w-25"
+              Cheight="10"
+            ></app-skeleton-loader></th>
+            <th>
+              <app-skeleton-loader
+              Cwidth="w-25"
+              Cheight="10"
+            ></app-skeleton-loader></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <app-skeleton-loader
+                Cwidth="w-30"
+                Cheight="10"
+              ></app-skeleton-loader></td>
+              <td>
+                <app-skeleton-loader
+                Cwidth="w-50"
+                Cheight="10"
+              ></app-skeleton-loader></td>
+              <td>
+                <app-skeleton-loader
+                Cwidth="w-20"
+                Cheight="10"
+              ></app-skeleton-loader>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div
         *ngIf="
@@ -106,7 +137,7 @@
         <tbody>
           <tr *ngFor="let t of trasporters?.content" class="py-4">
             <td>{{ t.id }}</td>
-            <td>{{ t.dataPubblicazione }}</td>
+            <td>{{ t.nome + " " + t.cognome }}</td>
             <td>
               <button class="btn btn-dark" (click)="openT(t)">
                 Mostra

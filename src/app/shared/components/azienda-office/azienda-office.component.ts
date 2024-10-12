@@ -398,8 +398,10 @@ ngAfterViewInit(): void {
                 "Qualcosa è successo nell'elaborazione della richiesta."
             );
           },
-          complete: () => {      this.trasportatoreLoader=true
-setTimeout(()=>{this.trasportatoreLoader=false},1000)
+          complete: () => {
+             this.trasportatoreLoader=true
+setTimeout(()=>{
+  this.trasportatoreLoader=false},1000)
           },
         });
       } else if (!citta && nome && cognome) {
