@@ -4,7 +4,7 @@
       <h1 class="text-danger">Il tuo ufficio</h1>
     </div>
     <div class="col-md-3 py-5">
-      <p class="fs-5">Cosa vuoi fare?</p>
+      <p class="fs-5 text-danger">Cosa vuoi fare?</p>
       <div class="p-2 text-start" *ngIf="user?.role == 'Azienda'; else tMenu">
         <p class="p-2" *ngFor="let a of azioni; index as i">
           <button
