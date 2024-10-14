@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
+import { MapComponent } from './shared/components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-an
     AnnuncioInfoComponent,
     ResetPasswordComponent,
     ProfileComponent,
-    ShowAnnuncioComponent
+    ShowAnnuncioComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
