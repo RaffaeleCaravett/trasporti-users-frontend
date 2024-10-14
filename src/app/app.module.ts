@@ -30,9 +30,8 @@ import { MapComponent } from './shared/components/map/map.component';
     AnnuncioInfoComponent,
     ResetPasswordComponent,
     ProfileComponent,
-    ShowAnnuncioComponent,
-    MapComponent
-  ],
+    ShowAnnuncioComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

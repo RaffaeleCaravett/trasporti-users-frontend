@@ -9,12 +9,14 @@ import { SkeletonModuleModule } from "src/app/shared/modules/skeleton-module.mod
 import { AziendaOfficeComponent } from "src/app/shared/components/azienda-office/azienda-office.component";
 import { TrasportatoreOfficeComponent } from "src/app/shared/components/trasportatore-office/trasportatore-office.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MapComponent } from "src/app/shared/components/map/map.component";
 
 @NgModule({
   declarations: [
     OfficeComponent,
     AziendaOfficeComponent,
-    TrasportatoreOfficeComponent
+    TrasportatoreOfficeComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 ],
 exports: [
   AziendaOfficeComponent,
-  TrasportatoreOfficeComponent
+  TrasportatoreOfficeComponent,
+  MapComponent
 ],
   bootstrap: [OfficeComponent]
 })

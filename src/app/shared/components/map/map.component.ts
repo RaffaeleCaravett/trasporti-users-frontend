@@ -9,26 +9,24 @@ import * as L from 'leaflet';
 export class MapComponent {
   private map!: L.Map
   markers: L.Marker[] = [
-    L.marker([31.9539, 35.9106]), // Amman
-    L.marker([32.5568, 35.8469]) // Irbid
+    L.marker([41.535712, 12.324200]), // Amman
+    L.marker([39.298263, 16.253736])
   ];
 
   constructor() { }
 
   ngOnInit() {
+    this.map = L.map("map").setView([46.879966, -121.726909], 7);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
   }
 
   ngAfterViewInit() {
-    this.initializeMap();
     this.addMarkers();
     this.centerMap();
-  }
-
-
-  private initializeMap() {
-    const baseMapURl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-    this.map = L.map('map');
-    L.tileLayer(baseMapURl).addTo(this.map);
   }
 
 
