@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { delay } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
-import { OfficeComponent } from '../office/office.component';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,8 @@ orderBy:string='id';
   isTLoading:boolean=false
   aOfficeComponent:AziendaOfficeComponent = inject(AziendaOfficeComponent);
   displayChat:boolean=false
-constructor(private homeService:HomeService,private toastr:ToastrService){}
+  chats:any[]=[]
+constructor(private homeService:HomeService,private toastr:ToastrService,private router:Router){}
 
 ngOnInit():void{
     localStorage.setItem('location','/home')
@@ -74,6 +75,10 @@ this.homeService.getTrasportatori(page,size,orderBy).pipe(delay(2000)).subscribe
 this.aOfficeComponent.openT(t)
   }
   showChat(){
+    if(window.innerWidth<=500){
+
+    }else{
     this.displayChat=!this.displayChat;
+    }
   }
 }
