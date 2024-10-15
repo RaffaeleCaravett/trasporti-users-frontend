@@ -107,13 +107,22 @@ export class HomeComponent implements OnInit {
   openT(t: any) {
     this.aOfficeComponent.openT(t);
   }
-  showChat() {
+  showChat(resize?:string) {
+    let chatContainer = document.getElementsByClassName(
+      'chat-container'
+    )[0] as HTMLDivElement;
     if (window.innerWidth <= 500) {
+      if(resize){
+        this.displayChat =false;
+        chatContainer.style.height = '0';
+        chatContainer.style.transition = '2s';
+        setTimeout(()=>{
+          chatContainer.classList.remove('border');
+        },2000)
+      }
     } else {
+      if(!resize){
       this.displayChat = !this.displayChat;
-      let chatContainer = document.getElementsByClassName(
-        'chat-container'
-      )[0] as HTMLDivElement;
       if (this.displayChat) {
         chatContainer.style.height = '60vh';
         chatContainer.style.transition = '2s';
@@ -124,6 +133,7 @@ export class HomeComponent implements OnInit {
         setTimeout(()=>{
           chatContainer.classList.remove('border');
         },2000)
+      }
       }
     }
   }
