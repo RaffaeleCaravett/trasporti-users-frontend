@@ -23,4 +23,7 @@ getAnnunciByCity(){}
 getAnnunci(){}
 getAnnunciByPrice(){}
 getAnnunciByCategoria(){}
+getTrasportatori(page:number,size:number,orderBy:string){
+  return this.http.get(environment.API_URL+this.azienda+this.trasportatore+`?page=${page||0}&size=${size||10}&orderBy=${orderBy||'id'}`)
+}
 }

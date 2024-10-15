@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { delay } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 
 @Component({
@@ -12,12 +13,16 @@ export class HomeComponent implements OnInit{
 user:any
 isTrasportatore:boolean=false
 notifications:any
+page:number=0;
+size:number=0;
+orderBy:string='id';
+  transporters: any;
+  isTLoading:boolean=false
 constructor(private homeService:HomeService,private toastr:ToastrService){}
 
 ngOnInit():void{
     localStorage.setItem('location','/home')
 this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
-console.log(this.user)
 if(this.user&&this.user.cognome){
   this.isTrasportatore=true
 }
@@ -42,7 +47,22 @@ this.homeService.getNotificationByTransporterIdAndNotificationStateAndSender(thi
     },
     complete:()=>{}
   })
-
+  this.getT(this.page,this.size,this.orderBy)
 }
+  }
+
+  getT(page:number,size:number,orderBy:string){
+    this.isTLoading=true;
+this.homeService.getTrasportatori(page,size,orderBy).pipe(delay(2000)).subscribe({
+  next:(data:any)=>{
+    this.transporters=data
+    this.isTLoading=false;
+    console.log(this.transporters)
+  },
+  error:(error:any)=>{
+    this.toastr.error(error.error.message||error.error.messageList[0]||"E' stato impossibile recuperare le notifiche.")
+  },
+  complete:()=>{}
+})
   }
 }
