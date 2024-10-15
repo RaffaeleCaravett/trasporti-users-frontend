@@ -1,5 +1,5 @@
 <p class="fs-5 fw-bold">Le tue informazioni</p>
-<div class="row text-start p-2 border rounded overflow-auto bg-light" *ngIf="isTrasportatore else azienda">
+<div class="row text-start p-2 border rounded overflow-auto" *ngIf="isTrasportatore else azienda">
 <div class="col-md-12"><span class="text-danger">
 
 </span>{{user?.role}}</div>
@@ -35,7 +35,7 @@ C.F.
 </span> {{user?.flottaMezzi}}</div>
 </div>
 <ng-template #azienda>
-<div class="row text-start p-2 border rounded overflow-auto bg-light">
+<div class="row text-start p-2 border rounded overflow-auto">
 <div class="col-md-12">
 <span class="text-danger">
 Tipo :

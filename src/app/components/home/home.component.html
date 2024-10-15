@@ -1,32 +1,31 @@
 <div class="container py-5 text-center">
   <div class="row py-5 position-relative">
-    <img src="assets/app/tr-bg.webp" alt="background image" class="bg">
     <div class="chat-container overflow-auto bg-white rounded" (window:resize)="showChat('resize')">
     <p *ngFor="let c of chats"></p>
     <p *ngIf="!chats||chats==null||chats.length==0">Non hai chat avviate al momento.</p>
     </div>
     <i class="material-icons chat" (click)="showChat()">chat</i>
-    <div class="col-md-12 text-danger">
+    <div class="col-md-12 text-danger p-2 bg-light">
       <h1>Benvenuto! Dai un'occhiata {{user.role=='Trasportatore'?"alle spedizioni":"ai trasportatori"}} disponibili.</h1>
     </div>
     <div class="col-md-3 py-5">
       <p class="fs-5 fw-bold">Notifiche</p>
-           <div class="row p-2 border rounded overflow-auto tr" *ngIf="notifications && notifications.content>0 else nonotifications">
+           <div class="row p-2 border rounded overflow-auto" *ngIf="notifications && notifications.content>0 else nonotifications">
            <p *ngFor="let n of notifications.content">
              {{n.testo}}
            </p>
            </div>
          <ng-template #nonotifications>
-             <div class="row p-2 border rounded overflow-auto tr">
+             <div class="row p-2 border rounded overflow-auto">
              <p>Non ci sono ancora notifiche da mostrarti.</p>
              </div>
          </ng-template>
        </div>
     <div class="col-md-6 p-1">
-      <div class="row px-3 text-center" *ngIf="transporters&&transporters?.content?.length>0">
-<div class="col-md-12 my-1 border rounded tr" *ngFor="let t of transporters.content, index as i">
+      <div class="row px-3 text-center py-5" *ngIf="transporters&&transporters?.content?.length>0">
+<div class="col-md-12 my-1 border-bottom" *ngFor="let t of transporters.content, index as i">
 <div class="row">
-  <div class="col-md-12 p-1">
+  <div class="col-md-12 p-1 bg-light">
     <h1>
       {{t?.nome + " " +t?.cognome}}
     </h1>
