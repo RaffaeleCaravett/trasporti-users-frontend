@@ -119,6 +119,8 @@ export class HomeComponent implements OnInit {
         setTimeout(()=>{
           chatContainer.classList.remove('border');
         },2000)
+      }else{
+        this.router.navigate(['/home/chat',{user:JSON.stringify(this.user)}])
       }
     } else {
       if(!resize){
