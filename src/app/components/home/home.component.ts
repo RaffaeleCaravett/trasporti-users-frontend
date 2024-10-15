@@ -21,6 +21,7 @@ orderBy:string='id';
   transporters: any;
   isTLoading:boolean=false
   aOfficeComponent:AziendaOfficeComponent = inject(AziendaOfficeComponent);
+  displayChat:boolean=false
 constructor(private homeService:HomeService,private toastr:ToastrService){}
 
 ngOnInit():void{
@@ -71,5 +72,8 @@ this.homeService.getTrasportatori(page,size,orderBy).pipe(delay(2000)).subscribe
 
   openT(t:any){
 this.aOfficeComponent.openT(t)
+  }
+  showChat(){
+    this.displayChat=!this.displayChat;
   }
 }
