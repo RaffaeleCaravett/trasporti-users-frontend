@@ -1,7 +1,8 @@
 <div class="container py-5 text-center">
   <div class="row py-5 position-relative">
-    <div class="chat-container overflow-auto">
-
+    <div class="chat-container overflow-auto bg-white rounded">
+    <p *ngFor="let c of chats"></p>
+    <p *ngIf="!chats||chats==null||chats.length==0">Non hai chat avviate al momento.</p>
     </div>
     <i class="material-icons chat" (click)="showChat()">chat</i>
     <div class="col-md-12 text-danger">

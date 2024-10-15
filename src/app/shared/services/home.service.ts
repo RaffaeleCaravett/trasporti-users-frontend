@@ -9,6 +9,7 @@ export class HomeService {
   private notifica:string = '/notifica'
   private trasportatore:string ='/trasportatore'
   private azienda:string ='/azienda'
+  private chat:string = '/chat'
   private chatByAzienda:string ='/byAzId'
 
   constructor(private http:HttpClient) { }
@@ -27,7 +28,7 @@ getTrasportatori(page:number,size:number,orderBy:string){
   return this.http.get(environment.API_URL+this.azienda+this.trasportatore+`?page=${page||0}&size=${size||10}&orderBy=${orderBy||'id'}`)
 }
 getChatsByAziendaId(azId:number){
-  return this.http.get(environment.API_URL+this.azienda+this.chatByAzienda+`/${azId}`)
+  return this.http.get(environment.API_URL+this.azienda+this.chat+this.chatByAzienda+`/${azId}`)
 }
 getChatsByAziendaIdAndTId(azId:number,tId:number){
   return this.http.get(environment.API_URL+this.azienda+this.chatByAzienda+`/${azId}/${tId}`)

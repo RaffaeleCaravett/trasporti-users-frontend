@@ -8,77 +8,142 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit{
-
-user:any
-isTrasportatore:boolean=false
-notifications:any
-page:number=0;
-size:number=0;
-orderBy:string='id';
+export class HomeComponent implements OnInit {
+  user: any;
+  isTrasportatore: boolean = false;
+  notifications: any;
+  page: number = 0;
+  size: number = 0;
+  orderBy: string = 'id';
   transporters: any;
-  isTLoading:boolean=false
-  aOfficeComponent:AziendaOfficeComponent = inject(AziendaOfficeComponent);
-  displayChat:boolean=false
-  chats:any[]=[]
-constructor(private homeService:HomeService,private toastr:ToastrService,private router:Router){}
+  isTLoading: boolean = false;
+  aOfficeComponent: AziendaOfficeComponent = inject(AziendaOfficeComponent);
+  displayChat: boolean = false;
+  chats: any[] = [];
+  constructor(
+    private homeService: HomeService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
-ngOnInit():void{
-    localStorage.setItem('location','/home')
-this.user=JSON.parse(localStorage.getItem('trasportatore')!)||JSON.parse(localStorage.getItem('azienda')!)
-if(this.user&&this.user.cognome){
-  this.isTrasportatore=true
-}
-
-if(this.isTrasportatore){
-this.homeService.getNotificationByTransporterIdAndNotificationStateAndSender(this.user.id,'Emessa','az').subscribe({
-  next:(data:any)=>{
-    this.notifications=data
-  },
-  error:(error:any)=>{
-    this.toastr.error(error.error.message||error.error.messageList[0]||"E' stato impossibile recuperare le notifiche.")
-  },
-  complete:()=>{}
-})
-}else{
-  this.homeService.getNotificationByAziendaIdAndNotificationStateAndSender(this.user?.id,'Emessa','tr').subscribe({
-    next:(data:any)=>{
-      this.notifications=data
-    },
-    error:(error:any)=>{
-      this.toastr.error(error.error.message||error.error.messageList[0]||"E' stato impossibile recuperare le notifiche.")
-    },
-    complete:()=>{}
-  })
-  this.getT(this.page,this.size,this.orderBy)
-}
-  }
-
-  getT(page:number,size:number,orderBy:string){
-    this.isTLoading=true;
-this.homeService.getTrasportatori(page,size,orderBy).pipe(delay(2000)).subscribe({
-  next:(data:any)=>{
-    this.transporters=data
-    this.isTLoading=false;
-    console.log(this.transporters)
-  },
-  error:(error:any)=>{
-    this.toastr.error(error.error.message||error.error.messageList[0]||"E' stato impossibile recuperare le notifiche.")
-  },
-  complete:()=>{}
-})
-  }
-
-  openT(t:any){
-this.aOfficeComponent.openT(t)
-  }
-  showChat(){
-    if(window.innerWidth<=500){
-
-    }else{
-    this.displayChat=!this.displayChat;
+  ngOnInit(): void {
+    localStorage.setItem('location', '/home');
+    this.user =
+      JSON.parse(localStorage.getItem('trasportatore')!) ||
+      JSON.parse(localStorage.getItem('azienda')!);
+    if (this.user && this.user.cognome) {
+      this.isTrasportatore = true;
     }
+
+    if (this.isTrasportatore) {
+      this.homeService
+        .getNotificationByTransporterIdAndNotificationStateAndSender(
+          this.user.id,
+          'Emessa',
+          'az'
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.notifications = data;
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile recuperare le notifiche."
+            );
+          },
+          complete: () => {},
+        });
+    } else {
+      this.homeService
+        .getNotificationByAziendaIdAndNotificationStateAndSender(
+          this.user?.id,
+          'Emessa',
+          'tr'
+        )
+        .subscribe({
+          next: (data: any) => {
+            this.notifications = data;
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile recuperare le notifiche."
+            );
+          },
+          complete: () => {},
+        });
+      this.getT(this.page, this.size, this.orderBy);
+      this.getChats(this.user.id);
+    }
+  }
+
+  getT(page: number, size: number, orderBy: string) {
+    this.isTLoading = true;
+    this.homeService
+      .getTrasportatori(page, size, orderBy)
+      .pipe(delay(2000))
+      .subscribe({
+        next: (data: any) => {
+          this.transporters = data;
+          this.isTLoading = false;
+          console.log(this.transporters);
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile recuperare i trasportatori."
+          );
+        },
+        complete: () => {},
+      });
+  }
+
+  openT(t: any) {
+    this.aOfficeComponent.openT(t);
+  }
+  showChat() {
+    if (window.innerWidth <= 500) {
+    } else {
+      this.displayChat = !this.displayChat;
+      let chatContainer = document.getElementsByClassName(
+        'chat-container'
+      )[0] as HTMLDivElement;
+      if (this.displayChat) {
+        chatContainer.style.height = '60vh';
+        chatContainer.style.transition = '2s';
+        chatContainer.classList.add('border');
+      } else {
+        chatContainer.style.height = '0';
+        chatContainer.style.transition = '2s';
+        setTimeout(()=>{
+          chatContainer.classList.remove('border');
+        },2000)
+      }
+    }
+  }
+
+  getChats(userId: number) {
+    this.homeService
+      .getChatsByAziendaId(userId)
+      .pipe(delay(1000))
+      .subscribe({
+        next: (dataChats: any) => {
+          this.chats = dataChats;
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile recuperare le chats."
+          );
+        },
+        complete: () => {},
+      });
   }
 }
