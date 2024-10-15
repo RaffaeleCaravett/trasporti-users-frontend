@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { delay } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
+import { OfficeComponent } from '../office/office.component';
+import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,7 @@ size:number=0;
 orderBy:string='id';
   transporters: any;
   isTLoading:boolean=false
+  aOfficeComponent:AziendaOfficeComponent = inject(AziendaOfficeComponent);
 constructor(private homeService:HomeService,private toastr:ToastrService){}
 
 ngOnInit():void{
@@ -64,5 +67,9 @@ this.homeService.getTrasportatori(page,size,orderBy).pipe(delay(2000)).subscribe
   },
   complete:()=>{}
 })
+  }
+
+  openT(t:any){
+this.aOfficeComponent.openT(t)
   }
 }
