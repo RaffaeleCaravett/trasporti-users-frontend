@@ -158,4 +158,22 @@ export class HomeComponent implements OnInit {
         complete: () => {},
       });
   }
+  openChat(userId:number,chatMember:any){
+
+  this.homeService.getChatsByAziendaIdAndTId(
+    this.isTrasportatore?chatMember.id:userId,this.isTrasportatore?userId:chatMember.id).pipe(delay(1000)).subscribe({
+    next: (chat: any) => {
+      console.log(chat)
+    },
+    error: (error: any) => {
+      this.toastr.error(
+        error.error.message ||
+          error.error.messageList[0] ||
+          "E' stato impossibile recuperare la chat."
+      );
+    },
+    complete: () => {},
+  })
+
+  }
 }
