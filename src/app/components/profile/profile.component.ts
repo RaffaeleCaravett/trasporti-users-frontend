@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
   user: any;
   recensioneTFormPagination!: FormGroup;
   recePageNumbers:number[]=[]
+  showDeleteConfirm:boolean=false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private profileService: ProfileService,
@@ -66,6 +67,7 @@ export class ProfileComponent implements OnInit {
   }
 
 updateReces(page?:number,size?:number,orderBy?:string){
+  this.showDeleteConfirm=false;
 this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
   next:(reces:any)=>{
     this.recensioniT=reces
@@ -80,7 +82,8 @@ this.recePageNumbers.push(i)
   complete:()=>{}
 })
 }
-deleteRece(receId:number,userId:number){
+deleteRece(receId?:number,userId?:number){
+  if(receId&&userId){
   this.profileService.deleteTRecensione(userId,receId).subscribe({
     next:(data:any)=>{
       if(data){
@@ -95,6 +98,9 @@ this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato
     },
     complete:()=>{}
   })
+  }else{
+    this.showDeleteConfirm=!this.showDeleteConfirm;
+  }
 }
 Number(value:string){
   return Number(value);

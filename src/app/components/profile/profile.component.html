@@ -57,9 +57,20 @@
       <div class="p-2">
   <div class="row border shadow-sm bg-personal" *ngFor="let r of recensioniT.content">
     <div class="col-md-12 text-end p-0">
-      <button class="btn" *ngIf="user?.id==r?.da?.id" (click)="deleteRece(r.id,user.id)" title="Elimina">
+      <button class="btn" *ngIf="user?.id==r?.da?.id" (click)="deleteRece()" title="Elimina">
         ❌
       </button>
+      <div *ngIf="showDeleteConfirm" class="text-center py-3 delete-rece">
+      <p class="text-danger">Vuoi davvero eliminare questa recensione?</p>
+    <div class="d-flex justify-content-around w-50 m-auto">
+    <button class="btn btn-success" (click)="deleteRece(r.id,user.id)">
+    Si
+    </button>
+    <button class="btn btn-dark" (click)="deleteRece()">
+    No
+    </button>
+      </div>
+    </div>
     </div>
     <div class="col-md-12 p-0">
       <h2 class="bg-dark p-2 text-white">Recensione effettuata da : </h2>

@@ -1,5 +1,5 @@
 <div class="container py-5 text-center">
-  <div class="row py-5 position-relative">
+  <div class="row py-5 p-3 position-relative">
     <div class="chat-container overflow-auto bg-white rounded" (window:resize)="showChat('resize')">
     <p *ngFor="let c of chats"></p>
     <p *ngIf="!chats||chats==null||chats.length==0">Non hai chat avviate al momento.</p>
@@ -21,7 +21,7 @@
              </div>
          </ng-template>
        </div>
-    <div class="col-md-6 p-1">
+    <div class="col-lg-6 col-md-9 p-1">
       <h2 class="pt-5">Bacheca</h2>
       <div class="row px-3 text-center" *ngIf="transporters&&transporters?.content?.length>0">
 <div class="col-md-12 my-1 border-bottom" *ngFor="let t of transporters.content, index as i">
@@ -86,7 +86,7 @@
 </div>
       </div>
     </div>
-  <div class="col-md-3 py-5">
+  <div class="col-lg-3 col-md-8 m-auto py-5">
     <app-user-info [user]="user" [isTrasportatore]="isTrasportatore"></app-user-info>
   </div>
 </div>
