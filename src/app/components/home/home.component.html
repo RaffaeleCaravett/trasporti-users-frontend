@@ -1,7 +1,8 @@
 <div class="container py-5 text-center">
   <div class="row py-5 p-3 position-relative">
+    <div class="single-chat runded p-2 bg-white"></div>
     <div class="chat-container overflow-auto bg-white rounded" (window:resize)="showChat('resize')">
-    <p *ngFor="let c of chats">
+    <p class="py-1 chat-item" *ngFor="let c of chats">
       {{c.azienda.id==user.id? c.trasportatore.nome + " " + c.trasportatore.cognome:c.azienda.nomeAzienda}}
     </p>
     <p *ngIf="!chats||chats==null||chats.length==0">Non hai chat avviate al momento.</p>

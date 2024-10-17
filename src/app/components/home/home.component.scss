@@ -44,4 +44,14 @@ h1{
   right: 80px;
   bottom:40px;
 }
+.chat-item{
+  cursor: pointer;
+}
 
+.single-chat{
+  position:fixed;
+  right: 340px;
+  bottom:40px;
+  width: 250px;
+  height: 450px;
+}

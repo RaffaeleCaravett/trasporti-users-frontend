@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
     let chatContainer = document.getElementsByClassName(
       'chat-container'
     )[0] as HTMLDivElement;
-    if (window.innerWidth <= 500) {
+    if (window.innerWidth <= 700) {
       if(resize){
         this.displayChat =false;
         chatContainer.style.height = '0';
@@ -133,9 +133,7 @@ export class HomeComponent implements OnInit {
       } else {
         chatContainer.style.height = '0';
         chatContainer.style.transition = '2s';
-        setTimeout(()=>{
           chatContainer.classList.remove('border');
-        },2000)
       }
       }
     }
