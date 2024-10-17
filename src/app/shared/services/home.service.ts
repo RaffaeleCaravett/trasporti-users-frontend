@@ -12,6 +12,7 @@ export class HomeService {
   private chat:string = '/chat'
   private chatByAzienda:string ='/byAzId'
   private chatByAziendaAndTr:string = '/byAziendaIdAndTrasportatoreId'
+
   constructor(private http:HttpClient) { }
 
 getNotificationByTransporterIdAndNotificationStateAndSender(transporterId:number,notificationState:string,sender:string){
@@ -32,5 +33,12 @@ getChatsByAziendaId(azId:number){
 }
 getChatsByAziendaIdAndTId(azId:number,tId:number){
   return this.http.get(environment.API_URL+this.azienda+this.chat+this.chatByAziendaAndTr+`/${azId}/${tId}`)
+}
+postChat(aziendaId:number,trasportatoreId:number){
+  let chatDTO = {
+azienda_id:aziendaId,
+trasportatore_id:trasportatoreId
+  }
+return this.http.post(environment.API_URL+this.azienda+this.chat,chatDTO)
 }
 }
