@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { delay } from 'rxjs';
+import { delay, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   aOfficeComponent: AziendaOfficeComponent = inject(AziendaOfficeComponent);
   displayChat: boolean = false;
   chats: any[] = [];
+  selectedChat:any
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -163,9 +164,22 @@ export class HomeComponent implements OnInit {
   this.homeService.getChatsByAziendaIdAndTId(
     this.isTrasportatore?chatMember.id:userId,this.isTrasportatore?userId:chatMember.id).pipe(delay(1000)).subscribe({
     next: (chat: any) => {
-      console.log(chat)
+      this.selectedChat= chat;
     },
     error: (error: any) => {
+      this.homeService.postChat(this.isTrasportatore?chatMember.id:userId,this.isTrasportatore?userId:chatMember.id).pipe(throttleTime(1000)).subscribe({
+        next: (chat: any) => {
+          this.selectedChat= chat;
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile creare la chat."
+          );
+        },
+        complete: () => {},
+      });
       this.toastr.error(
         error.error.message ||
           error.error.messageList[0] ||
