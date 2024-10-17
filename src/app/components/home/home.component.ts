@@ -170,6 +170,7 @@ export class HomeComponent implements OnInit {
       this.homeService.postChat(this.isTrasportatore?chatMember.id:userId,this.isTrasportatore?userId:chatMember.id).pipe(throttleTime(1000)).subscribe({
         next: (chat: any) => {
           this.selectedChat= chat;
+          this.getChats(userId)
         },
         error: (error: any) => {
           this.toastr.error(
