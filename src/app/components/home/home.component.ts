@@ -81,6 +81,16 @@ export class HomeComponent implements OnInit {
       this.getT(this.page, this.size, this.orderBy);
       this.getChats(this.user.id);
     }
+    let chatContainer = document.getElementsByClassName(
+      'chat-container'
+    )[0] as HTMLDivElement;
+    if(window.innerWidth<700){
+      this.displayChat = false;
+        chatContainer.style.height = '0';
+        chatContainer.style.transition = '2s';
+        chatContainer.style.overflow = 'hidden';
+        chatContainer.classList.remove('border');
+    }
   }
 
   getT(page: number, size: number, orderBy: string) {
@@ -114,16 +124,10 @@ export class HomeComponent implements OnInit {
     )[0] as HTMLDivElement;
     if (window.innerWidth <= 700) {
       if (resize) {
-        this.displayChat = false;
-        chatContainer.style.height = '0';
-        chatContainer.style.transition = '2s';
-        setTimeout(() => {
-          chatContainer.classList.remove('border');
-        }, 2000);
       } else {
         this.router.navigate([
           '/home/chat',
-          { user: JSON.stringify(this.user) },
+          { user: JSON.stringify(this.user) , chat:null},
         ]);
       }
     } else {
@@ -132,12 +136,18 @@ export class HomeComponent implements OnInit {
         if (this.displayChat) {
           chatContainer.style.height = '60vh';
           chatContainer.style.transition = '2s';
-          chatContainer.classList.add('border','overflow-auto');
+          chatContainer.classList.add('overflow-auto', 'border');
         } else {
           chatContainer.style.height = '30px';
           chatContainer.style.transition = '2s';
-          chatContainer.classList.remove('border','overflow-auto');
+          chatContainer.classList.remove( 'overflow-auto');
         }
+      }else{
+        if(!this.displayChat)
+        chatContainer.style.height = '30px';
+          chatContainer.style.transition = '2s';
+          chatContainer.classList.remove('overflow-auto')
+          chatContainer.classList.add('border');
       }
     }
   }
@@ -188,13 +198,21 @@ export class HomeComponent implements OnInit {
           complete: () => {},
         });
     }
+
+    if(window.innerWidth>=700){
     let singleChat = document.getElementsByClassName(
       'single-chat'
     )[0] as HTMLDivElement;
 
-    singleChat.classList.add('border','p-2');
+    singleChat.classList.add('border', 'p-2');
     singleChat.style.overflowY = 'auto';
     singleChat.style.height = '450px';
     singleChat.style.width = '250px';
+    }else{
+      this.router.navigate([
+        '/home/chat',
+        { user: JSON.stringify(this.user),chat:this.selectedChat },
+      ]);
+    }
   }
 }
