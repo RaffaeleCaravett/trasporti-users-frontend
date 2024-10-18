@@ -124,6 +124,11 @@ export class HomeComponent implements OnInit {
     )[0] as HTMLDivElement;
     if (window.innerWidth <= 700) {
       if (resize) {
+        this.displayChat = false;
+        chatContainer.style.height = '0';
+        chatContainer.style.transition = '2s';
+        chatContainer.style.overflow = 'hidden';
+        chatContainer.classList.remove('border');
       } else {
         this.router.navigate([
           '/home/chat',

@@ -1,6 +1,8 @@
 <div class="container py-5 text-center">
   <div class="row py-5 p-3 position-relative">
-    <div class="single-chat runded bg-white"></div>
+    <div class="single-chat runded bg-white">
+      <p class="fs-4">La tua chat con </p>
+    </div>
     <div class="chat-container bg-white rounded border" (window:resize)="showChat('resize')">
       <p class="fs-4 py-1 text-danger chat-container-title" (click)="showChat()">Le tue chat</p>
  <div *ngIf="displayChat">
