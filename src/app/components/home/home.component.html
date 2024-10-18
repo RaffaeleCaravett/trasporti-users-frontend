@@ -1,11 +1,22 @@
 <div class="container py-5 text-center">
   <div class="row py-5 p-3 position-relative">
-    <div class="single-chat runded bg-white d-none" *ngIf="selectedChat">
-      <div class="w-100 text-end p-0 d-flex">
-      <p class="fs-6">La tua chat con {{isTrasportatore?selectedChat.azienda.nomeAzienda:selectedChat.trasportatore.nome+" "+ selectedChat.trasportatore.cognome}}</p>
+    <div class="p-0 single-chat runded bg-white d-none" *ngIf="selectedChat">
+      <div class="text-end p-0 d-flex bg-light p-1">
+      <p class="fs-6">{{isTrasportatore?selectedChat.azienda.nomeAzienda:selectedChat.trasportatore.nome + " " + selectedChat.trasportatore.cognome}}</p>
         <button class="btn" (click)="selectedChat=null" title="Chiudi">
           ❌
         </button>
+      </div>
+      <div class="p-1 messages-container">
+      <div *ngFor="let m of selectedChat.messaggiList">
+       <p class="text-start" *ngIf="isTrasportatore&&m?.trasportatore_as_sender?.id==user.id||!isTrasportatore&&m?.azienda_as_sender?.id==user.id">
+        {{m.testo}}
+       </p>
+       <p class="text-start" *ngIf="isTrasportatore&&m?.trasportatore_as_receiver?.id==user.id||!isTrasportatore&&m.azienda_as_receiver?.id==user.id">
+        {{m.testo}}
+       </p>
+      </div>
+      <p *ngIf="selectedChat&&selectedChat.messaggiList.length==0||!selectedChat.messaggiList">Inizia la conversazione.</p>
       </div>
     </div>
     <div class="chat-container bg-white rounded border" (window:resize)="showChat('resize')">
@@ -15,7 +26,7 @@
       {{c.azienda.id==user.id? c.trasportatore.nome + " " + c.trasportatore.cognome:c.azienda.nomeAzienda}}
     </p>
  </div>
-    <p *ngIf="!chats||chats==null||chats.length==0">Non hai chat avviate al momento.</p>
+    <p *ngIf="!chats||chats==null||chats.length==0&&displayChat">Non hai chat avviate al momento.</p>
     </div>
     <i class="material-icons chat" (click)="showChat()">chat</i>
     <div class="col-md-12 text-danger p-2 bg-light">

@@ -217,7 +217,7 @@ export class HomeComponent implements OnInit {
 let singleChat = document.getElementsByClassName(
       'single-chat'
     )[0] as HTMLDivElement;
-    singleChat.classList.add('border', 'p-2', 'd-block');
+    singleChat.classList.add('border', 'd-block');
     singleChat.classList.remove('d-none')
     singleChat.style.overflowY = 'auto';
     singleChat.style.height = '450px';
@@ -229,5 +229,6 @@ let singleChat = document.getElementsByClassName(
         { user: JSON.stringify(this.user),chat:this.selectedChat },
       ]);
     }
+    console.log(this.selectedChat)
   }
 }
