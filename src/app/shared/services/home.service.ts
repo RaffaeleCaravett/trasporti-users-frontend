@@ -10,6 +10,7 @@ export class HomeService {
   private trasportatore:string ='/trasportatore'
   private azienda:string ='/azienda'
   private chat:string = '/chat'
+  private messaggi:string = '/messaggi'
   private chatByAzienda:string ='/byAzId'
   private chatByAziendaAndTr:string = '/byAziendaIdAndTrasportatoreId'
 
@@ -40,5 +41,9 @@ azienda_id:aziendaId,
 trasportatore_id:trasportatoreId
   }
 return this.http.post(environment.API_URL+this.azienda+this.chat,chatDTO)
+}
+
+sendMessage(message:any){
+return this.http.post(environment.API_URL+this.azienda+this.messaggi,message)
 }
 }

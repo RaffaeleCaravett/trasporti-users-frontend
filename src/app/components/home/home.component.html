@@ -2,125 +2,184 @@
   <div class="row py-5 p-3 position-relative">
     <div class="p-0 single-chat runded bg-white d-none" *ngIf="selectedChat">
       <div class="text-end p-0 d-flex bg-light p-1">
-      <p class="fs-6 pt-2">{{isTrasportatore?selectedChat.azienda.nomeAzienda:selectedChat.trasportatore.nome + " " + selectedChat.trasportatore.cognome}}</p>
-      <button class="btn" (click)="downgradeChat()" title="Riduci">
-        ➖
-      </button>
-        <button class="btn" (click)="selectedChat=null" title="Chiudi">
+        <p class="fs-6 pt-2">
+          {{
+            isTrasportatore
+              ? selectedChat.azienda.nomeAzienda
+              : selectedChat.trasportatore.nome +
+                " " +
+                selectedChat.trasportatore.cognome
+          }}
+        </p>
+        <button class="btn" (click)="downgradeChat()" title="Riduci">➖</button>
+        <button class="btn" (click)="selectedChat = null" title="Chiudi">
           ❌
         </button>
       </div>
       <div class="p-1 messages-container">
-      <div *ngFor="let m of selectedChat.messaggiList">
-       <p class="text-start" *ngIf="isTrasportatore&&m?.trasportatore_as_sender?.id==user.id||!isTrasportatore&&m?.azienda_as_sender?.id==user.id">
-        {{m.testo}}
-       </p>
-       <p class="text-start" *ngIf="isTrasportatore&&m?.trasportatore_as_receiver?.id==user.id||!isTrasportatore&&m.azienda_as_receiver?.id==user.id">
-        {{m.testo}}
-       </p>
-      </div>
-      <p *ngIf="selectedChat&&selectedChat.messaggiList.length==0||!selectedChat.messaggiList">Inizia la conversazione.</p>
+        <div *ngFor="let m of selectedChat.messaggiList">
+          <p
+            class="text-start"
+            *ngIf="
+              (isTrasportatore && m?.trasportatore_as_sender?.id == user.id) ||
+              (!isTrasportatore && m?.azienda_as_sender?.id == user.id)
+            "
+          >
+            {{ m.testo }}
+          </p>
+          <p
+            class="text-start"
+            *ngIf="
+              (isTrasportatore &&
+                m?.trasportatore_as_receiver?.id == user.id) ||
+              (!isTrasportatore && m.azienda_as_receiver?.id == user.id)
+            "
+          >
+            {{ m.testo }}
+          </p>
+        </div>
+        <p
+          *ngIf="
+            (selectedChat && selectedChat.messaggiList.length == 0) ||
+            !selectedChat.messaggiList
+          "
+        >
+          Inizia la conversazione.
+        </p>
       </div>
       <div class="position-absolute bottom-0 left-50">
         <form [formGroup]="messageForm" class="d-flex p-1">
-        <input type="text" class="form-control" formControlName="messaggio">
-          <button class="btn" (click)="sendMessage(selectedChat,user)">Invia</button>
+          <input type="text" class="form-control" formControlName="message" />
+          <button class="btn" (click)="sendMessage(selectedChat, user)">
+            Invia
+          </button>
         </form>
-              </div>
+      </div>
     </div>
-    <div class="chat-container bg-white rounded border" (window:resize)="showChat('resize')">
-      <p class="fs-4 py-1 text-danger chat-container-title"  (click)="showChat()">Le tue chat</p>
- <div *ngIf="displayChat">
-   <p class="py-1 chat-item" *ngFor="let c of chats" title="Apri chat con {{c.azienda.id==user.id? c.trasportatore.nome + ' ' + c.trasportatore.cognome:c.azienda.nomeAzienda}}" (click)="openChat(user?.id,c.trasportatore)">
-      {{c.azienda.id==user.id? c.trasportatore.nome + " " + c.trasportatore.cognome:c.azienda.nomeAzienda}}
-    </p>
- </div>
-    <p *ngIf="!chats||chats==null||chats.length==0&&displayChat">Non hai chat avviate al momento.</p>
+    <div
+      class="chat-container bg-white rounded border"
+      (window:resize)="showChat('resize')"
+    >
+      <p
+        class="fs-4 py-1 text-danger chat-container-title"
+        (click)="showChat()"
+      >
+        Le tue chat
+      </p>
+      <div *ngIf="displayChat">
+        <p
+          class="py-1 chat-item"
+          *ngFor="let c of chats"
+          title="Apri chat con {{
+            c.azienda.id == user.id
+              ? c.trasportatore.nome + ' ' + c.trasportatore.cognome
+              : c.azienda.nomeAzienda
+          }}"
+          (click)="openChat(user?.id, c.trasportatore)"
+        >
+          {{
+            c.azienda.id == user.id
+              ? c.trasportatore.nome + " " + c.trasportatore.cognome
+              : c.azienda.nomeAzienda
+          }}
+        </p>
+      </div>
+      <p *ngIf="!chats || chats == null || (chats.length == 0 && displayChat)">
+        Non hai chat avviate al momento.
+      </p>
     </div>
     <i class="material-icons chat" (click)="showChat()">chat</i>
     <div class="col-md-12 text-danger p-2 bg-light">
-      <h1>Benvenuto! Dai un'occhiata {{user.role=='Trasportatore'?"alle spedizioni":"ai trasportatori"}} disponibili.</h1>
+      <h1>
+        Benvenuto! Dai un'occhiata
+        {{
+          user.role == "Trasportatore" ? "alle spedizioni" : "ai trasportatori"
+        }}
+        disponibili.
+      </h1>
     </div>
     <div class="col-md-3 py-5">
       <p class="fs-5 fw-bold">Notifiche</p>
-           <div class="row p-2 border rounded overflow-auto" *ngIf="notifications && notifications.content>0 else nonotifications">
-           <p *ngFor="let n of notifications.content">
-             {{n.testo}}
-           </p>
-           </div>
-         <ng-template #nonotifications>
-             <div class="row p-2 border rounded overflow-auto">
-             <p>Non ci sono ancora notifiche da mostrarti.</p>
-             </div>
-         </ng-template>
-       </div>
+      <div
+        class="row p-2 border rounded overflow-auto"
+        *ngIf="notifications && notifications.content > 0; else nonotifications"
+      >
+        <p *ngFor="let n of notifications.content">
+          {{ n.testo }}
+        </p>
+      </div>
+      <ng-template #nonotifications>
+        <div class="row p-2 border rounded overflow-auto">
+          <p>Non ci sono ancora notifiche da mostrarti.</p>
+        </div>
+      </ng-template>
+    </div>
     <div class="col-lg-6 col-md-9 p-1">
       <h2 class="pt-5">Bacheca</h2>
-      <div class="row px-3 text-center" *ngIf="transporters&&transporters?.content?.length>0">
-<div class="col-md-12 my-1 border-bottom" *ngFor="let t of transporters.content, index as i">
-<div class="row">
-  <div class="col-md-12 p-1 bg-light">
-    <h1>
-      {{t?.nome + " " +t?.cognome}}
-    </h1>
-  </div>
-  <div class="col-md-6 p-1">
-    <span class="text-danger">
-      Codice fiscale :
-    </span>
-    {{t.codiceFiscale}}
-  </div>
-  <div class="col-md-6 p-1">
-    <span class="text-danger">
-      Partita Iva :
-    </span>
-    {{t.partitaIva}}
-  </div>
-  <div class="col-md-6 p-1">
-    <span class="text-danger">
-      Età :
-    </span>
-    {{t.eta}}
-  </div>
-  <div class="col-md-6 p-1">
-    <span class="text-danger">
-      Flotta mezzi :
-    </span>
-    {{t.flottaMezzi}}
-  </div>
-  <div class="col-md-3 p-1">
-    <span class="text-danger">
-    Indirizzo :
-    </span>
-    {{t.citta}} ,
-  </div>
-  <div class="col-md-3 p-1">
-  {{t.regione}}
-  </div>
-  <div class="col-md-3 p-1">
-   - {{t.indirizzo}}
-  </div>
-  <div class="col-md-3 p-1">
-  {{t.cap}}
-  </div>
-  <div class="col-md-12 p-1 pb-3">
-    <span class="text-danger">
-      Email :
-    </span>
-    {{t.email}}
-  </div>
-  <div class="col-md-6 p-1 bg-light">
-    <button class="btn text-danger" (click)="openT(t)">Visualizza profilo</button>
-  </div>
-  <div class="col-md-6 p-1 bg-light">
-    <button class="btn text-danger" (click)="openChat(user?.id,t)">Manda un messaggio</button>
-  </div>
-</div>
-</div>
+      <div
+        class="row px-3 text-center"
+        *ngIf="transporters && transporters?.content?.length > 0"
+      >
+        <div
+          class="col-md-12 my-1 border-bottom"
+          *ngFor="let t of transporters.content; index as i"
+        >
+          <div class="row">
+            <div class="col-md-12 p-1 bg-light">
+              <h1>
+                {{ t?.nome + " " + t?.cognome }}
+              </h1>
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Codice fiscale : </span>
+              {{ t.codiceFiscale }}
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Partita Iva : </span>
+              {{ t.partitaIva }}
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Età : </span>
+              {{ t.eta }}
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Flotta mezzi : </span>
+              {{ t.flottaMezzi }}
+            </div>
+            <div class="col-md-3 p-1">
+              <span class="text-danger"> Indirizzo : </span>
+              {{ t.citta }} ,
+            </div>
+            <div class="col-md-3 p-1">
+              {{ t.regione }}
+            </div>
+            <div class="col-md-3 p-1">- {{ t.indirizzo }}</div>
+            <div class="col-md-3 p-1">
+              {{ t.cap }}
+            </div>
+            <div class="col-md-12 p-1 pb-3">
+              <span class="text-danger"> Email : </span>
+              {{ t.email }}
+            </div>
+            <div class="col-md-6 p-1 bg-light">
+              <button class="btn text-danger" (click)="openT(t)">
+                Visualizza profilo
+              </button>
+            </div>
+            <div class="col-md-6 p-1 bg-light">
+              <button class="btn text-danger" (click)="openChat(user?.id, t)">
+                Manda un messaggio
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  <div class="col-lg-3 col-md-8 m-auto py-5">
-    <app-user-info [user]="user" [isTrasportatore]="isTrasportatore"></app-user-info>
+    <div class="col-lg-3 col-md-8 m-auto py-5">
+      <app-user-info
+        [user]="user"
+        [isTrasportatore]="isTrasportatore"
+      ></app-user-info>
+    </div>
   </div>
-</div>
 </div>

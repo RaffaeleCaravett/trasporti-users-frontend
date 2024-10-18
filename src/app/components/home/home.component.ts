@@ -217,7 +217,7 @@ export class HomeComponent implements OnInit {
                 "E' stato impossibile creare la chat."
             );
           },
-          complete: () => {},
+          complete: () => {}
         });
     }
 
@@ -262,6 +262,29 @@ export class HomeComponent implements OnInit {
   }
 
   sendMessage(chat:any,user:any){
+if(this.messageForm.valid){
+  let message = {
+    chat_id:this.selectedChat?.id,
+    sender_id:this.user?.id,
+    receiver_id:this.isTrasportatore?this.selectedChat.azienda.id:this.selectedChat.trasportatore.id,
+    receiverType:this.isTrasportatore?'Azienda':'Trasportatore',
+    senderType:this.isTrasportatore?'Trasportatore':'Azienda',
+    testo:this.messageForm.controls['message'].value
+  }
 
+  this.homeService.sendMessage(message).pipe(delay(1000)).subscribe({
+    next: (message: any) => {
+      this.selectedChat.messaggiList.push(message)
+    },
+    error: (error: any) => {
+      this.toastr.error(
+        error.error.message ||
+          error.error.messageList[0] ||
+          "E' stato impossibile inviare il messaggio."
+      );
+    },
+    complete: () => {}
+  })
+}
   }
 }
