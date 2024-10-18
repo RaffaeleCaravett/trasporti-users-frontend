@@ -10,9 +10,6 @@
           ❌
         </button>
       </div>
-      <div class="position-absolute bottom-0">
-Ciao
-      </div>
       <div class="p-1 messages-container">
       <div *ngFor="let m of selectedChat.messaggiList">
        <p class="text-start" *ngIf="isTrasportatore&&m?.trasportatore_as_sender?.id==user.id||!isTrasportatore&&m?.azienda_as_sender?.id==user.id">
@@ -24,6 +21,12 @@ Ciao
       </div>
       <p *ngIf="selectedChat&&selectedChat.messaggiList.length==0||!selectedChat.messaggiList">Inizia la conversazione.</p>
       </div>
+      <div class="position-absolute bottom-0 left-50">
+        <form [formGroup]="messageForm" class="d-flex p-1">
+        <input type="text" class="form-control" formControlName="messaggio">
+          <button class="btn" (click)="sendMessage(selectedChat,user)">Invia</button>
+        </form>
+              </div>
     </div>
     <div class="chat-container bg-white rounded border" (window:resize)="showChat('resize')">
       <p class="fs-4 py-1 text-danger chat-container-title"  (click)="showChat()">Le tue chat</p>

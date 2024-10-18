@@ -4,6 +4,7 @@ import { delay, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   chats: any[] = [];
   selectedChat: any;
   reduce: boolean = false;
+  messageForm!:FormGroup
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -92,6 +94,9 @@ export class HomeComponent implements OnInit {
       chatContainer.style.overflow = 'hidden';
       chatContainer.classList.remove('border');
     }
+    this.messageForm = new FormGroup({
+      message: new FormControl('',Validators.required)
+    })
   }
 
   getT(page: number, size: number, orderBy: string) {
@@ -254,5 +259,9 @@ export class HomeComponent implements OnInit {
         singleChat.style.width = '280px';
       }
     }, 500);
+  }
+
+  sendMessage(chat:any,user:any){
+
   }
 }
