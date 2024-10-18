@@ -1,12 +1,17 @@
 <div class="container py-5 text-center">
   <div class="row py-5 p-3 position-relative">
-    <div class="single-chat runded bg-white">
-      <p class="fs-4">La tua chat con </p>
+    <div class="single-chat runded bg-white d-none" *ngIf="selectedChat">
+      <div class="w-100 text-end p-0 d-flex">
+      <p class="fs-6">La tua chat con {{isTrasportatore?selectedChat.azienda.nomeAzienda:selectedChat.trasportatore.nome+" "+ selectedChat.trasportatore.cognome}}</p>
+        <button class="btn" (click)="selectedChat=null" title="Chiudi">
+          ❌
+        </button>
+      </div>
     </div>
     <div class="chat-container bg-white rounded border" (window:resize)="showChat('resize')">
-      <p class="fs-4 py-1 text-danger chat-container-title" (click)="showChat()">Le tue chat</p>
+      <p class="fs-4 py-1 text-danger chat-container-title"  (click)="showChat()">Le tue chat</p>
  <div *ngIf="displayChat">
-   <p class="py-1 chat-item" *ngFor="let c of chats" (click)="openChat(user.id,c)">
+   <p class="py-1 chat-item" *ngFor="let c of chats" title="Apri chat con {{c.azienda.id==user.id? c.trasportatore.nome + ' ' + c.trasportatore.cognome:c.azienda.nomeAzienda}}" (click)="openChat(user?.id,c.trasportatore)">
       {{c.azienda.id==user.id? c.trasportatore.nome + " " + c.trasportatore.cognome:c.azienda.nomeAzienda}}
     </p>
  </div>

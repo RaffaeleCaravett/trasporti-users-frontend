@@ -102,7 +102,6 @@ export class HomeComponent implements OnInit {
         next: (data: any) => {
           this.transporters = data;
           this.isTLoading = false;
-          console.log(this.transporters);
         },
         error: (error: any) => {
           this.toastr.error(
@@ -122,6 +121,9 @@ export class HomeComponent implements OnInit {
     let chatContainer = document.getElementsByClassName(
       'chat-container'
     )[0] as HTMLDivElement;
+    let singleChat = document.getElementsByClassName(
+          'single-chat'
+        )[0] as HTMLDivElement;
     if (window.innerWidth <= 700) {
       if (resize) {
         this.displayChat = false;
@@ -129,6 +131,9 @@ export class HomeComponent implements OnInit {
         chatContainer.style.transition = '2s';
         chatContainer.style.overflow = 'hidden';
         chatContainer.classList.remove('border');
+        setTimeout(()=>{
+          singleChat.classList.add('d-none')
+        },200)
       } else {
         this.router.navigate([
           '/home/chat',
@@ -176,10 +181,13 @@ export class HomeComponent implements OnInit {
       });
   }
   openChat(userId: number, chatMember: any) {
-    this.selectedChat = this.chats.filter((c) => {
-      this.isTrasportatore
-        ? c.trasportatore.id == userId && c.azienda.id == chatMember.id
-        : c.azienda.id == userId && c.trasportatore.id == chatMember.id;
+    this.chats.forEach((c) => {
+      if(this.isTrasportatore
+        && c.trasportatore.id == userId && c.azienda.id == chatMember.id||
+        !this.isTrasportatore&&
+         c.azienda.id == userId && c.trasportatore.id == chatMember.id){
+          this.selectedChat=c;
+         }
     });
     if (this.selectedChat == null) {
       this.homeService
@@ -205,14 +213,16 @@ export class HomeComponent implements OnInit {
     }
 
     if(window.innerWidth>=700){
-    let singleChat = document.getElementsByClassName(
+      setTimeout(()=>{
+let singleChat = document.getElementsByClassName(
       'single-chat'
     )[0] as HTMLDivElement;
-
-    singleChat.classList.add('border', 'p-2');
+    singleChat.classList.add('border', 'p-2', 'd-block');
+    singleChat.classList.remove('d-none')
     singleChat.style.overflowY = 'auto';
     singleChat.style.height = '450px';
     singleChat.style.width = '250px';
+      },500)
     }else{
       this.router.navigate([
         '/home/chat',
