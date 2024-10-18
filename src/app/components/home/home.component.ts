@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   displayChat: boolean = false;
   chats: any[] = [];
   selectedChat: any;
+  reduce: boolean = false;
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -84,12 +85,12 @@ export class HomeComponent implements OnInit {
     let chatContainer = document.getElementsByClassName(
       'chat-container'
     )[0] as HTMLDivElement;
-    if(window.innerWidth<700){
+    if (window.innerWidth < 700) {
       this.displayChat = false;
-        chatContainer.style.height = '0';
-        chatContainer.style.transition = '2s';
-        chatContainer.style.overflow = 'hidden';
-        chatContainer.classList.remove('border');
+      chatContainer.style.height = '0';
+      chatContainer.style.transition = '2s';
+      chatContainer.style.overflow = 'hidden';
+      chatContainer.classList.remove('border');
     }
   }
 
@@ -122,8 +123,8 @@ export class HomeComponent implements OnInit {
       'chat-container'
     )[0] as HTMLDivElement;
     let singleChat = document.getElementsByClassName(
-          'single-chat'
-        )[0] as HTMLDivElement;
+      'single-chat'
+    )[0] as HTMLDivElement;
     if (window.innerWidth <= 700) {
       if (resize) {
         this.displayChat = false;
@@ -131,13 +132,13 @@ export class HomeComponent implements OnInit {
         chatContainer.style.transition = '2s';
         chatContainer.style.overflow = 'hidden';
         chatContainer.classList.remove('border');
-        setTimeout(()=>{
-          singleChat.classList.add('d-none')
-        },200)
+        setTimeout(() => {
+          singleChat.classList.add('d-none');
+        }, 200);
       } else {
         this.router.navigate([
           '/home/chat',
-          { user: JSON.stringify(this.user) , chat:null},
+          { user: JSON.stringify(this.user), chat: null },
         ]);
       }
     } else {
@@ -150,14 +151,13 @@ export class HomeComponent implements OnInit {
         } else {
           chatContainer.style.height = '30px';
           chatContainer.style.transition = '2s';
-          chatContainer.classList.remove( 'overflow-auto');
+          chatContainer.classList.remove('overflow-auto');
         }
-      }else{
-        if(!this.displayChat)
-        chatContainer.style.height = '30px';
-          chatContainer.style.transition = '2s';
-          chatContainer.classList.remove('overflow-auto')
-          chatContainer.classList.add('border');
+      } else {
+        if (!this.displayChat) chatContainer.style.height = '30px';
+        chatContainer.style.transition = '2s';
+        chatContainer.classList.remove('overflow-auto');
+        chatContainer.classList.add('border');
       }
     }
   }
@@ -182,12 +182,16 @@ export class HomeComponent implements OnInit {
   }
   openChat(userId: number, chatMember: any) {
     this.chats.forEach((c) => {
-      if(this.isTrasportatore
-        && c.trasportatore.id == userId && c.azienda.id == chatMember.id||
-        !this.isTrasportatore&&
-         c.azienda.id == userId && c.trasportatore.id == chatMember.id){
-          this.selectedChat=c;
-         }
+      if (
+        (this.isTrasportatore &&
+          c.trasportatore.id == userId &&
+          c.azienda.id == chatMember.id) ||
+        (!this.isTrasportatore &&
+          c.azienda.id == userId &&
+          c.trasportatore.id == chatMember.id)
+      ) {
+        this.selectedChat = c;
+      }
     });
     if (this.selectedChat == null) {
       this.homeService
@@ -212,23 +216,43 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    if(window.innerWidth>=700){
-      setTimeout(()=>{
-let singleChat = document.getElementsByClassName(
-      'single-chat'
-    )[0] as HTMLDivElement;
-    singleChat.classList.add('border', 'd-block');
-    singleChat.classList.remove('d-none')
-    singleChat.style.overflowY = 'auto';
-    singleChat.style.height = '450px';
-    singleChat.style.width = '250px';
-      },500)
-    }else{
+    if (window.innerWidth >= 700) {
+      setTimeout(() => {
+        let singleChat = document.getElementsByClassName(
+          'single-chat'
+        )[0] as HTMLDivElement;
+        singleChat.classList.add('border', 'd-block');
+        singleChat.classList.remove('d-none');
+        singleChat.style.overflowY = 'auto';
+        singleChat.style.height = '450px';
+        singleChat.style.width = '340px';
+      }, 500);
+    } else {
       this.router.navigate([
         '/home/chat',
-        { user: JSON.stringify(this.user),chat:this.selectedChat },
+        { user: JSON.stringify(this.user), chat: this.selectedChat },
       ]);
     }
-    console.log(this.selectedChat)
+    console.log(this.selectedChat);
+  }
+  downgradeChat() {
+    this.reduce = !this.reduce;
+    setTimeout(() => {
+      let singleChat = document.getElementsByClassName(
+        'single-chat'
+      )[0] as HTMLDivElement;
+      if (this.reduce) {
+        singleChat.style.transition = '1s';
+        singleChat.style.height = '50px';
+        singleChat.style.overflowY = 'hidden';
+      } else {
+        singleChat.style.transition = '1s';
+        singleChat.classList.add('border', 'd-block');
+        singleChat.classList.remove('d-none');
+        singleChat.style.overflowY = 'auto';
+        singleChat.style.height = '450px';
+        singleChat.style.width = '280px';
+      }
+    }, 500);
   }
 }

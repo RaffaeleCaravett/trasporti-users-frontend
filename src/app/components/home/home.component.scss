@@ -46,6 +46,13 @@ h1{
 }
 .chat-item{
   cursor: pointer;
+  transition: 1s;
+  &:hover{
+    transition: .5s;
+    transform: scale(1.1);
+    background: rgba($color: #000000, $alpha: .5);
+    color: white;
+  }
 }
 
 .single-chat{
@@ -58,3 +65,4 @@ h1{
 .chat-container-title{
   cursor: pointer;
 }
+

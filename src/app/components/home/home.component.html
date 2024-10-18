@@ -2,10 +2,16 @@
   <div class="row py-5 p-3 position-relative">
     <div class="p-0 single-chat runded bg-white d-none" *ngIf="selectedChat">
       <div class="text-end p-0 d-flex bg-light p-1">
-      <p class="fs-6">{{isTrasportatore?selectedChat.azienda.nomeAzienda:selectedChat.trasportatore.nome + " " + selectedChat.trasportatore.cognome}}</p>
+      <p class="fs-6 pt-2">{{isTrasportatore?selectedChat.azienda.nomeAzienda:selectedChat.trasportatore.nome + " " + selectedChat.trasportatore.cognome}}</p>
+      <button class="btn" (click)="downgradeChat()" title="Riduci">
+        ➖
+      </button>
         <button class="btn" (click)="selectedChat=null" title="Chiudi">
           ❌
         </button>
+      </div>
+      <div class="position-absolute bottom-0">
+Ciao
       </div>
       <div class="p-1 messages-container">
       <div *ngFor="let m of selectedChat.messaggiList">
