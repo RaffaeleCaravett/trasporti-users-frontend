@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   aOfficeComponent: AziendaOfficeComponent = inject(AziendaOfficeComponent);
   displayChat: boolean = false;
   chats: any[] = [];
-  selectedChat:any
+  selectedChat: any;
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -108,33 +108,36 @@ export class HomeComponent implements OnInit {
   openT(t: any) {
     this.aOfficeComponent.openT(t);
   }
-  showChat(resize?:string) {
+  showChat(resize?: string) {
     let chatContainer = document.getElementsByClassName(
       'chat-container'
     )[0] as HTMLDivElement;
     if (window.innerWidth <= 700) {
-      if(resize){
-        this.displayChat =false;
+      if (resize) {
+        this.displayChat = false;
         chatContainer.style.height = '0';
         chatContainer.style.transition = '2s';
-        setTimeout(()=>{
+        setTimeout(() => {
           chatContainer.classList.remove('border');
-        },2000)
-      }else{
-        this.router.navigate(['/home/chat',{user:JSON.stringify(this.user)}])
+        }, 2000);
+      } else {
+        this.router.navigate([
+          '/home/chat',
+          { user: JSON.stringify(this.user) },
+        ]);
       }
     } else {
-      if(!resize){
-      this.displayChat = !this.displayChat;
-      if (this.displayChat) {
-        chatContainer.style.height = '60vh';
-        chatContainer.style.transition = '2s';
-        chatContainer.classList.add('border');
-      } else {
-        chatContainer.style.height = '0';
-        chatContainer.style.transition = '2s';
-          chatContainer.classList.remove('border');
-      }
+      if (!resize) {
+        this.displayChat = !this.displayChat;
+        if (this.displayChat) {
+          chatContainer.style.height = '60vh';
+          chatContainer.style.transition = '2s';
+          chatContainer.classList.add('border','overflow-auto');
+        } else {
+          chatContainer.style.height = '30px';
+          chatContainer.style.transition = '2s';
+          chatContainer.classList.remove('border','overflow-auto');
+        }
       }
     }
   }
@@ -157,36 +160,41 @@ export class HomeComponent implements OnInit {
         complete: () => {},
       });
   }
-  openChat(userId:number,chatMember:any){
+  openChat(userId: number, chatMember: any) {
+    this.selectedChat = this.chats.filter((c) => {
+      this.isTrasportatore
+        ? c.trasportatore.id == userId && c.azienda.id == chatMember.id
+        : c.azienda.id == userId && c.trasportatore.id == chatMember.id;
+    });
+    if (this.selectedChat == null) {
+      this.homeService
+        .postChat(
+          this.isTrasportatore ? chatMember.id : userId,
+          this.isTrasportatore ? userId : chatMember.id
+        )
+        .pipe(throttleTime(1000))
+        .subscribe({
+          next: (chat: any) => {
+            this.selectedChat = chat;
+            this.getChats(userId);
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile creare la chat."
+            );
+          },
+          complete: () => {},
+        });
+    }
+    let singleChat = document.getElementsByClassName(
+      'single-chat'
+    )[0] as HTMLDivElement;
 
-  this.homeService.getChatsByAziendaIdAndTId(
-    this.isTrasportatore?chatMember.id:userId,this.isTrasportatore?userId:chatMember.id).pipe(delay(1000)).subscribe({
-    next: (chat: any) => {
-      this.selectedChat= chat;
-    },
-    error: (error: any) => {
-      this.homeService.postChat(this.isTrasportatore?chatMember.id:userId,this.isTrasportatore?userId:chatMember.id).pipe(throttleTime(1000)).subscribe({
-        next: (chat: any) => {
-          this.selectedChat= chat;
-          this.getChats(userId)
-        },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile creare la chat."
-          );
-        },
-        complete: () => {},
-      });
-      this.toastr.error(
-        error.error.message ||
-          error.error.messageList[0] ||
-          "E' stato impossibile recuperare la chat."
-      );
-    },
-    complete: () => {},
-  })
-
+    singleChat.classList.add('border','p-2');
+    singleChat.style.overflowY = 'auto';
+    singleChat.style.height = '450px';
+    singleChat.style.width = '250px';
   }
 }
