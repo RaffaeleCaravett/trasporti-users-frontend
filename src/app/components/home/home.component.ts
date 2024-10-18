@@ -274,6 +274,7 @@ if(this.messageForm.valid){
 
   this.homeService.sendMessage(message).pipe(delay(1000)).subscribe({
     next: (message: any) => {
+      this.messageForm.reset()
       this.selectedChat.messaggiList.push(message)
     },
     error: (error: any) => {
