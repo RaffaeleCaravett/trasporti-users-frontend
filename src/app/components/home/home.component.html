@@ -18,25 +18,37 @@
       </div>
       <div class="p-1 messages-container">
         <div *ngFor="let m of selectedChat.messaggiList">
-          <p
+          <div
             class="text-end w-75 my-1 p-1 message-as-sender bg-info text-white rounded border"
             *ngIf="
               (isTrasportatore && m?.trasportatore_as_sender?.id == user.id) ||
               (!isTrasportatore && m?.azienda_as_sender?.id == user.id)
             "
+            title="{{m?.trasportatore_as_sender?.nome||m?.azienda_as_sender?.nomeAzienda + ' il ' + m.createdAt}}"
           >
-            {{ m.testo }}
-          </p>
-          <p
+            <p>
+              {{ m.testo }}
+            </p>
+            <p class="created-at" title="{{m.createdAt}}">
+              {{m.createdAt}}
+            </p>
+          </div>
+          <div
             class="text-start my-1 p-1 w-75 ml-0 message-as-receiver"
             *ngIf="
               (isTrasportatore &&
                 m?.trasportatore_as_receiver?.id == user.id) ||
               (!isTrasportatore && m.azienda_as_receiver?.id == user.id)
             "
-          >
+            title="{{m?.trasportatore_as_sender?.nome||m?.azienda_as_sender?.nomeAzienda + ' il ' + m.createdAt}}"
+            >
+          <p>
             {{ m.testo }}
           </p>
+          <p class="created-at" title="{{m.createdAt}}">
+            {{m.createdAt}}
+          </p>
+          </div>
         </div>
         <p
           *ngIf="
