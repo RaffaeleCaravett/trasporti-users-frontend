@@ -7,19 +7,25 @@
   <h1 class="border-bottom p-2 text-danger">Informazioni</h1>
 </div>
 <div mat-dialog-content>
-  <div class="container" *ngIf="isTrasportatore else azienda">
+  <div class="container" *ngIf="isTrasportatore">
     <div class="row p-2 bg-light rounded overflow-auto" >
       <div class="col-md-5">
-        {{ data?.nome }}
+        {{ isTrasportatore?data?.nomeAzienda:data?.nome }}
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5" *ngIf="isTrasportatore">
         {{ data?.cognome }}
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" *ngIf="isTrasportatore">
         {{ data?.eta + " anni." }}
       </div>
-      <div class="col-md-12">
+      <div class="col-md-7" *ngIf="isTrasportatore">
+        {{ data?.numeroDipendenti + " dipendenti all'attivo." }}
+      </div>
+      <div class="col-md-12" *ngIf="isTrasportatore">
         {{ data?.codiceFiscale }}
+      </div>
+      <div class="col-md-12" *ngIf="!isTrasportatore">
+   {{ data?.fatturatoMedio}}
       </div>
       <div class="col-md-4">
         {{ data?.indirizzo }}
@@ -42,9 +48,9 @@
       <div class="col-md-6">
         {{ data?.role }}
       </div>
-      <div class="col-md-6">Mezzi : {{ data?.flottaMezzi }}</div>
+      <div class="col-md-6" *ngIf="isTrasportatore">Mezzi : {{ data?.flottaMezzi }}</div>
     </div>
-    <div class="row" *ngIf="recensioniT && recensioniT?.content.length > 0">
+    <div class="row" *ngIf="(recensioniT && recensioniT?.content?.length > 0)||(recensioniAz&&recensioniAz?.content?.length>0)">
       <div class="col-md-12">
         <h1 class="border-bottom p-2 text-danger">Dai un'occhiata alle recensioni</h1>
       </div>
@@ -101,16 +107,19 @@
       </div>
 
     </div>
+    </div>
+    <div class="row">
       <div class="col-md-12">
-        <form [formGroup]="recensioneTFormPagination" class="d-flex">
+        <form [formGroup]="recensioneFormPagination" class="d-flex">
           <div class="row w-100">
             <div class="col-md-4">
-              <label class="personal-label">Pagina {{recensioniT?.number+1 +' of ' + recensioniT?.totalPages}}</label>
+              <label class="personal-label">Pagina {{!isTrasportatore?recensioniT?.number+1 +' of ' + recensioniT?.totalPages:
+                recensioniAz?.number+1 +' of ' + recensioniAz?.totalPages}}</label>
               <div class="d-flex justify-content-around">
                 <button
                   class="btn"
-                  *ngIf="recensioniT.first == false"
-                  (click)="updateReces(recensioniT.number - 1)"
+                  *ngIf="(!isTrasportatore&&recensioniT.first == false)||(isTrasportatore && recensioniAz.first==false)"
+                  (click)="updateReces(!isTrasportatore?recensioniT.number - 1:recensioniAz.number - 1)"
                 >
                   ⏪
                 </button>
@@ -119,8 +128,9 @@
                 </select>
                 <button
                   class="btn"
-                  *ngIf="recensioniT.last == false"
-                  (click)="updateReces(recensioniT.number + 1)"
+                  *ngIf="(!isTrasportatore&&recensioniT.last == false)||(isTrasportatore && recensioniAz.last==false)"
+                  (click)="updateReces(isTrasportatore?recensioniAz?.number + 1:
+                    recensioniT?.number + 1 )"
                 >
                   ⏩
                 </button>
@@ -135,8 +145,9 @@
                 formControlName="size"
                 (change)="
                   updateReces(
-                    recensioniT.number,
-                    recensioneTFormPagination.controls['size'].value
+                    isTrasportatore?recensioniAz?.number:
+                    recensioniT?.number,
+                    recensioneFormPagination.controls['size'].value
                   )
                 "
               >
@@ -154,9 +165,10 @@
                 formControlName="orderBy"
                 (change)="
                   updateReces(
-                    recensioniT.number,
-                    recensioneTFormPagination.controls['size'].value,
-                    recensioneTFormPagination.controls['orderBy'].value
+                    isTrasportatore?recensioniAz?.number:
+                    recensioniT?.number,
+                    recensioneFormPagination.controls['size'].value,
+                    recensioneFormPagination.controls['orderBy'].value
                   )
                 "
               >
@@ -171,7 +183,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h1 class="border-bottom p-2 text-danger">Recensisci trasportatore</h1>
+        <h1 class="border-bottom p-2 text-danger">Recensisci {{isTrasportatore?'azienda':'trasportatore'}}</h1>
       </div>
     </div>
     <div class="row p-2 rounded bg-light">
@@ -184,7 +196,7 @@
           </select>
           <label class="p-2"
             >Scrivi qualcosa sulla tua esperienza con
-            {{ data?.nome + " " + data?.cognome }}</label
+            {{ isTrasportatore?data?.nomeAzienda:data?.nome + " " + data?.cognome}}</label
           >
           <textarea type="text" class="form-control" formControlName="message">
           </textarea>
@@ -197,11 +209,4 @@
       </div>
     </div>
   </div>
-  <ng-template #azienda>
-    <div class="container">
-      <div class="row p-2 bg-light rounded">
-
-      </div>
-    </div>
-  </ng-template>
 </div>

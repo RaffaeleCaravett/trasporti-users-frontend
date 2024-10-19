@@ -16,9 +16,10 @@ export class ProfileComponent implements OnInit {
   recensioneTForm!: FormGroup;
   poli: string[] = ['positiva', 'negativa'];
   user: any;
-  recensioneTFormPagination!: FormGroup;
+  recensioneFormPagination!: FormGroup;
   recePageNumbers:number[]=[]
   showDeleteConfirm:boolean=false;
+  recensioniAz:any
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private profileService: ProfileService,
@@ -33,7 +34,7 @@ export class ProfileComponent implements OnInit {
       polo: new FormControl('', Validators.required),
       message: new FormControl('')
     });
-    this.recensioneTFormPagination = new FormGroup({
+    this.recensioneFormPagination = new FormGroup({
       size: new FormControl(''),
       orderBy: new FormControl('')
     });
@@ -68,6 +69,7 @@ export class ProfileComponent implements OnInit {
 
 updateReces(page?:number,size?:number,orderBy?:string){
   this.showDeleteConfirm=false;
+  if(!this.isTrasportatore){
 this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
   next:(reces:any)=>{
     this.recensioniT=reces
@@ -81,6 +83,21 @@ this.recePageNumbers.push(i)
   },
   complete:()=>{}
 })
+  }else{
+    this.profileService.getAzRecensioni(this.data.id,page||0,size||10,orderBy||"id").subscribe({
+      next:(reces:any)=>{
+        this.recensioniAz=reces
+
+        for(let i = 1; i <=this.recensioniT.totalPages;i++){
+    this.recePageNumbers.push(i)
+        }
+      },
+      error:(error:any)=>{
+        this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
+      },
+      complete:()=>{}
+    });
+  }
 }
 deleteRece(receId?:number,userId?:number){
   if(receId&&userId){
