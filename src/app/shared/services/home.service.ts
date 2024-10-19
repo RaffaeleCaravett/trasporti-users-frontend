@@ -12,7 +12,7 @@ export class HomeService {
   private chat:string = '/chat'
   private messaggi:string = '/messaggi'
   private chatByAzienda:string ='/byAzId'
-  private chatByTrasportatore:string ='/byTrId'
+  private chatByTrasportatore:string ='/byTId'
   private chatByAziendaAndTr:string = '/byAziendaIdAndTrasportatoreId'
 
   constructor(private http:HttpClient) { }
@@ -29,6 +29,9 @@ getAnnunciByPrice(){}
 getAnnunciByCategoria(){}
 getTrasportatori(page:number,size:number,orderBy:string){
   return this.http.get(environment.API_URL+this.azienda+this.trasportatore+`?page=${page||0}&size=${size||10}&orderBy=${orderBy||'id'}`)
+}
+getAziende(page:number,size:number,orderBy:string){
+  return this.http.get(environment.API_URL+this.trasportatore+this.azienda+`?page=${page||0}&size=${size||10}&orderBy=${orderBy||'id'}`)
 }
 getChatsByAziendaId(azId:number){
   return this.http.get(environment.API_URL+this.azienda+this.chat+this.chatByAzienda+`/${azId}`)

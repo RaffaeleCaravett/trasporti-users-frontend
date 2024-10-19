@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   selectedChat: any;
   reduce: boolean = false;
   messageForm!: FormGroup;
+  aziende:any
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -81,11 +82,13 @@ export class HomeComponent implements OnInit {
           },
           complete: () => {},
         });
-      if (!this.isTrasportatore) {
-        this.getT(this.page, this.size, this.orderBy);
-      }
-      this.getChats(this.user.id);
     }
+    if (!this.isTrasportatore) {
+      this.getT(this.page, this.size, this.orderBy);
+    }else{
+      this.getAz(this.page, this.size, this.orderBy)
+    }
+    this.getChats(this.user.id);
     let chatContainer = document.getElementsByClassName(
       'chat-container'
     )[0] as HTMLDivElement;
@@ -318,5 +321,20 @@ export class HomeComponent implements OnInit {
           complete: () => {},
         });
     }
+  }
+  getAz(page:number,size:number,orderBy:string){
+   this.homeService.getAziende(page,size,orderBy).pipe(delay(1000)).subscribe({
+    next: (azs: any) => {
+      this.aziende=azs
+    },
+    error: (error: any) => {
+      this.toastr.error(
+        error.error.message ||
+          error.error.messageList[0] ||
+          "E' stato impossibile inviare il messaggio."
+      );
+    },
+    complete: () => {}
+   })
   }
 }

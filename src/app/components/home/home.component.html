@@ -136,7 +136,9 @@
       <h2 class="pt-5">Bacheca</h2>
       <div
         class="row px-3 text-center"
-        *ngIf="transporters && transporters?.content?.length > 0"
+        *ngIf="
+          transporters && transporters?.content?.length > 0 && !isTrasportatore
+        "
       >
         <div
           class="col-md-12 my-1 border-bottom"
@@ -191,6 +193,32 @@
             </div>
           </div>
         </div>
+      </div>
+      <div
+        class="row px-3 text-center"
+        *ngIf="
+          (!transporters || transporters?.content?.length == 0) &&
+          !isTrasportatore
+        "
+      >
+        <p class="fs-3">Non ci sono trasportatori disponibili al momento ...</p>
+      </div>
+      <div
+      class="row px-3 text-center"
+      *ngIf="
+        aziende && aziende?.content?.length > 0 &&
+        isTrasportatore
+      "
+    >
+    </div>
+    <div
+        class="row px-3 text-center"
+        *ngIf="
+          (!aziende || aziende?.content?.length == 0) &&
+          isTrasportatore
+        "
+      >
+        <p class="fs-3">Non ci sono aziende disponibili al momento ...</p>
       </div>
     </div>
     <div class="col-lg-3 col-md-8 m-auto py-5">
