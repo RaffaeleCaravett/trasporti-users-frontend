@@ -210,6 +210,59 @@
         isTrasportatore
       "
     >
+    <div
+    class="col-md-12 my-1 border-bottom"
+    *ngFor="let a of aziende.content; index as i"
+  >
+    <div class="row">
+      <div class="col-md-12 p-1 bg-light">
+        <h1>
+          {{ a.nomeAzienda }}
+        </h1>
+      </div>
+      <div class="col-md-6 p-1">
+        <span class="text-danger"> Fatturato Medio : </span>
+        {{ a.fatturatoMedio }}
+      </div>
+      <div class="col-md-6 p-1">
+        <span class="text-danger"> Partita Iva : </span>
+        {{ a.partitaIva }}
+      </div>
+      <div class="col-md-6 p-1">
+        <span class="text-danger"> Numero dipendenti : </span>
+        {{ a.numeroDipendenti }}
+      </div>
+      <div class="col-md-6 p-1">
+        <span class="text-danger"> Settore : </span>
+        {{ a.settore }}
+      </div>
+      <div class="col-md-3 p-1">
+        <span class="text-danger"> Indirizzo : </span>
+        {{ a.citta }} ,
+      </div>
+      <div class="col-md-3 p-1">
+        {{ a.regione }}
+      </div>
+      <div class="col-md-3 p-1">- {{ a.indirizzo }}</div>
+      <div class="col-md-3 p-1">
+        {{ a.cap }}
+      </div>
+      <div class="col-md-12 p-1 pb-3">
+        <span class="text-danger"> Email : </span>
+        {{ a.email }}
+      </div>
+      <div class="col-md-6 p-1 bg-light">
+        <button class="btn text-danger" (click)="openT(a)">
+          Visualizza profilo
+        </button>
+      </div>
+      <div class="col-md-6 p-1 bg-light">
+        <button class="btn text-danger" (click)="openChat(user?.id, a)">
+          Manda un messaggio
+        </button>
+      </div>
+    </div>
+  </div>
     </div>
     <div
         class="row px-3 text-center"
