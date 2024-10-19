@@ -24,13 +24,16 @@
               (isTrasportatore && m?.trasportatore_as_sender?.id == user.id) ||
               (!isTrasportatore && m?.azienda_as_sender?.id == user.id)
             "
-            title="{{m?.trasportatore_as_sender?.nome||m?.azienda_as_sender?.nomeAzienda + ' il ' + m.createdAt}}"
+            title="{{
+              m?.trasportatore_as_sender?.nome ||
+                m?.azienda_as_sender?.nomeAzienda + ' il ' + m.createdAt
+            }}"
           >
             <p>
               {{ m.testo }}
             </p>
-            <p class="created-at" title="{{m.createdAt}}">
-              {{m.createdAt}}
+            <p class="created-at" title="{{ m.createdAt }}">
+              {{ m.createdAt }}
             </p>
           </div>
           <div
@@ -40,14 +43,17 @@
                 m?.trasportatore_as_receiver?.id == user.id) ||
               (!isTrasportatore && m.azienda_as_receiver?.id == user.id)
             "
-            title="{{m?.trasportatore_as_sender?.nome||m?.azienda_as_sender?.nomeAzienda + ' il ' + m.createdAt}}"
-            >
-          <p>
-            {{ m.testo }}
-          </p>
-          <p class="created-at" title="{{m.createdAt}}">
-            {{m.createdAt}}
-          </p>
+            title="{{
+              m?.trasportatore_as_sender?.nome ||
+                m?.azienda_as_sender?.nomeAzienda + ' il ' + m.createdAt
+            }}"
+          >
+            <p>
+              {{ m.testo }}
+            </p>
+            <p class="created-at" title="{{ m.createdAt }}">
+              {{ m.createdAt }}
+            </p>
           </div>
         </div>
         <p
@@ -59,7 +65,7 @@
           Inizia la conversazione.
         </p>
       </div>
-      <div class="position-absolute bottom-0 left-50">
+      <div class="position-absolute bottom-0 left-50 chat-footer">
         <form [formGroup]="messageForm" class="d-flex p-1">
           <input type="text" class="form-control" formControlName="message" />
           <button class="btn" (click)="sendMessage(selectedChat, user)">

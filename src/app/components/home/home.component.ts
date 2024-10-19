@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   chats: any[] = [];
   selectedChat: any;
   reduce: boolean = false;
-  messageForm!:FormGroup
+  messageForm!: FormGroup;
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -81,7 +81,9 @@ export class HomeComponent implements OnInit {
           },
           complete: () => {},
         });
-      this.getT(this.page, this.size, this.orderBy);
+      if (!this.isTrasportatore) {
+        this.getT(this.page, this.size, this.orderBy);
+      }
       this.getChats(this.user.id);
     }
     let chatContainer = document.getElementsByClassName(
@@ -95,8 +97,8 @@ export class HomeComponent implements OnInit {
       chatContainer.classList.remove('border');
     }
     this.messageForm = new FormGroup({
-      message: new FormControl('',Validators.required)
-    })
+      message: new FormControl('', Validators.required),
+    });
   }
 
   getT(page: number, size: number, orderBy: string) {
@@ -168,22 +170,41 @@ export class HomeComponent implements OnInit {
   }
 
   getChats(userId: number) {
-    this.homeService
-      .getChatsByAziendaId(userId)
-      .pipe(delay(1000))
-      .subscribe({
-        next: (dataChats: any) => {
-          this.chats = dataChats;
-        },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile recuperare le chats."
-          );
-        },
-        complete: () => {},
-      });
+    if (!this.isTrasportatore) {
+      this.homeService
+        .getChatsByAziendaId(userId)
+        .pipe(delay(1000))
+        .subscribe({
+          next: (dataChats: any) => {
+            this.chats = dataChats;
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile recuperare le chats."
+            );
+          },
+          complete: () => {},
+        });
+    } else {
+      this.homeService
+        .getChatsByTrId(userId)
+        .pipe(delay(1000))
+        .subscribe({
+          next: (dataChats: any) => {
+            this.chats = dataChats;
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile recuperare le chats."
+            );
+          },
+          complete: () => {},
+        });
+    }
   }
   openChat(userId: number, chatMember: any) {
     this.chats.forEach((c) => {
@@ -217,7 +238,7 @@ export class HomeComponent implements OnInit {
                 "E' stato impossibile creare la chat."
             );
           },
-          complete: () => {}
+          complete: () => {},
         });
     }
 
@@ -246,46 +267,56 @@ export class HomeComponent implements OnInit {
       let singleChat = document.getElementsByClassName(
         'single-chat'
       )[0] as HTMLDivElement;
+      let chatFooter = document.getElementsByClassName(
+        'chat-footer'
+      )[0] as HTMLDivElement;
       if (this.reduce) {
         singleChat.style.transition = '1s';
         singleChat.style.height = '50px';
         singleChat.style.overflowY = 'hidden';
+        chatFooter.style.display = 'none';
       } else {
         singleChat.style.transition = '1s';
         singleChat.classList.add('border', 'd-block');
         singleChat.classList.remove('d-none');
         singleChat.style.overflowY = 'auto';
         singleChat.style.height = '450px';
-        singleChat.style.width = '280px';
+        singleChat.style.width = '340px';
+        chatFooter.style.display = 'block';
       }
     }, 500);
   }
 
-  sendMessage(chat:any,user:any){
-if(this.messageForm.valid){
-  let message = {
-    chat_id:this.selectedChat?.id,
-    sender_id:this.user?.id,
-    receiver_id:this.isTrasportatore?this.selectedChat.azienda.id:this.selectedChat.trasportatore.id,
-    receiverType:this.isTrasportatore?'Azienda':'Trasportatore',
-    senderType:this.isTrasportatore?'Trasportatore':'Azienda',
-    testo:this.messageForm.controls['message'].value
-  }
+  sendMessage(chat: any, user: any) {
+    if (this.messageForm.valid) {
+      let message = {
+        chat_id: this.selectedChat?.id,
+        sender_id: this.user?.id,
+        receiver_id: this.isTrasportatore
+          ? this.selectedChat.azienda.id
+          : this.selectedChat.trasportatore.id,
+        receiverType: this.isTrasportatore ? 'Azienda' : 'Trasportatore',
+        senderType: this.isTrasportatore ? 'Trasportatore' : 'Azienda',
+        testo: this.messageForm.controls['message'].value,
+      };
 
-  this.homeService.sendMessage(message).pipe(delay(1000)).subscribe({
-    next: (message: any) => {
-      this.messageForm.reset()
-      this.selectedChat.messaggiList.push(message)
-    },
-    error: (error: any) => {
-      this.toastr.error(
-        error.error.message ||
-          error.error.messageList[0] ||
-          "E' stato impossibile inviare il messaggio."
-      );
-    },
-    complete: () => {}
-  })
-}
+      this.homeService
+        .sendMessage(message)
+        .pipe(delay(1000))
+        .subscribe({
+          next: (message: any) => {
+            this.messageForm.reset();
+            this.selectedChat.messaggiList.push(message);
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile inviare il messaggio."
+            );
+          },
+          complete: () => {},
+        });
+    }
   }
 }
