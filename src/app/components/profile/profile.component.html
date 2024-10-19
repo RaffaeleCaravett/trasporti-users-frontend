@@ -7,10 +7,10 @@
   <h1 class="border-bottom p-2 text-danger">Informazioni</h1>
 </div>
 <div mat-dialog-content>
-  <div class="container" *ngIf="isTrasportatore">
+  <div class="container" >
     <div class="row p-2 bg-light rounded overflow-auto" >
       <div class="col-md-5">
-        {{ isTrasportatore?data?.nomeAzienda:data?.nome }}
+        {{ !isTrasportatore?data?.nomeAzienda:data?.nome }}
       </div>
       <div class="col-md-5" *ngIf="isTrasportatore">
         {{ data?.cognome }}
@@ -108,17 +108,70 @@
 
     </div>
     </div>
+    <div
+    class="row p-2 rounded bg-light"
+    *ngIf="recensioniAz && recensioniAz?.content.length > 0"
+  >
+  <div class="col-md-12">
+    <div class="p-2">
+<div class="row border shadow-sm bg-personal" *ngFor="let r of recensioniAz.content">
+  <div class="col-md-12 text-end p-0">
+    <button class="btn" *ngIf="user?.id==r?.da?.id" (click)="deleteRece()" title="Elimina">
+      ❌
+    </button>
+    <div *ngIf="showDeleteConfirm" class="text-center py-3 delete-rece">
+    <p class="text-danger">Vuoi davvero eliminare questa recensione?</p>
+  <div class="d-flex justify-content-around w-50 m-auto">
+  <button class="btn btn-success" (click)="deleteRece(r.id,user.id)">
+  Si
+  </button>
+  <button class="btn btn-dark" (click)="deleteRece()">
+  No
+  </button>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-12 p-0">
+    <h2 class="bg-dark p-2 text-white">Recensione effettuata da : </h2>
+    <p class="px-2">
+      {{r?.da?.nome + " " + r?.da?.cognome}}
+    </p>
+  </div>
+      <div class="col-md-4 p-0">
+        <h2 class="bg-dark p-2 text-white">Esito recensione : </h2>
+        <p [ngClass]="r.poloRecensione=='positiva'?'text-success':'text-danger'" class="px-2 fw-bold">
+          {{r.poloRecensione}}
+        </p>
+      </div>
+      <div class="col-md-8 p-0 px-2" *ngIf="r.commento">
+        <h2 class="bg-dark p-2 text-white">
+          Commento :
+        </h2>
+        <p class="px-2">
+        {{r.commento}}
+      </p>
+      </div>
+<div class="col-md-12 p-0">
+<p class="px-2">
+ Il {{r.localDate}}
+</p>
+</div>
+    </div>
+    </div>
+
+  </div>
+  </div>
     <div class="row">
       <div class="col-md-12">
         <form [formGroup]="recensioneFormPagination" class="d-flex">
           <div class="row w-100">
             <div class="col-md-4">
-              <label class="personal-label">Pagina {{!isTrasportatore?recensioniT?.number+1 +' of ' + recensioniT?.totalPages:
+              <label class="personal-label">Pagina {{isTrasportatore?recensioniT?.number+1 +' of ' + recensioniT?.totalPages:
                 recensioniAz?.number+1 +' of ' + recensioniAz?.totalPages}}</label>
               <div class="d-flex justify-content-around">
                 <button
                   class="btn"
-                  *ngIf="(!isTrasportatore&&recensioniT.first == false)||(isTrasportatore && recensioniAz.first==false)"
+                  *ngIf="(isTrasportatore&&recensioniT?.first == false)||(!isTrasportatore && recensioniAz?.first==false)"
                   (click)="updateReces(!isTrasportatore?recensioniT.number - 1:recensioniAz.number - 1)"
                 >
                   ⏪
@@ -128,8 +181,8 @@
                 </select>
                 <button
                   class="btn"
-                  *ngIf="(!isTrasportatore&&recensioniT.last == false)||(isTrasportatore && recensioniAz.last==false)"
-                  (click)="updateReces(isTrasportatore?recensioniAz?.number + 1:
+                  *ngIf="(isTrasportatore&&recensioniT?.last == false)||(!isTrasportatore && recensioniAz?.last==false)"
+                  (click)="updateReces(!isTrasportatore?recensioniAz?.number + 1:
                     recensioniT?.number + 1 )"
                 >
                   ⏩
@@ -145,7 +198,7 @@
                 formControlName="size"
                 (change)="
                   updateReces(
-                    isTrasportatore?recensioniAz?.number:
+                    !isTrasportatore?recensioniAz?.number:
                     recensioniT?.number,
                     recensioneFormPagination.controls['size'].value
                   )
@@ -165,7 +218,7 @@
                 formControlName="orderBy"
                 (change)="
                   updateReces(
-                    isTrasportatore?recensioniAz?.number:
+                    !isTrasportatore?recensioniAz?.number:
                     recensioniT?.number,
                     recensioneFormPagination.controls['size'].value,
                     recensioneFormPagination.controls['orderBy'].value
@@ -183,12 +236,12 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h1 class="border-bottom p-2 text-danger">Recensisci {{isTrasportatore?'azienda':'trasportatore'}}</h1>
+        <h1 class="border-bottom p-2 text-danger">Recensisci {{!isTrasportatore?'azienda':'trasportatore'}}</h1>
       </div>
     </div>
     <div class="row p-2 rounded bg-light">
       <div class="col-md-12">
-        <form [formGroup]="recensioneTForm" class="w-75 m-auto">
+        <form [formGroup]="recensioneForm" class="w-75 m-auto">
           <label class="p-2">Come classifichi questa recensione?</label>
           <select name="" id="" class="form-select" formControlName="polo">
             <option value=""></option>
@@ -196,7 +249,7 @@
           </select>
           <label class="p-2"
             >Scrivi qualcosa sulla tua esperienza con
-            {{ isTrasportatore?data?.nomeAzienda:data?.nome + " " + data?.cognome}}</label
+            {{ !isTrasportatore?data?.nomeAzienda:data?.nome + " " + data?.cognome}}</label
           >
           <textarea type="text" class="form-control" formControlName="message">
           </textarea>

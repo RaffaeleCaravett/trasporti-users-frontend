@@ -13,7 +13,7 @@ import { ProfileService } from 'src/app/shared/services/profile.service';
 export class ProfileComponent implements OnInit {
   isTrasportatore:boolean=false
   recensioniT:any
-  recensioneTForm!: FormGroup;
+  recensioneForm!: FormGroup;
   poli: string[] = ['positiva', 'negativa'];
   user: any;
   recensioneFormPagination!: FormGroup;
@@ -29,8 +29,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.formsService.getUser();
+    console.log(this.data.role)
     this.isTrasportatore=this.data.role=='Trasportatore'
-    this.recensioneTForm = new FormGroup({
+    this.recensioneForm = new FormGroup({
       polo: new FormControl('', Validators.required),
       message: new FormControl('')
     });
@@ -42,20 +43,20 @@ export class ProfileComponent implements OnInit {
   }
 
   inviaRecensione() {
-    if (this.recensioneTForm.controls['polo'].valid) {
+    if (this.recensioneForm.controls['polo'].valid) {
       if (this.data.role == 'Trasportatore') {
         this.profileService.postTRecensione({
-          message: this.recensioneTForm.controls['message'].value || '',
-          polo: this.recensioneTForm.controls['polo'].value,
+          message: this.recensioneForm.controls['message'].value || '',
+          polo: this.recensioneForm.controls['polo'].value,
           trasportatore_id: this.data.id,
           azienda_id:this.user.id
         }).subscribe({
           next:(rece:any)=>{
-            this.recensioneTForm.reset()
+            this.recensioneForm.reset()
             this.updateReces()
           },
           error:(error:any)=>{
-            this.recensioneTForm.reset()
+            this.recensioneForm.reset()
             this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
           },
           complete:()=>{}
@@ -69,7 +70,7 @@ export class ProfileComponent implements OnInit {
 
 updateReces(page?:number,size?:number,orderBy?:string){
   this.showDeleteConfirm=false;
-  if(!this.isTrasportatore){
+  if(this.isTrasportatore){
 this.profileService.getTRecensioni(this.data.id,0,10,"id").subscribe({
   next:(reces:any)=>{
     this.recensioniT=reces
@@ -88,7 +89,7 @@ this.recePageNumbers.push(i)
       next:(reces:any)=>{
         this.recensioniAz=reces
 
-        for(let i = 1; i <=this.recensioniT.totalPages;i++){
+        for(let i = 1; i <=this.recensioniAz.totalPages;i++){
     this.recePageNumbers.push(i)
         }
       },

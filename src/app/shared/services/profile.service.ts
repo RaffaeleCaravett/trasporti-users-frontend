@@ -8,6 +8,8 @@ import { environment } from "src/app/core/environment"
 export class ProfileService {
   private T:string = '/trasportatore'
   private Az:string = '/azienda'
+   private TAcronimo:string = 'Tr'
+  private AzAcronimo:string = 'Az'
   private recensione:string = '/recensione'
   private paginated:string = '/paginated'
 
@@ -17,7 +19,7 @@ getAzRecensioniStated(azId:number,stato:string,page:number,size:number,orderBy:s
   return this.http.get(environment.API_URL+this.T+this.recensione+this.paginated+'AndStato'+`/${azId+'/'+stato+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 getAzRecensioni(azId:number,page:number,size:number,orderBy:string){
-  return this.http.get(environment.API_URL+this.T+this.recensione+this.paginated+`/${azId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
+  return this.http.get(environment.API_URL+this.T+this.recensione+this.AzAcronimo+this.paginated+`/${azId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 postAzRecensione(recensione:any){
   return this.http.post(environment.API_URL+this.T+this.recensione,recensione)
@@ -32,7 +34,7 @@ getTRecensioniStated(tId:number,stato:string,page:number,size:number,orderBy:str
   return this.http.get(environment.API_URL+this.Az+this.recensione+this.paginated+'AndStato'+`/${tId+'/'+stato+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 getTRecensioni(tId:number,page:number,size:number,orderBy:string){
-  return this.http.get(environment.API_URL+this.Az+this.recensione+this.paginated+`/${tId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
+  return this.http.get(environment.API_URL+this.Az+this.recensione+this.TAcronimo+this.paginated+`/${tId+'?page='}`+page+'&size='+size+'&orderBy='+orderBy)
 }
 postTRecensione(recensione:any){
   return this.http.post(environment.API_URL+this.Az+this.recensione,recensione)
