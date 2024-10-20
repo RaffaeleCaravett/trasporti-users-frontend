@@ -62,6 +62,22 @@ export class ProfileComponent implements OnInit {
           complete:()=>{}
         });
       } else {
+        this.profileService.postAzRecensione({
+            message: this.recensioneForm.controls['message'].value || '',
+            polo: this.recensioneForm.controls['polo'].value,
+            trasportatore_id: this.user.id,
+            azienda_id:this.data.id
+          }).subscribe({
+            next:(rece:any)=>{
+              this.recensioneForm.reset()
+              this.updateReces()
+            },
+            error:(error:any)=>{
+              this.recensioneForm.reset()
+              this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' sucesso qualcosa durante l'elaborazione della richiesta.")
+            },
+            complete:()=>{}
+          });
       }
     } else {
       this.toastr.show('Inserisci la valutazione');

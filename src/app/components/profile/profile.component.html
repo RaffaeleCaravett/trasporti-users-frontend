@@ -134,7 +134,7 @@
   <div class="col-md-12 p-0">
     <h2 class="bg-dark p-2 text-white">Recensione effettuata da : </h2>
     <p class="px-2">
-      {{r?.da?.nome + " " + r?.da?.cognome}}
+      {{!isTrasportatore? r?.da?.nome + " " + r?.da?.cognome:r?.da?.nomeAzienda}}
     </p>
   </div>
       <div class="col-md-4 p-0">
