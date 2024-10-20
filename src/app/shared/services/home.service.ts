@@ -51,6 +51,10 @@ return this.http.post(environment.API_URL+this.azienda+this.chat,chatDTO)
 }
 
 sendMessage(message:any){
+  if(message&&message.senderType=='Azienda'){
 return this.http.post(environment.API_URL+this.azienda+this.messaggi,message)
+  }else{
+    return this.http.post(environment.API_URL+this.trasportatore+this.messaggi,message)
+  }
 }
 }
