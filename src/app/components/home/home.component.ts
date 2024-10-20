@@ -222,7 +222,6 @@ export class HomeComponent implements OnInit {
         this.selectedChat = c;
       }
     });
-    console.log(this.isTrasportatore, userId, chatMember.id)
     if (this.selectedChat == null) {
       this.homeService
         .postChat(
@@ -293,6 +292,7 @@ export class HomeComponent implements OnInit {
 
   sendMessage(chat: any, user: any) {
     if (this.messageForm.valid) {
+      console.log(this.selectedChat)
       let message = {
         chat_id: this.selectedChat?.id,
         sender_id: this.user?.id,

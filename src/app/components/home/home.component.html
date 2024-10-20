@@ -21,7 +21,7 @@
       <div class="p-1 messages-container">
         <div *ngFor="let m of selectedChat.messaggiList">
           <div
-            class="text-end w-75 my-1 p-1 message-as-sender bg-info text-white rounded border"
+            class="text-end w-75 my-1 p-1 message-as-sender rounded"
             *ngIf="
               (isTrasportatore && m?.trasportatore_as_sender?.id == user.id) ||
               (!isTrasportatore && m?.azienda_as_sender?.id == user.id)
@@ -34,7 +34,7 @@
             <p>
               {{ m.testo }}
             </p>
-            <p class="created-at" title="{{ m.createdAt }}">
+            <p class="created-at bg-info" title="{{ m.createdAt }}">
               {{ m.createdAt }}
             </p>
           </div>
@@ -53,7 +53,7 @@
             <p>
               {{ m.testo }}
             </p>
-            <p class="created-at" title="{{ m.createdAt }}">
+            <p class="created-at bg-light" title="{{ m.createdAt }}">
               {{ m.createdAt }}
             </p>
           </div>
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div
-      class="chat-container bg-white rounded border"
+      class="chat-container bg-light rounded border"
       (window:resize)="showChat('resize')"
     >
       <p
