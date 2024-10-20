@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.formsService.getUser();
-    console.log(this.data.role)
     this.isTrasportatore=this.data.role=='Trasportatore'
     this.recensioneForm = new FormGroup({
       polo: new FormControl('', Validators.required),
@@ -54,6 +53,7 @@ export class ProfileComponent implements OnInit {
           next:(rece:any)=>{
             this.recensioneForm.reset()
             this.updateReces()
+            this.toastr.success("Recensione effettuata con successo.")
           },
           error:(error:any)=>{
             this.recensioneForm.reset()
@@ -71,6 +71,7 @@ export class ProfileComponent implements OnInit {
             next:(rece:any)=>{
               this.recensioneForm.reset()
               this.updateReces()
+              this.toastr.success("Recensione effettuata con successo.")
             },
             error:(error:any)=>{
               this.recensioneForm.reset()
@@ -118,20 +119,37 @@ this.recePageNumbers.push(i)
 }
 deleteRece(receId?:number,userId?:number){
   if(receId&&userId){
-  this.profileService.deleteTRecensione(userId,receId).subscribe({
-    next:(data:any)=>{
-      if(data){
-       this.toastr.success("Recensione eliminata con successo.")
-       this.updateReces()
-      }else{
-        this.toastr.error("C'è stato un problema nell'elaborazione della richiesta.")
-      }
-    },
-    error:(error:any)=>{
-this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
-    },
-    complete:()=>{}
-  })
+  if(this.isTrasportatore){
+    this.profileService.deleteTRecensione(userId,receId).subscribe({
+      next:(data:any)=>{
+        if(data){
+         this.toastr.success("Recensione eliminata con successo.")
+         this.updateReces()
+        }else{
+          this.toastr.error("C'è stato un problema nell'elaborazione della richiesta.")
+        }
+      },
+      error:(error:any)=>{
+  this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
+      },
+      complete:()=>{}
+    })
+  }else{
+    this.profileService.deleteAzRecensione(userId,receId).subscribe({
+      next:(data:any)=>{
+        if(data){
+         this.toastr.success("Recensione eliminata con successo.")
+         this.updateReces()
+        }else{
+          this.toastr.error("C'è stato un problema nell'elaborazione della richiesta.")
+        }
+      },
+      error:(error:any)=>{
+  this.toastr.error(error?.error?.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
+      },
+      complete:()=>{}
+    })
+  }
   }else{
     this.showDeleteConfirm=!this.showDeleteConfirm;
   }
