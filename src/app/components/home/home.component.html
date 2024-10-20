@@ -11,10 +11,12 @@
                 selectedChat.trasportatore.cognome
           }}
         </p>
-        <button class="btn" (click)="downgradeChat()" title="Riduci">➖</button>
+        <div class="chat-actions-div">
+       <button class="btn" (click)="downgradeChat()" title="Riduci">➖</button>
         <button class="btn" (click)="selectedChat = null" title="Chiudi">
           ❌
         </button>
+        </div>
       </div>
       <div class="p-1 messages-container">
         <div *ngFor="let m of selectedChat.messaggiList">
@@ -93,7 +95,7 @@
               ? c.trasportatore.nome + ' ' + c.trasportatore.cognome
               : c.azienda.nomeAzienda
           }}"
-          (click)="openChat(user?.id, c.trasportatore)"
+          (click)="openChat(user?.id, isTrasportatore?c.azienda:c.trasportatore)"
         >
           {{
             c.azienda.id == user.id

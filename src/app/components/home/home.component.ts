@@ -222,6 +222,7 @@ export class HomeComponent implements OnInit {
         this.selectedChat = c;
       }
     });
+    console.log(this.isTrasportatore, userId, chatMember.id)
     if (this.selectedChat == null) {
       this.homeService
         .postChat(
