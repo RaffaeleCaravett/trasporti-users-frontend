@@ -161,7 +161,7 @@
 
   </div>
   </div>
-    <div class="row">
+    <div class="row" *ngIf="(recensioniT&&recensioniT?.content?.length>0)||(recensioniAz&&recensioniAz?.content?.length>0)">
       <div class="col-md-12">
         <form [formGroup]="recensioneFormPagination" class="d-flex">
           <div class="row w-100">
