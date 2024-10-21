@@ -1,9 +1,20 @@
-import { ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { OfficeService } from 'src/app/shared/services/office.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Client, Stomp } from '@stomp/stompjs';
 import { environment } from 'src/app/core/environment';
 import * as SockJS from 'sockjs-client';
@@ -13,7 +24,7 @@ import * as SockJS from 'sockjs-client';
   templateUrl: './office.component.html',
   styleUrls: ['./office.component.scss'],
 })
-export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
+export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
   user: any;
   isTrasportatore: boolean = false;
   toDo: string = '';
@@ -30,15 +41,14 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
     private toastr: ToastrService,
     private officeService: OfficeService,
     private formsService: FormsService,
-    private cdRef:ChangeDetectorRef
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.cdRef.detectChanges()
+    this.cdRef.detectChanges();
   }
 
   ngOnInit(): void {
-
     localStorage.setItem('location', '/office');
 
     this.user =
@@ -127,12 +137,11 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
         });
       },
     });
-    // this.initializeWebSocketConnection()
+
+    this.initializeWebSocketConnection();
   }
 
-
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   modifyProfilo() {
     if (this.modifyProfile.valid) {
@@ -145,7 +154,8 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
           email: this.modifyProfile.controls['email'].value,
           nomeAzienda: this.modifyProfile.controls['nomeAzienda'].value,
           fatturatoMedio: this.modifyProfile.controls['fatturatoMedio'].value,
-          numeroDipendenti:this.modifyProfile.controls['numeroDipendenti'].value,
+          numeroDipendenti:
+            this.modifyProfile.controls['numeroDipendenti'].value,
           settore: this.modifyProfile.controls['settore'].value,
           partitaIva: this.modifyProfile.controls['partitaIva'].value,
         })
@@ -166,7 +176,10 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
     }
   }
 
-  checkPasswords(ps1: AbstractControl<any, any>, ps2: AbstractControl<any, any>) {
+  checkPasswords(
+    ps1: AbstractControl<any, any>,
+    ps2: AbstractControl<any, any>
+  ) {
     let div = document.querySelector('.inserisciPassword') as HTMLDivElement;
     if (ps1.valid && ps2.valid && ps1.value == ps2.value) {
       div.classList.add('blocked');
@@ -251,7 +264,7 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
       this.getStatistica();
     }
     this.toDo = toDo;
-    this.cdRef.detectChanges()
+    this.cdRef.detectChanges();
   }
   getStatistica() {
     if (!this.isTrasportatore) {
@@ -272,6 +285,7 @@ export class OfficeComponent implements OnInit, OnDestroy , OnChanges{
       console.log('isT');
     }
   }
+  initializeWebSocketConnection() {
 
-
+  }
 }
