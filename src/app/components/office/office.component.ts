@@ -286,6 +286,6 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
   initializeWebSocketConnection() {
-
+    console.log('socket');
   }
 }
