@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { delay, throttleTime } from 'rxjs';
+import { delay, map, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private socket:Socket
   ) {}
 
   ngOnInit(): void {
@@ -337,5 +339,11 @@ export class HomeComponent implements OnInit {
     },
     complete: () => {}
    })
+  }
+  sendSocketMessage(msg: string) {
+    this.socket.emit('message', msg);
+  }
+  getMessage() {
+    return this.socket.fromEvent('message').pipe(map((data:any) => console.log(data.msg)));
   }
 }
