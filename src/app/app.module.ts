@@ -18,7 +18,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
-import { MapComponent } from './shared/components/map/map.component';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3031', options: {} };
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { MapComponent } from './shared/components/map/map.component';
     HttpClientModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    SocketIoModule.forRoot(config)
   ],
  providers: [
   {
