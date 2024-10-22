@@ -20,7 +20,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'http://localhost:3031', options: {} };
+const config: SocketIoConfig = { url: 'http://localhost:3031/trasporti-chat', options: {} };
+
 
 @NgModule({
   declarations: [
