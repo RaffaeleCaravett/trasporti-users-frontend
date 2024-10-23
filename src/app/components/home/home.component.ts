@@ -5,7 +5,7 @@ import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Socket } from 'ngx-socket-io';
+import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     private homeService: HomeService,
     private toastr: ToastrService,
     private router: Router,
-    private socket:Socket
+    private socket:SocketIoService,
   ) {}
 
   ngOnInit(): void {
@@ -264,7 +264,7 @@ export class HomeComponent implements OnInit {
         { user: JSON.stringify(this.user), chat: this.selectedChat },
       ]);
     }
-    console.log(this.selectedChat);
+    console.log(this.selectedChat)
   }
   downgradeChat() {
     this.reduce = !this.reduce;
@@ -294,7 +294,6 @@ export class HomeComponent implements OnInit {
 
   sendMessage(chat: any, user: any) {
     if (this.messageForm.valid) {
-      console.log(this.selectedChat)
       let message = {
         chat_id: this.selectedChat?.id,
         sender_id: this.user?.id,
@@ -304,6 +303,7 @@ export class HomeComponent implements OnInit {
         receiverType: this.isTrasportatore ? 'Azienda' : 'Trasportatore',
         senderType: this.isTrasportatore ? 'Trasportatore' : 'Azienda',
         testo: this.messageForm.controls['message'].value,
+        room:String(this.selectedChat?.id)
       };
 
       this.homeService
@@ -313,6 +313,7 @@ export class HomeComponent implements OnInit {
           next: (message: any) => {
             this.messageForm.reset();
             this.selectedChat.messaggiList.push(message);
+            this.socket.newMessage(message)
           },
           error: (error: any) => {
             this.toastr.error(
@@ -340,10 +341,11 @@ export class HomeComponent implements OnInit {
     complete: () => {}
    })
   }
-  sendSocketMessage(msg: string) {
-    this.socket.emit('message', msg);
-  }
-  getMessage() {
-    return this.socket.fromEvent('message').pipe(map((data:any) => console.log(data.msg)));
+   public async getSocketIoMessagesByChat (){
+    if(this.chats!=null)
+    for(let c of this.chats){
+          let message = await this.socket.awaitMessageByRoom(c.id);
+          console.log(message)
+    }
   }
 }

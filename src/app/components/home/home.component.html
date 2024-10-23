@@ -20,6 +20,8 @@
       </div>
       <div class="p-1 messages-container">
         <div *ngFor="let m of selectedChat.messaggiList">
+{{isTrasportatore}}
+{{m.testo}}
           <div
             class="text-end w-75 my-1 p-1 message-as-sender rounded"
             *ngIf="
