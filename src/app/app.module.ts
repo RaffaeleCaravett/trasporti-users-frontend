@@ -20,7 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
-export const config: SocketIoConfig = { url: 'ws://192.168.1.60:3032', options:{}}
+// export const config: SocketIoConfig = { url: 'ws://192.168.1.60:3032', options:{}}
 
 
 @NgModule({
@@ -44,7 +44,7 @@ export const config: SocketIoConfig = { url: 'ws://192.168.1.60:3032', options:{
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatDialogModule,
-    SocketIoModule.forRoot(config)
+    // SocketIoModule.forRoot(config)
   ],
  providers: [
   {

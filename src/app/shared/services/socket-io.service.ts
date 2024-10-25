@@ -1,19 +1,31 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { config } from 'src/app/app.module';
+import { Observable } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketIoService {
-  constructor(private socket: Socket, private http: HttpClient) {}
+  private socket: Socket;
 
-  awaitMessageByRoom(room: string) {
-    return this.http.get(config.url + `?room=${room}`);
+  constructor() {
+    this.socket = io('ws://192.168.1.60:3032');
   }
 
-  newMessage(messaggio: any) {
-    this.socket.emit('send_message', messaggio);
+  emit(event: string, data: any,room:string) {
+    this.socket = io('ws://192.168.1.60:3032=room='+room)
+    this.socket.emit(event, data);
+  }
+
+  on(event: string): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on(event, (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.off(event);
+      };
+    });
   }
 }

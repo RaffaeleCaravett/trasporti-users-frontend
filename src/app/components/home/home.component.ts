@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { delay, map, throttleTime } from 'rxjs';
+import { delay, map, Subscription, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit{
   user: any;
   isTrasportatore: boolean = false;
   notifications: any;
@@ -32,9 +32,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
-    private router: Router,
-    private socket:SocketIoService,
-  ) {}
+    private router: Router
+    ) {
+  }
 
   ngOnInit(): void {
 
@@ -312,10 +312,9 @@ export class HomeComponent implements OnInit {
         .sendMessage(message)
         .pipe(delay(1000))
         .subscribe({
-          next: (message: any) => {
+          next: (messaggio: any) => {
             this.messageForm.reset();
-            this.selectedChat.messaggiList.push(message);
-            this.socket.newMessage(message)
+            this.selectedChat.messaggiList.push(messaggio);
           },
           error: (error: any) => {
             this.toastr.error(
