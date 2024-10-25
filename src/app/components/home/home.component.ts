@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   reduce: boolean = false;
   messageForm!: FormGroup;
   aziende:any
+
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     localStorage.setItem('location', '/home');
     this.user =
       JSON.parse(localStorage.getItem('trasportatore')!) ||
@@ -264,7 +266,7 @@ export class HomeComponent implements OnInit {
         { user: JSON.stringify(this.user), chat: this.selectedChat },
       ]);
     }
-    console.log(this.selectedChat)
+
   }
   downgradeChat() {
     this.reduce = !this.reduce;
@@ -341,11 +343,5 @@ export class HomeComponent implements OnInit {
     complete: () => {}
    })
   }
-   public async getSocketIoMessagesByChat (){
-    if(this.chats!=null)
-    for(let c of this.chats){
-          let message = await this.socket.awaitMessageByRoom(c.id);
-          console.log(message)
-    }
-  }
+
 }

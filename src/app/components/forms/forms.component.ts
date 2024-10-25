@@ -62,7 +62,11 @@ this.formsService.getCities().subscribe({
 this.cities=cities
   },
   error:(err:any)=>{
+    if(err?.error?.message||err?.error?.messageList){
     this.toastr.error(err?.error?.message||err?.error?.messageList[0])
+    }else{
+      this.toastr.error("Sembra che sia successo qualcosa nell'elaborazione della richiesta.")
+    }
   },
   complete:()=>{}
 })
@@ -71,7 +75,11 @@ this.formsService.getSettori().subscribe({
 this.settori=settori
   },
   error:(err:any)=>{
+    if(err?.error?.message||err?.error?.messageList){
     this.toastr.error(err?.error?.message||err?.error?.messageList[0])
+    }else{
+      this.toastr.error("Sembra che sia successo qualcosa nell'elaborazione della richiesta.")
+    }
   },
   complete:()=>{}
 })
