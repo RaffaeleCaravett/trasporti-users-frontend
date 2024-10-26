@@ -212,11 +212,16 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    setTimeout(()=>{
-   for(let c of this.chats){
-    this.socketIoService.connectToRoom(c.id,this.isTrasportatore?this.user.nome+" " +this.user.cognome:this.user.nomeAzienda)
-   }
-    },5000)
+    setTimeout(() => {
+      for (let c of this.chats) {
+        this.socketIoService.connectToRoom(
+          c.id,
+          this.isTrasportatore
+            ? this.user.nome + ' ' + this.user.cognome
+            : this.user.nomeAzienda
+        );
+      }
+    }, 5000);
   }
   openChat(userId: number, chatMember: any) {
     this.chats.forEach((c) => {
@@ -229,6 +234,7 @@ export class HomeComponent implements OnInit {
           c.trasportatore.id == chatMember.id)
       ) {
         this.selectedChat = c;
+        this.selectedChat?.messaggiList?.sort((m1:any,m2:any) => m1.id - m2.id);
       }
     });
     if (this.selectedChat == null) {
@@ -241,6 +247,7 @@ export class HomeComponent implements OnInit {
         .subscribe({
           next: (chat: any) => {
             this.selectedChat = chat;
+            this.selectedChat?.messaggiList?.sort((m1:any,m2:any) => m1.id - m2.id);
             this.getChats(userId);
           },
           error: (error: any) => {
@@ -265,8 +272,8 @@ export class HomeComponent implements OnInit {
         singleChat.style.height = '450px';
         singleChat.style.width = '340px';
         let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
-        chatContainer.style.scrollBehavior="smooth"
-        chatContainer.scrollTop=chatContainer.scrollHeight
+        chatContainer.style.scrollBehavior = 'smooth';
+        chatContainer.scrollTop = chatContainer.scrollHeight;
       }, 500);
     } else {
       this.router.navigate([
@@ -322,7 +329,15 @@ export class HomeComponent implements OnInit {
           next: (messaggio: any) => {
             this.messageForm.reset();
             this.selectedChat.messaggiList.push(messaggio);
-            this.socketIoService.socketEmiter(message)
+            let singleChat = document.getElementsByClassName(
+              'single-chat'
+            )[0] as HTMLDivElement;
+            let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
+            setTimeout(() => {
+              chatContainer.style.scrollBehavior = 'smooth';
+              chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 500);
+            this.socketIoService.socketEmiter(message);
           },
           error: (error: any) => {
             this.toastr.error(
@@ -353,5 +368,4 @@ export class HomeComponent implements OnInit {
         complete: () => {},
       });
   }
-
 }
