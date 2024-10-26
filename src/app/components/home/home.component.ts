@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { delay, map, Subscription, throttleTime } from 'rxjs';
+import { delay, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   user: any;
   isTrasportatore: boolean = false;
   notifications: any;
@@ -27,17 +27,16 @@ export class HomeComponent implements OnInit{
   selectedChat: any;
   reduce: boolean = false;
   messageForm!: FormGroup;
-  aziende:any
+  aziende: any;
 
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
-    private router: Router
-    ) {
-  }
+    private router: Router,
+    private socketIoService: SocketIoService
+  ) {}
 
   ngOnInit(): void {
-
     localStorage.setItem('location', '/home');
     this.user =
       JSON.parse(localStorage.getItem('trasportatore')!) ||
@@ -89,8 +88,8 @@ export class HomeComponent implements OnInit{
     }
     if (!this.isTrasportatore) {
       this.getT(this.page, this.size, this.orderBy);
-    }else{
-      this.getAz(this.page, this.size, this.orderBy)
+    } else {
+      this.getAz(this.page, this.size, this.orderBy);
     }
     this.getChats(this.user.id);
     let chatContainer = document.getElementsByClassName(
@@ -212,6 +211,12 @@ export class HomeComponent implements OnInit{
           complete: () => {},
         });
     }
+
+    setTimeout(()=>{
+   for(let c of this.chats){
+    this.socketIoService.socketEmiter(c.id,this.isTrasportatore?this.user.nome+" " +this.user.cognome:this.user.nomeAzienda)
+   }
+    },5000)
   }
   openChat(userId: number, chatMember: any) {
     this.chats.forEach((c) => {
@@ -266,7 +271,6 @@ export class HomeComponent implements OnInit{
         { user: JSON.stringify(this.user), chat: this.selectedChat },
       ]);
     }
-
   }
   downgradeChat() {
     this.reduce = !this.reduce;
@@ -305,7 +309,7 @@ export class HomeComponent implements OnInit{
         receiverType: this.isTrasportatore ? 'Azienda' : 'Trasportatore',
         senderType: this.isTrasportatore ? 'Trasportatore' : 'Azienda',
         testo: this.messageForm.controls['message'].value,
-        room:String(this.selectedChat?.id)
+        room: String(this.selectedChat?.id),
       };
 
       this.homeService
@@ -315,6 +319,7 @@ export class HomeComponent implements OnInit{
           next: (messaggio: any) => {
             this.messageForm.reset();
             this.selectedChat.messaggiList.push(messaggio);
+            this.socketIoService.socketEmiter(this.selectedChat.id,this.isTrasportatore?this.user.nome+" " +this.user.cognome:this.user.nomeAzienda,message)
           },
           error: (error: any) => {
             this.toastr.error(
@@ -327,20 +332,22 @@ export class HomeComponent implements OnInit{
         });
     }
   }
-  getAz(page:number,size:number,orderBy:string){
-   this.homeService.getAziende(page,size,orderBy).pipe(delay(1000)).subscribe({
-    next: (azs: any) => {
-      this.aziende=azs
-    },
-    error: (error: any) => {
-      this.toastr.error(
-        error.error.message ||
-          error.error.messageList[0] ||
-          "E' stato impossibile inviare il messaggio."
-      );
-    },
-    complete: () => {}
-   })
+  getAz(page: number, size: number, orderBy: string) {
+    this.homeService
+      .getAziende(page, size, orderBy)
+      .pipe(delay(1000))
+      .subscribe({
+        next: (azs: any) => {
+          this.aziende = azs;
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile inviare il messaggio."
+          );
+        },
+        complete: () => {},
+      });
   }
-
 }

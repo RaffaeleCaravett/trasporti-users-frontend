@@ -1,31 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { io, Socket } from 'socket.io-client';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketIoService {
-  private socket: Socket;
 
-  constructor() {
-    this.socket = io('ws://192.168.1.60:3032');
-  }
+  public socketAdvicer:BehaviorSubject<any[]> = new BehaviorSubject<any[]>([])
+  constructor() {}
 
-  emit(event: string, data: any,room:string) {
-    this.socket = io('ws://192.168.1.60:3032=room='+room)
-    this.socket.emit(event, data);
-  }
+ socketEmiter(room:number,username:string,message?:any){
+  this.socketAdvicer.next([room,username,message||null])
+ }
 
-  on(event: string): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on(event, (data) => {
-        observer.next(data);
-      });
-      return () => {
-        this.socket.off(event);
-      };
-    });
-  }
 }
