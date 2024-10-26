@@ -353,4 +353,5 @@ export class HomeComponent implements OnInit {
         complete: () => {},
       });
   }
+
 }
