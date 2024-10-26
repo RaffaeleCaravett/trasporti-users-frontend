@@ -214,7 +214,7 @@ export class HomeComponent implements OnInit {
 
     setTimeout(()=>{
    for(let c of this.chats){
-    this.socketIoService.socketEmiter(c.id,this.isTrasportatore?this.user.nome+" " +this.user.cognome:this.user.nomeAzienda)
+    this.socketIoService.connectToRoom(c.id,this.isTrasportatore?this.user.nome+" " +this.user.cognome:this.user.nomeAzienda)
    }
     },5000)
   }
@@ -322,7 +322,7 @@ export class HomeComponent implements OnInit {
           next: (messaggio: any) => {
             this.messageForm.reset();
             this.selectedChat.messaggiList.push(messaggio);
-            this.socketIoService.socketEmiter(this.selectedChat.id,this.isTrasportatore?this.user.nome+" " +this.user.cognome:this.user.nomeAzienda,message)
+            this.socketIoService.socketEmiter(message)
           },
           error: (error: any) => {
             this.toastr.error(

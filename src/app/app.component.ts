@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormsService } from './shared/services/forms.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { io } from 'socket.io-client';
 import { SocketIoService } from './shared/services/socket-io.service';
 
 @Component({
@@ -22,8 +21,8 @@ socket:any
     private socketService: SocketIoService
   ) {
     this.socketService.socketAdvicer.subscribe((data)=>{
-      if(data&&data.length>0){
-        this.emitSocketMessage(data[0],data[1],data[2])
+      if(data&&data!=undefined&&data!=null){
+        this.emitSocketMessage(data)
       }
     })
   }
@@ -124,30 +123,9 @@ socket:any
 
   }
 
-  emitSocketMessage(room:number,username:string,message?:any){
-    this.room=room;
-    this.username=username;
-    if(room!=undefined&&username!=undefined)
-    this.socket = io(`ws://192.168.1.60:3032?room=${this.room}&username=${this.username}`,{ transports: ['websocket'] });
-    this.socket.on("read_message",(arg:any)=>{
-      console.log(arg)
-    })
-    this.socket.on('connection', function() {
-      console.log("client connected");
-  });
-
-  this.socket.on('connect_error', function(err:any) {
-      console.log("client connect_error: ", err);
-  });
-
-  this.socket.on('connect_timeout', function(err:any) {
-      console.log("client connect_timeout: ", err);
-  });
-  this.socket.on('read_message', (err:any) =>{
-    console.log("read message: ", err);
-});
+  emitSocketMessage(message?:any){
     if(message&&message!=null){
-    this.socket.emit("send_message",message)
+      this.socketService.getSocket().emit("send_message",message)
     }
   }
 }
