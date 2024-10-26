@@ -70,7 +70,7 @@
       <div class="position-absolute bottom-0 left-50 chat-footer">
         <form [formGroup]="messageForm" class="d-flex p-1">
           <input type="text" class="form-control" formControlName="message" />
-          <button class="btn" (click)="sendMessage(selectedChat, user)">
+          <button class="btn btn-danger" (click)="sendMessage(selectedChat, user)">
             Invia
           </button>
         </form>
