@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { delay, throttleTime } from 'rxjs';
+import { delay, single, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
@@ -264,6 +264,9 @@ export class HomeComponent implements OnInit {
         singleChat.style.overflowY = 'auto';
         singleChat.style.height = '450px';
         singleChat.style.width = '340px';
+        let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
+        chatContainer.style.scrollBehavior="smooth"
+        chatContainer.scrollTop=chatContainer.scrollHeight
       }, 500);
     } else {
       this.router.navigate([
@@ -344,7 +347,7 @@ export class HomeComponent implements OnInit {
           this.toastr.error(
             error.error.message ||
               error.error.messageList[0] ||
-              "E' stato impossibile inviare il messaggio."
+              "C'è stato un problema nell'elaborazione della richiesta."
           );
         },
         complete: () => {},

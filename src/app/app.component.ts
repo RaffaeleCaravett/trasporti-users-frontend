@@ -22,7 +22,7 @@ socket:any
     private socketService: SocketIoService
   ) {
     this.socketService.socketAdvicer.subscribe((data)=>{
-      if(data){
+      if(data&&data.length>0){
         this.emitSocketMessage(data[0],data[1],data[2])
       }
     })
@@ -121,9 +121,7 @@ socket:any
       });
     }
 
-    this.socket.on("send_message",(arg:any)=>{
-      console.log(arg)
-    })
+
   }
 
   emitSocketMessage(room:number,username:string,message?:any){
@@ -131,8 +129,12 @@ socket:any
     this.username=username;
     if(room!=undefined&&username!=undefined)
     this.socket = io(`ws://192.168.1.60:3032?room=${this.room}&username=${this.username}`);
+    this.socket.on("send_message",(arg:any)=>{
+      console.log(arg)
+    })
     if(message&&message!=null){
     this.socket.emit("send_message",message)
+    console.log('emitted')
     }
   }
 }
