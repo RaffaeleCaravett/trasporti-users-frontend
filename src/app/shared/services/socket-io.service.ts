@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
+import { FormsService } from './forms.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import io from 'socket.io-client';
 export class SocketIoService {
   private socket: any;
   public socketAdvicer: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  constructor() {}
+  constructor(private fService:FormsService) {}
 
   socketEmiter(message: any) {
     this.socketAdvicer.next(message);
@@ -30,13 +31,17 @@ export class SocketIoService {
       this.socket.on('connect_timeout', function (err: any) {
         console.log('client connect_timeout: ', err);
       });
-      this.socket.on('read_message', (err: any) => {
-        console.log('client connect_timeout: ', err);
+     let user = this.fService.getUser()
+     let username1 = user.role == "Trasportatore"?user.nome+" "+user.cognome:user.nomeAzienda
+
+
+      this.socket.on(username1, (data: any) => {
+        console.log('data: ', data);
       });
     }
   }
 
-  getSocket():any{
+  getSocket():Socket{
     return this.socket;
   }
 }
