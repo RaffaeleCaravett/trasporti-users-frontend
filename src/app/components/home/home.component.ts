@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { delay, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -13,7 +13,6 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
   user: any;
   isTrasportatore: boolean = false;
   notifications: any;
@@ -34,27 +33,38 @@ export class HomeComponent implements OnInit {
     private homeService: HomeService,
     private toastr: ToastrService,
     private router: Router,
-    private socketIoService: SocketIoService
+    private socketIoService: SocketIoService,
+    private cdr: ChangeDetectorRef
   ) {
-    this.socketIoService.signleMessageFromSocket.subscribe((data:any)=>{
-if(data){
-  for(let c of this.chats){
-    if(c.id==data.room){
-   this.homeService.getChatById(this.user.role,c.id,"receiver").subscribe({
-    next:(chat:any)=>{
-c=chat;
-    },
-    error:(error:any)=>{
-      this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' successo un problema nell'elaborazione della richiesta.")
-    }
-   })
-      if(!this.selectedChat||(this.selectedChat&&!this.selectedChat.id==c.id)){
-      this.toastr.show("Ti è arrivato un messaggio")
+    this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
+      if (data) {
+        for (let c of this.chats) {
+          if (c.id == data.room) {
+            this.homeService
+              .getChatById(this.user.role, c.id, 'receiver')
+              .subscribe({
+                next: (chat: any) => {
+                  c = chat;
+                  this.cdr.detectChanges();
+                },
+                error: (error: any) => {
+                  this.toastr.error(
+                    error?.error?.message ||
+                      error?.error?.messageList[0] ||
+                      "E' successo un problema nell'elaborazione della richiesta."
+                  );
+                },
+              });
+            if (
+              !this.selectedChat ||
+              (this.selectedChat && !this.selectedChat.id == c.id)
+            ) {
+              this.toastr.show('Ti è arrivato un messaggio');
+            }
+          }
+        }
       }
-    }
-  }
-}
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -255,7 +265,9 @@ c=chat;
           c.trasportatore.id == chatMember.id)
       ) {
         this.selectedChat = c;
-        this.selectedChat?.messaggiList?.sort((m1:any,m2:any) => m1.id - m2.id);
+        this.selectedChat?.messaggiList?.sort(
+          (m1: any, m2: any) => m1.id - m2.id
+        );
       }
     });
     if (this.selectedChat == null) {
@@ -268,7 +280,9 @@ c=chat;
         .subscribe({
           next: (chat: any) => {
             this.selectedChat = chat;
-            this.selectedChat?.messaggiList?.sort((m1:any,m2:any) => m1.id - m2.id);
+            this.selectedChat?.messaggiList?.sort(
+              (m1: any, m2: any) => m1.id - m2.id
+            );
             this.getChats(userId);
           },
           error: (error: any) => {
@@ -343,47 +357,48 @@ c=chat;
         room: String(this.selectedChat?.id),
       };
 
-
-            this.socketIoService.socketEmiter(message);
-            this.messageForm.reset()
-            this.homeService.getChatById(this.user.role,this.selectedChat.id,"sender").subscribe({
-              next:(data:any)=>{
-                this.selectedChat=data
-              },
-              error: (error: any) => {
-                this.toastr.error(
-                  error.error.message ||
-                    error.error.messageList[0] ||
-                    "C'è stato un problema nell'elaborazione della richiesta."
-                );
-              },
-              complete: () => {},
-            })
-        //     this.homeService
-        // .sendMessage(message)
-        // .pipe(delay(1000))
-        // .subscribe({
-        //   next: (messaggio: any) => {
-        //     this.messageForm.reset();
-        //     this.selectedChat.messaggiList.push(messaggio);
-        //     let singleChat = document.getElementsByClassName(
-        //       'single-chat'
-        //     )[0] as HTMLDivElement;
-        //     let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
-        //     setTimeout(() => {
-        //       chatContainer.style.scrollBehavior = 'smooth';
-        //       chatContainer.scrollTop = chatContainer.scrollHeight;
-        //     }, 500);
-        //   },
-        //   error: (error: any) => {
-        //     this.toastr.error(
-        //       error.error.message ||
-        //         error.error.messageList[0] ||
-        //         "E' stato impossibile inviare il messaggio."
-        //     );
-        //   },
-        //   complete: () => {},
-        // });
+      this.socketIoService.socketEmiter(message);
+      this.messageForm.reset();
+      this.homeService
+        .getChatById(this.user.role, this.selectedChat.id, 'sender')
+        .subscribe({
+          next: (data: any) => {
+            this.selectedChat = data;
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "C'è stato un problema nell'elaborazione della richiesta."
+            );
+          },
+          complete: () => {},
+        });
+      //     this.homeService
+      // .sendMessage(message)
+      // .pipe(delay(1000))
+      // .subscribe({
+      //   next: (messaggio: any) => {
+      //     this.messageForm.reset();
+      //     this.selectedChat.messaggiList.push(messaggio);
+      //     let singleChat = document.getElementsByClassName(
+      //       'single-chat'
+      //     )[0] as HTMLDivElement;
+      //     let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
+      //     setTimeout(() => {
+      //       chatContainer.style.scrollBehavior = 'smooth';
+      //       chatContainer.scrollTop = chatContainer.scrollHeight;
+      //     }, 500);
+      //   },
+      //   error: (error: any) => {
+      //     this.toastr.error(
+      //       error.error.message ||
+      //         error.error.messageList[0] ||
+      //         "E' stato impossibile inviare il messaggio."
+      //     );
+      //   },
+      //   complete: () => {},
+      // });
     }
   }
   getAz(page: number, size: number, orderBy: string) {
