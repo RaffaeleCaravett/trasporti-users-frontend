@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import io, { Socket } from 'socket.io-client';
 import { FormsService } from './forms.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,8 @@ import { FormsService } from './forms.service';
 export class SocketIoService {
   private socket: any;
   public socketAdvicer: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  constructor(private fService:FormsService) {}
+  public signleMessageFromSocket: BehaviorSubject<any> = new BehaviorSubject<any>(null)
+  constructor(private fService:FormsService,private toastr:ToastrService) {}
 
   socketEmiter(message: any) {
     this.socketAdvicer.next(message);
@@ -20,23 +22,17 @@ export class SocketIoService {
         `ws://192.168.1.60:3032?room=${room}&username=${username}`,
         { transports: ['websocket'] }
       );
-      this.socket.on('connection', function () {
-        console.log('client connected');
+      this.socket.on('connect_error',(err: any) =>{
+        this.toastr.error('client connect_error: ', err);
       });
-
-      this.socket.on('connect_error', function (err: any) {
-        console.log('client connect_error: ', err);
-      });
-
-      this.socket.on('connect_timeout', function (err: any) {
-        console.log('client connect_timeout: ', err);
+      this.socket.on('connect_timeout',(err: any) =>{
+        this.toastr.error('client connect_timeout: ', err);
       });
      let user = this.fService.getUser()
      let username1 = user.email
 
-
       this.socket.on(username1, (data: any) => {
-        console.log('data: ', data);
+        this.signleMessageFromSocket.next(data);
       });
     }
   }

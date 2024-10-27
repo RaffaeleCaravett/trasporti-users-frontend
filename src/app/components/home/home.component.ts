@@ -1,6 +1,6 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { delay, single, throttleTime } from 'rxjs';
+import { delay, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+
   user: any;
   isTrasportatore: boolean = false;
   notifications: any;
@@ -34,7 +35,18 @@ export class HomeComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private socketIoService: SocketIoService
-  ) {}
+  ) {
+    this.socketIoService.signleMessageFromSocket.subscribe((data:any)=>{
+if(data){
+  for(let c of this.chats){
+    if((c.azienda.id==data?.receiver_id)||(c.azienda.id==data?.sender_id)&&
+    (c.trasportatore.id==data?.receiver_id)||(c.trasportatore.id==data?.sender_id)){
+      console.log('eureka')
+    }
+  }
+}
+    })
+  }
 
   ngOnInit(): void {
     localStorage.setItem('location', '/home');
