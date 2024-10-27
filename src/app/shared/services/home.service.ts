@@ -57,4 +57,13 @@ return this.http.post(environment.API_URL+this.azienda+this.messaggi,message)
     return this.http.post(environment.API_URL+this.trasportatore+this.messaggi,message)
   }
 }
+getChatById(role:string,id:number,type:string){
+  debugger
+if(role=='Azienda'){
+return this.http.get(environment.API_URL+this.azienda+this.chat+`/${id}`)
+}else{
+  return this.http.get(environment.API_URL+this.trasportatore+this.chat+`/${id}`)
+}
+debugger
+}
 }

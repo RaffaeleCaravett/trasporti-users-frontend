@@ -39,9 +39,18 @@ export class HomeComponent implements OnInit {
     this.socketIoService.signleMessageFromSocket.subscribe((data:any)=>{
 if(data){
   for(let c of this.chats){
-    if((c.azienda.id==data?.receiver_id)||(c.azienda.id==data?.sender_id)&&
-    (c.trasportatore.id==data?.receiver_id)||(c.trasportatore.id==data?.sender_id)){
-      console.log('eureka')
+    if(c.id==data.room){
+   this.homeService.getChatById(this.user.role,c.id,"receiver").subscribe({
+    next:(chat:any)=>{
+c=chat;
+    },
+    error:(error:any)=>{
+      this.toastr.error(error?.error?.message||error?.error?.messageList[0]||"E' successo un problema nell'elaborazione della richiesta.")
+    }
+   })
+      if(!this.selectedChat||(this.selectedChat&&!this.selectedChat.id==c.id)){
+      this.toastr.show("Ti è arrivato un messaggio")
+      }
     }
   }
 }
@@ -334,32 +343,47 @@ if(data){
         room: String(this.selectedChat?.id),
       };
 
-      this.homeService
-        .sendMessage(message)
-        .pipe(delay(1000))
-        .subscribe({
-          next: (messaggio: any) => {
-            this.messageForm.reset();
-            this.selectedChat.messaggiList.push(messaggio);
-            let singleChat = document.getElementsByClassName(
-              'single-chat'
-            )[0] as HTMLDivElement;
-            let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
-            setTimeout(() => {
-              chatContainer.style.scrollBehavior = 'smooth';
-              chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 500);
+
             this.socketIoService.socketEmiter(message);
-          },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile inviare il messaggio."
-            );
-          },
-          complete: () => {},
-        });
+            this.messageForm.reset()
+            this.homeService.getChatById(this.user.role,this.selectedChat.id,"sender").subscribe({
+              next:(data:any)=>{
+                this.selectedChat=data
+              },
+              error: (error: any) => {
+                this.toastr.error(
+                  error.error.message ||
+                    error.error.messageList[0] ||
+                    "C'è stato un problema nell'elaborazione della richiesta."
+                );
+              },
+              complete: () => {},
+            })
+        //     this.homeService
+        // .sendMessage(message)
+        // .pipe(delay(1000))
+        // .subscribe({
+        //   next: (messaggio: any) => {
+        //     this.messageForm.reset();
+        //     this.selectedChat.messaggiList.push(messaggio);
+        //     let singleChat = document.getElementsByClassName(
+        //       'single-chat'
+        //     )[0] as HTMLDivElement;
+        //     let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
+        //     setTimeout(() => {
+        //       chatContainer.style.scrollBehavior = 'smooth';
+        //       chatContainer.scrollTop = chatContainer.scrollHeight;
+        //     }, 500);
+        //   },
+        //   error: (error: any) => {
+        //     this.toastr.error(
+        //       error.error.message ||
+        //         error.error.messageList[0] ||
+        //         "E' stato impossibile inviare il messaggio."
+        //     );
+        //   },
+        //   complete: () => {},
+        // });
     }
   }
   getAz(page: number, size: number, orderBy: string) {
