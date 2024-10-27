@@ -32,7 +32,7 @@ export class SocketIoService {
         console.log('client connect_timeout: ', err);
       });
      let user = this.fService.getUser()
-     let username1 = user.role == "Trasportatore"?user.nome+" "+user.cognome:user.nomeAzienda
+     let username1 = user.email
 
 
       this.socket.on(username1, (data: any) => {
