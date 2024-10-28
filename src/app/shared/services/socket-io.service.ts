@@ -28,10 +28,10 @@ export class SocketIoService {
         options
       );
       this.socket.on('connect_error',(err: any) =>{
-        this.toastr.error('client connect_error: ', err);
+        this.toastr.error('client connect_error: '+ err.message);
       });
       this.socket.on('connect_timeout',(err: any) =>{
-        this.toastr.error('client connect_timeout: ', err);
+        this.toastr.error('client connect_timeout: '+ err);
       });
      let user = this.fService.getUser()
      let username1 = user.email
