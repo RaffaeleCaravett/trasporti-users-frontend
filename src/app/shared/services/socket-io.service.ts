@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import io, { Socket } from 'socket.io-client';
 import { FormsService } from './forms.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/app/core/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class SocketIoService {
   connectToRoom(room: number, username: string) {
     if (room != undefined && username != undefined) {
       this.socket = io(
-        `ws://192.168.1.60:3032?room=${room}&username=${username}`,
+        `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
         { transports: ['websocket'] }
       );
       this.socket.on('connect_error',(err: any) =>{
