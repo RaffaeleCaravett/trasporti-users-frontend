@@ -19,9 +19,13 @@ export class SocketIoService {
   }
   connectToRoom(room: number, username: string) {
     if (room != undefined && username != undefined) {
+      var options = {
+        allowUpgrades: true,
+        transports: ['websocket', 'polling'],
+    };
       this.socket = io(
         `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
-        { transports: ['websocket'] }
+        options
       );
       this.socket.on('connect_error',(err: any) =>{
         this.toastr.error('client connect_error: ', err);
