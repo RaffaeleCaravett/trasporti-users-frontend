@@ -24,7 +24,7 @@ export class SocketIoService {
         transports: ['websocket', 'polling'],
     };
       this.socket = io(
-        `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
+        `${environment.NETLIFY_LOCALHOST_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
         options
       );
       this.socket.on('connect_error',(err: any) =>{
