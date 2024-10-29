@@ -22,7 +22,7 @@ export class SocketIoService {
     if (room != undefined && username != undefined) {
       var options = {
         allowUpgrades: true,
-        transports: ['websocket', 'polling'],
+        transports: ['websocket', 'polling', 'flashsocket'],
       };
       const manager = new Manager(
         `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
@@ -30,18 +30,11 @@ export class SocketIoService {
       );
 
       this.socket = manager.socket('/');
-      manager.on('error', (error:any) => {
+      manager.on('error', (error: any) => {
         console.log(error.message);
-
-  console.log(error.description);
-
-  console.log(error.context);
+        console.log(error.description);
       });
 
-      this.socket.on('connect_error', (err: any) => {
-        console.log(err);
-        this.toastr.error('client connect_error: ' + err.message);
-      });
       this.socket.on('connect_timeout', (err: any) => {
         this.toastr.error('client connect_timeout: ' + err);
       });
