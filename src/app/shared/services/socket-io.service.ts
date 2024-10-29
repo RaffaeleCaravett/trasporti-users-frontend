@@ -28,6 +28,7 @@ export class SocketIoService {
         options
       );
       this.socket.on('connect_error',(err: any) =>{
+        console.log(err)
         this.toastr.error('client connect_error: '+ err.message);
       });
       this.socket.on('connect_timeout',(err: any) =>{
