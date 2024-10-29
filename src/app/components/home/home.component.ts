@@ -128,10 +128,12 @@ export class HomeComponent implements OnInit {
     )[0] as HTMLDivElement;
     if (window.innerWidth < 700) {
       this.displayChat = false;
-      chatContainer.style.height = '0';
-      chatContainer.style.transition = '2s';
-      chatContainer.style.overflow = 'hidden';
-      chatContainer.classList.remove('border');
+      if (chatContainer) {
+        chatContainer.style.height = '0';
+        chatContainer.style.transition = '2s';
+        chatContainer.style.overflow = 'hidden';
+        chatContainer.classList.remove('border');
+      }
     }
     this.messageForm = new FormGroup({
       message: new FormControl('', Validators.required),
@@ -172,10 +174,12 @@ export class HomeComponent implements OnInit {
     if (window.innerWidth <= 700) {
       if (resize) {
         this.displayChat = false;
-        chatContainer.style.height = '0';
-        chatContainer.style.transition = '2s';
-        chatContainer.style.overflow = 'hidden';
-        chatContainer.classList.remove('border');
+        if (chatContainer) {
+          chatContainer.style.height = '0';
+          chatContainer.style.transition = '2s';
+          chatContainer.style.overflow = 'hidden';
+          chatContainer.classList.remove('border');
+        }
         setTimeout(() => {
           singleChat.classList.add('d-none');
         }, 200);
@@ -186,7 +190,7 @@ export class HomeComponent implements OnInit {
         ]);
       }
     } else {
-      if (!resize) {
+      if (!resize&&chatContainer) {
         this.displayChat = !this.displayChat;
         if (this.displayChat) {
           chatContainer.style.height = '60vh';
@@ -198,10 +202,12 @@ export class HomeComponent implements OnInit {
           chatContainer.classList.remove('overflow-auto');
         }
       } else {
-        if (!this.displayChat) chatContainer.style.height = '30px';
+        if (!this.displayChat&&chatContainer) {
+        chatContainer.style.height = '30px';
         chatContainer.style.transition = '2s';
         chatContainer.classList.remove('overflow-auto');
         chatContainer.classList.add('border');
+        }
       }
     }
   }
