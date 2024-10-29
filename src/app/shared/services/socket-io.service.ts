@@ -26,7 +26,7 @@ export class SocketIoService {
 
       };
       const manager = new Manager(
-        `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
+        `${environment.NETLIFY_EMPTY_API_URL}?room=${room}&username=${username}`,
         options
       );
 
