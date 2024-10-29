@@ -21,12 +21,14 @@ export class SocketIoService {
   connectToRoom(room: number, username: string) {
     if (room != undefined && username != undefined) {
       var options = {
-        allowUpgrades: true,
         transports: ['websocket'],
-
+        path:'/SERVERPATH',
+        forceNew:true,
+        reconnectionAttempts:3,
+        timeout:2000
       };
       const manager = new Manager(
-        `${environment.NETLIFY_EMPTY_API_URL}?room=${room}&username=${username}`,
+        `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
         options
       );
 
