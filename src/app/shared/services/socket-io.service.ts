@@ -30,8 +30,12 @@ export class SocketIoService {
       );
 
       this.socket = manager.socket('/');
-      manager.on('error', (error) => {
-        console.log('socket error', error);
+      manager.on('error', (error:any) => {
+        console.log(error.message);
+
+  console.log(error.description);
+
+  console.log(error.context);
       });
 
       this.socket.on('connect_error', (err: any) => {
