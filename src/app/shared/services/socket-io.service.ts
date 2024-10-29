@@ -24,7 +24,8 @@ export class SocketIoService {
         transports: ['websocket'],
         forceNew:true,
         reconnectionAttempts:3,
-        timeout:2000
+        timeout:2000,
+        secure:true
       };
       const manager = new Manager(
         `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
