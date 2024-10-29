@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import io, { Socket } from 'socket.io-client';
+import io, { Manager, Socket } from 'socket.io-client';
 import { FormsService } from './forms.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/app/core/environment';
@@ -23,10 +23,15 @@ export class SocketIoService {
         allowUpgrades: true,
         transports: ['websocket', 'polling'],
     };
-      this.socket = io(
-        `${environment.NETLIFY_LOCALHOST_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
-        options
+    const manager = new Manager(`${environment.NETLIFY_LOCALHOST_WEBSOCKET_API_URL}?room=${room}&username=${username}`,options)
+
+      this.socket = manager.socket(
+      '/'
       );
+      manager.on('error', (error) => {
+        console.log('socket error' , error)
+    })
+
       this.socket.on('connect_error',(err: any) =>{
         console.log(err)
         this.toastr.error('client connect_error: '+ err.message);
