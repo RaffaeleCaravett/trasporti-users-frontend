@@ -22,7 +22,6 @@ export class SocketIoService {
     if (room != undefined && username != undefined) {
       var options = {
         transports: ['websocket'],
-        path:'/SERVERPATH',
         forceNew:true,
         reconnectionAttempts:3,
         timeout:2000
