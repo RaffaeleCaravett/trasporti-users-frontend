@@ -11,8 +11,9 @@ import { environment } from 'src/app/core/environment';
 export class SocketIoService {
   private socket: any;
   public socketAdvicer: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public signleMessageFromSocket: BehaviorSubject<any> = new BehaviorSubject<any>(null)
-  constructor(private fService:FormsService,private toastr:ToastrService) {}
+  public signleMessageFromSocket: BehaviorSubject<any> =
+    new BehaviorSubject<any>(null);
+  constructor(private fService: FormsService, private toastr: ToastrService) {}
 
   socketEmiter(message: any) {
     this.socketAdvicer.next(message);
@@ -22,25 +23,26 @@ export class SocketIoService {
       var options = {
         allowUpgrades: true,
         transports: ['websocket', 'polling'],
-    };
-    const manager = new Manager(`${environment.NETLIFY_LOCALHOST_WEBSOCKET_API_URL}?room=${room}&username=${username}`,options)
-
-      this.socket = manager.socket(
-      '/'
+      };
+      const manager = new Manager(
+        `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
+        options
       );
-      manager.on('error', (error) => {
-        console.log('socket error' , error)
-    })
 
-      this.socket.on('connect_error',(err: any) =>{
-        console.log(err)
-        this.toastr.error('client connect_error: '+ err.message);
+      this.socket = manager.socket('/');
+      manager.on('error', (error) => {
+        console.log('socket error', error);
       });
-      this.socket.on('connect_timeout',(err: any) =>{
-        this.toastr.error('client connect_timeout: '+ err);
+
+      this.socket.on('connect_error', (err: any) => {
+        console.log(err);
+        this.toastr.error('client connect_error: ' + err.message);
       });
-     let user = this.fService.getUser()
-     let username1 = user.email
+      this.socket.on('connect_timeout', (err: any) => {
+        this.toastr.error('client connect_timeout: ' + err);
+      });
+      let user = this.fService.getUser();
+      let username1 = user.email;
 
       this.socket.on(username1, (data: any) => {
         this.signleMessageFromSocket.next(data);
@@ -48,7 +50,7 @@ export class SocketIoService {
     }
   }
 
-  getSocket():Socket{
+  getSocket(): Socket {
     return this.socket;
   }
 }
