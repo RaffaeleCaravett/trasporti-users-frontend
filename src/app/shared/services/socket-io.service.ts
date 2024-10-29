@@ -22,7 +22,7 @@ export class SocketIoService {
     if (room != undefined && username != undefined) {
       var options = {
         allowUpgrades: true,
-        transports: ['polling', 'flashsocket'],
+        transports: ['websocket'],
       };
       const manager = new Manager(
         `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
