@@ -22,10 +22,16 @@ export class SocketIoService {
     if (room != undefined && username != undefined) {
 
 
-      this.socket = io(`${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,{
+      this.socket = require("socket.io")(`${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,{
         transports: ['websocket','polling'],
         forceNew:true,
-        secure:true
+        secure:true,
+        cors: {
+          origin: "https://trasporti.netlify.app",
+          methods: ["GET", "POST","OPTIONS"],
+          allowedHeaders: ['Access-Control-Allow-Origin'],
+          credentials: false
+      }
       });
      this.socket.on('error', (error: any) => {
         console.log(error.message);
