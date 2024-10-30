@@ -20,20 +20,14 @@ export class SocketIoService {
   }
   connectToRoom(room: number, username: string) {
     if (room != undefined && username != undefined) {
-      var options = {
-        transports: ['websocket'],
-        forceNew:true,
-        reconnectionAttempts:3,
-        timeout:2000,
-        secure:true
-      };
-      const manager = new Manager(
-        `${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,
-        options
-      );
 
-      this.socket = manager.socket('/');
-      manager.on('error', (error: any) => {
+
+      this.socket = io(`${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,{
+        transports: ['websocket','polling'],
+        forceNew:true,
+        secure:true
+      });
+     this.socket.on('error', (error: any) => {
         console.log(error.message);
         console.log(error.description);
       });
