@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import io, { Manager, Socket } from 'socket.io-client';
+import {  io, Socket } from 'socket.io-client';
 import { FormsService } from './forms.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/app/core/environment';
@@ -22,16 +22,10 @@ export class SocketIoService {
     if (room != undefined && username != undefined) {
 
 
-      this.socket = require("socket.io")(`${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,{
+      this.socket = io(`${environment.NETLIFY_WEBSOCKET_API_URL}?room=${room}&username=${username}`,{
         transports: ['websocket','polling'],
         forceNew:true,
-        secure:true,
-        cors: {
-          origin: "https://trasporti.netlify.app",
-          methods: ["GET", "POST","OPTIONS"],
-          allowedHeaders: ['Access-Control-Allow-Origin'],
-          credentials: false
-      }
+        secure:true
       });
      this.socket.on('error', (error: any) => {
         console.log(error.message);
