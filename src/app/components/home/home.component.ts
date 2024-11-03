@@ -248,17 +248,17 @@ export class HomeComponent implements OnInit {
           complete: () => {},
         });
     }
-
-    setTimeout(() => {
-      for (let c of this.chats) {
-        this.socketIoService.connectToRoom(
-          c.id,
-          this.isTrasportatore
-            ? this.user.nome + ' ' + this.user.cognome
-            : this.user.nomeAzienda
-        );
-      }
-    }, 5000);
+//Establish a socket connection for each chat
+    // setTimeout(() => {
+    //   for (let c of this.chats) {
+    //     this.socketIoService.connectToRoom(
+    //       c.id,
+    //       this.isTrasportatore
+    //         ? this.user.nome + ' ' + this.user.cognome
+    //         : this.user.nomeAzienda
+    //     );
+    //   }
+    // }, 5000);
   }
   openChat(userId: number, chatMember: any) {
     this.chats.forEach((c) => {
@@ -362,8 +362,8 @@ export class HomeComponent implements OnInit {
         testo: this.messageForm.controls['message'].value,
         room: String(this.selectedChat?.id),
       };
-
-      this.socketIoService.socketEmiter(message);
+//When decommenting this, remember to comment the send message part itself
+      // this.socketIoService.socketEmiter(message);
       this.messageForm.reset();
       this.homeService
         .getChatById(this.user.role, this.selectedChat.id, 'sender')
@@ -380,31 +380,31 @@ export class HomeComponent implements OnInit {
           },
           complete: () => {},
         });
-      //     this.homeService
-      // .sendMessage(message)
-      // .pipe(delay(1000))
-      // .subscribe({
-      //   next: (messaggio: any) => {
-      //     this.messageForm.reset();
-      //     this.selectedChat.messaggiList.push(messaggio);
-      //     let singleChat = document.getElementsByClassName(
-      //       'single-chat'
-      //     )[0] as HTMLDivElement;
-      //     let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
-      //     setTimeout(() => {
-      //       chatContainer.style.scrollBehavior = 'smooth';
-      //       chatContainer.scrollTop = chatContainer.scrollHeight;
-      //     }, 500);
-      //   },
-      //   error: (error: any) => {
-      //     this.toastr.error(
-      //       error.error.message ||
-      //         error.error.messageList[0] ||
-      //         "E' stato impossibile inviare il messaggio."
-      //     );
-      //   },
-      //   complete: () => {},
-      // });
+          this.homeService
+      .sendMessage(message)
+      .pipe(delay(1000))
+      .subscribe({
+        next: (messaggio: any) => {
+          this.messageForm.reset();
+          this.selectedChat.messaggiList.push(messaggio);
+          let singleChat = document.getElementsByClassName(
+            'single-chat'
+          )[0] as HTMLDivElement;
+          let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
+          setTimeout(() => {
+            chatContainer.style.scrollBehavior = 'smooth';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+          }, 500);
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile inviare il messaggio."
+          );
+        },
+        complete: () => {},
+      });
     }
   }
   getAz(page: number, size: number, orderBy: string) {
