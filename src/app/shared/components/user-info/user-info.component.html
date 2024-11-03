@@ -1,5 +1,6 @@
 <p class="fs-5 fw-bold">Le tue informazioni</p>
-<div class="row text-start p-2 border rounded overflow-auto" *ngIf="isTrasportatore else azienda">
+<div class="row text-start p-2 border rounded overflow-auto">
+<div class="row" *ngIf="isTrasportatore else azienda">
 <div class="col-md-12"><span class="text-danger">
 
 </span>{{user?.role}}</div>
@@ -35,7 +36,7 @@ C.F.
 </span> {{user?.flottaMezzi}}</div>
 </div>
 <ng-template #azienda>
-<div class="row text-start p-2 border rounded overflow-auto">
+<div class="row">
 <div class="col-md-12">
 <span class="text-danger">
 Tipo :
@@ -86,3 +87,9 @@ Settore :
 </div>
 </div>
 </ng-template>
+  <div class="col-md-12">
+    <p class="fw-bolder">
+      Come ti valutano {{user?.role== 'Trasportatore' ? 'le aziende':'i trasportatori'}}?
+    </p>
+  </div>
+</div>

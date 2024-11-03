@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
     }
-
+console.log(this.user)
     if (this.isTrasportatore) {
       this.homeService
         .getNotificationByTransporterIdAndNotificationStateAndSender(
