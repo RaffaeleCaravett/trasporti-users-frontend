@@ -41,15 +41,15 @@ export class ShowAnnuncioComponent implements OnInit {
     this.officeService.richiediSpedizione(this.data.spedizione.id).subscribe({
       next: () => {
         this.toastr.show('Richiesta effettuata con successo.');
-        this.dialogRef.close();
+        this.dialogRef.close("Richiesta");
       },
       error: (error: any) => {
         this.toastr.error(
           error?.error?.message ||
             error?.error?.messageList[0] ||
             errors.request_error
-        );
-      },
+          );
+        },
       complete: () => {},
     });
   }
