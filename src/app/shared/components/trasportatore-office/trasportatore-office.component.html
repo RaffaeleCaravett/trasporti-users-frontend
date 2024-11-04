@@ -38,23 +38,26 @@
               </svg>
             </button>
           </p>
-          <p
-            class="text-end"
+          <div
+            class="d-flex justify-content-end"
             *ngIf="annunciOption[0] && annunciOption[1] == a.id"
           >
+          <p class="border rounded w-75 text-start p-2">
             <button
-              class="btn-bg-light p-2 rounded"
+              class="btn-bg-light p-2 rounded m-1"
               (click)="openAnnunciInfo(a)"
             >
               Richiedi assegnazione.
             </button>
             <button
-            class="btn-bg-light p-2 rounded"
+            class="btn-bg-light p-2 rounded m-1"
             (click)="openChat(user.id,a)"
           >
             Contatta l'azienda.
           </button>
           </p>
+
+          </div>
           <p class="text-start fw-bold">
             Azienda :
             <span> {{ a?.azienda?.nomeAzienda }}</span>

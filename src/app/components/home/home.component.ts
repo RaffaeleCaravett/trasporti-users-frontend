@@ -280,7 +280,8 @@ console.log(this.user)
       this.homeService
         .postChat(
           this.isTrasportatore ? chatMember.id : userId,
-          this.isTrasportatore ? userId : chatMember.id
+          this.isTrasportatore ? userId : chatMember.id,
+          this.user.role
         )
         .pipe(throttleTime(1000))
         .subscribe({

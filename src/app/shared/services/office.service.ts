@@ -23,6 +23,8 @@ private findByNomeAndCognomeContaining:string ='/findByNomeAndCognomeContaining'
 private findByCittaAndNomeAndCognomeContaining:String ='/findByCittaAndNomeAndCognomeContaining'
 private aziendaStatistica:string ='/azienda/statistica'
 private richiedi:string = '/richiedi'
+private chat:string = '/chat'
+
 constructor(private httpClient:HttpClient){}
 
 publicAnnuncio(annuncioDTO:any){
@@ -92,11 +94,22 @@ getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string,page:numbe
 getStatisticaByAziendaId(id:number){
   return this.httpClient.get(environment.API_URL+this.aziendaStatistica+`/${id}`)
 }
-getAllAnnunci(){
-  return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio)
+getAllAnnunci(orderBy:string){
+  return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio+`?orderBy=${orderBy||'id'}`)
 }
 richiediSpedizione(spedizioneId:number){
   return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione+this.richiedi+`/${spedizioneId}/me`)
+}
+postChat(aziendaId:number,trasportatoreId:number,role:string){
+  let chatDTO = {
+azienda_id:aziendaId,
+trasportatore_id:trasportatoreId
+  }
+  if(role=='Trasportatore'){
+    return this.httpClient.post(environment.API_URL+this.trasportatore+this.chat,chatDTO)
+  }else{
+    return this.httpClient.post(environment.API_URL+this.azienda+this.chat,chatDTO)
+  }
 }
 }
 

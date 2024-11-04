@@ -42,12 +42,16 @@ getChatsByTrId(azId:number){
 getChatsByAziendaIdAndTId(azId:number,tId:number){
   return this.http.get(environment.API_URL+this.azienda+this.chat+this.chatByAziendaAndTr+`/${azId}/${tId}`)
 }
-postChat(aziendaId:number,trasportatoreId:number){
+postChat(aziendaId:number,trasportatoreId:number,role:string){
   let chatDTO = {
 azienda_id:aziendaId,
 trasportatore_id:trasportatoreId
   }
-return this.http.post(environment.API_URL+this.azienda+this.chat,chatDTO)
+  if(role=='Trasportatore'){
+    return this.http.post(environment.API_URL+this.trasportatore+this.chat,chatDTO)
+  }else{
+    return this.http.post(environment.API_URL+this.azienda+this.chat,chatDTO)
+  }
 }
 
 sendMessage(message:any){
