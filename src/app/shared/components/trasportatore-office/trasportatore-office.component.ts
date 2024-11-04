@@ -67,16 +67,22 @@ selectedChat:any=null
         this.getAllAnnunci('id');
         break;
       case 'Retribuzione':
+        this.getAllAnnunci('retribuzione');
         break;
       case 'Data annuncio':
+        this.getAllAnnunci('dataPubblicazione');
         break;
       case 'Data spedizione':
+        this.getAllAnnunci('spedizione_DaSpedire');
         break;
       case 'Nome azienda':
+        this.getAllAnnunci('azienda_nomeAzienda');
         break;
       case 'Numero pedane':
+        this.getAllAnnunci('spedizione_NumeroPedane');
         break;
       default:
+        this.getAllAnnunci('id');
         break;
     }
     setTimeout(() => {
