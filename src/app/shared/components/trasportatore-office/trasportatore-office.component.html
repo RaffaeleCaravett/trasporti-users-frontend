@@ -11,6 +11,33 @@
           {{ f }}
         </button>
       </div>
+      <div
+        class="d-flex justify-content-center"
+        *ngIf="annunciCopy && annunciCopy.length > 0"
+      >
+        <button title="ASC" class="btn" (click)="getAllAnnunci('ASC')">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#5f6368"
+          >
+            <path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
+          </svg>
+        </button>
+        <button title="DESC" class="btn" (click)="getAllAnnunci('DESC')">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#5f6368"
+          >
+            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+          </svg>
+        </button>
+      </div>
       <div class="col-md-12 py-5 my-5" *ngIf="isLoading; else annc">
         <mat-spinner class="m-auto" color="warn"></mat-spinner>
       </div>
@@ -42,21 +69,20 @@
             class="d-flex justify-content-end"
             *ngIf="annunciOption[0] && annunciOption[1] == a.id"
           >
-          <p class="border rounded w-75 text-start p-2">
-            <button
-              class="btn-bg-light p-2 rounded m-1"
-              (click)="openAnnunciInfo(a)"
-            >
-              Richiedi assegnazione.
-            </button>
-            <button
-            class="btn-bg-light p-2 rounded m-1"
-            (click)="openChat(user.id,a)"
-          >
-            Contatta l'azienda.
-          </button>
-          </p>
-
+            <p class="border rounded w-75 text-start p-2">
+              <button
+                class="btn-bg-light p-2 rounded m-1"
+                (click)="openAnnunciInfo(a)"
+              >
+                Richiedi assegnazione.
+              </button>
+              <button
+                class="btn-bg-light p-2 rounded m-1"
+                (click)="openChat(user.id, a)"
+              >
+                Contatta l'azienda.
+              </button>
+            </p>
           </div>
           <p class="text-start fw-bold">
             Azienda :
