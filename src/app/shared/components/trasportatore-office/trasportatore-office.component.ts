@@ -21,6 +21,7 @@ export class TrasportatoreOfficeComponent implements OnChanges {
   annunci: any;
   annunciCopy: any[] = [];
   annunciOption: any[] = [false, 0];
+  action:string='id';
 today=new Date()
 selectedChat:any=null
   constructor(
@@ -64,21 +65,27 @@ selectedChat:any=null
     this.isLoading = true;
     switch (action) {
       case 'Tutti':
+        this.action='id';
         this.getAllAnnunci('id');
         break;
       case 'Retribuzione':
+        this.action='retribuzione';
         this.getAllAnnunci('retribuzione');
         break;
       case 'Data annuncio':
+        this.action='dataPubblicazione';
         this.getAllAnnunci('dataPubblicazione');
         break;
       case 'Data spedizione':
+        this.action='spedizione_DaSpedire';
         this.getAllAnnunci('spedizione_DaSpedire');
         break;
       case 'Nome azienda':
+        this.action='azienda_nomeAzienda';
         this.getAllAnnunci('azienda_nomeAzienda');
         break;
       case 'Numero pedane':
+        this.action='spedizione_NumeroPedane';
         this.getAllAnnunci('spedizione_NumeroPedane');
         break;
       default:
@@ -90,8 +97,8 @@ selectedChat:any=null
     }, 1000);
   }
 
-  getAllAnnunci(orderBy:string) {
-    this.officeService.getAllAnnunci(orderBy).subscribe({
+  getAllAnnunci(orderBy:string,ordering?:string) {
+    this.officeService.getAllAnnunci(orderBy,ordering||'ASC').subscribe({
       next: (data: any) => {
         this.annunci = data;
         this.annunciCopy = this.annunci?.content;

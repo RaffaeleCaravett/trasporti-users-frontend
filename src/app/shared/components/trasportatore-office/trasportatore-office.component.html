@@ -15,7 +15,7 @@
         class="d-flex justify-content-center"
         *ngIf="annunciCopy && annunciCopy.length > 0"
       >
-        <button title="ASC" class="btn" (click)="getAllAnnunci('ASC')">
+        <button title="ASC" class="btn" (click)="getAllAnnunci(action,'ASC')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -26,7 +26,7 @@
             <path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z" />
           </svg>
         </button>
-        <button title="DESC" class="btn" (click)="getAllAnnunci('DESC')">
+        <button title="DESC" class="btn" (click)="getAllAnnunci(action,'DESC')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
