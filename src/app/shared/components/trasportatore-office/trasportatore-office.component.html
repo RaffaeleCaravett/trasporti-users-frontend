@@ -161,9 +161,9 @@
           </button>
           <div>
             <span for="pages">Pagina</span>
-            <select name="pages" id="pages" class="form-select">
+            <select name="pages" id="pages" #page class="form-select" >
               <option value=""></option>
-              <option [value]="i" *ngFor="let i of pages">{{ i }}</option>
+              <option [value]="i" *ngFor="let i of pages" (click)="getAllAnnunci(action,'ASC',i)">{{ i }}</option>
             </select>
           </div>
         </div>
