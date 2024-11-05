@@ -94,8 +94,8 @@ getTrByNomeAndCognomeAndCitta(nome:string,cognome:string,citta:string,page:numbe
 getStatisticaByAziendaId(id:number){
   return this.httpClient.get(environment.API_URL+this.aziendaStatistica+`/${id}`)
 }
-getAllAnnunci(orderBy:string,order:string){
-  return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio+`?orderBy=${orderBy||'id'}&direction=${order}`)
+getAllAnnunci(orderBy:string,order:string,page?:number){
+  return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio+`?orderBy=${orderBy||'id'}&direction=${order}&page=${page||0}`)
 }
 richiediSpedizione(spedizioneId:number){
   return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione+this.richiedi+`/${spedizioneId}/me`)

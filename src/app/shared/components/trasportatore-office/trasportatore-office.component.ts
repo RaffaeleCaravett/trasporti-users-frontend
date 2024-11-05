@@ -21,14 +21,15 @@ export class TrasportatoreOfficeComponent implements OnChanges {
   annunci: any;
   annunciCopy: any[] = [];
   annunciOption: any[] = [false, 0];
-  action:string='id';
-today=new Date()
-selectedChat:any=null
+  action: string = 'id';
+  today = new Date();
+  selectedChat: any = null;
+  pages:number[]=[]
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
     private matDialog: MatDialog,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnChanges(): void {
@@ -65,27 +66,27 @@ selectedChat:any=null
     this.isLoading = true;
     switch (action) {
       case 'Tutti':
-        this.action='id';
+        this.action = 'id';
         this.getAllAnnunci('id');
         break;
       case 'Retribuzione':
-        this.action='retribuzione';
+        this.action = 'retribuzione';
         this.getAllAnnunci('retribuzione');
         break;
       case 'Data annuncio':
-        this.action='dataPubblicazione';
+        this.action = 'dataPubblicazione';
         this.getAllAnnunci('dataPubblicazione');
         break;
       case 'Data spedizione':
-        this.action='spedizione_DaSpedire';
+        this.action = 'spedizione_DaSpedire';
         this.getAllAnnunci('spedizione_DaSpedire');
         break;
       case 'Nome azienda':
-        this.action='azienda_nomeAzienda';
+        this.action = 'azienda_nomeAzienda';
         this.getAllAnnunci('azienda_nomeAzienda');
         break;
       case 'Numero pedane':
-        this.action='spedizione_NumeroPedane';
+        this.action = 'spedizione_NumeroPedane';
         this.getAllAnnunci('spedizione_NumeroPedane');
         break;
       default:
@@ -97,21 +98,26 @@ selectedChat:any=null
     }, 1000);
   }
 
-  getAllAnnunci(orderBy:string,ordering?:string) {
-    this.officeService.getAllAnnunci(orderBy,ordering||'ASC').subscribe({
-      next: (data: any) => {
-        this.annunci = data;
-        this.annunciCopy = this.annunci?.content;
-      },
-      error: (error: any) => {
-        this.toastr.error(
-          error?.message || error?.error?.message || errors.request_error
-        );
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+  getAllAnnunci(orderBy: string, ordering?: string, page?: number) {
+    this.officeService
+      .getAllAnnunci(orderBy, ordering || 'ASC', page || 0)
+      .subscribe({
+        next: (data: any) => {
+          this.annunci = data;
+          for (let i = 1; i <= this.annunci.totalPages; i++) {
+            this.pages.push(i)
+          }
+          this.annunciCopy = this.annunci?.content;
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error?.message || error?.error?.message || errors.request_error
+          );
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
   }
 
   changeAnnunciOption(value: boolean, id: number) {
@@ -129,45 +135,44 @@ selectedChat:any=null
       }
     });
   }
-  checkDatePassed(date:any){
-    if(this.today.toISOString().split('T')[0]>(date)){
-     return true;
-    }else{
-     return false;
-    }
-  }
-  checkDateEqual(date:any){
-    if(this.today.toISOString().split('T')[0]==(date)){
+  checkDatePassed(date: any) {
+    if (this.today.toISOString().split('T')[0] > date) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
-  openChat(userId:number,partecipant:any){
-
+  checkDateEqual(date: any) {
+    if (this.today.toISOString().split('T')[0] == date) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  openChat(userId: number, partecipant: any) {
     this.officeService
-    .postChat(
-      this.user.role=='Trasportatore' ? partecipant.id : userId,
-      this.user.role=='Trasportatore' ? userId : partecipant.id,
-      this.user.role
-    )
-    .pipe(throttleTime(1000))
-    .subscribe({
-      next: (chat: any) => {
-        this.selectedChat = chat;
-        this.selectedChat?.messaggiList?.sort(
-          (m1: any, m2: any) => m1.id - m2.id
-        );
-      },
-      error: (error: any) => {
-        this.toastr.error(
-          error.error.message ||
-            error.error.messageList[0] ||
-            "E' stato impossibile creare la chat."
-        );
-      },
-      complete: () => {},
-    });
+      .postChat(
+        this.user.role == 'Trasportatore' ? partecipant.id : userId,
+        this.user.role == 'Trasportatore' ? userId : partecipant.id,
+        this.user.role
+      )
+      .pipe(throttleTime(1000))
+      .subscribe({
+        next: (chat: any) => {
+          this.selectedChat = chat;
+          this.selectedChat?.messaggiList?.sort(
+            (m1: any, m2: any) => m1.id - m2.id
+          );
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile creare la chat."
+          );
+        },
+        complete: () => {},
+      });
     this.router.navigate([
       '/home/chat',
       { user: JSON.stringify(this.user), chat: this.selectedChat },
