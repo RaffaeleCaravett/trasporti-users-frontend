@@ -98,12 +98,13 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     }, 1000);
   }
 
-  getAllAnnunci(orderBy: string, ordering?: string, page?: number) {
+  getAllAnnunci(orderBy: string, ordering?: string, page?: number|string) {
     this.officeService
-      .getAllAnnunci(orderBy, ordering || 'ASC', page || 0)
+      .getAllAnnunci(orderBy, ordering || 'ASC', Number(page) || 0)
       .subscribe({
         next: (data: any) => {
           this.annunci = data;
+          this.pages=[]
           for (let i = 1; i <= this.annunci.totalPages; i++) {
             this.pages.push(i)
           }
