@@ -39,8 +39,22 @@ export class ShowAnnuncioComponent implements OnInit {
 
   richiedi() {
     this.officeService.richiediSpedizione(this.data.spedizione.id).subscribe({
-      next: () => {
+      next: (data:any) => {
         this.toastr.show('Richiesta effettuata con successo.');
+
+        const newBlob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+        //@ts-ignore
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          //@ts-ignore
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+        }
+        const url = URL.createObjectURL(newBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Richiesta spedizione_${this.data.spedizione.id}.docx`;
+        link.click();
+        URL.revokeObjectURL(url);
         this.dialogRef.close("Richiesta");
       },
       error: (error: any) => {

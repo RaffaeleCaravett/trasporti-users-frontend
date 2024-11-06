@@ -98,7 +98,7 @@ getAllAnnunci(orderBy:string,order:string,page?:number){
   return this.httpClient.get(environment.API_URL+this.trasportatore+this.annuncio+`?orderBy=${orderBy||'id'}&direction=${order}&page=${page||0}`)
 }
 richiediSpedizione(spedizioneId:number){
-  return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione+this.richiedi+`/${spedizioneId}/me`)
+  return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione+this.richiedi+`/${spedizioneId}/me`,{responseType: 'blob' as 'json' })
 }
 postChat(aziendaId:number,trasportatoreId:number,role:string){
   let chatDTO = {
