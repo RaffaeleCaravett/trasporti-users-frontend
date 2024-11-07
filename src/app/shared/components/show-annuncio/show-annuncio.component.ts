@@ -26,13 +26,10 @@ export class ShowAnnuncioComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.formsService.getUser();
     if(this.today.toISOString().split('T')[0]>(this.data.spedizione?.daSpedire)){
-      console.log(1)
       this.warningDateMessage="Attenzione, la data di spedizione è scaduta."
     }else if(this.today.toISOString().split('T')[0]==(this.data.spedizione?.daSpedire)){
-      console.log(2)
       this.warningDateMessage="Attenzione, la data di spedizione scade oggi."
     }else{
-      console.log(3)
       this.warningDateMessage=""
     }
   }
@@ -40,6 +37,7 @@ export class ShowAnnuncioComponent implements OnInit {
   richiedi() {
     this.officeService.richiediSpedizione(this.data.spedizione.id).subscribe({
       next: (data:any) => {
+        console.log(data)
         this.toastr.show('Richiesta effettuata con successo.');
 
         const newBlob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
@@ -58,10 +56,9 @@ export class ShowAnnuncioComponent implements OnInit {
         this.dialogRef.close("Richiesta");
       },
       error: (error: any) => {
+        console.log(error)
         this.toastr.error(
-          error?.error?.message ||
-            error?.error?.messageList[0] ||
-            errors.request_error
+          "E' successo un problema nell'elaborazione della richiesta. Riprova o refresha la pagina, e assicurati di non avere già richiesto questa spedizione."
           );
         },
       complete: () => {},
