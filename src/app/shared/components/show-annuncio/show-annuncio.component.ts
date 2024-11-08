@@ -58,7 +58,7 @@ export class ShowAnnuncioComponent implements OnInit {
       error: (error: any) => {
         console.log(error)
         this.toastr.error(
-          "E' successo un problema nell'elaborazione della richiesta. Riprova o refresha la pagina, e assicurati di non avere già richiesto questa spedizione."
+         error?.message
           );
         },
       complete: () => {},
