@@ -7,6 +7,7 @@ import { environment } from "src/app/core/environment"
 })
 export class HomeService {
   private notifica:string = '/notifica'
+  private notificaRecensione:string = '/notificaRecensione'
   private trasportatore:string ='/trasportatore'
   private azienda:string ='/azienda'
   private chat:string = '/chat'
@@ -67,5 +68,8 @@ return this.http.get(environment.API_URL+this.azienda+this.chat+`/${id}`)
 }else{
   return this.http.get(environment.API_URL+this.trasportatore+this.chat+`/${id}`)
 }
+}
+getNotificheRecensioneRicevuta(trasportatoreId:number){
+return this.http.get(environment.API_URL+this.trasportatore+this.notificaRecensione+`/TId/${trasportatoreId}`)
 }
 }

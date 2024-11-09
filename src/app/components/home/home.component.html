@@ -121,10 +121,13 @@
     <div class="col-md-3 py-5">
       <p class="fs-5 fw-bold">Notifiche</p>
       <div
-        class="row p-2 border rounded overflow-auto"
-        *ngIf="notifications && notifications.content > 0; else nonotifications"
+        class="row p-2 border rounded overflow-auto notifications"
+        *ngIf="notifications && notifications.length > 0; else nonotifications"
       >
-        <p *ngFor="let n of notifications.content">
+        <p *ngFor="let n of notifications" class="text-start p-1 bg-light rounded border shadow-sm">
+          <span *ngIf="n.statoNotifica&&n.statoNotifica=='Emessa'" (click)="leggiNotifica(n)">
+
+          </span>
           {{ n.testo }}
         </p>
       </div>

@@ -88,3 +88,9 @@ z-index: 4!important;
 .messages-container{
   max-height: 300px;
 }
+.notifications{
+  max-height: 400px;
+  span{
+    cursor: pointer;
+  }
+}

@@ -15,7 +15,7 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 export class HomeComponent implements OnInit {
   user: any;
   isTrasportatore: boolean = false;
-  notifications: any;
+  notifications: any[]=[];
   page: number = 0;
   size: number = 0;
   orderBy: string = 'id';
@@ -75,48 +75,9 @@ export class HomeComponent implements OnInit {
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
     }
-console.log(this.user)
-    if (this.isTrasportatore) {
-      this.homeService
-        .getNotificationByTransporterIdAndNotificationStateAndSender(
-          this.user.id,
-          'Emessa',
-          'az'
-        )
-        .subscribe({
-          next: (data: any) => {
-            this.notifications = data;
-          },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le notifiche."
-            );
-          },
-          complete: () => {},
-        });
-    } else {
-      this.homeService
-        .getNotificationByAziendaIdAndNotificationStateAndSender(
-          this.user?.id,
-          'Emessa',
-          'tr'
-        )
-        .subscribe({
-          next: (data: any) => {
-            this.notifications = data;
-          },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le notifiche."
-            );
-          },
-          complete: () => {},
-        });
-    }
+
+      this.getNotifiche()
+
     if (!this.isTrasportatore) {
       this.getT(this.page, this.size, this.orderBy);
     } else {
@@ -425,5 +386,73 @@ console.log(this.user)
         },
         complete: () => {},
       });
+  }
+
+  getNotifiche(){
+if(this.isTrasportatore){
+    this.homeService
+    .getNotificationByTransporterIdAndNotificationStateAndSender(
+      this.user.id,
+      'Emessa',
+      'az'
+    )
+    .subscribe({
+      next: (data: any) => {
+        for(let n of data?.content){
+          this.notifications.push(n)
+        }
+      },
+      error: (error: any) => {
+        this.toastr.error(
+          error.error.message ||
+            error.error.messageList[0] ||
+            "E' stato impossibile recuperare le notifiche."
+        );
+      },
+      complete: () => {},
+    });
+    this.homeService.getNotificheRecensioneRicevuta(this.user?.id)
+    .subscribe({
+      next: (data: any) => {
+        for(let n of data?.content){
+          this.notifications.push(n)
+        }
+      },
+      error: (error: any) => {
+        this.toastr.error(
+          error.error.message ||
+            error.error.messageList[0] ||
+            "E' stato impossibile recuperare le notifiche."
+        );
+      },
+      complete: () => {},
+    });
+    return;
+  }
+  this.homeService
+    .getNotificationByAziendaIdAndNotificationStateAndSender(
+      this.user?.id,
+      'Emessa',
+      'tr'
+    )
+    .subscribe({
+      next: (data: any) => {
+        for(let n of data?.content){
+          this.notifications.push(n)
+        }
+      },
+      error: (error: any) => {
+        this.toastr.error(
+          error.error.message ||
+            error.error.messageList[0] ||
+            "E' stato impossibile recuperare le notifiche."
+        );
+      },
+      complete: () => {},
+    });
+  }
+
+  leggiNotifica(notifica:any){
+
   }
 }
