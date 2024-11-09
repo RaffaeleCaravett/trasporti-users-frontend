@@ -56,9 +56,8 @@ export class ShowAnnuncioComponent implements OnInit {
         this.dialogRef.close("Richiesta");
       },
       error: (error: any) => {
-        console.log(error)
         this.toastr.error(
-         error?.message
+         "Refresha la pagina se non hai già richiesto questa spedizione. O contatta direttamente l'azienda."
           );
         },
       complete: () => {},
