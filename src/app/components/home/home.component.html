@@ -124,8 +124,8 @@
         class="row p-2 border rounded overflow-auto notifications"
         *ngIf="notifications && notifications.length > 0; else nonotifications"
       >
-        <p *ngFor="let n of notifications" class="text-start p-1 bg-light rounded border shadow-sm">
-          <span *ngIf="n.statoNotifica&&n.statoNotifica=='Emessa'" (click)="leggiNotifica(n)">
+        <p *ngFor="let n of notifications" class="text-start p-1 bg-light rounded border shadow-sm" (click)="readNotification(n)">
+          <span *ngIf="n.statoNotifica&&n.statoNotifica=='Emessa'" >
 
           </span>
           {{ n.testo }}
@@ -133,7 +133,7 @@
       </div>
       <ng-template #nonotifications>
         <div class="row p-2 border rounded overflow-auto">
-          <p>Non ci sono ancora notifiche da mostrarti.</p>
+          <p class="text-start p-1 bg-light rounded border shadow-sm">Non ci sono ancora notifiche da mostrarti.</p>
         </div>
       </ng-template>
     </div>

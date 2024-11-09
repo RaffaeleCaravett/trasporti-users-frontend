@@ -72,4 +72,10 @@ return this.http.get(environment.API_URL+this.azienda+this.chat+`/${id}`)
 getNotificheRecensioneRicevuta(trasportatoreId:number){
 return this.http.get(environment.API_URL+this.trasportatore+this.notificaRecensione+`/TId/${trasportatoreId}`)
 }
+readTNotifications(notifiche:any[]){
+  return this.http.post(environment.API_URL+this.trasportatore+this.notificaRecensione+`/leggi`,notifiche)
+}
+readNotifications(notifiche:any[],aziendaId:number){
+return this.http.post(environment.API_URL+this.azienda+this.notifica+`/leggi/${aziendaId}`,notifiche)
+}
 }
