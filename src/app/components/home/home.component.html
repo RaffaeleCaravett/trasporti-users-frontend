@@ -138,14 +138,13 @@
           <span *ngIf="n.statoNotifica && n.statoNotifica == 'Emessa'">
             {{ n.testo }}
           </span>
-            <ul *ngIf="n&&n.spedizione">
-              <li class="text-success m-1">Accetta
-              </li>
-<li class="text-danger m-1">Rifiuta</li>
-<li  (click)="showProfile(n?.trasportatore)">Visualizza profilo</li>
-<li >Visualizza spedizione</li>
-            </ul>
-                   </div>
+          <ul *ngIf="n && n.spedizione">
+            <li (click)="showProfile(n?.trasportatore)">Visualizza profilo</li>
+            <li (click)="showSpedition(n.spedizione)">Visualizza spedizione</li>
+            <li class="text-success m-1">Accetta</li>
+            <li class="text-danger m-1">Rifiuta</li>
+          </ul>
+        </div>
       </div>
       <ng-template #nonotifications>
         <div class="row p-2 border rounded overflow-auto">

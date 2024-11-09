@@ -14,6 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
+import { ShowSpedizioneComponent } from '../show-spedizione/show-spedizione.component';
 
 @Component({
   selector: 'app-home',
@@ -477,6 +478,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   showProfile(t:any){
     const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
+    dialogRef.afterClosed().subscribe((data:any)=>{})
+  }
+  showSpedition(s:any){
+    const dialogRef = this.matDialog.open(ShowSpedizioneComponent,{data:s})
     dialogRef.afterClosed().subscribe((data:any)=>{})
   }
 }
