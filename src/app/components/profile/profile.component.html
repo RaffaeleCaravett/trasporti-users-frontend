@@ -18,7 +18,7 @@
       <div class="col-md-2" *ngIf="isTrasportatore">
         {{ data?.eta + " anni." }}
       </div>
-      <div class="col-md-7" *ngIf="isTrasportatore">
+      <div class="col-md-7" *ngIf="!isTrasportatore">
         {{ data?.numeroDipendenti + " dipendenti all'attivo." }}
       </div>
       <div class="col-md-12" *ngIf="isTrasportatore">

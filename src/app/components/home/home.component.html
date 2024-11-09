@@ -12,10 +12,12 @@
           }}
         </p>
         <div class="chat-actions-div">
-       <button class="btn" (click)="downgradeChat()" title="Riduci">➖</button>
-        <button class="btn" (click)="selectedChat = null" title="Chiudi">
-          ❌
-        </button>
+          <button class="btn" (click)="downgradeChat()" title="Riduci">
+            ➖
+          </button>
+          <button class="btn" (click)="selectedChat = null" title="Chiudi">
+            ❌
+          </button>
         </div>
       </div>
       <div class="p-1 messages-container overflow-auto">
@@ -41,8 +43,7 @@
           <div
             class="text-start my-1 p-1 w-75 ml-0 message-as-receiver"
             *ngIf="
-              (isTrasportatore &&
-                m?.trasportatoreAsReceiver?.id == user.id) ||
+              (isTrasportatore && m?.trasportatoreAsReceiver?.id == user.id) ||
               (!isTrasportatore && m.aziendaAsReceiver?.id == user.id)
             "
             title="{{
@@ -70,7 +71,10 @@
       <div class="position-absolute bottom-0 left-50 chat-footer">
         <form [formGroup]="messageForm" class="d-flex p-1">
           <input type="text" class="form-control" formControlName="message" />
-          <button class="btn btn-danger" (click)="sendMessage(selectedChat, user)">
+          <button
+            class="btn btn-danger"
+            (click)="sendMessage(selectedChat, user)"
+          >
             Invia
           </button>
         </form>
@@ -95,7 +99,9 @@
               ? c.trasportatore.nome + ' ' + c.trasportatore.cognome
               : c.azienda.nomeAzienda
           }}"
-          (click)="openChat(user?.id, isTrasportatore?c.azienda:c.trasportatore)"
+          (click)="
+            openChat(user?.id, isTrasportatore ? c.azienda : c.trasportatore)
+          "
         >
           {{
             c.azienda.id == user.id
@@ -124,16 +130,28 @@
         class="row p-2 border rounded overflow-auto notifications"
         *ngIf="notifications && notifications.length > 0; else nonotifications"
       >
-        <p *ngFor="let n of notifications" class="text-start p-1 bg-light rounded border shadow-sm" (click)="readNotification(n)">
-          <span *ngIf="n.statoNotifica&&n.statoNotifica=='Emessa'" >
-
+        <div
+          *ngFor="let n of notifications"
+          class="text-start p-1 bg-light rounded border shadow-sm my-1"
+          (click)="readNotification(n)"
+        >
+          <span *ngIf="n.statoNotifica && n.statoNotifica == 'Emessa'">
+            {{ n.testo }}
           </span>
-          {{ n.testo }}
-        </p>
+            <ul *ngIf="n&&n.spedizione">
+              <li class="text-success m-1">Accetta
+              </li>
+<li class="text-danger m-1">Rifiuta</li>
+<li  (click)="showProfile(n?.trasportatore)">Visualizza profilo</li>
+<li >Visualizza spedizione</li>
+            </ul>
+                   </div>
       </div>
       <ng-template #nonotifications>
         <div class="row p-2 border rounded overflow-auto">
-          <p class="text-start p-1 bg-light rounded border shadow-sm">Non ci sono ancora notifiche da mostrarti.</p>
+          <p class="text-start p-1 bg-light rounded border shadow-sm">
+            Non ci sono ancora notifiche da mostrarti.
+          </p>
         </div>
       </ng-template>
     </div>
@@ -148,7 +166,7 @@
         <div
           class="col-md-12 my-1 border-bottom"
           *ngFor="let t of transporters.content; index as i"
-          >
+        >
           <div class="row">
             <div class="col-md-12 p-1 bg-light">
               <h1>
@@ -209,72 +227,66 @@
         <p class="fs-3">Non ci sono trasportatori disponibili al momento ...</p>
       </div>
       <div
-      class="row px-3 text-center"
-      *ngIf="
-        aziende && aziende?.content?.length > 0 &&
-        isTrasportatore
-      "
-    >
-    <div
-    class="col-md-12 my-1 border-bottom"
-    *ngFor="let a of aziende.content; index as i"
-  >
-    <div class="row">
-      <div class="col-md-12 p-1 bg-light">
-        <h1>
-          {{ a.nomeAzienda }}
-        </h1>
-      </div>
-      <div class="col-md-6 p-1">
-        <span class="text-danger"> Fatturato Medio : </span>
-        {{ a.fatturatoMedio }}
-      </div>
-      <div class="col-md-6 p-1">
-        <span class="text-danger"> Partita Iva : </span>
-        {{ a.partitaIva }}
-      </div>
-      <div class="col-md-6 p-1">
-        <span class="text-danger"> Numero dipendenti : </span>
-        {{ a.numeroDipendenti }}
-      </div>
-      <div class="col-md-6 p-1">
-        <span class="text-danger"> Settore : </span>
-        {{ a.settore }}
-      </div>
-      <div class="col-md-3 p-1">
-        <span class="text-danger"> Indirizzo : </span>
-        {{ a.citta }} ,
-      </div>
-      <div class="col-md-3 p-1">
-        {{ a.regione }}
-      </div>
-      <div class="col-md-3 p-1">- {{ a.indirizzo }}</div>
-      <div class="col-md-3 p-1">
-        {{ a.cap }}
-      </div>
-      <div class="col-md-12 p-1 pb-3">
-        <span class="text-danger"> Email : </span>
-        {{ a.email }}
-      </div>
-      <div class="col-md-6 p-1 bg-light">
-        <button class="btn text-danger" (click)="openT(a)">
-          Visualizza profilo
-        </button>
-      </div>
-      <div class="col-md-6 p-1 bg-light">
-        <button class="btn text-danger" (click)="openChat(user?.id, a)">
-          Manda un messaggio
-        </button>
-      </div>
-    </div>
-  </div>
-    </div>
-    <div
         class="row px-3 text-center"
-        *ngIf="
-          (!aziende || aziende?.content?.length == 0) &&
-          isTrasportatore
-        "
+        *ngIf="aziende && aziende?.content?.length > 0 && isTrasportatore"
+      >
+        <div
+          class="col-md-12 my-1 border-bottom"
+          *ngFor="let a of aziende.content; index as i"
+        >
+          <div class="row">
+            <div class="col-md-12 p-1 bg-light">
+              <h1>
+                {{ a.nomeAzienda }}
+              </h1>
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Fatturato Medio : </span>
+              {{ a.fatturatoMedio }}
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Partita Iva : </span>
+              {{ a.partitaIva }}
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Numero dipendenti : </span>
+              {{ a.numeroDipendenti }}
+            </div>
+            <div class="col-md-6 p-1">
+              <span class="text-danger"> Settore : </span>
+              {{ a.settore }}
+            </div>
+            <div class="col-md-3 p-1">
+              <span class="text-danger"> Indirizzo : </span>
+              {{ a.citta }} ,
+            </div>
+            <div class="col-md-3 p-1">
+              {{ a.regione }}
+            </div>
+            <div class="col-md-3 p-1">- {{ a.indirizzo }}</div>
+            <div class="col-md-3 p-1">
+              {{ a.cap }}
+            </div>
+            <div class="col-md-12 p-1 pb-3">
+              <span class="text-danger"> Email : </span>
+              {{ a.email }}
+            </div>
+            <div class="col-md-6 p-1 bg-light">
+              <button class="btn text-danger" (click)="openT(a)">
+                Visualizza profilo
+              </button>
+            </div>
+            <div class="col-md-6 p-1 bg-light">
+              <button class="btn text-danger" (click)="openChat(user?.id, a)">
+                Manda un messaggio
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row px-3 text-center"
+        *ngIf="(!aziende || aziende?.content?.length == 0) && isTrasportatore"
       >
         <p class="fs-3">Non ci sono aziende disponibili al momento ...</p>
       </div>

@@ -12,6 +12,8 @@ import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocketIoService } from 'src/app/shared/services/socket-io.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-home',
@@ -41,7 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private router: Router,
     private socketIoService: SocketIoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private matDialog:MatDialog
   ) {
     this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
       if (data) {
@@ -459,7 +462,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   readNotification(notifica: any) {
-    this.notificheDaLeggere.push(notifica);
+    if(notifica&&!notifica.spedizione){
+      this.notificheDaLeggere.push(notifica);
+    }
   }
 
   ngOnDestroy(): void {
@@ -469,5 +474,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         :
         this.homeService.readNotifications(this.notificheDaLeggere,this.user?.id).subscribe()
        }
+  }
+  showProfile(t:any){
+    const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
+    dialogRef.afterClosed().subscribe((data:any)=>{})
   }
 }
