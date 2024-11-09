@@ -460,18 +460,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   readNotification(notifica: any) {
     this.notificheDaLeggere.push(notifica);
-    console.log(this.notificheDaLeggere)
   }
 
   ngOnDestroy(): void {
-    console.log("destroy",this.notificheDaLeggere.length)
       if(this.notificheDaLeggere.length>0){
-        debugger
         this.isTrasportatore?
         this.homeService.readTNotifications(this.notificheDaLeggere).subscribe()
         :
         this.homeService.readNotifications(this.notificheDaLeggere,this.user?.id).subscribe()
        }
-       debugger
   }
 }
