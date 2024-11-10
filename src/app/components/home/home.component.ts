@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { delay, throttleTime } from 'rxjs';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -6,16 +12,19 @@ import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocketIoService } from 'src/app/shared/services/socket-io.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ProfileComponent } from '../profile/profile.component';
+import { ShowSpedizioneComponent } from '../show-spedizione/show-spedizione.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   user: any;
   isTrasportatore: boolean = false;
-  notifications: any;
+  notifications: any[] = [];
   page: number = 0;
   size: number = 0;
   orderBy: string = 'id';
@@ -28,13 +37,15 @@ export class HomeComponent implements OnInit {
   reduce: boolean = false;
   messageForm!: FormGroup;
   aziende: any;
+  notificheDaLeggere: any[] = [];
 
   constructor(
     private homeService: HomeService,
     private toastr: ToastrService,
     private router: Router,
     private socketIoService: SocketIoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private matDialog:MatDialog
   ) {
     this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
       if (data) {
@@ -75,48 +86,9 @@ export class HomeComponent implements OnInit {
     if (this.user && this.user.cognome) {
       this.isTrasportatore = true;
     }
-console.log(this.user)
-    if (this.isTrasportatore) {
-      this.homeService
-        .getNotificationByTransporterIdAndNotificationStateAndSender(
-          this.user.id,
-          'Emessa',
-          'az'
-        )
-        .subscribe({
-          next: (data: any) => {
-            this.notifications = data;
-          },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le notifiche."
-            );
-          },
-          complete: () => {},
-        });
-    } else {
-      this.homeService
-        .getNotificationByAziendaIdAndNotificationStateAndSender(
-          this.user?.id,
-          'Emessa',
-          'tr'
-        )
-        .subscribe({
-          next: (data: any) => {
-            this.notifications = data;
-          },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le notifiche."
-            );
-          },
-          complete: () => {},
-        });
-    }
+
+    this.getNotifiche();
+
     if (!this.isTrasportatore) {
       this.getT(this.page, this.size, this.orderBy);
     } else {
@@ -190,7 +162,7 @@ console.log(this.user)
         ]);
       }
     } else {
-      if (!resize&&chatContainer) {
+      if (!resize && chatContainer) {
         this.displayChat = !this.displayChat;
         if (this.displayChat) {
           chatContainer.style.height = '60vh';
@@ -202,11 +174,11 @@ console.log(this.user)
           chatContainer.classList.remove('overflow-auto');
         }
       } else {
-        if (!this.displayChat&&chatContainer) {
-        chatContainer.style.height = '30px';
-        chatContainer.style.transition = '2s';
-        chatContainer.classList.remove('overflow-auto');
-        chatContainer.classList.add('border');
+        if (!this.displayChat && chatContainer) {
+          chatContainer.style.height = '30px';
+          chatContainer.style.transition = '2s';
+          chatContainer.classList.remove('overflow-auto');
+          chatContainer.classList.add('border');
         }
       }
     }
@@ -248,7 +220,7 @@ console.log(this.user)
           complete: () => {},
         });
     }
-//Establish a socket connection for each chat
+    //Establish a socket connection for each chat
     // setTimeout(() => {
     //   for (let c of this.chats) {
     //     this.socketIoService.connectToRoom(
@@ -363,7 +335,7 @@ console.log(this.user)
         testo: this.messageForm.controls['message'].value,
         room: String(this.selectedChat?.id),
       };
-//When decommenting this, remember to comment the send message part itself
+      //When decommenting this, remember to comment the send message part itself
       // this.socketIoService.socketEmiter(message);
       this.messageForm.reset();
       this.homeService
@@ -381,31 +353,31 @@ console.log(this.user)
           },
           complete: () => {},
         });
-          this.homeService
-      .sendMessage(message)
-      .pipe(delay(1000))
-      .subscribe({
-        next: (messaggio: any) => {
-          this.messageForm.reset();
-          this.selectedChat.messaggiList.push(messaggio);
-          let singleChat = document.getElementsByClassName(
-            'single-chat'
-          )[0] as HTMLDivElement;
-          let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
-          setTimeout(() => {
-            chatContainer.style.scrollBehavior = 'smooth';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-          }, 500);
-        },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile inviare il messaggio."
-          );
-        },
-        complete: () => {},
-      });
+      this.homeService
+        .sendMessage(message)
+        .pipe(delay(1000))
+        .subscribe({
+          next: (messaggio: any) => {
+            this.messageForm.reset();
+            this.selectedChat.messaggiList.push(messaggio);
+            let singleChat = document.getElementsByClassName(
+              'single-chat'
+            )[0] as HTMLDivElement;
+            let chatContainer = singleChat.childNodes[1] as HTMLDivElement;
+            setTimeout(() => {
+              chatContainer.style.scrollBehavior = 'smooth';
+              chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 500);
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile inviare il messaggio."
+            );
+          },
+          complete: () => {},
+        });
     }
   }
   getAz(page: number, size: number, orderBy: string) {
@@ -425,5 +397,94 @@ console.log(this.user)
         },
         complete: () => {},
       });
+  }
+
+  getNotifiche() {
+    if (this.isTrasportatore) {
+      this.homeService
+        .getNotificationByTransporterIdAndNotificationStateAndSender(
+          this.user.id,
+          'Emessa',
+          'az'
+        )
+        .subscribe({
+          next: (data: any) => {
+            for (let n of data?.content) {
+              this.notifications.push(n);
+            }
+          },
+          error: (error: any) => {
+            this.toastr.error(
+              error.error.message ||
+                error.error.messageList[0] ||
+                "E' stato impossibile recuperare le notifiche."
+            );
+          },
+          complete: () => {},
+        });
+      this.homeService.getNotificheRecensioneRicevuta(this.user?.id).subscribe({
+        next: (data: any) => {
+          for (let n of data?.content) {
+            this.notifications.push(n);
+          }
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile recuperare le notifiche."
+          );
+        },
+        complete: () => {},
+      });
+      return;
+    }
+    this.homeService
+      .getNotificationByAziendaIdAndNotificationStateAndSender(
+        this.user?.id,
+        'Emessa',
+        'tr'
+      )
+      .subscribe({
+        next: (data: any) => {
+          for (let n of data?.content) {
+            this.notifications.push(n);
+          }
+        },
+        error: (error: any) => {
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile recuperare le notifiche."
+          );
+        },
+        complete: () => {},
+      });
+  }
+
+  readNotification(notifica: any) {
+    if(notifica&&!notifica.spedizione){
+      this.notificheDaLeggere.push(notifica);
+    }
+  }
+
+  ngOnDestroy(): void {
+      if(this.notificheDaLeggere.length>0){
+        this.isTrasportatore?
+        this.homeService.readTNotifications(this.notificheDaLeggere).subscribe()
+        :
+        this.homeService.readNotifications(this.notificheDaLeggere,this.user?.id).subscribe()
+       }
+  }
+  showProfile(t:any){
+    const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
+    dialogRef.afterClosed().subscribe((data:any)=>{})
+  }
+  showSpedition(s:any){
+    const dialogRef = this.matDialog.open(ShowSpedizioneComponent,{data:s})
+    dialogRef.afterClosed().subscribe((data:any)=>{})
+  }
+  putNotification(notification:any){
+
   }
 }

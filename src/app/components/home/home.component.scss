@@ -88,3 +88,15 @@ z-index: 4!important;
 .messages-container{
   max-height: 300px;
 }
+.notifications{
+  max-height: 400px;
+  p{
+    cursor: pointer;
+  }
+}
+ul{
+  list-style-type: none;
+  li{
+    cursor: pointer;
+  }
+}

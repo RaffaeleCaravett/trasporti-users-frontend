@@ -1,0 +1,38 @@
+<div mat-dialog-title class="row text-center">
+  <div class="col-md-12 text-end p-0">
+    <button class="btn" mat-dialog-close="" title="Chiudi">❌</button>
+  </div>
+  <h1>Spedizione {{ spedizione?.id }}</h1>
+</div>
+<div class="container" mat-dialog-content>
+  <div class="row">
+    <div class="col-md-6 p-1">
+      <span class="text-danger">Da: </span>
+      {{ spedizione.da }}
+    </div>
+    <div class="col-md-6 p-1">
+      <span class="text-danger">A: </span>
+      {{ spedizione.a }}
+    </div>
+    <div class="col-md-4 p-1">
+      <span class="text-danger"> Stato: </span>
+      {{ spedizione.stato }}
+    </div>
+    <div class="col-md-4 p-1">
+      <span class="text-danger"> Azienda : </span>
+      {{ spedizione.azienda.nomeAzienda }}
+    </div>
+    <div class="col-md-4 p-1">
+      <span class="text-danger"> Da spedire : </span>
+      {{ spedizione.daSpedire }}
+    </div>
+    <div class="col-md-6 p-1">
+      <span class="text-danger"> Descrizione merce : </span>
+      {{ spedizione.descrizioneMerce }}
+    </div>
+    <div class="col-md-6 p-1">
+      <span class="text-danger"> Numero pedane : </span>
+      {{ spedizione.numeroPedane }}
+    </div>
+  </div>
+</div>

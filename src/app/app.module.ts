@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
+import { ShowSpedizioneComponent } from './components/show-spedizione/show-spedizione.component';
 
 
 
@@ -31,7 +32,8 @@ import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-an
     AnnuncioInfoComponent,
     ResetPasswordComponent,
     ProfileComponent,
-    ShowAnnuncioComponent
+    ShowAnnuncioComponent,
+    ShowSpedizioneComponent
     ],
   imports: [
     BrowserModule,
