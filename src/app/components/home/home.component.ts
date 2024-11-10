@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private socketIoService: SocketIoService,
     private cdr: ChangeDetectorRef,
-    private matDialog:MatDialog
+    private matDialog: MatDialog
   ) {
     this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
       if (data) {
@@ -463,28 +463,43 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   readNotification(notifica: any) {
-    if(notifica&&!notifica.spedizione){
+    if (notifica && !notifica.spedizione) {
       this.notificheDaLeggere.push(notifica);
     }
   }
 
   ngOnDestroy(): void {
-      if(this.notificheDaLeggere.length>0){
-        this.isTrasportatore?
-        this.homeService.readTNotifications(this.notificheDaLeggere).subscribe()
-        :
-        this.homeService.readNotifications(this.notificheDaLeggere,this.user?.id).subscribe()
-       }
+    if (this.notificheDaLeggere.length > 0) {
+      this.isTrasportatore
+        ? this.homeService
+            .readTNotifications(this.notificheDaLeggere)
+            .subscribe()
+        : this.homeService
+            .readNotifications(this.notificheDaLeggere, this.user?.id)
+            .subscribe();
+    }
   }
-  showProfile(t:any){
-    const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
-    dialogRef.afterClosed().subscribe((data:any)=>{})
+  showProfile(t: any) {
+    const dialogRef = this.matDialog.open(ProfileComponent, { data: t });
+    dialogRef.afterClosed().subscribe((data: any) => {});
   }
-  showSpedition(s:any){
-    const dialogRef = this.matDialog.open(ShowSpedizioneComponent,{data:s})
-    dialogRef.afterClosed().subscribe((data:any)=>{})
+  showSpedition(s: any) {
+    const dialogRef = this.matDialog.open(ShowSpedizioneComponent, { data: s });
+    dialogRef.afterClosed().subscribe((data: any) => {});
   }
-  putNotification(notification:any){
-
+  putNotification(notification: any, action: string) {
+    switch (action) {
+      case 'rifiuta':
+        {
+        }
+        break;
+      case 'accetta':
+        {
+        }
+        break;
+      default: {
+      this.toastr.show("Seleziona un'opzione. Accetta o rifiuta?")
+      }
+    }
   }
 }

@@ -26,13 +26,10 @@ export class ShowAnnuncioComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.formsService.getUser();
     if(this.today.toISOString().split('T')[0]>(this.data.spedizione?.daSpedire)){
-      console.log(1)
       this.warningDateMessage="Attenzione, la data di spedizione è scaduta."
     }else if(this.today.toISOString().split('T')[0]==(this.data.spedizione?.daSpedire)){
-      console.log(2)
       this.warningDateMessage="Attenzione, la data di spedizione scade oggi."
     }else{
-      console.log(3)
       this.warningDateMessage=""
     }
   }
