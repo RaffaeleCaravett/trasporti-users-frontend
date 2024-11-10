@@ -15,6 +15,7 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { ShowSpedizioneComponent } from '../show-spedizione/show-spedizione.component';
+import { ConfirmOperationComponent } from '../confirm-operation/confirm-operation.component';
 
 @Component({
   selector: 'app-home',
@@ -488,18 +489,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((data: any) => {});
   }
   putNotification(notification: any, action: string) {
-    switch (action) {
-      case 'rifiuta':
-        {
-        }
-        break;
-      case 'accetta':
-        {
-        }
-        break;
-      default: {
-      this.toastr.show("Seleziona un'opzione. Accetta o rifiuta?")
-      }
-    }
+    const dialogRef = this.matDialog.open(ConfirmOperationComponent, { data: [notification,action] });
+    dialogRef.afterClosed().subscribe((data: any) => {});
   }
 }
