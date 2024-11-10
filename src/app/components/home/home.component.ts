@@ -484,4 +484,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const dialogRef = this.matDialog.open(ShowSpedizioneComponent,{data:s})
     dialogRef.afterClosed().subscribe((data:any)=>{})
   }
+  putNotification(notification:any){
+
+  }
 }
