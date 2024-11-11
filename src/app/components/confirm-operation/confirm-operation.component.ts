@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { HomeService } from 'src/app/shared/services/home.service';
 
 @Component({
   selector: 'app-confirm-operation',
@@ -14,7 +15,8 @@ export class ConfirmOperationComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private matDialogRef:MatDialogRef<ConfirmOperationComponent>
+    private matDialogRef:MatDialogRef<ConfirmOperationComponent>,
+    private homeService:HomeService
   ) {}
 
   ngOnInit(): void {
