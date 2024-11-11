@@ -1,1 +1,5 @@
-<p>confirm-operation works!</p>
+<div mat-dialog-title>
+  <h1 [ngClass]="data[1]=='accetta'?'text-success':'text-danger'">
+    {{title()}}
+  </h1>
+</div>
