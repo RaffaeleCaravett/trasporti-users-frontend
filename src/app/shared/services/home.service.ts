@@ -78,4 +78,10 @@ readTNotifications(notifiche:any[]){
 readNotifications(notifiche:any[],aziendaId:number){
 return this.http.post(environment.API_URL+this.azienda+this.notifica+`/leggi/${aziendaId}`,notifiche)
 }
+acceptNotification(notificationId:number,aziendaId:number){
+  return this.http.get(environment.API_URL+this.azienda+this.notifica+`/accetta/${notificationId}/${aziendaId}`)
+}
+rejectNotification(notificationId:number,aziendaId:number){
+  return this.http.get(environment.API_URL+this.azienda+this.notifica+`/rifiuta/${notificationId}/${aziendaId}`)
+}
 }

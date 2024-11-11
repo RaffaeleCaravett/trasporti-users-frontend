@@ -490,6 +490,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   putNotification(notification: any, action: string) {
     const dialogRef = this.matDialog.open(ConfirmOperationComponent, { data: [notification,action] });
-    dialogRef.afterClosed().subscribe((data: any) => {});
+    dialogRef.afterClosed().subscribe((data: any) => {
+      if(data&&data=='accetta'){
+        this.toastr.show("Richiesta accettata con successo.")
+      }else if(data&&data=='rifiuta'){
+        this.toastr.show("Richiesta rifiutata con successo.")
+      }else{
+        this.toastr.show("Non è stata effettuata alcuna operazione sulla richiesta.")
+      }
+    });
   }
 }
