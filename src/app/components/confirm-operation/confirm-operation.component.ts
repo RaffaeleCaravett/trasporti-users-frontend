@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,14 +10,17 @@ import { ToastrService } from 'ngx-toastr';
 export class ConfirmOperationComponent implements OnInit {
   operation: string = '';
   notification: any;
+  today:string = new Date().toISOString().substring(0,10)
   constructor(
     private toastr: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private matDialogRef:MatDialogRef<ConfirmOperationComponent>
   ) {}
 
   ngOnInit(): void {
-    this.notification = this.data;
+    this.notification = this.data[0];
     this.operation = this.data[1];
+
   }
 
   putNotification(notification: any, action: string) {
@@ -36,6 +39,9 @@ export class ConfirmOperationComponent implements OnInit {
     }
   }
   title(){
-    return this.data[1][0].toUpperCase()+this.data[1].substring(1)
+    return this.operation[0].toUpperCase()+this.operation.substring(1)
+  }
+  close(operation?:string){
+    this.matDialogRef.close(operation)
   }
 }

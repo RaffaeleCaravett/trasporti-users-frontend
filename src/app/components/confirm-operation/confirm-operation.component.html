@@ -1,5 +1,41 @@
 <div mat-dialog-title>
-  <h1 [ngClass]="data[1]=='accetta'?'text-success':'text-danger'">
-    {{title()}}
+  <h1 [ngClass]="operation == 'accetta' ? 'text-success' : 'text-danger'">
+    {{ title() }}
   </h1>
+</div>
+<div mat-dialog-content>
+  Stai {{ title() == "Accetta" ? "accettando" : "rifiutando" }} la richiesta da
+  parte di
+  {{
+    notification?.trasportatore?.nome +
+      " " +
+      notification?.trasportatore?.cognome
+  }}
+  di effettuare la spedizione {{ notification?.spedizione?.id }} , da
+  {{ notification?.spedizione?.da }} a {{ notification?.spedizione?.a }}.
+  Continuare?
+</div>
+<div mat-dialog-actions>
+  <div class="w-100 px-3">
+    <p class="pt-5">Oggi</p>
+    <p>{{ today }}</p>
+  </div>
+  <div class="d-flex justify-content-end w-100">
+    <button
+      class="btn"
+      [ngClass]="operation == 'accetta' ? 'text-success' : 'text-danger'"
+      title="Conferma"
+      (click)="putNotification(notification,operation)"
+    >
+      Continua
+    </button>
+    <button
+      class="btn"
+      [ngClass]="operation == 'accetta' ? 'text-danger' : 'text-success'"
+      title="Vai indietro"
+      (click)="close()"
+    >
+      Indietro
+    </button>
+  </div>
 </div>
