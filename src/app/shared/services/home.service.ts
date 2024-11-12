@@ -85,6 +85,6 @@ rejectNotification(notificationId:number,aziendaId:number){
   return this.http.get(environment.API_URL+this.azienda+this.notifica+`/rifiuta/${notificationId}/${aziendaId}`)
 }
 downloadRequestDocument(spedizioneId:number,trasportatoreId:number){
-  return this.http.get(environment.API_URL+this.trasportatore+this.jasper+`/${spedizioneId}/${trasportatoreId}`)
+  return this.http.get(environment.API_URL+this.trasportatore+this.jasper+`/${spedizioneId}/${trasportatoreId}`, {responseType: 'blob' as 'json' })
 }
 }
