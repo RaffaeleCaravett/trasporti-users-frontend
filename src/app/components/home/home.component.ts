@@ -401,6 +401,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getNotifiche() {
+    this.notifications = [];
     if (this.isTrasportatore) {
       this.homeService
         .getNotificationByTransporterIdAndNotificationStateAndSender(
@@ -413,6 +414,15 @@ export class HomeComponent implements OnInit, OnDestroy {
             for (let n of data?.content) {
               this.notifications.push(n);
             }
+            this.notifications.sort((n: any, m: any) => {
+              if (n.dateTime < m.dateTima) {
+                return 1;
+              }
+              if (n.dateTime > m.dateTime) {
+                return -1;
+              }
+              return 0;
+            });
           },
           error: (error: any) => {
             this.toastr.error(
@@ -428,6 +438,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           for (let n of data?.content) {
             this.notifications.push(n);
           }
+          this.notifications.sort((n: any, m: any) => {
+            if (n.dateTime < m.dateTima) {
+              return 1;
+            }
+            if (n.dateTime > m.dateTime) {
+              return -1;
+            }
+            return 0;
+          });
         },
         error: (error: any) => {
           this.toastr.error(
@@ -451,6 +470,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           for (let n of data?.content) {
             this.notifications.push(n);
           }
+          this.notifications.sort((n: any, m: any) => {
+            if (n.dateTime < m.dateTima) {
+              return 1;
+            }
+            if (n.dateTime > m.dateTime) {
+              return -1;
+            }
+            return 0;
+          });
         },
         error: (error: any) => {
           this.toastr.error(
@@ -489,17 +517,79 @@ export class HomeComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((data: any) => {});
   }
   putNotification(notification: any, action: string) {
-    const dialogRef = this.matDialog.open(ConfirmOperationComponent, { data: [notification,action] });
+    const dialogRef = this.matDialog.open(ConfirmOperationComponent, {
+      data: [notification, action],
+    });
     dialogRef.afterClosed().subscribe((data: any) => {
-      if(data&&data=='accetta'){
-        this.toastr.show("Richiesta accettata con successo.")
-        this.getNotifiche()
-      }else if(data&&data=='rifiuta'){
-        this.toastr.show("Richiesta rifiutata con successo.")
-        this.getNotifiche()
-      }else{
-        this.toastr.show("Non è stata effettuata alcuna operazione sulla richiesta.")
+      if (data && data == 'accetta') {
+        this.toastr.show('Richiesta accettata con successo.');
+        this.getNotifiche();
+      } else if (data && data == 'rifiuta') {
+        this.toastr.show('Richiesta rifiutata con successo.');
+        this.getNotifiche();
+      } else {
+        this.toastr.show(
+          'Non è stata effettuata alcuna operazione sulla richiesta.'
+        );
       }
     });
+  }
+
+downloadRequestDocument(event:Event,spedition:any){
+  event.preventDefault()
+  this.homeService
+  .downloadRequestDocument(spedition.id, this.user.id)
+  .subscribe({
+    next: (res: any) => {
+      const newBlob = new Blob([res], {
+        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+      //@ts-ignore
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        //@ts-ignore
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      const url = URL.createObjectURL(newBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `richiesta-spedizione-copia.docx`;
+      link.click();
+      URL.revokeObjectURL(url);
+      this.toastr.show("Ti suggeriamo di contattare l'azienda.");
+    },
+    error: (error: any) => {
+      this.toastr.error(
+        error.error.message ||
+          error.error.messageList[0] ||
+          "E' stato impossibile recuperare il documento."
+      );
+    },
+    complete: () => {},
+  });
+}
+
+
+  notificationTextModified(
+    notificationText: string,
+    textContainer: HTMLDivElement,
+    spedition: any
+  ) {
+    let string1: string = notificationText.substring(0, 37);
+    let string2: string = notificationText.substring(
+      49,
+      notificationText.length
+    );
+    let htmlElement = document.createElement('button');
+
+    htmlElement.classList.add('btn');
+    htmlElement.classList.add('p-0');
+    htmlElement.classList.add('m-0');
+    htmlElement.classList.add('shadow-none');
+    htmlElement.textContent = 'Clicca qui,';
+    htmlElement.addEventListener('click', Event => this.downloadRequestDocument(Event,spedition));
+    textContainer.innerHTML = string1;
+    textContainer.appendChild(htmlElement);
+    textContainer.innerHTML += string2;
   }
 }
