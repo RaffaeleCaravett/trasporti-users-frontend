@@ -568,28 +568,37 @@ downloadRequestDocument(event:Event,spedition:any){
     complete: () => {},
   });
 }
-
+notificationTextVariable:string='';
 
   notificationTextModified(
     notificationText: string,
     textContainer: HTMLDivElement,
     spedition: any
   ) {
-    let string1: string = notificationText.substring(0, 37);
-    let string2: string = notificationText.substring(
-      49,
-      notificationText.length
-    );
-    let htmlElement = document.createElement('button');
+if(this.notificationTextVariable!=notificationText){
+  this.notificationTextVariable=notificationText
+  let string1: string = notificationText.substring(0, 37);
+  let string2: string = notificationText.substring(
+    49,
+    notificationText.length
+  );
+  let firstPHtmlElement =document.createElement('p')
+  let secondPHtmlElement =document.createElement('p')
+  let htmlElement = document.createElement('button');
 
-    htmlElement.classList.add('btn');
-    htmlElement.classList.add('p-0');
-    htmlElement.classList.add('m-0');
-    htmlElement.classList.add('shadow-none');
-    htmlElement.textContent = 'Clicca qui,';
-    htmlElement.addEventListener('click', Event => this.downloadRequestDocument(Event,spedition));
-    textContainer.innerHTML = string1;
-    textContainer.appendChild(htmlElement);
-    textContainer.innerHTML += string2;
+  htmlElement.classList.add('btn');
+  htmlElement.classList.add('btn-danger');
+  htmlElement.classList.add('p-0');
+  htmlElement.classList.add('m-0');
+  htmlElement.classList.add('shadow-none');
+  htmlElement.textContent = 'Clicca qui,';
+htmlElement
+  .addEventListener('click', Event => this.downloadRequestDocument(Event,spedition));
+  firstPHtmlElement.innerHTML = string1;
+  secondPHtmlElement.innerHTML += string2;
+  textContainer.appendChild(firstPHtmlElement);
+  textContainer.appendChild(htmlElement);
+  textContainer.appendChild(secondPHtmlElement);
+}
   }
 }
