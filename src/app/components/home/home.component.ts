@@ -557,6 +557,7 @@ downloadRequestDocument(event:Event,spedition:any){
       link.click();
       URL.revokeObjectURL(url);
       this.toastr.show("Ti suggeriamo di contattare l'azienda.");
+      this.getNotifiche()
     },
     error: (error: any) => {
       this.toastr.error(

@@ -61,6 +61,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         "Cerca un'azienda",
         'Modifica il profilo',
         'Monitora le tue statistiche',
+        'Le tue spedizioni'
       ];
     } else {
       this.azioni = [
@@ -243,7 +244,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement;
     let maxIt = 0;
     if (this.isTrasportatore) {
-      maxIt = 9;
+      maxIt = 10;
     } else {
       maxIt = 10;
     }
