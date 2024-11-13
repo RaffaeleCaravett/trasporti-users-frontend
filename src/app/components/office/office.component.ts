@@ -89,35 +89,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         this.toastr.error(err.error.message || err.error.messageList[0]);
       },
       complete: () => {
-        this.modifyProfile = new FormGroup({
-          citta: new FormControl(this.user.citta, Validators.required),
-          regione: new FormControl(this.user.regione, Validators.required),
-          indirizzo: new FormControl(this.user.indirizzo, Validators.required),
-          cap: new FormControl(this.user.cap, Validators.required),
-          email: new FormControl(this.user.email, [
-            Validators.required,
-            Validators.pattern(
-              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-            ),
-          ]),
-          nomeAzienda: new FormControl(
-            this.user?.nomeAzienda,
-            Validators.required
-          ),
-          fatturatoMedio: new FormControl(
-            this.user?.fatturatoMedio,
-            Validators.required
-          ),
-          numeroDipendenti: new FormControl(
-            this.user?.numeroDipendenti,
-            Validators.required
-          ),
-          settore: new FormControl(this.user?.settore, Validators.required),
-          partitaIva: new FormControl(this.user?.partitaIva, [
-            Validators.required,
-            Validators.pattern(/^[0-9]{11}$/),
-          ]),
-        });
+
         this.changePasswordForm = new FormGroup({
           oldPassword: new FormControl('', [
             Validators.required,
@@ -264,6 +236,9 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     if (toDo == 'Monitora le tue statistiche') {
       this.getStatistica();
     }
+    if(toDo=='Modifica il profilo'){
+      this.updateModifyForm()
+    }
     this.toDo = toDo;
     this.cdRef.detectChanges();
   }
@@ -288,5 +263,75 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
   }
   initializeWebSocketConnection() {
     console.log('socket');
+  }
+  updateModifyForm(){
+if(!this.isTrasportatore){
+  this.modifyProfile = new FormGroup({
+    citta: new FormControl(this.user.citta, Validators.required),
+    regione: new FormControl(this.user.regione, Validators.required),
+    indirizzo: new FormControl(this.user.indirizzo, Validators.required),
+    cap: new FormControl(this.user.cap, Validators.required),
+    email: new FormControl(this.user.email, [
+      Validators.required,
+      Validators.pattern(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+      ),
+    ]),
+    nomeAzienda: new FormControl(
+      this.user?.nomeAzienda,
+      Validators.required
+    ),
+    fatturatoMedio: new FormControl(
+      this.user?.fatturatoMedio,
+      Validators.required
+    ),
+    numeroDipendenti: new FormControl(
+      this.user?.numeroDipendenti,
+      Validators.required
+    ),
+    settore: new FormControl(this.user?.settore, Validators.required),
+    partitaIva: new FormControl(this.user?.partitaIva, [
+      Validators.required,
+      Validators.pattern(/^[0-9]{11}$/)
+    ]),
+  });
+}else{
+  this.modifyProfile = new FormGroup({
+    citta: new FormControl(this.user.citta, Validators.required),
+    regione: new FormControl(this.user.regione, Validators.required),
+    indirizzo: new FormControl(this.user.indirizzo, Validators.required),
+    cap: new FormControl(this.user.cap, Validators.required),
+    email: new FormControl(this.user.email, [
+      Validators.required,
+      Validators.pattern(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+      ),
+    ]),
+    nome: new FormControl(
+      this.user?.nome,
+      Validators.required
+    ),
+    cognome: new FormControl(
+      this.user?.cognome,
+      Validators.required
+    ),
+    eta: new FormControl(
+      this.user?.eta,
+      Validators.required
+    ),
+    flottaMezzi: new FormControl(
+      this.user?.flottaMezzi,
+      Validators.required
+    ),
+    partitaIva: new FormControl(this.user?.partitaIva, [
+      Validators.required,
+      Validators.pattern(/^[0-9]{11}$/)
+    ]),
+    codiceFiscale: new FormControl(this.user?.codiceFiscale, [
+      Validators.required,
+      Validators.pattern('^[A-Za-z]{6}[0-9]{2}[A-Za-z]{1}[0-9]{2}[A-Za-z]{1}[0-9]{3}[A-Za-z]{1}$')
+    ]),
+  });
+}
   }
 }

@@ -1,5 +1,5 @@
-<div class="row p-3">
-  <div class="col-md-12 py-5 my-5" *ngIf="toDo == 'Cerca un annuncio'">
+<div class="row p-3 py-5 my-5">
+  <div class="col-md-12" *ngIf="toDo == 'Cerca un annuncio'">
     <p class="fs-3">{{ toDo }}</p>
     <div class="row">
       <div class="d-flex justify-content-around overflow-auto">
@@ -177,6 +177,9 @@
     <p class="fs-3">{{ toDo }}</p>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Monitora le tue statistiche'">
+    <p class="fs-3">{{ toDo }}</p>
+  </div>
+  <div class="col-md-12" *ngIf="toDo == 'Le tue spedizioni'">
     <p class="fs-3">{{ toDo }}</p>
   </div>
 </div>
