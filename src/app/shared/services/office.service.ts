@@ -70,6 +70,9 @@ getAnnunciByAziendaIdAndStatoPubblicata(aziendaId:number){
 putAziendaById(aziendaDTO:{},aziendaId?:number){
   return this.httpClient.put(environment.API_URL+this.azienda+`${aziendaId!=null&&aziendaId!=undefined&&aziendaId!=0&&aziendaId?'/'+aziendaId:'/me'}`,aziendaDTO)
 }
+putTrasportatoreById(trasportatoreDTO:{},trasportatoreId?:number){
+  return this.httpClient.put(environment.API_URL+this.trasportatore+`${trasportatoreId!=null&&trasportatoreId!=undefined&&trasportatoreId!=0&&trasportatoreId?'/'+trasportatoreId:'/me'}`,trasportatoreDTO)
+}
 deleteProfile(){
 
 }

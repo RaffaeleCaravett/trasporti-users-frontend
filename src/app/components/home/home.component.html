@@ -124,7 +124,7 @@
         disponibili.
       </h1>
     </div>
-    <div class="col-md-3 py-5">
+    <div class="col-lg-3 col-md-4 py-5">
       <p class="fs-5 fw-bold">Notifiche</p>
       <div
         class="row p-2 border rounded overflow-auto notifications"
@@ -135,14 +135,22 @@
           class="text-start p-1 bg-light rounded border shadow-sm my-1"
           (click)="readNotification(n)"
         >
+        <p *ngIf="n.inviataDa!='az' else az">
           <span *ngIf="n.statoNotifica && n.statoNotifica == 'Emessa'">
             {{ n.testo }}
           </span>
+        </p>
+        <ng-template #az>
+          <div *ngIf="n.statoNotifica && n.statoNotifica == 'Emessa'" #textContainer>
+              {{notificationTextModified(n.testo,textContainer,n.spedizione)}}
+          </div>
+        </ng-template>
           <ul *ngIf="n && n.spedizione">
-            <li  class="bg-white m-1 border rounded p-2 shadow-sm" (click)="showProfile(n?.trasportatore)">Visualizza profilo</li>
+            <li  class="bg-white m-1 border rounded p-2 shadow-sm" (click)="showProfile(n?.trasportatore)" *ngIf="n.inviataDa=='tr'">Visualizza profilo</li>
+            <li  class="bg-white m-1 border rounded p-2 shadow-sm" (click)="showProfile(n?.azienda)" *ngIf="n.inviataDa=='az'">Visualizza profilo</li>
             <li  class="bg-white m-1 border rounded p-2 shadow-sm" (click)="showSpedition(n.spedizione)">Visualizza spedizione</li>
-            <li class="text-success m-1 bg-white m-1 border rounded p-2 shadow-sm" (click)="putNotification(n)">Accetta</li>
-            <li class="text-danger m-1 bg-white m-1 border rounded p-2 shadow-sm" (click)="putNotification(n)">Rifiuta</li>
+            <li class="text-success m-1 bg-white m-1 border rounded p-2 shadow-sm" (click)="putNotification(n,'accetta')" title="Accetta" *ngIf="n.inviataDa=='tr'">Accetta</li>
+            <li class="text-danger m-1 bg-white m-1 border rounded p-2 shadow-sm" (click)="putNotification(n,'rifiuta')" title="Rifiuta" *ngIf="n.inviataDa=='tr'">Rifiuta</li>
           </ul>
         </div>
       </div>
@@ -154,7 +162,7 @@
         </div>
       </ng-template>
     </div>
-    <div class="col-lg-6 col-md-9 p-1">
+    <div class="col-lg-6 col-md-8 p-1">
       <h2 class="pt-5">Bacheca</h2>
       <div
         class="row px-3 text-center"

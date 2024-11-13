@@ -19,6 +19,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
 import { ShowSpedizioneComponent } from './components/show-spedizione/show-spedizione.component';
+import { ConfirmOperationComponent } from './components/confirm-operation/confirm-operation.component';
 
 
 
@@ -33,7 +34,8 @@ import { ShowSpedizioneComponent } from './components/show-spedizione/show-spedi
     ResetPasswordComponent,
     ProfileComponent,
     ShowAnnuncioComponent,
-    ShowSpedizioneComponent
+    ShowSpedizioneComponent,
+    ConfirmOperationComponent
     ],
   imports: [
     BrowserModule,

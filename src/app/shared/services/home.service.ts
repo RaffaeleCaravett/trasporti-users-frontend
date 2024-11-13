@@ -15,7 +15,7 @@ export class HomeService {
   private chatByAzienda:string ='/byAzId'
   private chatByTrasportatore:string ='/byTId'
   private chatByAziendaAndTr:string = '/byAziendaIdAndTrasportatoreId'
-
+  private jasper:string = '/jasper'
   constructor(private http:HttpClient) { }
 
 getNotificationByTransporterIdAndNotificationStateAndSender(transporterId:number,notificationState:string,sender:string){
@@ -77,5 +77,14 @@ readTNotifications(notifiche:any[]){
 }
 readNotifications(notifiche:any[],aziendaId:number){
 return this.http.post(environment.API_URL+this.azienda+this.notifica+`/leggi/${aziendaId}`,notifiche)
+}
+acceptNotification(notificationId:number,aziendaId:number){
+  return this.http.get(environment.API_URL+this.azienda+this.notifica+`/accetta/${notificationId}/${aziendaId}`, {responseType: 'blob' as 'json' })
+}
+rejectNotification(notificationId:number,aziendaId:number){
+  return this.http.get(environment.API_URL+this.azienda+this.notifica+`/rifiuta/${notificationId}/${aziendaId}`)
+}
+downloadRequestDocument(spedizioneId:number,trasportatoreId:number){
+  return this.http.get(environment.API_URL+this.trasportatore+this.jasper+`/${spedizioneId}/${trasportatoreId}`, {responseType: 'blob' as 'json' })
 }
 }

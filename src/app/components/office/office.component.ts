@@ -61,6 +61,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         "Cerca un'azienda",
         'Modifica il profilo',
         'Monitora le tue statistiche',
+        'Le tue spedizioni',
       ];
     } else {
       this.azioni = [
@@ -88,35 +89,6 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         this.toastr.error(err.error.message || err.error.messageList[0]);
       },
       complete: () => {
-        this.modifyProfile = new FormGroup({
-          citta: new FormControl(this.user.citta, Validators.required),
-          regione: new FormControl(this.user.regione, Validators.required),
-          indirizzo: new FormControl(this.user.indirizzo, Validators.required),
-          cap: new FormControl(this.user.cap, Validators.required),
-          email: new FormControl(this.user.email, [
-            Validators.required,
-            Validators.pattern(
-              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-            ),
-          ]),
-          nomeAzienda: new FormControl(
-            this.user?.nomeAzienda,
-            Validators.required
-          ),
-          fatturatoMedio: new FormControl(
-            this.user?.fatturatoMedio,
-            Validators.required
-          ),
-          numeroDipendenti: new FormControl(
-            this.user?.numeroDipendenti,
-            Validators.required
-          ),
-          settore: new FormControl(this.user?.settore, Validators.required),
-          partitaIva: new FormControl(this.user?.partitaIva, [
-            Validators.required,
-            Validators.pattern(/^[0-9]{11}$/),
-          ]),
-        });
         this.changePasswordForm = new FormGroup({
           oldPassword: new FormControl('', [
             Validators.required,
@@ -145,34 +117,65 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
 
   modifyProfilo() {
     if (this.modifyProfile.valid) {
-      this.officeService
-        .putAziendaById({
-          citta: this.modifyProfile.controls['citta'].value,
-          regione: this.modifyProfile.controls['regione'].value,
-          indirizzo: this.modifyProfile.controls['indirizzo'].value,
-          cap: this.modifyProfile.controls['cap'].value,
-          email: this.modifyProfile.controls['email'].value,
-          nomeAzienda: this.modifyProfile.controls['nomeAzienda'].value,
-          fatturatoMedio: this.modifyProfile.controls['fatturatoMedio'].value,
-          numeroDipendenti:
-            this.modifyProfile.controls['numeroDipendenti'].value,
-          settore: this.modifyProfile.controls['settore'].value,
-          partitaIva: this.modifyProfile.controls['partitaIva'].value,
-        })
-        .subscribe({
-          next: (data: any) => {
-            this.user = data;
-            this.toastr.success('Azienda modificata correttamente.');
-          },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "Qualcosa è successo nell'elaborazione della richiesta."
-            );
-          },
-          complete: () => {},
-        });
+      if (!this.isTrasportatore) {
+        this.officeService
+          .putAziendaById({
+            citta: this.modifyProfile.controls['citta'].value,
+            regione: this.modifyProfile.controls['regione'].value,
+            indirizzo: this.modifyProfile.controls['indirizzo'].value,
+            cap: this.modifyProfile.controls['cap'].value,
+            email: this.modifyProfile.controls['email'].value,
+            nomeAzienda: this.modifyProfile.controls['nomeAzienda'].value,
+            fatturatoMedio: this.modifyProfile.controls['fatturatoMedio'].value,
+            numeroDipendenti:
+              this.modifyProfile.controls['numeroDipendenti'].value,
+            settore: this.modifyProfile.controls['settore'].value,
+            partitaIva: this.modifyProfile.controls['partitaIva'].value,
+          })
+          .subscribe({
+            next: (data: any) => {
+              this.user = data;
+              this.toastr.success('Azienda modificata correttamente.');
+            },
+            error: (error: any) => {
+              this.toastr.error(
+                error.error.message ||
+                  error.error.messageList[0] ||
+                  "Qualcosa è successo nell'elaborazione della richiesta."
+              );
+            },
+            complete: () => {},
+          });
+      } else {
+        this.officeService
+          .putTrasportatoreById({
+            citta: this.modifyProfile.controls['citta'].value,
+            regione: this.modifyProfile.controls['regione'].value,
+            indirizzo: this.modifyProfile.controls['indirizzo'].value,
+            cap: this.modifyProfile.controls['cap'].value,
+            email: this.modifyProfile.controls['email'].value,
+            nome: this.modifyProfile.controls['nome'].value,
+            cognome: this.modifyProfile.controls['cognome'].value,
+            codiceFiscale: this.modifyProfile.controls['codiceFiscale'].value,
+            flottaMezzi: this.modifyProfile.controls['flottaMezzi'].value,
+            eta: this.modifyProfile.controls['eta'].value,
+            partitaIva: this.modifyProfile.controls['partitaIva'].value,
+          })
+          .subscribe({
+            next: (data: any) => {
+              this.user = data;
+              this.toastr.success('Trasportatore modificato correttamente.');
+            },
+            error: (error: any) => {
+              this.toastr.error(
+                error.error.message ||
+                  error.error.messageList[0] ||
+                  "Qualcosa è successo nell'elaborazione della richiesta."
+              );
+            },
+            complete: () => {},
+          });
+      }
     }
   }
 
@@ -243,7 +246,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     let p = document.getElementsByClassName(`p-${i}`)[0] as HTMLElement;
     let maxIt = 0;
     if (this.isTrasportatore) {
-      maxIt = 9;
+      maxIt = 10;
     } else {
       maxIt = 10;
     }
@@ -262,6 +265,9 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     }
     if (toDo == 'Monitora le tue statistiche') {
       this.getStatistica();
+    }
+    if (toDo == 'Modifica il profilo') {
+      this.updateModifyForm();
     }
     this.toDo = toDo;
     this.cdRef.detectChanges();
@@ -287,5 +293,71 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
   }
   initializeWebSocketConnection() {
     console.log('socket');
+  }
+  updateModifyForm() {
+    if (!this.isTrasportatore) {
+      this.modifyProfile = new FormGroup({
+        citta: new FormControl(this.user.citta, Validators.required),
+        regione: new FormControl(this.user.regione, Validators.required),
+        indirizzo: new FormControl(this.user.indirizzo, Validators.required),
+        cap: new FormControl(this.user.cap, Validators.required),
+        email: new FormControl(this.user.email, [
+          Validators.required,
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+          ),
+        ]),
+        nomeAzienda: new FormControl(
+          this.user?.nomeAzienda,
+          Validators.required
+        ),
+        fatturatoMedio: new FormControl(
+          this.user?.fatturatoMedio,
+          Validators.required
+        ),
+        numeroDipendenti: new FormControl(
+          this.user?.numeroDipendenti,
+          Validators.required
+        ),
+        settore: new FormControl(this.user?.settore, Validators.required),
+        partitaIva: new FormControl(this.user?.partitaIva, [
+          Validators.required,
+          Validators.pattern(/^[0-9]{11}$/),
+        ]),
+      });
+    } else {
+      this.modifyProfile = new FormGroup({
+        citta: new FormControl(this.user.citta, Validators.required),
+        regione: new FormControl(this.user.regione, Validators.required),
+        indirizzo: new FormControl(this.user.indirizzo, Validators.required),
+        cap: new FormControl(this.user.cap, Validators.required),
+        email: new FormControl(this.user.email, [
+          Validators.required,
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+          ),
+        ]),
+        nome: new FormControl(this.user?.nome, Validators.required),
+        cognome: new FormControl(this.user?.cognome, Validators.required),
+        eta: new FormControl(this.user?.eta, [
+          Validators.required,
+          Validators.min(18),
+        ]),
+        flottaMezzi: new FormControl(
+          this.user?.flottaMezzi,
+          Validators.required
+        ),
+        partitaIva: new FormControl(this.user?.partitaIva, [
+          Validators.required,
+          Validators.pattern(/^[0-9]{11}$/),
+        ]),
+        codiceFiscale: new FormControl(this.user?.codiceFiscale, [
+          Validators.required,
+          Validators.pattern(
+            '^[A-Za-z]{6}[0-9]{2}[A-Za-z]{1}[0-9]{2}[A-Za-z]{1}[0-9]{3}[A-Za-z]{1}$'
+          ),
+        ]),
+      });
+    }
   }
 }

@@ -15,6 +15,7 @@ import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { ShowSpedizioneComponent } from '../show-spedizione/show-spedizione.component';
+import { ConfirmOperationComponent } from '../confirm-operation/confirm-operation.component';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private socketIoService: SocketIoService,
     private cdr: ChangeDetectorRef,
-    private matDialog:MatDialog
+    private matDialog: MatDialog
   ) {
     this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
       if (data) {
@@ -400,6 +401,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getNotifiche() {
+    this.notifications = [];
     if (this.isTrasportatore) {
       this.homeService
         .getNotificationByTransporterIdAndNotificationStateAndSender(
@@ -412,6 +414,15 @@ export class HomeComponent implements OnInit, OnDestroy {
             for (let n of data?.content) {
               this.notifications.push(n);
             }
+            this.notifications.sort((n: any, m: any) => {
+              if (n.dateTime < m.dateTima) {
+                return 1;
+              }
+              if (n.dateTime > m.dateTime) {
+                return -1;
+              }
+              return 0;
+            });
           },
           error: (error: any) => {
             this.toastr.error(
@@ -427,6 +438,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           for (let n of data?.content) {
             this.notifications.push(n);
           }
+          this.notifications.sort((n: any, m: any) => {
+            if (n.dateTime < m.dateTima) {
+              return 1;
+            }
+            if (n.dateTime > m.dateTime) {
+              return -1;
+            }
+            return 0;
+          });
         },
         error: (error: any) => {
           this.toastr.error(
@@ -450,6 +470,15 @@ export class HomeComponent implements OnInit, OnDestroy {
           for (let n of data?.content) {
             this.notifications.push(n);
           }
+          this.notifications.sort((n: any, m: any) => {
+            if (n.dateTime < m.dateTima) {
+              return 1;
+            }
+            if (n.dateTime > m.dateTime) {
+              return -1;
+            }
+            return 0;
+          });
         },
         error: (error: any) => {
           this.toastr.error(
@@ -463,28 +492,114 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   readNotification(notifica: any) {
-    if(notifica&&!notifica.spedizione){
+    if (notifica && !notifica.spedizione) {
       this.notificheDaLeggere.push(notifica);
     }
   }
 
   ngOnDestroy(): void {
-      if(this.notificheDaLeggere.length>0){
-        this.isTrasportatore?
-        this.homeService.readTNotifications(this.notificheDaLeggere).subscribe()
-        :
-        this.homeService.readNotifications(this.notificheDaLeggere,this.user?.id).subscribe()
-       }
+    if (this.notificheDaLeggere.length > 0) {
+      this.isTrasportatore
+        ? this.homeService
+            .readTNotifications(this.notificheDaLeggere)
+            .subscribe()
+        : this.homeService
+            .readNotifications(this.notificheDaLeggere, this.user?.id)
+            .subscribe();
+    }
   }
-  showProfile(t:any){
-    const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
-    dialogRef.afterClosed().subscribe((data:any)=>{})
+  showProfile(t: any) {
+    const dialogRef = this.matDialog.open(ProfileComponent, { data: t });
+    dialogRef.afterClosed().subscribe((data: any) => {});
   }
-  showSpedition(s:any){
-    const dialogRef = this.matDialog.open(ShowSpedizioneComponent,{data:s})
-    dialogRef.afterClosed().subscribe((data:any)=>{})
+  showSpedition(s: any) {
+    const dialogRef = this.matDialog.open(ShowSpedizioneComponent, { data: s });
+    dialogRef.afterClosed().subscribe((data: any) => {});
   }
-  putNotification(notification:any){
+  putNotification(notification: any, action: string) {
+    const dialogRef = this.matDialog.open(ConfirmOperationComponent, {
+      data: [notification, action],
+    });
+    dialogRef.afterClosed().subscribe((data: any) => {
+      if (data && data == 'accetta') {
+        this.toastr.show('Richiesta accettata con successo.');
+        this.getNotifiche();
+      } else if (data && data == 'rifiuta') {
+        this.toastr.show('Richiesta rifiutata con successo.');
+        this.getNotifiche();
+      } else {
+        this.toastr.show(
+          'Non è stata effettuata alcuna operazione sulla richiesta.'
+        );
+      }
+    });
+  }
 
+downloadRequestDocument(event:Event,spedition:any){
+  event.preventDefault()
+  this.homeService
+  .downloadRequestDocument(spedition.id, this.user.id)
+  .subscribe({
+    next: (res: any) => {
+      const newBlob = new Blob([res], {
+        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+      //@ts-ignore
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        //@ts-ignore
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      const url = URL.createObjectURL(newBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `richiesta-spedizione-copia.docx`;
+      link.click();
+      URL.revokeObjectURL(url);
+      this.toastr.show("Ti suggeriamo di contattare l'azienda.");
+      this.getNotifiche()
+    },
+    error: (error: any) => {
+      this.toastr.error(
+        error.error.message ||
+          error.error.messageList[0] ||
+          "E' stato impossibile recuperare il documento."
+      );
+    },
+    complete: () => {},
+  });
+}
+notificationTextVariable:string='';
+
+  notificationTextModified(
+    notificationText: string,
+    textContainer: HTMLDivElement,
+    spedition: any
+  ) {
+if(this.notificationTextVariable!=notificationText){
+  this.notificationTextVariable=notificationText
+  let string1: string = notificationText.substring(0, 37);
+  let string2: string = notificationText.substring(
+    49,
+    notificationText.length
+  );
+  let firstPHtmlElement =document.createElement('p')
+  let secondPHtmlElement =document.createElement('p')
+  let htmlElement = document.createElement('button');
+
+  htmlElement.classList.add('btn');
+  htmlElement.classList.add('btn-danger');
+  htmlElement.classList.add('p-0');
+  htmlElement.classList.add('m-0');
+  htmlElement.classList.add('shadow-none');
+  htmlElement.textContent = 'Clicca qui,';
+htmlElement
+  .addEventListener('click', Event => this.downloadRequestDocument(Event,spedition));
+  firstPHtmlElement.innerHTML = string1;
+  secondPHtmlElement.innerHTML += string2;
+  textContainer.appendChild(firstPHtmlElement);
+  textContainer.appendChild(htmlElement);
+  textContainer.appendChild(secondPHtmlElement);
+}
   }
 }
