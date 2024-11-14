@@ -5,7 +5,7 @@ import { errors } from 'src/app/core/errors';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowAnnuncioComponent } from '../show-annuncio/show-annuncio.component';
 import { Router } from '@angular/router';
-import { throttleTime } from 'rxjs';
+import { delay, throttleTime } from 'rxjs';
 
 @Component({
   selector: 'app-trasportatore-office',
@@ -24,11 +24,15 @@ export class TrasportatoreOfficeComponent implements OnChanges {
   action: string = 'id';
   today = new Date();
   selectedChat: any = null;
-  pages:number[]=[]
-  spedizioni:any
-  speditionFilters:string[]=[
-    'Richiesta','In corso','Stoppata','Terminata'
-  ]
+  pages: number[] = [];
+  spedizioni: any;
+  speditionFilters: string[] = [
+    'Richiesta',
+    'In corso',
+    'Stoppata',
+    'Terminata',
+  ];
+  speditionState: string = '';
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -49,8 +53,8 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     } else {
       this.filters = [];
     }
-    if(this.toDo=='Le tue spedizioni'){
-      this.getSpedizioniByTId()
+    if (this.toDo == 'Le tue spedizioni') {
+      this.getSpedizioniByTId();
     }
   }
 
@@ -112,7 +116,7 @@ export class TrasportatoreOfficeComponent implements OnChanges {
         next: (data: any) => {
           this.annunci = data;
           for (let i = 1; i <= this.annunci.totalPages; i++) {
-            this.pages.push(i)
+            this.pages.push(i);
           }
           this.annunciCopy = this.annunci?.content;
         },
@@ -186,32 +190,39 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     ]);
   }
 
-  getSpedizioniByTId(statoSpedizione?:string){
-    this.officeService.getSpedizioniByTrId(this.user.id,statoSpedizione).pipe(throttleTime(1000))
-    .subscribe({
-      next: (spedizioni: any) => {
-       this.spedizioni=spedizioni;
-      },
-      error: (error: any) => {
-        this.toastr.error(
-          error.error.message ||
-            error.error.messageList[0] ||
-            "E' stato impossibile recuperare le spedizioni."
-        );
-      },
-      complete: () => {},
-    });
+  getSpedizioniByTId(statoSpedizione?: string) {
+    this.isLoading=true;
+    this.officeService
+      .getSpedizioniByTrId(this.user.id, statoSpedizione)
+      .pipe(delay(1000))
+      .subscribe({
+        next: (spedizioni: any) => {
+          this.isLoading=false
+          this.spedizioni = spedizioni;
+        },
+        error: (error: any) => {
+          this.isLoading=false
+          this.toastr.error(
+            error.error.message ||
+              error.error.messageList[0] ||
+              "E' stato impossibile recuperare le spedizioni."
+          );
+        },
+        complete: () => {},
+      });
   }
-  setBg(elementId:string){
-for(let i=1;i<=this.speditionFilters.length;i++){
-  if('button'+i==elementId){
-    document.getElementById(elementId)?.classList.add('btn-secondary')
-    document.getElementById(elementId)?.classList.remove('btn-light')
-    break;
-  }
-  let button = document.getElementById('button'+i)
-  button?.classList.remove('btn-secondary')
-  button?.classList.add('btn-light')
-}
+  setBg(elementId: string, speditionState: string) {
+    this.speditionState = speditionState;
+    for (let i = 1; i <= this.speditionFilters.length; i++) {
+      if ('button' + i == elementId) {
+        document.getElementById(elementId)?.classList.add('btn-secondary');
+        document.getElementById(elementId)?.classList.remove('btn-light');
+        break;
+      }
+      let button = document.getElementById('button' + i);
+      button?.classList.remove('btn-secondary');
+      button?.classList.add('btn-light');
+    }
+    this.getSpedizioniByTId(speditionState);
   }
 }

@@ -189,17 +189,17 @@
           class="btn fs-6 btn-light m-1"
           *ngFor="let sf of speditionFilters; index as i"
           id="button-{{ i }}"
-          (click)="setBg('button' + i)"
+          (click)="setBg('button' + i,sf)"
         >
           {{ sf }}
         </button>
       </div>
       <div
-        class="col-md-12 text-start d-flex justify-content-around"
-        *ngFor="let s of spedizioni?.content"
-      >
-        <p class="pt-3">
-          <span class="text-danger">{{ s.id }}</span> - da {{ s.da }} a
+        class="col-md-12"
+      *ngIf="!isLoading">
+        <div class="text-start d-flex justify-content-around" *ngFor="let s of spedizioni?.content">
+ <p class="pt-3">
+          <span class="text-danger">{{ s.id }}</span> - Da {{ s.da }} a
           {{ s.a }}
         </p>
         <button
@@ -219,6 +219,14 @@
         >
           {{ s.stato }}
         </button>
+      </div>
+
+      </div>
+      <div *ngIf="(!spedizioni||(spedizioni&&spedizioni.content&&spedizioni.content.length==0))&&!isLoading">
+Non ci sono spedizioni con stato : {{speditionState}}
+      </div>
+      <div *ngIf="isLoading" class="text-center">
+        <mat-spinner class="m-auto mt-5" color="warn"></mat-spinner>
       </div>
     </div>
   </div>
