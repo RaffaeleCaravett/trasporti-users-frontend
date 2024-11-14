@@ -14,6 +14,7 @@ export class ConfirmOperationComponent implements OnInit {
   notification: any;
   today: string = new Date().toISOString().substring(0, 10);
   user: any ;
+  isLoading:boolean=false;
   constructor(
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,

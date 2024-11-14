@@ -25,6 +25,7 @@ export class TrasportatoreOfficeComponent implements OnChanges {
   today = new Date();
   selectedChat: any = null;
   pages:number[]=[]
+  spedizioni:any
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -44,6 +45,9 @@ export class TrasportatoreOfficeComponent implements OnChanges {
       ];
     } else {
       this.filters = [];
+    }
+    if(this.toDo=='Le tue spedizioni'){
+      this.getSpedizioniByTId()
     }
   }
 
@@ -177,5 +181,22 @@ export class TrasportatoreOfficeComponent implements OnChanges {
       '/home/chat',
       { user: JSON.stringify(this.user), chat: this.selectedChat },
     ]);
+  }
+
+  getSpedizioniByTId(statoSpedizione?:string){
+    this.officeService.getSpedizioniByTrId(this.user.id,statoSpedizione).pipe(throttleTime(1000))
+    .subscribe({
+      next: (spedizioni: any) => {
+       this.spedizioni=spedizioni;
+      },
+      error: (error: any) => {
+        this.toastr.error(
+          error.error.message ||
+            error.error.messageList[0] ||
+            "E' stato impossibile recuperare le spedizioni."
+        );
+      },
+      complete: () => {},
+    });
   }
 }

@@ -116,11 +116,11 @@ trasportatore_id:trasportatoreId
     return this.httpClient.post(environment.API_URL+this.azienda+this.chat,chatDTO)
   }
 }
-getSpedizioniByTrId(trasportatoreId:number){
-return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione)
+getSpedizioniByTrId(trasportatoreId:number,statoSpedizione?:string){
+return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione+this.byTrasportatoreId+`/${trasportatoreId}${statoSpedizione?'/'+statoSpedizione:''}`)
 }
 getSpedizioniByStatoAndAziendaId(statoSpedizione:string,aziendaId:number){
-
+  return this.httpClient.get(environment.API_URL+this.azienda+this.spedizione+this.byAziendaId+`/AndStato/${aziendaId}/${statoSpedizione}`)
 }
 }
 
