@@ -180,6 +180,17 @@
     <p class="fs-3">{{ toDo }}</p>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Le tue spedizioni'">
-    <p class="fs-3">{{ toDo }}</p>
+    <div class="row">
+      <div class="col-md-12 py-5">
+        <p class="fs-3">{{ toDo }}</p>
+      </div>
+      <div class="col-md-12 overflow-auto d-flex justify-content-around">
+<button class="btn" *ngFor="let sf of speditionFilters"></button>
+      </div>
+      <div class="col-md-12 text-start d-flex justify-content-around" *ngFor="let s of spedizioni?.content">
+<p class="pt-3"><span class="text-danger">{{s.id}}</span> - da {{s.da}} a {{s.a}} </p> <button class="btn" [ngClass]="s.stato=='Richiesta'?'btn-warning':s.stato=='In_corso'?'btn-info':
+s.stato=='Stoppata'?'btn-danger':s.stato=='A_termine'?'btn-success':''" disabled>{{s.stato}}</button>
+      </div>
+    </div>
   </div>
 </div>

@@ -26,6 +26,7 @@ export class TrasportatoreOfficeComponent implements OnChanges {
   selectedChat: any = null;
   pages:number[]=[]
   spedizioni:any
+  speditionFilters:string[]=[]
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -198,5 +199,8 @@ export class TrasportatoreOfficeComponent implements OnChanges {
       },
       complete: () => {},
     });
+  }
+  setBg(elementId:string){
+
   }
 }
