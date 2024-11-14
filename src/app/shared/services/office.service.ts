@@ -319,8 +319,10 @@ export class OfficeService {
         this.spedizione +
         this.byTrasportatoreId +
         `/${trasportatoreId}` +
-        '?stato='+(statoSpedizione||'Richiesta')+
-        '&page='+(page||0)
+        '?stato=' +
+        (statoSpedizione || 'Richiesta') +
+        '&page=' +
+        (page || 0)
     );
   }
   getSpedizioniByStatoAndAziendaId(statoSpedizione: string, aziendaId: number) {
@@ -330,6 +332,27 @@ export class OfficeService {
         this.spedizione +
         this.byAziendaId +
         `/AndStato/${aziendaId}/${statoSpedizione}`
+    );
+  }
+
+  getAziendaByParams(
+    nome: string,
+    email: string,
+    partitaIva: string,
+    citta: string
+  ) {
+    return this.httpClient.get(
+      environment.API_URL +
+        this.trasportatore +
+        this.azienda +
+        '?nome=' +
+        nome +
+        '&email=' +
+        email +
+        '&partitaIva=' +
+        partitaIva +
+        '&citta=' +
+        citta
     );
   }
 }

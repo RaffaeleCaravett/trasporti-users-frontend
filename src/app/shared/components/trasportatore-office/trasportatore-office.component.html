@@ -171,13 +171,46 @@
     </div>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Cerca un\'azienda'">
-    <p class="fs-3">{{ toDo }}</p>
+    <div class="row">
+      <div class="col-md-12 py-5">
+        <p class="fs-3">{{ toDo }}</p>
+      </div>
+      <div class="col-md-12">
+        <form [formGroup]="searchAziendaForm" class="row" (onsubmit)="searchAzienda()">
+          <div class="col-md-6 p-1">
+            <label class="p-1" for="nome">Nome azienda</label>
+            <input type="text" name="nome" class="form-control" />
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="p-1" for="email">Email</label>
+            <input type="text" name="email" class="form-control" />
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="p-1" for="citta">Città</label>
+            <input type="text" name="citta" class="form-control" />
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="p-1" for="partita">Partita Iva</label>
+            <input type="text" name="partita" class="form-control" />
+          </div>
+          <div class="col-md-12 p-2">
+            <button class="btn btn-light" type="submit">
+              Cerca
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Modifica il profilo'">
     <p class="fs-3">{{ toDo }}</p>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Monitora le tue statistiche'">
-    <p class="fs-3">{{ toDo }}</p>
+    <div class="row">
+      <div class="col-md-12 py-5">
+        <p class="fs-3">{{ toDo }}</p>
+      </div>
+    </div>
   </div>
   <div class="col-md-12" *ngIf="toDo == 'Le tue spedizioni'">
     <div class="row">
@@ -189,41 +222,62 @@
           class="btn fs-6 btn-light m-1"
           *ngFor="let sf of speditionFilters; index as i"
           id="button-{{ i }}"
-          (click)="setBg('button' + i,sf)"
+          (click)="setBg('button' + i, sf)"
         >
           {{ sf }}
         </button>
       </div>
-      <div
-        class="col-md-12"
-      *ngIf="!isLoading">
-        <div class="text-start d-flex justify-content-around" *ngFor="let s of spedizioni?.content">
- <p class="pt-3">
-          <span class="text-danger">{{ s.id }}</span> - Da {{ s.da }} a
-          {{ s.a }}
-        </p>
-        <button
-          class="btn"
-          [ngClass]="
-            s.stato == 'Richiesta'
-              ? 'btn-warning'
-              : s.stato == 'In_corso'
-              ? 'btn-info'
-              : s.stato == 'Stoppata'
-              ? 'btn-danger'
-              : s.stato == 'A_termine'
-              ? 'btn-success'
-              : ''
-          "
-          disabled
+      <div class="col-md-12" *ngIf="!isLoading">
+        <div
+          class="text-start d-flex justify-content-around"
+          *ngFor="let s of spedizioni?.content"
         >
-          {{ s.stato }}
-        </button>
+          <p class="pt-3">
+            <span class="text-danger">{{ s.id }}</span> - Da {{ s.da }} a
+            {{ s.a }}
+          </p>
+          <button
+            class="btn"
+            [ngClass]="
+              s.stato == 'Richiesta'
+                ? 'btn-warning'
+                : s.stato == 'In_corso'
+                ? 'btn-info'
+                : s.stato == 'Stoppata'
+                ? 'btn-danger'
+                : s.stato == 'A_termine'
+                ? 'btn-success'
+                : ''
+            "
+            disabled
+          >
+            {{ s.stato }}
+          </button>
+          <button class="btn" (click)="openSpedition(s)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#5f6368"
+            >
+              <path
+                d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
-
-      </div>
-      <div *ngIf="(!spedizioni||(spedizioni&&spedizioni.content&&spedizioni.content.length==0))&&!isLoading">
-Non ci sono spedizioni con stato : {{speditionState}}
+      <div
+        *ngIf="
+          (!spedizioni ||
+            (spedizioni &&
+              spedizioni.content &&
+              spedizioni.content.length == 0)) &&
+          !isLoading
+        "
+      >
+        Non ci sono spedizioni con stato : {{ speditionState }}
       </div>
       <div *ngIf="isLoading" class="text-center">
         <mat-spinner class="m-auto mt-5" color="warn"></mat-spinner>
@@ -233,14 +287,18 @@ Non ci sono spedizioni con stato : {{speditionState}}
           <button
             class="btn"
             (click)="getSpedizioniByTId(speditionState, spedizioni?.number - 1)"
-            *ngIf="spedizioni.number>0"
+            *ngIf="spedizioni && spedizioni?.number && spedizioni?.number > 0"
           >
             Indietro
           </button>
           <button
             class="btn"
             (click)="getSpedizioniByTId(speditionState, spedizioni?.number + 1)"
-            *ngIf="spedizioni.number+1<spedizioni.totalPages"
+            *ngIf="
+              spedizioni &&
+              spedizioni?.number &&
+              spedizioni?.number + 1 < spedizioni?.totalPages
+            "
           >
             Avanti
           </button>
@@ -251,7 +309,7 @@ Non ci sono spedizioni con stato : {{speditionState}}
             id=""
             class="form-select"
             (change)="getSpedizioniByTId(speditionState, pageSelect.value)"
-            *ngIf="speditionPages.length>0"
+            *ngIf="speditionPages.length > 0"
             #pageSelect
           >
             <option value="{{ p }}" *ngFor="let p of speditionPages">

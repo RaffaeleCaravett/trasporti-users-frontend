@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { OfficeService } from '../../services/office.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { errors } from 'src/app/core/errors';
@@ -6,13 +6,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShowAnnuncioComponent } from '../show-annuncio/show-annuncio.component';
 import { Router } from '@angular/router';
 import { delay, throttleTime } from 'rxjs';
+import { ShowSpedizioneComponent } from 'src/app/components/show-spedizione/show-spedizione.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-trasportatore-office',
   templateUrl: './trasportatore-office.component.html',
   styleUrls: ['./trasportatore-office.component.scss'],
 })
-export class TrasportatoreOfficeComponent implements OnChanges {
+export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
   @Input() user: any;
   @Input() toDo: string = '';
   @Input() azioni: string[] = [];
@@ -33,7 +35,8 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     'Terminata',
   ];
   speditionState: string = '';
-  speditionPages:number[]=[]
+  speditionPages: number[] = [];
+  searchAziendaForm: FormGroup = new FormGroup({});
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -41,6 +44,14 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    this.searchAziendaForm = new FormGroup({
+      nomeAzienda: new FormControl(''),
+      citta: new FormControl(''),
+      partitaIva: new FormControl(''),
+      email: new FormControl(''),
+    });
+  }
   ngOnChanges(): void {
     if (this.toDo == 'Cerca un annuncio') {
       this.filters = [
@@ -191,23 +202,23 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     ]);
   }
 
-  getSpedizioniByTId(statoSpedizione?: string,page?:any) {
-    let numberPage=Number(page);
-        this.isLoading=true;
+  getSpedizioniByTId(statoSpedizione?: string, page?: any) {
+    let numberPage = Number(page);
+    this.isLoading = true;
     this.officeService
-      .getSpedizioniByTrId(this.user.id, statoSpedizione,numberPage)
+      .getSpedizioniByTrId(this.user.id, statoSpedizione, numberPage)
       .pipe(delay(1000))
       .subscribe({
         next: (spedizioni: any) => {
-          this.isLoading=false;
+          this.isLoading = false;
           this.spedizioni = spedizioni;
-          this.speditionPages=[];
-    for(let i = 1;i<=spedizioni.content.length;i++){
-    this.speditionPages.push(i)
-    }
+          this.speditionPages = [];
+          for (let i = 1; i <= spedizioni.content.length; i++) {
+            this.speditionPages.push(i);
+          }
         },
         error: (error: any) => {
-          this.isLoading=false
+          this.isLoading = false;
           this.toastr.error(
             error.error.message ||
               error.error.messageList[0] ||
@@ -230,5 +241,29 @@ export class TrasportatoreOfficeComponent implements OnChanges {
       button?.classList.add('btn-light');
     }
     this.getSpedizioniByTId(speditionState);
+  }
+  openSpedition(spedition: any) {
+    const dialogRef = this.matDialog.open(ShowSpedizioneComponent, {
+      data: spedition,
+    });
+    dialogRef.afterClosed().subscribe((data) => {});
+  }
+  searchAzienda() {
+    this.officeService.getAziendaByParams(
+      this.searchAziendaForm.controls['nome'].value,
+      this.searchAziendaForm.controls['email'].value,
+      this.searchAziendaForm.controls['partitaIva'].value,
+      this.searchAziendaForm.controls['citta'].value
+    ).subscribe({
+      next:(aziende)=>{
+
+      },
+      error:(error)=>{
+
+      },
+      complete:()=>{
+
+      }
+    })
   }
 }
