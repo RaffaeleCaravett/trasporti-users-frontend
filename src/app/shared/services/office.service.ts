@@ -290,7 +290,11 @@ export class OfficeService {
       );
     }
   }
-  getSpedizioniByTrId(trasportatoreId: number, statoSpedizione?: string) {
+  getSpedizioniByTrId(
+    trasportatoreId: number,
+    statoSpedizione?: string,
+    page?: number
+  ) {
     switch (statoSpedizione) {
       case 'In corso':
         {
@@ -308,14 +312,15 @@ export class OfficeService {
         }
         break;
     }
+
     return this.httpClient.get(
       environment.API_URL +
         this.trasportatore +
         this.spedizione +
         this.byTrasportatoreId +
-        `/${trasportatoreId}${
-          statoSpedizione ? '?stato=' + statoSpedizione : ''
-        }`
+        `/${trasportatoreId}` +
+        '?stato='+(statoSpedizione||'Richiesta')+
+        '&page='+(page||0)
     );
   }
   getSpedizioniByStatoAndAziendaId(statoSpedizione: string, aziendaId: number) {

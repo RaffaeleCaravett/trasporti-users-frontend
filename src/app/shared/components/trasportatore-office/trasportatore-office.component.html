@@ -228,6 +228,38 @@ Non ci sono spedizioni con stato : {{speditionState}}
       <div *ngIf="isLoading" class="text-center">
         <mat-spinner class="m-auto mt-5" color="warn"></mat-spinner>
       </div>
+      <div class="row py-3">
+        <div class="col-sm-8 d-flex">
+          <button
+            class="btn"
+            (click)="getSpedizioniByTId(speditionState, spedizioni?.number - 1)"
+            *ngIf="spedizioni.number>0"
+          >
+            Indietro
+          </button>
+          <button
+            class="btn"
+            (click)="getSpedizioniByTId(speditionState, spedizioni?.number + 1)"
+            *ngIf="spedizioni.number+1<spedizioni.totalPages"
+          >
+            Avanti
+          </button>
+        </div>
+        <div class="col-sm-4">
+          <select
+            name=""
+            id=""
+            class="form-select"
+            (change)="getSpedizioniByTId(speditionState, pageSelect.value)"
+            *ngIf="speditionPages.length>0"
+            #pageSelect
+          >
+            <option value="{{ p }}" *ngFor="let p of speditionPages">
+              {{ p }}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
 </div>

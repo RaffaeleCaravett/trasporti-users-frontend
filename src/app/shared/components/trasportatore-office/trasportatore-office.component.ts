@@ -33,6 +33,7 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     'Terminata',
   ];
   speditionState: string = '';
+  speditionPages:number[]=[]
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -190,15 +191,20 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     ]);
   }
 
-  getSpedizioniByTId(statoSpedizione?: string) {
-    this.isLoading=true;
+  getSpedizioniByTId(statoSpedizione?: string,page?:any) {
+    let numberPage=Number(page);
+        this.isLoading=true;
     this.officeService
-      .getSpedizioniByTrId(this.user.id, statoSpedizione)
+      .getSpedizioniByTrId(this.user.id, statoSpedizione,numberPage)
       .pipe(delay(1000))
       .subscribe({
         next: (spedizioni: any) => {
-          this.isLoading=false
+          this.isLoading=false;
           this.spedizioni = spedizioni;
+          this.speditionPages=[];
+    for(let i = 1;i<=spedizioni.content.length;i++){
+    this.speditionPages.push(i)
+    }
         },
         error: (error: any) => {
           this.isLoading=false
