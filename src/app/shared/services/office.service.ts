@@ -13,6 +13,8 @@ private trasportatore:string = '/trasportatore'
 private annuncioAzienda:string = '/azienda/annuncio'
 private byAzienda:string ='/byAzienda'
 private byRetribuzione:string ='/byRetribuzione'
+private byTrasportatoreId:string ='/byTrasportatoreId'
+private byAziendaId:string ='/byAziendaId'
 private byData:string ='/byData'
 private spedizione:string = '/spedizione'
 private spedizioneAzienda:string = '/azienda/spedizione'
@@ -113,6 +115,12 @@ trasportatore_id:trasportatoreId
   }else{
     return this.httpClient.post(environment.API_URL+this.azienda+this.chat,chatDTO)
   }
+}
+getSpedizioniByTrId(trasportatoreId:number){
+return this.httpClient.get(environment.API_URL+this.trasportatore+this.spedizione)
+}
+getSpedizioniByStatoAndAziendaId(statoSpedizione:string,aziendaId:number){
+
 }
 }
 
