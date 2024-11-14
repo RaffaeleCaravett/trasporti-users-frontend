@@ -13,31 +13,32 @@ export class ConfirmOperationComponent implements OnInit {
   operation: string = '';
   notification: any;
   today: string = new Date().toISOString().substring(0, 10);
-  user: any ;
-  isLoading:boolean=false;
+  user: any;
+  isLoading: boolean = false;
   constructor(
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private matDialogRef: MatDialogRef<ConfirmOperationComponent>,
     private homeService: HomeService,
-    private formsService:FormsService
+    private formsService: FormsService
   ) {}
 
   ngOnInit(): void {
     this.notification = this.data[0];
     this.operation = this.data[1];
     this.user = this.formsService.getUser();
-
   }
 
   putNotification(notification: any, action: string) {
     switch (action) {
       case 'rifiuta':
         {
+          this.isLoading = true;
           this.homeService
             .rejectNotification(notification.id, this.user.id)
             .subscribe({
               next: (rejected: any) => {
+                this.isLoading = false;
                 if (rejected) {
                   this.close('rifiuta');
                 } else {
@@ -53,6 +54,7 @@ export class ConfirmOperationComponent implements OnInit {
         break;
       case 'accetta':
         {
+          this.isLoading = true;
           this.homeService
             .acceptNotification(notification.id, this.user.id)
             .subscribe({
@@ -72,11 +74,15 @@ export class ConfirmOperationComponent implements OnInit {
                 link.download = `richiesta-spedizione-copia.docx`;
                 link.click();
                 URL.revokeObjectURL(url);
-
+                this.isLoading = false;
                 this.close('accetta');
               },
-              error: (err:any) => {
-                this.toastr.error(err?.error?.message||err?.error?.messageList[0]||"Si è verificato un errore.")
+              error: (err: any) => {
+                this.toastr.error(
+                  err?.error?.message ||
+                    err?.error?.messageList[0] ||
+                    'Si è verificato un errore.'
+                );
                 this.close();
               },
               complete: () => {},
