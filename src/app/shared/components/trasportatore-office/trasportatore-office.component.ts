@@ -26,7 +26,9 @@ export class TrasportatoreOfficeComponent implements OnChanges {
   selectedChat: any = null;
   pages:number[]=[]
   spedizioni:any
-  speditionFilters:string[]=[]
+  speditionFilters:string[]=[
+    'Richiesta','In corso','Stoppata','Terminata'
+  ]
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -201,6 +203,15 @@ export class TrasportatoreOfficeComponent implements OnChanges {
     });
   }
   setBg(elementId:string){
-
+for(let i=1;i<=this.speditionFilters.length;i++){
+  if('button'+i==elementId){
+    document.getElementById(elementId)?.classList.add('btn-secondary')
+    document.getElementById(elementId)?.classList.remove('btn-light')
+    break;
+  }
+  let button = document.getElementById('button'+i)
+  button?.classList.remove('btn-secondary')
+  button?.classList.add('btn-light')
+}
   }
 }
