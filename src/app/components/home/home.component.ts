@@ -142,7 +142,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           chatContainer.classList.remove('border');
         }
         setTimeout(() => {
-          singleChat.classList.add('d-none');
+          singleChat?.classList?.add('d-none');
         }, 200);
       } else {
         this.router.navigate([
@@ -263,7 +263,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate([
         '/home/chat',
-        { user: JSON.stringify(this.user), chat: this.selectedChat },
+        { chat: JSON.stringify(this.selectedChat), chats: JSON.stringify(this.chats) },
       ]);
     }
   }

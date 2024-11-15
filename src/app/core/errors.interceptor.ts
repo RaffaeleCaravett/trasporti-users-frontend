@@ -24,7 +24,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((err: any) => {
-        debugger;
         if (err instanceof HttpErrorResponse) {
           if (
             err.error &&
@@ -33,7 +32,6 @@ export class ErrorInterceptor implements HttpInterceptor {
               'Il token non è valido! Per favore effettua nuovamente il login o refresha la pagina!'
           ) {
             let trasportatore = localStorage.getItem('TrAccessToken');
-            let azienda = localStorage.getItem('AzAccessToken');
             let trasportatoreR = localStorage.getItem('TrRefreshToken');
             let aziendaR = localStorage.getItem('AzRefreshToken');
             let location = localStorage.getItem('location');
