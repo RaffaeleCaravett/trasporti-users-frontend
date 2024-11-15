@@ -176,22 +176,22 @@
         <p class="fs-3">{{ toDo }}</p>
       </div>
       <div class="col-md-12">
-        <form [formGroup]="searchAziendaForm" class="row" (onsubmit)="searchAzienda()">
+        <form [formGroup]="searchAziendaForm" class="row" (ngSubmit)="searchAzienda()">
           <div class="col-md-6 p-1">
-            <label class="p-1" for="nome">Nome azienda</label>
-            <input type="text" name="nome" class="form-control" />
+            <label class="p-1" for="nome">Nome </label>
+            <input type="text" name="nome" class="form-control" formControlName="nomeAzienda"/>
           </div>
           <div class="col-md-6 p-1">
             <label class="p-1" for="email">Email</label>
-            <input type="text" name="email" class="form-control" />
+            <input type="text" name="email" class="form-control" formControlName="email"/>
           </div>
           <div class="col-md-6 p-1">
             <label class="p-1" for="citta">Città</label>
-            <input type="text" name="citta" class="form-control" />
+            <input type="text" name="citta" class="form-control" formControlName="citta"/>
           </div>
           <div class="col-md-6 p-1">
             <label class="p-1" for="partita">Partita Iva</label>
-            <input type="text" name="partita" class="form-control" />
+            <input type="text" name="partita" class="form-control" formControlName="partita"/>
           </div>
           <div class="col-md-12 p-2">
             <button class="btn btn-light" type="submit">

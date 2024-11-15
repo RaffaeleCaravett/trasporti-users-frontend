@@ -15,6 +15,7 @@ export class OfficeService {
   private byTrasportatoreId: string = '/byTrasportatoreId';
   private byAziendaId: string = '/byAziendaId';
   private byData: string = '/byData';
+  private byParams: string = '/byParams';
   private spedizione: string = '/spedizione';
   private spedizioneAzienda: string = '/azienda/spedizione';
   private andStato: string = 'AndStato';
@@ -345,6 +346,7 @@ export class OfficeService {
       environment.API_URL +
         this.trasportatore +
         this.azienda +
+        this.byParams +
         '?nome=' +
         nome +
         '&email=' +

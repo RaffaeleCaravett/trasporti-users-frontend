@@ -234,9 +234,10 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
     dialogRef.afterClosed().subscribe((data) => {});
   }
   searchAzienda() {
+    debugger
     this.officeService
       .getAziendaByParams(
-        this.searchAziendaForm.controls['nome'].value,
+        this.searchAziendaForm.controls['nomeAzienda'].value,
         this.searchAziendaForm.controls['email'].value,
         this.searchAziendaForm.controls['partitaIva'].value,
         this.searchAziendaForm.controls['citta'].value
