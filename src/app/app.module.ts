@@ -20,6 +20,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ShowAnnuncioComponent } from './shared/components/show-annuncio/show-annuncio.component';
 import { ShowSpedizioneComponent } from './components/show-spedizione/show-spedizione.component';
 import { ConfirmOperationComponent } from './components/confirm-operation/confirm-operation.component';
+import { ErrorInterceptor } from './core/errors.interceptor';
 
 
 
@@ -51,6 +52,11 @@ import { ConfirmOperationComponent } from './components/confirm-operation/confir
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthTokenInterceptor,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ErrorInterceptor,
     multi: true,
   },
     provideAnimations(),
