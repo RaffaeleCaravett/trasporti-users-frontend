@@ -294,7 +294,8 @@ export class OfficeService {
   getSpedizioniByTrId(
     trasportatoreId: number,
     statoSpedizione?: string,
-    page?: number
+    page?: number,
+    direction?:string
   ) {
     switch (statoSpedizione) {
       case 'In corso':
@@ -323,7 +324,9 @@ export class OfficeService {
         '?stato=' +
         (statoSpedizione || 'Richiesta') +
         '&page=' +
-        (page || 0)
+        (page || 0) +
+        '&sort=' +
+        (direction||'ASC')
     );
   }
   getSpedizioniByStatoAndAziendaId(statoSpedizione: string, aziendaId: number) {

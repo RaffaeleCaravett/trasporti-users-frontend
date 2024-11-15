@@ -13,7 +13,7 @@
       </div>
       <div
         class="d-flex justify-content-center"
-        *ngIf="annunciCopy && annunciCopy.length > 0"
+        *ngIf="annunciCopy && annunciCopy.length > 1"
       >
         <button title="ASC" class="btn" (click)="getAllAnnunci(action, 'ASC')">
           <svg
@@ -73,7 +73,7 @@
             class="d-flex justify-content-end"
             *ngIf="annunciOption[0] && annunciOption[1] == a.id"
           >
-            <p class="w-75 text-start p-2">
+            <p class="w-75 text-end p-2">
               <button
                 class="btn-bg-light p-2 rounded m-1"
                 (click)="openAnnunciInfo(a)"
@@ -176,29 +176,94 @@
         <p class="fs-3">{{ toDo }}</p>
       </div>
       <div class="col-md-12">
-        <form [formGroup]="searchAziendaForm" class="row" (ngSubmit)="searchAzienda()">
+        <form
+          [formGroup]="searchAziendaForm"
+          class="row"
+          (ngSubmit)="searchAzienda()"
+        >
           <div class="col-md-6 p-1">
             <label class="p-1" for="nome">Nome </label>
-            <input type="text" name="nome" class="form-control" formControlName="nomeAzienda"/>
+            <input
+              type="text"
+              name="nome"
+              class="form-control"
+              formControlName="nomeAzienda"
+            />
           </div>
           <div class="col-md-6 p-1">
             <label class="p-1" for="email">Email</label>
-            <input type="text" name="email" class="form-control" formControlName="email"/>
+            <input
+              type="text"
+              name="email"
+              class="form-control"
+              formControlName="email"
+            />
           </div>
           <div class="col-md-6 p-1">
             <label class="p-1" for="citta">Città</label>
-            <input type="text" name="citta" class="form-control" formControlName="citta"/>
+            <input
+              type="text"
+              name="citta"
+              class="form-control"
+              formControlName="citta"
+            />
           </div>
           <div class="col-md-6 p-1">
             <label class="p-1" for="partita">Partita Iva</label>
-            <input type="text" name="partita" class="form-control" formControlName="partita"/>
+            <input
+              type="text"
+              name="partita"
+              class="form-control"
+              formControlName="partitaIva"
+            />
           </div>
           <div class="col-md-12 p-2">
-            <button class="btn btn-light" type="submit">
-              Cerca
-            </button>
+            <button class="btn btn-light" type="submit">Cerca</button>
           </div>
         </form>
+      </div>
+      <div class="col-md-12 pt-5">
+        <ul>
+          <li
+            *ngFor="let a of aziende?.content"
+            class="d-flex justify-content-around"
+          >
+            <p class="pt-2">
+              <span class="fw-bold">
+                {{ a.id }}
+              </span>
+              {{ " - " + a.nomeAzienda + ", " + a.citta }}
+            </p>
+            <div class="d-flex">
+              <button class="btn" title="Profilo" (click)="visualizeAzienda(a)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#5f6368"
+                >
+                  <path
+                    d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"
+                  />
+                </svg>
+              </button>
+              <button class="btn" title="Chat" (click)="openChat(user.id,a)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#5f6368"
+                >
+                  <path
+                    d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -227,7 +292,50 @@
           {{ sf }}
         </button>
       </div>
-      <div class="col-md-12" *ngIf="!isLoading">
+      <div class="col-md-12 py-5" *ngIf="!isLoading">
+        <div
+          class="d-flex justify-content-center"
+          *ngIf="
+            spedizioni && spedizioni?.content && spedizioni?.content?.length > 1
+          "
+        >
+          <button
+            title="ASC"
+            class="btn"
+            (click)="
+              getSpedizioniByTId(speditionState, spedizioni?.number, 'ASC')
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#5f6368"
+            >
+              <path
+                d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z"
+              />
+            </svg>
+          </button>
+          <button
+            title="DESC"
+            class="btn"
+            (click)="
+              getSpedizioniByTId(speditionState, spedizioni?.number, 'DESC')
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#5f6368"
+            >
+              <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+            </svg>
+          </button>
+        </div>
         <div
           class="text-start d-flex justify-content-around"
           *ngFor="let s of spedizioni?.content"

@@ -37,6 +37,7 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
   speditionState: string = '';
   speditionPages: number[] = [];
   searchAziendaForm: FormGroup = new FormGroup({});
+  aziende:any
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
@@ -192,11 +193,11 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
     ]);
   }
 
-  getSpedizioniByTId(statoSpedizione?: string, page?: any) {
+  getSpedizioniByTId(statoSpedizione?: string, page?: any,direction?:string) {
     let numberPage = Number(page);
     this.isLoading = true;
     this.officeService
-      .getSpedizioniByTrId(this.user.id, statoSpedizione, numberPage)
+      .getSpedizioniByTrId(this.user.id, statoSpedizione, numberPage,direction)
       .pipe(delay(1000))
       .subscribe({
         next: (spedizioni: any) => {
@@ -234,7 +235,6 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
     dialogRef.afterClosed().subscribe((data) => {});
   }
   searchAzienda() {
-    debugger
     this.officeService
       .getAziendaByParams(
         this.searchAziendaForm.controls['nomeAzienda'].value,
@@ -243,9 +243,14 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
         this.searchAziendaForm.controls['citta'].value
       )
       .subscribe({
-        next: (aziende) => {},
+        next: (aziende) => {
+          this.aziende=aziende;
+        },
         error: (error) => {},
         complete: () => {},
       });
+  }
+  visualizeAzienda(azienda:any){
+
   }
 }

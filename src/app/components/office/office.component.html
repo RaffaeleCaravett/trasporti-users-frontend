@@ -29,10 +29,8 @@
       </ng-template>
     </div>
     <div
-      class="col-md-6"
-      *ngIf="
-        user?.role == 'Azienda' && toDo != 'Modifica il profilo';
-      "
+      class="col-md-9 col-lg-6"
+      *ngIf="user?.role == 'Azienda' && toDo != 'Modifica il profilo'"
     >
       <app-azienda-office
         [toDo]="toDo"
@@ -44,16 +42,17 @@
         [statistica]="statistica"
       ></app-azienda-office>
     </div>
-      <div class="col-md-6" *ngIf="
-      user?.role == 'Trasportatore' && toDo != 'Modifica il profilo';
-    ">
-        <app-trasportatore-office
+    <div
+      class="col-md-9 col-lg-6"
+      *ngIf="user?.role == 'Trasportatore' && toDo != 'Modifica il profilo'"
+    >
+      <app-trasportatore-office
         [user]="user"
         [toDo]="toDo"
         [azioni]="azioni"
-        ></app-trasportatore-office>
-      </div>
-    <div class="col-md-3 py-5" *ngIf="toDo != 'Modifica il profilo'">
+      ></app-trasportatore-office>
+    </div>
+    <div class="col-lg-3 py-5" *ngIf="toDo != 'Modifica il profilo'">
       <app-user-info
         [isTrasportatore]="isTrasportatore"
         [user]="user"
@@ -300,256 +299,248 @@
       </form>
     </div>
     <div
-    class="col-md-9 py-5 bg-light"
-    *ngIf="toDo == 'Modifica il profilo' && user?.role == 'Trasportatore'"
-  >
-    <p class="fs-3">Modifica il tuo profilo</p>
-    <form [formGroup]="modifyProfile">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="py-3">Città</label>
-          <select
-            type="text"
-            class="form-select"
-            formControlName="citta"
-            (change)="getRegioneByCity(modifyProfile.controls['citta'].value)"
-          >
-            <option value=""></option>
-            <option [value]="c" *ngFor="let c of cities">{{ c }}</option>
-          </select>
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['citta'].invalid"
-          >
-            Seleziona un valore.
-          </p>
+      class="col-md-9 py-5 bg-light"
+      *ngIf="toDo == 'Modifica il profilo' && user?.role == 'Trasportatore'"
+    >
+      <p class="fs-3">Modifica il tuo profilo</p>
+      <form [formGroup]="modifyProfile">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="py-3">Città</label>
+            <select
+              type="text"
+              class="form-select"
+              formControlName="citta"
+              (change)="getRegioneByCity(modifyProfile.controls['citta'].value)"
+            >
+              <option value=""></option>
+              <option [value]="c" *ngFor="let c of cities">{{ c }}</option>
+            </select>
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['citta'].invalid"
+            >
+              Seleziona un valore.
+            </p>
+          </div>
+          <div class="col-md-3">
+            <label class="py-3">Regione</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="regione"
+              readonly
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['regione'].invalid"
+            >
+              Campo autocompilato. Selezione una città!
+            </p>
+          </div>
+          <div class="col-md-3">
+            <label class="py-3">Indirizzo</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="indirizzo"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['indirizzo'].invalid"
+            >
+              Inserisci il tuo indirizzo.
+            </p>
+          </div>
+          <div class="col-md-3">
+            <label class="py-3">Cap</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="cap"
+              readonly
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['cap'].invalid"
+            >
+              Campo autocompilato. Selezione una città!
+            </p>
+          </div>
+          <div class="col-md-9">
+            <label class="py-3">Email</label>
+            <input type="email" class="form-control" formControlName="email" />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['email'].invalid"
+            >
+              Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
+            </p>
+          </div>
+          <div class="col-md-12">
+            <label for="" class="py-3">Nome </label>
+            <input type="text" class="form-control" formControlName="nome" />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['nome'].invalid"
+            >
+              Inserisci un valore.
+            </p>
+          </div>
+          <div class="col-md-12">
+            <label for="" class="py-3">Cognome </label>
+            <input type="text" class="form-control" formControlName="cognome" />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['cognome'].invalid"
+            >
+              Inserisci un valore.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Flotta mezzi</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="flottaMezzi"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['flottaMezzi'].invalid"
+            >
+              Inserisci un valore numerico.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Eta</label>
+            <input type="number" class="form-control" formControlName="eta" />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['eta'].invalid"
+            >
+              Età minima : 18 anni.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">Codice fiscale</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="codiceFiscale"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['codiceFiscale'].invalid"
+            >
+              Inserisci un codice fiscale che rispetti gli standard italiani.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <label for="" class="py-3">PartitaIva</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="partitaIva"
+            />
+            <p
+              class="text-danger"
+              *ngIf="modifyProfile.controls['partitaIva'].invalid"
+            >
+              Inserisci un valore che rispetti il pattern della partita iva
+              italiana.
+            </p>
+          </div>
+          <div class="col-md-12 py-5">
+            <button
+              class="btn btn-dark text-danger"
+              [disabled]="modifyProfile.invalid"
+              (click)="modifyProfilo()"
+              title="Stai modificando le informazioni del tuo profilo"
+            >
+              Modifica
+            </button>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label class="py-3">Regione</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="regione"
-            readonly
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['regione'].invalid"
-          >
-            Campo autocompilato. Selezione una città!
-          </p>
-        </div>
-        <div class="col-md-3">
-          <label class="py-3">Indirizzo</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="indirizzo"
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['indirizzo'].invalid"
-          >
-            Inserisci il tuo indirizzo.
-          </p>
-        </div>
-        <div class="col-md-3">
-          <label class="py-3">Cap</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="cap"
-            readonly
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['cap'].invalid"
-          >
-            Campo autocompilato. Selezione una città!
-          </p>
-        </div>
-        <div class="col-md-9">
-          <label class="py-3">Email</label>
-          <input type="email" class="form-control" formControlName="email" />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['email'].invalid"
-          >
-            Campo invalido, prova ad inserire un valore tipo 'a&#64;a.com'
-          </p>
-        </div>
-        <div class="col-md-12">
-          <label for="" class="py-3">Nome </label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="nome"
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['nome'].invalid"
-          >
-            Inserisci un valore.
-          </p>
-        </div>
-        <div class="col-md-12">
-          <label for="" class="py-3">Cognome </label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="cognome"
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['cognome'].invalid"
-          >
-            Inserisci un valore.
-          </p>
-        </div>
-        <div class="col-md-6">
-          <label for="" class="py-3">Flotta mezzi</label>
-          <input
-            type="number"
-            class="form-control"
-            formControlName="flottaMezzi"
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['flottaMezzi'].invalid"
-          >
-            Inserisci un valore numerico.
-          </p>
-        </div>
-        <div class="col-md-6">
-          <label for="" class="py-3">Eta</label>
-          <input
-            type="number"
-            class="form-control"
-            formControlName="eta"
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['eta'].invalid"
-          >
-            Età minima : 18 anni.
-          </p>
-        </div>
-        <div class="col-md-6">
-          <label for="" class="py-3">Codice fiscale</label>
-          <input type="text" class="form-control" formControlName="codiceFiscale" />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['codiceFiscale'].invalid"
-          >
-            Inserisci un codice fiscale che rispetti gli standard italiani.
-          </p>
-        </div>
-        <div class="col-md-6">
-          <label for="" class="py-3">PartitaIva</label>
-          <input
-            type="number"
-            class="form-control"
-            formControlName="partitaIva"
-          />
-          <p
-            class="text-danger"
-            *ngIf="modifyProfile.controls['partitaIva'].invalid"
-          >
-            Inserisci un valore che rispetti il pattern della partita iva
-            italiana.
-          </p>
-        </div>
-        <div class="col-md-12 py-5">
-          <button
-            class="btn btn-dark text-danger"
-            [disabled]="modifyProfile.invalid"
-            (click)="modifyProfilo()"
-            title="Stai modificando le informazioni del tuo profilo"
-          >
-            Modifica
-          </button>
-        </div>
-      </div>
-    </form>
-    <p class="fs-5">Vuoi cambiare la password?</p>
-    <form [formGroup]="changePasswordForm">
-      <label class="p-2">Inserisci qui la tua password attuale</label>
-      <input
-        type="password"
-        formControlName="oldPassword"
-        class="form-control w-75 m-auto"
-        (input)="
-          checkPasswords(
-            changePasswordForm.controls['oldPassword'],
-            changePasswordForm.controls['repeteOldPassword']
-          )
-        "
-      />
-      <label class="p-2">Riscrivila qui</label>
-      <input
-        type="password"
-        formControlName="repeteOldPassword"
-        class="form-control w-75 m-auto"
-        (input)="
-          checkPasswords(
-            changePasswordForm.controls['oldPassword'],
-            changePasswordForm.controls['repeteOldPassword']
-          )
-        "
-      />
-      <div class="inserisciPassword noned">
-        <label class="p-2">Inserisci la nuova password</label>
+      </form>
+      <p class="fs-5">Vuoi cambiare la password?</p>
+      <form [formGroup]="changePasswordForm">
+        <label class="p-2">Inserisci qui la tua password attuale</label>
         <input
           type="password"
-          formControlName="newPassword"
+          formControlName="oldPassword"
           class="form-control w-75 m-auto"
-          #showNew1
-        />
-        <label class="p-2">Ripeti la nuova password</label>
-        <input
-          type="password"
-          formControlName="newPassword1"
-          class="form-control w-75 m-auto"
-          #showNew2
-        />
-        <p
-          class="text-danger"
-          *ngIf="
-            changePasswordForm.controls['newPassword'].value !=
-              changePasswordForm.controls['newPassword1'].value &&
-            changePasswordForm.controls['newPassword'].valid &&
-            changePasswordForm.controls['newPassword1'].valid
-          "
-        >
-          Le password non coincidono.
-        </p>
-        <p
-          class="text-success"
-          *ngIf="
-            changePasswordForm.controls['newPassword'].value ==
-              changePasswordForm.controls['newPassword1'].value &&
-            changePasswordForm.controls['newPassword'].valid &&
-            changePasswordForm.controls['newPassword1'].valid
-          "
-        >
-          Le password coincidono.
-        </p>
-        <button
-          class="btn btn-dark my-3 text-danger"
-          (click)="
-            resetPassword(
-              changePasswordForm.controls['oldPassword'].value,
-              changePasswordForm.controls['newPassword'].value,
-              user?.role
+          (input)="
+            checkPasswords(
+              changePasswordForm.controls['oldPassword'],
+              changePasswordForm.controls['repeteOldPassword']
             )
           "
-          title="Stai modificando la tua password"
-        >
-          Cambia password
-        </button>
-      </div>
-    </form>
-  </div>
+        />
+        <label class="p-2">Riscrivila qui</label>
+        <input
+          type="password"
+          formControlName="repeteOldPassword"
+          class="form-control w-75 m-auto"
+          (input)="
+            checkPasswords(
+              changePasswordForm.controls['oldPassword'],
+              changePasswordForm.controls['repeteOldPassword']
+            )
+          "
+        />
+        <div class="inserisciPassword noned">
+          <label class="p-2">Inserisci la nuova password</label>
+          <input
+            type="password"
+            formControlName="newPassword"
+            class="form-control w-75 m-auto"
+            #showNew1
+          />
+          <label class="p-2">Ripeti la nuova password</label>
+          <input
+            type="password"
+            formControlName="newPassword1"
+            class="form-control w-75 m-auto"
+            #showNew2
+          />
+          <p
+            class="text-danger"
+            *ngIf="
+              changePasswordForm.controls['newPassword'].value !=
+                changePasswordForm.controls['newPassword1'].value &&
+              changePasswordForm.controls['newPassword'].valid &&
+              changePasswordForm.controls['newPassword1'].valid
+            "
+          >
+            Le password non coincidono.
+          </p>
+          <p
+            class="text-success"
+            *ngIf="
+              changePasswordForm.controls['newPassword'].value ==
+                changePasswordForm.controls['newPassword1'].value &&
+              changePasswordForm.controls['newPassword'].valid &&
+              changePasswordForm.controls['newPassword1'].valid
+            "
+          >
+            Le password coincidono.
+          </p>
+          <button
+            class="btn btn-dark my-3 text-danger"
+            (click)="
+              resetPassword(
+                changePasswordForm.controls['oldPassword'].value,
+                changePasswordForm.controls['newPassword'].value,
+                user?.role
+              )
+            "
+            title="Stai modificando la tua password"
+          >
+            Cambia password
+          </button>
+        </div>
+      </form>
+    </div>
     <div class="col-md-12">
       <app-map></app-map>
     </div>
