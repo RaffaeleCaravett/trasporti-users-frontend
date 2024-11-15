@@ -11,20 +11,20 @@ import { SocketIoService } from './shared/services/socket-io.service';
 })
 export class AppComponent implements OnInit {
   title = 'trasporti-users';
-  room:number=0;
-  username:string="";
-socket:any
+  room: number = 0;
+  username: string = '';
+  socket: any;
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
     private router: Router,
     private socketService: SocketIoService
   ) {
-    this.socketService.socketAdvicer.subscribe((data)=>{
-      if(data&&data!=undefined&&data!=null){
-        this.emitSocketMessage(data)
+    this.socketService.socketAdvicer.subscribe((data) => {
+      if (data && data != undefined && data != null) {
+        this.emitSocketMessage(data);
       }
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -66,11 +66,7 @@ socket:any
                     },
                   });
               },
-              error: (error: any) => {
-                this.toastr.error(
-                  'Non è stato possibile verificare la tua identità.'
-                );
-              },
+              error: (error: any) => {},
               complete: () => {},
             });
         },
@@ -108,24 +104,18 @@ socket:any
                   },
                 });
             },
-            error: (error: any) => {
-              this.toastr.error(
-                'Non è stato possibile verificare la tua identità.'
-              );
-            },
+            error: (error: any) => {},
             complete: () => {},
           });
         },
         complete: () => {},
       });
     }
-
-
   }
 
-  emitSocketMessage(message?:any){
-    if(message&&message!=null){
-      this.socketService.getSocket().emit("send_message",message)
+  emitSocketMessage(message?: any) {
+    if (message && message != null) {
+      this.socketService.getSocket().emit('send_message', message);
     }
   }
 }

@@ -132,11 +132,7 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
           }
           this.annunciCopy = this.annunci?.content;
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error?.message || error?.error?.message || errors.request_error
-          );
-        },
+        error: (error: any) => {},
         complete: () => {
           this.isLoading = false;
         },
@@ -187,13 +183,7 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
             (m1: any, m2: any) => m1.id - m2.id
           );
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile creare la chat."
-          );
-        },
+        error: (error: any) => {},
         complete: () => {},
       });
     this.router.navigate([
@@ -219,11 +209,6 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
         },
         error: (error: any) => {
           this.isLoading = false;
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile recuperare le spedizioni."
-          );
         },
         complete: () => {},
       });
@@ -249,21 +234,17 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
     dialogRef.afterClosed().subscribe((data) => {});
   }
   searchAzienda() {
-    this.officeService.getAziendaByParams(
-      this.searchAziendaForm.controls['nome'].value,
-      this.searchAziendaForm.controls['email'].value,
-      this.searchAziendaForm.controls['partitaIva'].value,
-      this.searchAziendaForm.controls['citta'].value
-    ).subscribe({
-      next:(aziende)=>{
-
-      },
-      error:(error)=>{
-
-      },
-      complete:()=>{
-
-      }
-    })
+    this.officeService
+      .getAziendaByParams(
+        this.searchAziendaForm.controls['nome'].value,
+        this.searchAziendaForm.controls['email'].value,
+        this.searchAziendaForm.controls['partitaIva'].value,
+        this.searchAziendaForm.controls['citta'].value
+      )
+      .subscribe({
+        next: (aziende) => {},
+        error: (error) => {},
+        complete: () => {},
+      });
   }
 }

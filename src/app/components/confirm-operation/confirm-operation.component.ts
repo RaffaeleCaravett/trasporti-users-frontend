@@ -79,12 +79,7 @@ export class ConfirmOperationComponent implements OnInit {
                 this.close('accetta');
               },
               error: (err: any) => {
-                this.toastr.error(
-                  err?.message||
-                  err?.error?.message ||
-                    err?.error?.messageList[0] ||
-                    'Si è verificato un errore.'
-                );
+
                 this.isLoading = false;
                 this.close();
               },
