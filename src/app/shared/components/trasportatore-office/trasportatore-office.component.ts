@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { delay, throttleTime } from 'rxjs';
 import { ShowSpedizioneComponent } from 'src/app/components/show-spedizione/show-spedizione.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProfileComponent } from 'src/app/components/profile/profile.component';
 
 @Component({
   selector: 'app-trasportatore-office',
@@ -251,6 +252,8 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
       });
   }
   visualizeAzienda(azienda:any){
-
+const matDialog = this.matDialog.open(ProfileComponent,{data:azienda})
+matDialog.afterClosed().subscribe(()=>{})
   }
+
 }
