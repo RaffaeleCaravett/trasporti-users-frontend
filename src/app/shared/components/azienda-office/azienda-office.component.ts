@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../../services/forms.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,16 +17,18 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-azienda-office',
   templateUrl: './azienda-office.component.html',
-  styleUrls: ['./azienda-office.component.scss']
+  styleUrls: ['./azienda-office.component.scss'],
 })
-export class AziendaOfficeComponent implements OnInit,OnChanges,AfterViewInit{
-@Input() toDo:string=''
-@Input() azioni:string[]=[]
-@Input() user:any
-@Input() aggiungiAnnuncioFormSubmitted:boolean=false
-@Input() statistica:any
-@Input() cities:string[]=[]
-@Input() settori:string[]=[]
+export class AziendaOfficeComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
+  @Input() toDo: string = '';
+  @Input() azioni: string[] = [];
+  @Input() user: any;
+  @Input() aggiungiAnnuncioFormSubmitted: boolean = false;
+  @Input() statistica: any;
+  @Input() cities: string[] = [];
+  @Input() settori: string[] = [];
   aggiungiAnnuncioForm!: FormGroup;
   year: number = 0;
   today = new Date();
@@ -44,20 +53,24 @@ export class AziendaOfficeComponent implements OnInit,OnChanges,AfterViewInit{
   changePasswordForm!: FormGroup;
   searchTrasportatori!: FormGroup;
   trasporters: any;
-  trasportatoreLoader:boolean=false
+  trasportatoreLoader: boolean = false;
 
+  constructor(
+    private formsService: FormsService,
+    private toastr: ToastrService,
+    private officeService: OfficeService,
+    private matDialog: MatDialog
+  ) {}
 
-constructor(private formsService:FormsService, private toastr:ToastrService,private officeService:OfficeService,private matDialog:MatDialog){}
-
-ngAfterViewInit(): void {
-  if(this.toDo == 'Monitora un annuncio'){
-        this.getAnnunci();
-      }
-}
+  ngAfterViewInit(): void {
+    if (this.toDo == 'Monitora un annuncio') {
+      this.getAnnunci();
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
-      if(this.toDo == 'Monitora un annuncio'){
-        this.getAnnunci();
-      }
+    if (this.toDo == 'Monitora un annuncio') {
+      this.getAnnunci();
+    }
   }
 
   ngOnInit(): void {
@@ -87,12 +100,7 @@ ngAfterViewInit(): void {
       nome: new FormControl(''),
       cognome: new FormControl(''),
     });
-
-
-
   }
-
-
 
   addAnnuncio() {
     this.aggiungiAnnuncioFormSubmitted = true;
@@ -131,23 +139,11 @@ ngAfterViewInit(): void {
                       this.aggiungiAnnuncioForm.reset();
                       this.aggiungiAnnuncioFormSubmitted = false;
                     },
-                    error: (error: any) => {
-                      this.toastr.error(
-                        error.error.message ||
-                          error.error.messageList[0] ||
-                          "Qualcosa è andato storto nell'elaborazione della richiesta."
-                      );
-                    },
+                    error: (error: any) => {},
                     complete: () => {},
                   });
               },
-              error: (error: any) => {
-                this.toastr.error(
-                  error.error.message ||
-                    error.error.messageList[0] ||
-                    "Qualcosa è andato storto nell'elaborazione della richiesta."
-                );
-              },
+              error: (error: any) => {},
               complete: () => {},
             });
         } else {
@@ -291,13 +287,7 @@ ngAfterViewInit(): void {
                     this.toastr.show('Annuncio modificato correttamente');
                     this.updateAnnunciByAzienda();
                   },
-                  error: (error: any) => {
-                    this.toastr.error(
-                      error.error.message ||
-                        error.error.messageList[0] ||
-                        "Qualcosa è andato storto nell'elaborazione della richiesta."
-                    );
-                  },
+                  error: (error: any) => {},
                   complete: () => {},
                 });
             },
@@ -324,13 +314,7 @@ ngAfterViewInit(): void {
                 );
               }
             },
-            error: (error: any) => {
-              this.toastr.error(
-                error.error.message ||
-                  error.error.messageList[0] ||
-                  "Qualcosa è andato storto nell'elaborazione della richiesta."
-              );
-            },
+            error: (error: any) => {},
             complete: () => {},
           });
       } else {
@@ -372,8 +356,6 @@ ngAfterViewInit(): void {
     }
   }
 
-
-
   searchT(page: number, size: number, orderBy: string) {
     if (
       !this.searchTrasportatori.controls['citta'].value &&
@@ -385,23 +367,18 @@ ngAfterViewInit(): void {
       let citta = this.searchTrasportatori.controls['citta'].value;
       let nome = this.searchTrasportatori.controls['nome'].value;
       let cognome = this.searchTrasportatori.controls['cognome'].value;
-      this.trasportatoreLoader=true
+      this.trasportatoreLoader = true;
       if (citta && !nome && !cognome) {
         this.officeService.getTrByCitta(citta, page, size, orderBy).subscribe({
           next: (tr: any) => {
             this.trasporters = tr;
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "Qualcosa è successo nell'elaborazione della richiesta."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {
-             this.trasportatoreLoader=true
-setTimeout(()=>{
-  this.trasportatoreLoader=false},1000)
+            this.trasportatoreLoader = true;
+            setTimeout(() => {
+              this.trasportatoreLoader = false;
+            }, 1000);
           },
         });
       } else if (!citta && nome && cognome) {
@@ -411,15 +388,12 @@ setTimeout(()=>{
             next: (tr: any) => {
               this.trasporters = tr;
             },
-            error: (error: any) => {
-              this.toastr.error(
-                error.error.message ||
-                  error.error.messageList[0] ||
-                  "Qualcosa è successo nell'elaborazione della richiesta."
-              );
-            },
-            complete: () => {      this.trasportatoreLoader=true
-setTimeout(()=>{this.trasportatoreLoader=false},1000)
+            error: (error: any) => {},
+            complete: () => {
+              this.trasportatoreLoader = true;
+              setTimeout(() => {
+                this.trasportatoreLoader = false;
+              }, 1000);
             },
           });
       } else if (citta && nome && cognome) {
@@ -436,15 +410,12 @@ setTimeout(()=>{this.trasportatoreLoader=false},1000)
             next: (tr: any) => {
               this.trasporters = tr;
             },
-            error: (error: any) => {
-              this.toastr.error(
-                error.error.message ||
-                  error.error.messageList[0] ||
-                  "Qualcosa è successo nell'elaborazione della richiesta."
-              );
-            },
-            complete: () => {      this.trasportatoreLoader=true
-setTimeout(()=>{this.trasportatoreLoader=false},1000)
+            error: (error: any) => {},
+            complete: () => {
+              this.trasportatoreLoader = true;
+              setTimeout(() => {
+                this.trasportatoreLoader = false;
+              }, 1000);
             },
           });
       } else {
@@ -455,8 +426,7 @@ setTimeout(()=>{this.trasportatoreLoader=false},1000)
     }
   }
   openT(t: any) {
-    const dialogRef = this.matDialog.open(ProfileComponent,{data:t})
-    dialogRef.afterClosed().subscribe((data:any)=>{})
+    const dialogRef = this.matDialog.open(ProfileComponent, { data: t });
+    dialogRef.afterClosed().subscribe((data: any) => {});
   }
-
 }

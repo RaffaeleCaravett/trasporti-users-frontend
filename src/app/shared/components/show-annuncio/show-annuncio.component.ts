@@ -12,8 +12,8 @@ import { errors } from 'src/app/core/errors';
 })
 export class ShowAnnuncioComponent implements OnInit {
   user: any;
-  warningDateMessage:string=""
-  today = new Date()
+  warningDateMessage: string = '';
+  today = new Date();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -25,12 +25,16 @@ export class ShowAnnuncioComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.formsService.getUser();
-    if(this.today.toISOString().split('T')[0]>(this.data.spedizione?.daSpedire)){
-      this.warningDateMessage="Attenzione, la data di spedizione è scaduta."
-    }else if(this.today.toISOString().split('T')[0]==(this.data.spedizione?.daSpedire)){
-      this.warningDateMessage="Attenzione, la data di spedizione scade oggi."
-    }else{
-      this.warningDateMessage=""
+    if (
+      this.today.toISOString().split('T')[0] > this.data.spedizione?.daSpedire
+    ) {
+      this.warningDateMessage = 'Attenzione, la data di spedizione è scaduta.';
+    } else if (
+      this.today.toISOString().split('T')[0] == this.data.spedizione?.daSpedire
+    ) {
+      this.warningDateMessage = 'Attenzione, la data di spedizione scade oggi.';
+    } else {
+      this.warningDateMessage = '';
     }
   }
 
@@ -39,6 +43,7 @@ export class ShowAnnuncioComponent implements OnInit {
       next: (data:any) => {
         console.log(data)
         this.toastr.show('Richiesta effettuata con successo.');
+<<<<<<< HEAD
 
         const newBlob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
         //@ts-ignore
@@ -60,6 +65,11 @@ export class ShowAnnuncioComponent implements OnInit {
          "Refresha la pagina se non hai già richiesto questa spedizione. O contatta direttamente l'azienda."
           );
         },
+=======
+        this.dialogRef.close('Richiesta');
+      },
+      error: (error: any) => {},
+>>>>>>> notifiche
       complete: () => {},
     });
   }

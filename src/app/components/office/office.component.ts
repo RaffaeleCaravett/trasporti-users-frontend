@@ -137,13 +137,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
               this.user = data;
               this.toastr.success('Azienda modificata correttamente.');
             },
-            error: (error: any) => {
-              this.toastr.error(
-                error.error.message ||
-                  error.error.messageList[0] ||
-                  "Qualcosa è successo nell'elaborazione della richiesta."
-              );
-            },
+            error: (error: any) => {},
             complete: () => {},
           });
       } else {
@@ -166,13 +160,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
               this.user = data;
               this.toastr.success('Trasportatore modificato correttamente.');
             },
-            error: (error: any) => {
-              this.toastr.error(
-                error.error.message ||
-                  error.error.messageList[0] ||
-                  "Qualcosa è successo nell'elaborazione della richiesta."
-              );
-            },
+            error: (error: any) => {},
             complete: () => {},
           });
       }
@@ -205,13 +193,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
               this.toastr.success('Password modificata correttamente.');
               this.changePasswordForm.reset();
             },
-            error: (error: any) => {
-              this.toastr.error(
-                error.error.message ||
-                  error.error.messageList[0] ||
-                  "Qualcosa è successo nell'elaborazione della richiesta."
-              );
-            },
+            error: (error: any) => {},
             complete: () => {},
           });
         } else {
@@ -236,7 +218,6 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
       },
       error: (err: any) => {
         console.log(err);
-        this.toastr.error(err.error.message || err.error.messageList[0]);
       },
       complete: () => {},
     });
@@ -278,13 +259,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         next: (sta: any) => {
           this.statistica = sta;
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "Qualcosa è successo nell'elaborazione della richiesta."
-          );
-        },
+        error: (error: any) => {},
         complete: () => {},
       });
     } else {

@@ -16,6 +16,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { ShowSpedizioneComponent } from '../show-spedizione/show-spedizione.component';
 import { ConfirmOperationComponent } from '../confirm-operation/confirm-operation.component';
+import { ChatService } from 'src/app/shared/services/chat.service';
 
 @Component({
   selector: 'app-home',
@@ -46,26 +47,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private socketIoService: SocketIoService,
     private cdr: ChangeDetectorRef,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private chatService: ChatService
   ) {
     this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
       if (data) {
         for (let c of this.chats) {
           if (c.id == data.room) {
-            this.homeService
+            this.chatService
               .getChatById(this.user.role, c.id, 'receiver')
               .subscribe({
                 next: (chat: any) => {
                   c = chat;
                   this.cdr.detectChanges();
                 },
-                error: (error: any) => {
-                  this.toastr.error(
-                    error?.error?.message ||
-                      error?.error?.messageList[0] ||
-                      "E' successo un problema nell'elaborazione della richiesta."
-                  );
-                },
+                error: (error: any) => {},
               });
             if (
               !this.selectedChat ||
@@ -123,13 +119,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.transporters = data;
           this.isTLoading = false;
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile recuperare i trasportatori."
-          );
-        },
+        error: (error: any) => {},
         complete: () => {},
       });
   }
@@ -154,13 +144,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           chatContainer.classList.remove('border');
         }
         setTimeout(() => {
-          singleChat.classList.add('d-none');
+          singleChat?.classList?.add('d-none');
         }, 200);
       } else {
-        this.router.navigate([
-          '/home/chat',
-          { user: JSON.stringify(this.user), chat: null },
-        ]);
+        this.chatService.setChats(this.chats);
+        this.chatService.setSelectedChat(this.selectedChat || null);
+        this.router.navigate(['/home/chat']);
       }
     } else {
       if (!resize && chatContainer) {
@@ -187,37 +176,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getChats(userId: number) {
     if (!this.isTrasportatore) {
-      this.homeService
+      this.chatService
         .getChatsByAziendaId(userId)
         .pipe(delay(1000))
         .subscribe({
           next: (dataChats: any) => {
             this.chats = dataChats;
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le chats."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {},
         });
     } else {
-      this.homeService
+      this.chatService
         .getChatsByTrId(userId)
         .pipe(delay(1000))
         .subscribe({
           next: (dataChats: any) => {
             this.chats = dataChats;
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le chats."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {},
         });
     }
@@ -250,7 +227,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
     if (this.selectedChat == null) {
-      this.homeService
+      this.chatService
         .postChat(
           this.isTrasportatore ? chatMember.id : userId,
           this.isTrasportatore ? userId : chatMember.id,
@@ -265,13 +242,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             );
             this.getChats(userId);
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile creare la chat."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {},
         });
     }
@@ -291,10 +262,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         chatContainer.scrollTop = chatContainer.scrollHeight;
       }, 500);
     } else {
-      this.router.navigate([
-        '/home/chat',
-        { user: JSON.stringify(this.user), chat: this.selectedChat },
-      ]);
+      this.chatService.setChats(this.chats);
+      this.chatService.setSelectedChat(this.selectedChat);
+      this.router.navigate(['/home/chat']);
     }
   }
   downgradeChat() {
@@ -339,22 +309,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       //When decommenting this, remember to comment the send message part itself
       // this.socketIoService.socketEmiter(message);
       this.messageForm.reset();
-      this.homeService
+      this.chatService
         .getChatById(this.user.role, this.selectedChat.id, 'sender')
         .subscribe({
           next: (data: any) => {
             this.selectedChat = data;
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "C'è stato un problema nell'elaborazione della richiesta."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {},
         });
-      this.homeService
+      this.chatService
         .sendMessage(message)
         .pipe(delay(1000))
         .subscribe({
@@ -370,13 +334,7 @@ export class HomeComponent implements OnInit, OnDestroy {
               chatContainer.scrollTop = chatContainer.scrollHeight;
             }, 500);
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile inviare il messaggio."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {},
         });
     }
@@ -389,13 +347,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: (azs: any) => {
           this.aziende = azs;
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "C'è stato un problema nell'elaborazione della richiesta."
-          );
-        },
+        error: (error: any) => {},
         complete: () => {},
       });
   }
@@ -424,13 +376,7 @@ export class HomeComponent implements OnInit, OnDestroy {
               return 0;
             });
           },
-          error: (error: any) => {
-            this.toastr.error(
-              error.error.message ||
-                error.error.messageList[0] ||
-                "E' stato impossibile recuperare le notifiche."
-            );
-          },
+          error: (error: any) => {},
           complete: () => {},
         });
       this.homeService.getNotificheRecensioneRicevuta(this.user?.id).subscribe({
@@ -448,13 +394,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             return 0;
           });
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile recuperare le notifiche."
-          );
-        },
+        error: (error: any) => {},
         complete: () => {},
       });
       return;
@@ -480,13 +420,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             return 0;
           });
         },
-        error: (error: any) => {
-          this.toastr.error(
-            error.error.message ||
-              error.error.messageList[0] ||
-              "E' stato impossibile recuperare le notifiche."
-          );
-        },
+        error: (error: any) => {},
         complete: () => {},
       });
   }
@@ -535,71 +469,66 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-downloadRequestDocument(event:Event,spedition:any){
-  event.preventDefault()
-  this.homeService
-  .downloadRequestDocument(spedition.id, this.user.id)
-  .subscribe({
-    next: (res: any) => {
-      const newBlob = new Blob([res], {
-        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  downloadRequestDocument(event: Event, spedition: any) {
+    event.preventDefault();
+    this.homeService
+      .downloadRequestDocument(spedition.id, this.user.id)
+      .subscribe({
+        next: (res: any) => {
+          const newBlob = new Blob([res], {
+            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          });
+          //@ts-ignore
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            //@ts-ignore
+            window.navigator.msSaveOrOpenBlob(newBlob);
+            return;
+          }
+          const url = URL.createObjectURL(newBlob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `richiesta-spedizione-copia.docx`;
+          link.click();
+          URL.revokeObjectURL(url);
+          this.toastr.show("Ti suggeriamo di contattare l'azienda.");
+          this.getNotifiche();
+        },
+        error: (error: any) => {},
+        complete: () => {},
       });
-      //@ts-ignore
-      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        //@ts-ignore
-        window.navigator.msSaveOrOpenBlob(newBlob);
-        return;
-      }
-      const url = URL.createObjectURL(newBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `richiesta-spedizione-copia.docx`;
-      link.click();
-      URL.revokeObjectURL(url);
-      this.toastr.show("Ti suggeriamo di contattare l'azienda.");
-      this.getNotifiche()
-    },
-    error: (error: any) => {
-      this.toastr.error(
-        error.error.message ||
-          error.error.messageList[0] ||
-          "E' stato impossibile recuperare il documento."
-      );
-    },
-    complete: () => {},
-  });
-}
-notificationTextVariable:string='';
+  }
+  notificationTextVariable: string = '';
 
   notificationTextModified(
     notificationText: string,
     textContainer: HTMLDivElement,
     spedition: any
   ) {
-if(this.notificationTextVariable!=notificationText){
-  this.notificationTextVariable=notificationText
-  let string1: string = notificationText.substring(0, 37);
-  let string2: string = notificationText.substring(
-    49,
-    notificationText.length
-  );
-  let firstPHtmlElement =document.createElement('p')
-  let secondPHtmlElement =document.createElement('p')
-  let htmlElement = document.createElement('button');
+    if (this.notificationTextVariable != notificationText) {
+      this.notificationTextVariable = notificationText;
+      let string1: string = notificationText.substring(0, 37);
+      let string2: string = notificationText.substring(
+        49,
+        notificationText.length
+      );
+      let firstPHtmlElement = document.createElement('p');
+      let secondPHtmlElement = document.createElement('p');
+      let htmlElement = document.createElement('button');
 
-  htmlElement.classList.add('btn');
-  htmlElement.classList.add('btn-danger');
-  htmlElement.classList.add('p-0');
-  htmlElement.classList.add('m-0');
-  htmlElement.classList.add('shadow-none');
-  htmlElement.textContent = 'Clicca qui,';
-htmlElement
-  .addEventListener('click', Event => this.downloadRequestDocument(Event,spedition));
-  firstPHtmlElement.innerHTML = string1;
-  secondPHtmlElement.innerHTML += string2;
-  textContainer.appendChild(firstPHtmlElement);
-  textContainer.appendChild(htmlElement);
-  textContainer.appendChild(secondPHtmlElement);
-}
+      htmlElement.classList.add('btn');
+      htmlElement.classList.add('btn-danger');
+      htmlElement.classList.add('p-0');
+      htmlElement.classList.add('m-0');
+      htmlElement.classList.add('shadow-none');
+      htmlElement.textContent = 'Clicca qui,';
+      htmlElement.addEventListener('click', (Event) =>
+        this.downloadRequestDocument(Event, spedition)
+      );
+      firstPHtmlElement.innerHTML = string1;
+      secondPHtmlElement.innerHTML += string2;
+      textContainer.appendChild(firstPHtmlElement);
+      textContainer.appendChild(htmlElement);
+      textContainer.appendChild(secondPHtmlElement);
+    }
   }
 }

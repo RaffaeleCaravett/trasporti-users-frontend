@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { ChatService } from 'src/app/shared/services/chat.service';
+import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
   selector: 'app-chat',
@@ -7,9 +9,17 @@ import { ActivatedRoute, Route } from '@angular/router';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-user:any
+user:any;
+selectedChat:any;
+chats:any=null;
+isThereaSelectedChat:boolean=false;
+constructor(private formsService:FormsService,private chatService:ChatService){
+ this.user=this.formsService.getUser()
+ this.selectedChat=this.chatService.getSelectedChat()
+ this.chats=this.chatService.getChats()
+ if(this.selectedChat!=null){
+  this.isThereaSelectedChat=true;
+ }
 
-constructor(private route:ActivatedRoute){
- this.user=JSON.parse(this.route.snapshot.paramMap.get('user')!)
 }
 }

@@ -3,7 +3,7 @@
     {{ title() }} {{title()=='Accetta'? '✓' : '❌'}}
   </h1>
 </div>
-<div mat-dialog-content class="fs-2">
+<div mat-dialog-content class="fs-2" *ngIf="!isLoading else spinner">
   Stai {{ title() == "Accetta" ? "accettando" : "rifiutando" }} la richiesta da
   parte di
   {{
@@ -15,6 +15,11 @@
   {{ notification?.spedizione?.da }} a {{ notification?.spedizione?.a }}.
   Continuare?
 </div>
+<ng-template #spinner>
+  <div mat-dialog-content>
+    <mat-spinner class="my-5 m-auto" color="warn"></mat-spinner>
+  </div>
+</ng-template>
 <div mat-dialog-actions>
   <div class="w-100 px-3">
     <p class="pt-5">Oggi</p>

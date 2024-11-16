@@ -23,11 +23,12 @@ export class ResetPasswordComponent implements OnInit {
     this.reset = new FormGroup({
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern(
-          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-        ),
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/),
       ]),
-      codice: new FormControl('', [Validators.required,Validators.minLength(18)]),
+      codice: new FormControl('', [
+        Validators.required,
+        Validators.minLength(18),
+      ]),
       nuovaPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -43,74 +44,61 @@ export class ResetPasswordComponent implements OnInit {
     this.resetPassword.emit(false);
   }
   verifyEmail(email: string) {
-    if(this.reset.controls['email'].valid){
-    this.formsService.verifyEmail({ to: email }).subscribe({
-      next: (value: any) => {
-        console.log(value);
-if(value){
-  this.emailSended=true
-}
-      },
-      error: (error: any) => {
-        this.toastr.error(
-          error.error.message ||
-            error.error.messageList[0] ||
-            "Si è verificato un errore durante l'elaborazione della richiesta"
-        );
-      },
-      complete: () => {},
-    });
-  }else{
-    this.toastr.error("Inserisci una mail valida.")
-  }
+    if (this.reset.controls['email'].valid) {
+      this.formsService.verifyEmail({ to: email }).subscribe({
+        next: (value: any) => {
+          console.log(value);
+          if (value) {
+            this.emailSended = true;
+          }
+        },
+        error: (error: any) => {},
+        complete: () => {},
+      });
+    } else {
+      this.toastr.error('Inserisci una mail valida.');
+    }
   }
   verifyCode(code: string) {
-if(this.reset.controls['codice'].valid){
-  this.formsService.verifyCode(
-    {
-      secretCode:this.reset.controls['codice'].value,
-      email:this.reset.controls['email'].value
+    if (this.reset.controls['codice'].valid) {
+      this.formsService
+        .verifyCode({
+          secretCode: this.reset.controls['codice'].value,
+          email: this.reset.controls['email'].value,
+        })
+        .subscribe({
+          next: (value: any) => {
+            if (value) {
+              this.codeVerified = true;
+            } else {
+              this.toastr.error(
+                'Il codice che hai inserito sembra non coincidere con quello che ti abbiamo inviato.'
+              );
+            }
+          },
+          error: (error: any) => {},
+          complete: () => {},
+        });
     }
-  ).subscribe({
-    next:(value:any)=>{
-      if(value){
-this.codeVerified=true
-      }else{
-this.toastr.error("Il codice che hai inserito sembra non coincidere con quello che ti abbiamo inviato.")
-      }
-    },
-    error:(error:any)=>{
-      this.toastr.error(error.error.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
-    },
-    complete:()=>{
-
-    }
-  })
-}
   }
-  changePassword(psw: string, newPsw: string,code:string) {
-    if(this.reset.valid){
-      if(psw==newPsw)
-      {
-this.formsService.changePassword(
-  psw,
-  this.reset.controls['email'].value,
-  code
-).subscribe({
-  next:(user)=>{
-    this.toastr.show("Password cambiata correttamente.")
-    this.resetPassword.emit(false)
-  },
-  error:(error:any)=>{
-    this.toastr.error(error.error.message||error.error.messageList[0]||"C'è stato un problema nell'elaborazione della richiesta.")
-  },
-  complete:()=>{}
-})
-      }else{
-        this.toastr.error("Le password che hai inserito non coincidono.")
+  changePassword(psw: string, newPsw: string, code: string) {
+    if (this.reset.valid) {
+      if (psw == newPsw) {
+        this.formsService
+          .changePassword(psw, this.reset.controls['email'].value, code)
+          .subscribe({
+            next: (user) => {
+              this.toastr.show('Password cambiata correttamente.');
+              this.resetPassword.emit(false);
+            },
+            error: (error: any) => {},
+            complete: () => {},
+          });
+      } else {
+        this.toastr.error('Le password che hai inserito non coincidono.');
       }
-    }else{
-      this.toastr.error("Sembra che in form non sia valido.")
+    } else {
+      this.toastr.error('Sembra che in form non sia valido.');
     }
   }
 }
