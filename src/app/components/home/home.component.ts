@@ -147,10 +147,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           singleChat?.classList?.add('d-none');
         }, 200);
       } else {
-        this.router.navigate([
-          '/home/chat',
-          { user: JSON.stringify(this.user), chat: null },
-        ]);
+        this.chatService.setChats(this.chats);
+        this.chatService.setSelectedChat(this.selectedChat || null);
+        this.router.navigate(['/home/chat']);
       }
     } else {
       if (!resize && chatContainer) {
@@ -263,13 +262,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         chatContainer.scrollTop = chatContainer.scrollHeight;
       }, 500);
     } else {
-      this.router.navigate([
-        '/home/chat',
-        {
-          chat: JSON.stringify(this.selectedChat),
-          chats: JSON.stringify(this.chats),
-        },
-      ]);
+      this.chatService.setChats(this.chats);
+      this.chatService.setSelectedChat(this.selectedChat);
+      this.router.navigate(['/home/chat']);
     }
   }
   downgradeChat() {

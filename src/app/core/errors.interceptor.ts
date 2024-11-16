@@ -26,10 +26,14 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err: any) => {
         if (err instanceof HttpErrorResponse) {
           if (
-            err.error &&
-            err.error.message &&
-            err.error.message ==
-              'Il token non è valido! Per favore effettua nuovamente il login o refresha la pagina!'
+            (err.error &&
+              err.error.message &&
+              err.error.message ==
+                'Il token non è valido! Per favore effettua nuovamente il login o refresha la pagina!') ||
+            (err.error &&
+              err.error.message &&
+              err.error.message ==
+                'Il token non è valido.')
           ) {
             let trasportatore = localStorage.getItem('TrAccessToken');
             let trasportatoreR = localStorage.getItem('TrRefreshToken');
@@ -87,13 +91,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 complete: () => {},
               });
             }
-          }else{
-          this.toastr.show(
-            err?.error?.message ||
-              err?.error?.messageList[0] ||
-              err?.message ||
-              "E' successo qualcosa nell'elaborazione della richiesta"
-          );
+          } else {
+            this.toastr.show(
+              err?.error?.message ||
+                err?.error?.messageList[0] ||
+                err?.message ||
+                "E' successo qualcosa nell'elaborazione della richiesta"
+            );
           }
         }
 
