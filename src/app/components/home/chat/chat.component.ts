@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
+import { ChatService } from 'src/app/shared/services/chat.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
@@ -10,13 +11,12 @@ import { FormsService } from 'src/app/shared/services/forms.service';
 export class ChatComponent {
 user:any;
 selectedChat:any;
-chats:any[]=[];
+chats:any=null;
 isThereaSelectedChat:boolean=false;
-constructor(private route:ActivatedRoute,private formsService:FormsService){
+constructor(private formsService:FormsService,private chatService:ChatService){
  this.user=this.formsService.getUser()
- this.selectedChat=JSON.parse(this.route.snapshot.paramMap.get('chat')!)
- this.chats=JSON.parse(this.route.snapshot.paramMap.get('chats')!)
- console.log(this.user,this.selectedChat,this.chats)
+ this.selectedChat=this.chatService.getSelectedChat()
+ this.chats=this.chatService.getChats()
  if(this.selectedChat!=null){
   this.isThereaSelectedChat=true;
  }
