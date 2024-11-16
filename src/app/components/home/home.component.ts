@@ -16,6 +16,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ProfileComponent } from '../profile/profile.component';
 import { ShowSpedizioneComponent } from '../show-spedizione/show-spedizione.component';
 import { ConfirmOperationComponent } from '../confirm-operation/confirm-operation.component';
+import { ChatService } from 'src/app/shared/services/chat.service';
 
 @Component({
   selector: 'app-home',
@@ -46,13 +47,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private socketIoService: SocketIoService,
     private cdr: ChangeDetectorRef,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private chatService: ChatService
   ) {
     this.socketIoService.signleMessageFromSocket.subscribe((data: any) => {
       if (data) {
         for (let c of this.chats) {
           if (c.id == data.room) {
-            this.homeService
+            this.chatService
               .getChatById(this.user.role, c.id, 'receiver')
               .subscribe({
                 next: (chat: any) => {
@@ -175,7 +177,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getChats(userId: number) {
     if (!this.isTrasportatore) {
-      this.homeService
+      this.chatService
         .getChatsByAziendaId(userId)
         .pipe(delay(1000))
         .subscribe({
@@ -186,7 +188,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           complete: () => {},
         });
     } else {
-      this.homeService
+      this.chatService
         .getChatsByTrId(userId)
         .pipe(delay(1000))
         .subscribe({
@@ -226,7 +228,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
     if (this.selectedChat == null) {
-      this.homeService
+      this.chatService
         .postChat(
           this.isTrasportatore ? chatMember.id : userId,
           this.isTrasportatore ? userId : chatMember.id,
@@ -263,7 +265,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate([
         '/home/chat',
-        { chat: JSON.stringify(this.selectedChat), chats: JSON.stringify(this.chats) },
+        {
+          chat: JSON.stringify(this.selectedChat),
+          chats: JSON.stringify(this.chats),
+        },
       ]);
     }
   }
@@ -309,7 +314,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       //When decommenting this, remember to comment the send message part itself
       // this.socketIoService.socketEmiter(message);
       this.messageForm.reset();
-      this.homeService
+      this.chatService
         .getChatById(this.user.role, this.selectedChat.id, 'sender')
         .subscribe({
           next: (data: any) => {
@@ -318,7 +323,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           error: (error: any) => {},
           complete: () => {},
         });
-      this.homeService
+      this.chatService
         .sendMessage(message)
         .pipe(delay(1000))
         .subscribe({
