@@ -112,7 +112,6 @@ export class FormsComponent implements OnInit {
           })
           .subscribe({
             next: (data: any) => {
-              console.log(data);
               if (data && data.trasportatore) {
                 localStorage.setItem(
                   'trasportatore',
@@ -268,7 +267,6 @@ export class FormsComponent implements OnInit {
   }
 
   getRegioneByCity(city: string) {
-    let regione;
     this.formsService.getRegionByCity(city).subscribe({
       next: (regione: any) => {
         regione = regione;
@@ -277,7 +275,6 @@ export class FormsComponent implements OnInit {
         this.signupForm.updateValueAndValidity();
       },
       error: (err: any) => {
-        console.log(err);
       },
       complete: () => {},
     });

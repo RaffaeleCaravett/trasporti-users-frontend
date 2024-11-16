@@ -47,7 +47,6 @@ export class ResetPasswordComponent implements OnInit {
     if (this.reset.controls['email'].valid) {
       this.formsService.verifyEmail({ to: email }).subscribe({
         next: (value: any) => {
-          console.log(value);
           if (value) {
             this.emailSended = true;
           }

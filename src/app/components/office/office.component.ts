@@ -197,7 +197,6 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
             complete: () => {},
           });
         } else {
-          console.log(userRole);
         }
       } else {
         this.toastr.error('Le nuove password non coincidono.');
@@ -217,7 +216,6 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         this.modifyProfile.updateValueAndValidity();
       },
       error: (err: any) => {
-        console.log(err);
       },
       complete: () => {},
     });
@@ -263,11 +261,9 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         complete: () => {},
       });
     } else {
-      console.log('isT');
     }
   }
   initializeWebSocketConnection() {
-    console.log('socket');
   }
   updateModifyForm() {
     if (!this.isTrasportatore) {

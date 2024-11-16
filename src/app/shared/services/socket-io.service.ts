@@ -28,8 +28,6 @@ export class SocketIoService {
         secure:true
       });
      this.socket.on('error', (error: any) => {
-        console.log(error.message);
-        console.log(error.description);
       });
 
       this.socket.on('connect_timeout', (err: any) => {
