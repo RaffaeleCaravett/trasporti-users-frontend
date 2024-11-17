@@ -74,7 +74,7 @@ export class ChatService {
       );
     }
   }
-  getChatById(role: string, id: number, type: string) {
+  getChatById(role: string, id: number, type?: string) {
     if (role == 'Azienda') {
       return this.http.get(
         environment.API_URL + this.azienda + this.chat + `/${id}`

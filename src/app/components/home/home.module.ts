@@ -7,6 +7,7 @@ import { UserInfoModule } from '../../shared/components/user-info/user-info.modu
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatService } from 'src/app/shared/services/chat.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [HomeComponent, ChatComponent],
@@ -15,6 +16,7 @@ import { ChatService } from 'src/app/shared/services/chat.service';
     HomeRoutingModule,
     ReactiveFormsModule,
     UserInfoModule,
+    MatProgressSpinnerModule
   ],
   providers: [AziendaOfficeComponent, ChatService],
   bootstrap: [HomeComponent],

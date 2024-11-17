@@ -1,11 +1,46 @@
-<div class="container">
-  <div class="row">
-    <div class="col-3 overflow-auto">
-<p class="p-1"></p>
+<div class="container p-5">
+  <div class="row text-center border">
+    <div class="col-lg-4 col-sm-5 overflow-auto bg-light p-0 chats-container">
+      <div class="row">
+        <div class="col-md-12 p-0 py-1">
+          <p class="py-1 fs-3 border-bottom">Le tue chat</p>
+        </div>
+        <div class="col-md-12" *ngIf="!isLoading; else spinner">
+          <div *ngFor="let c of chats">
+            <button
+              class="btn"
+              title="Apri chat con {{
+                user?.role == 'Azienda'
+                  ? c?.trasportatore?.nome + ' ' + c?.trasportatore?.cognome
+                  : c?.azienda?.nomeAzienda
+              }}"
+              (click)="assignChat(c)"
+            >
+              {{
+                user?.role == "Azienda"
+                  ? c?.trasportatore?.nome + " " + c?.trasportatore?.cognome
+                  : c?.azienda?.nomeAzienda
+              }}
+            </button>
+          </div>
+        </div>
+        <ng-template #spinner>
+          <div class="col-md-12">
+            <mat-spinner color="warn" class="m-auto my-5"> </mat-spinner>
+          </div>
+        </ng-template>
+      </div>
     </div>
-    <div class="col-9">
-<h1 *ngIf="isThereaSelectedChat">La tua chat con </h1>
-<h1 *ngIf="!isThereaSelectedChat">Avvia una chat</h1>
+    <div class="col-lg-8 col-sm-7 border-left">
+      <h1 *ngIf="isThereaSelectedChat">
+        La tua chat con
+        {{
+          user?.role == "Azienda"
+            ? selectedChat?.trasportatore?.nome + " " + selectedChat?.trasportatore?.cognome
+            : selectedChat?.azienda?.nomeAzienda
+        }}
+      </h1>
+      <h1 *ngIf="!isThereaSelectedChat">Avvia una chat</h1>
     </div>
   </div>
 </div>
