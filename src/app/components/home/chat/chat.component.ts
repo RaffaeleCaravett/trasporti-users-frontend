@@ -1,11 +1,9 @@
 import {
   AfterViewChecked,
   Component,
-  Inject,
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
 import { delay } from 'rxjs';
 import { ChatService } from 'src/app/shared/services/chat.service';
 import { FormsService } from 'src/app/shared/services/forms.service';
