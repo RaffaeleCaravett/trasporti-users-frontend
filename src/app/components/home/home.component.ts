@@ -148,7 +148,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         }, 200);
       } else {
         this.chatService.setChats(this.chats);
-        this.chatService.setSelectedChat(this.selectedChat || null);
+        if(this.selectedChat){
+        this.chatService.setSelectedChat(this.selectedChat);
+        localStorage.setItem('selectedChatId',this.selectedChat.id)
+        }
         this.router.navigate(['/home/chat']);
       }
     } else {
@@ -264,6 +267,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.chatService.setChats(this.chats);
       this.chatService.setSelectedChat(this.selectedChat);
+      localStorage.setItem('selectedChatId',this.selectedChat.id)
       this.router.navigate(['/home/chat']);
     }
   }

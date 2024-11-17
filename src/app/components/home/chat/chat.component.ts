@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   user: any;
   selectedChat: any;
   chats: any = null;
-  isLoading:boolean = false
+  isLoading: boolean = false;
   isThereaSelectedChat: boolean = false;
   constructor(
     private formsService: FormsService,
@@ -34,13 +34,21 @@ export class ChatComponent implements OnInit, OnDestroy {
         : this.getChatsByTrasportatoreId();
     }
     if (localStorage.getItem('selectedChatId')) {
-      this.isThereaSelectedChat=true;
-    }
-    if (this.isThereaSelectedChat) {
-      localStorage.setItem(
-        'selectedChatId',
-        JSON.stringify(this.selectedChat.id)
-      );
+      this.isThereaSelectedChat = true;
+      this.chatService
+        .getChatById(
+          this.user.role,
+          JSON.parse(localStorage.getItem('selectedChatId')!)
+        )
+        .subscribe({
+          next: (sc: any) => {
+            this.selectedChat = sc;
+            localStorage.setItem(
+              'selectedChatId',
+              JSON.stringify(this.selectedChat.id)
+            );
+          },
+        });
     }
     localStorage.setItem('userId', JSON.stringify(this.user.id));
     localStorage.setItem('location', '/home/chat');
@@ -48,35 +56,37 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     localStorage.removeItem('userId');
     localStorage.removeItem('selectedChatId');
+    this.chatService.setChats(null);
+    this.chatService.setSelectedChat(null);
   }
 
   getChatsByAziendaId() {
-    this.isLoading=true
+    this.isLoading = true;
     this.chatService
       .getChatsByAziendaId(this.user?.id)
       .pipe(delay(1000))
       .subscribe({
         next: (data: any) => {
           this.chats = data;
-          this.isLoading=false
+          this.isLoading = false;
         },
       });
   }
   getChatsByTrasportatoreId() {
-    this.isLoading=true
+    this.isLoading = true;
     this.chatService
       .getChatsByTrId(this.user?.id)
       .pipe(delay(1000))
       .subscribe({
         next: (data: any) => {
           this.chats = data;
-          this.isLoading=false
+          this.isLoading = false;
         },
       });
   }
-  assignChat(chat:any){
-    this.selectedChat=chat;
-    this.isThereaSelectedChat=true;
-    localStorage.setItem('selectedChatId',this.selectedChat.id)
+  assignChat(chat: any) {
+    this.selectedChat = chat;
+    this.isThereaSelectedChat = true;
+    localStorage.setItem('selectedChatId', this.selectedChat.id);
   }
 }
