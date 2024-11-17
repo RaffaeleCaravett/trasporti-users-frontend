@@ -1,4 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { delay } from 'rxjs';
 import { ChatService } from 'src/app/shared/services/chat.service';
@@ -9,7 +15,7 @@ import { FormsService } from 'src/app/shared/services/forms.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   user: any;
   selectedChat: any;
   chats: any = null;
@@ -22,8 +28,11 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.user = this.formsService.getUser();
     this.selectedChat = this.chatService.getSelectedChat();
     this.chats = this.chatService.getChats();
+  }
+  ngAfterViewChecked(): void {
     if (this.selectedChat != null) {
       this.isThereaSelectedChat = true;
+      this.scrollToBottom();
     }
   }
 
@@ -47,6 +56,7 @@ export class ChatComponent implements OnInit, OnDestroy {
               'selectedChatId',
               JSON.stringify(this.selectedChat.id)
             );
+            this.scrollToBottom();
           },
         });
     }
@@ -88,5 +98,16 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.selectedChat = chat;
     this.isThereaSelectedChat = true;
     localStorage.setItem('selectedChatId', this.selectedChat.id);
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    let chatContainer = document.getElementsByClassName(
+      'chats-container'
+    )[1] as HTMLDivElement;
+    if (chatContainer != null) {
+      chatContainer.style.scrollBehavior = 'smooth';
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
   }
 }

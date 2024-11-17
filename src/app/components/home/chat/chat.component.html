@@ -1,11 +1,13 @@
 <div class="container p-5">
-  <div class="row text-center border">
-    <div class="col-lg-4 col-sm-5 overflow-auto bg-light p-0 chats-container">
+  <div class="row text-center border border-bottom-0">
+    <div
+      class="col-lg-4 col-sm-5 overflow-auto bg-light py-3 border border-top-0 border-left-0 border-start-0"
+    >
       <div class="row">
         <div class="col-md-12 p-0 py-1">
-          <p class="py-1 fs-3 border-bottom">Le tue chat</p>
+          <p class="py-1 fs-3 fw-bold border-bottom">Le tue chat</p>
         </div>
-        <div class="col-md-12" *ngIf="!isLoading; else spinner">
+        <div class="col-md-12 chats-container" *ngIf="!isLoading; else spinner">
           <div *ngFor="let c of chats">
             <button
               class="btn"
@@ -31,20 +33,52 @@
         </ng-template>
       </div>
     </div>
-    <div class="col-lg-8 col-sm-7 border-left">
+    <div class="col-lg-8 col-sm-7 border-bottom py-3">
       <div class="row">
-        <div class="col-md-12 py-2">
-          <h1 *ngIf="isThereaSelectedChat">
-            La tua chat con
+        <div class="col-md-12 p-0 py-1">
+          <p
+            class="fs-3 fw-bold py-1 border-bottom"
+            *ngIf="isThereaSelectedChat"
+          >
             {{
               user?.role == "Azienda"
-                ? selectedChat?.trasportatore?.nome + " " + selectedChat?.trasportatore?.cognome
+                ? selectedChat?.trasportatore?.nome +
+                  " " +
+                  selectedChat?.trasportatore?.cognome
                 : selectedChat?.azienda?.nomeAzienda
             }}
-          </h1>
+          </p>
+          <p class="fs-3 py-1 border-bottom" *ngIf="!isThereaSelectedChat">
+            Avvia una chat
+          </p>
+        </div>
+        <div class="col-md-12 chats-container overflow-auto">
+          <div
+            *ngFor="let m of selectedChat?.messaggiList"
+            class="d-flex"
+            [ngClass]="
+              m?.aziendaAsSender?.id == user.id ||
+              m?.trasportatoreAsSender?.id == user.id
+                ? 'justify-content-end'
+                : 'justify-content-start'
+            "
+          >
+            <p
+              [ngClass]="
+                m?.aziendaAsSender?.id == user.id ||
+                m?.trasportatoreAsSender?.id == user.id
+                  ? 'bg-info px-3'
+                  : 'bg-light px-3'
+              "
+              class="p-1 rounded"
+              style="width: fit-content"
+            title="{{m.createdAt}}"
+              >
+              {{ m.testo }}
+            </p>
+          </div>
         </div>
       </div>
-      <h1 *ngIf="!isThereaSelectedChat">Avvia una chat</h1>
     </div>
   </div>
 </div>
