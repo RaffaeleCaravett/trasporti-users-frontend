@@ -15,7 +15,7 @@
         unisciti a noi!
       </p>
     </div>
-    <div class="col-md-6 p-3" *ngIf="section == 'login'">
+    <div class="col-md-6" *ngIf="section == 'login'">
       <p class="fs-3">Accedi</p>
       <form [formGroup]="loginForm" class="p-3 w-75 m-auto">
         <div class="row border rounded p-1">
@@ -97,7 +97,7 @@
     </div>
     <div class="col-md-6 p-3" *ngIf="section == 'signup'">
       <p class="fs-3">Registrati</p>
-      <div class="p-3 w-75 m-auto">
+      <div class="auto-width m-auto">
         <div class="row border rounded p-1">
           <form [formGroup]="signupForm">
             <div class="col-md-12">
@@ -397,9 +397,33 @@
             </p>
           </form>
           <form [formGroup]="profileImageForm">
-            <label for="">Scegli un'immagine del profilo</label>
-            <input type="file" class="form-control d-none" formControlName="profileImage" (change)="handleProfileImage()" #profileImage accept="image/png, image/jpg, image/jpeg">
-            <img src="../../../assets/forms/profile.png" alt="avatar_profilo" class="m-auto w-50 my-3 rounded-circle border shadow profile-image" (click)="profileImage.click()">
+            <label for="">Scegli un'immagine del profilo</label><br>
+            <input
+              type="file"
+              class="form-control d-none"
+              formControlName="profileImage"
+              (change)="handleProfileImage($event)"
+              #profileImage
+              accept="image/png, image/jpg, image/jpeg"
+            /> <br>
+            <img
+              src="assets/forms/profile.png"
+              alt="avatar_profilo"
+              class="m-auto my-3 rounded-circle border shadow profile-image"
+              style="height:auto;"
+              (click)="profileImage.click()"
+              *ngIf="url == ''"
+            /> <br>
+            <div class="text-end">
+              <button class="btn btn-danger" *ngIf="url!=''" (click)="url = ''">Delete</button>
+            </div>
+            <img
+              [src]="url"
+              alt="avatar_profilo"
+              class="m-auto rounded-circle border shadow profile-image"
+              (click)="profileImage.click()"
+              *ngIf="url != ''"
+            />
           </form>
           <button class="btn btn-dark w-75 m-auto my-3" (click)="signup()">
             Register
@@ -414,12 +438,20 @@
       <mat-spinner class="my-5 m-auto" color="warn"></mat-spinner>
     </div>
     <div class="col-md-6"></div>
-    <div class="col-md-6 my-5" *ngIf="section=='login'">
+    <div class="col-md-6 my-5" *ngIf="section == 'login'">
       <p>**Hai dimenticato la password?</p>
-      <button class="btn btn-light" (click)="showResetPassword=!showResetPassword">Clicca qui</button>
+      <button
+        class="btn btn-light"
+        (click)="showResetPassword = !showResetPassword"
+      >
+        Clicca qui
+      </button>
     </div>
     <div class="col-md-12">
-      <app-reset-password *ngIf="showResetPassword"  (resetPassword)="onReceiveResetPassword($event)"></app-reset-password>
+      <app-reset-password
+        *ngIf="showResetPassword"
+        (resetPassword)="onReceiveResetPassword($event)"
+      ></app-reset-password>
     </div>
   </div>
 </div>

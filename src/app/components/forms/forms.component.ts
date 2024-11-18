@@ -23,6 +23,7 @@ export class FormsComponent implements OnInit {
   loginValue = '';
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
+  url:string='';
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -32,7 +33,7 @@ export class FormsComponent implements OnInit {
   ngOnInit(): void {
     localStorage.clear();
     this.profileImageForm = new FormGroup({
-      profileImage:new FormControl('',Validators.required)
+      profileImage: new FormControl('', Validators.required),
     });
     this.loginForm = new FormGroup({
       email: new FormControl('', [
@@ -292,7 +293,15 @@ export class FormsComponent implements OnInit {
   onReceiveResetPassword(rP: boolean) {
     this.showResetPassword = rP;
   }
-  handleProfileImage(){
+  handleProfileImage(event: any) {
+    if (event&&event.target&&event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
 
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+    }
   }
 }
