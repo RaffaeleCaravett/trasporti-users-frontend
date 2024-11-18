@@ -1,4 +1,4 @@
-<div class="container p-5">
+<div class="container py-5 p-3">
   <div class="row text-center border border-bottom-0">
     <div
       class="col-lg-4 col-sm-5 overflow-auto bg-light py-3 border border-top-0 border-left-0 border-start-0"
@@ -72,11 +72,27 @@
               "
               class="p-1 rounded"
               style="width: fit-content"
-            title="{{m.createdAt}}"
-              >
+              title="{{ m.createdAt }}"
+            >
               {{ m.testo }}
             </p>
           </div>
+        </div>
+        <div class="col-md-12" *ngIf="isThereaSelectedChat">
+          <form [formGroup]="sendMessageForm">
+            <div class="row">
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="testo"
+                />
+              </div>
+              <div class="col-sm-3">
+                <button class="btn" (click)="sendMessage()">Invia</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
