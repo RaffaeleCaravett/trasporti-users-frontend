@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserInfoModule } from '../../shared/components/user-info/user-info.module';
 import { AziendaOfficeComponent } from 'src/app/shared/components/azienda-office/azienda-office.component';
 import { ChatComponent } from './chat/chat.component';
-import { ChatService } from 'src/app/shared/services/chat.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
@@ -18,7 +17,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     UserInfoModule,
     MatProgressSpinnerModule
   ],
-  providers: [AziendaOfficeComponent, ChatService],
+  providers: [AziendaOfficeComponent],
   bootstrap: [HomeComponent],
   exports: [ChatComponent],
 })

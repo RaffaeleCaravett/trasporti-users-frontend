@@ -9,6 +9,7 @@ import { delay, throttleTime } from 'rxjs';
 import { ShowSpedizioneComponent } from 'src/app/components/show-spedizione/show-spedizione.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProfileComponent } from 'src/app/components/profile/profile.component';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-trasportatore-office',
@@ -38,12 +39,13 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
   speditionState: string = '';
   speditionPages: number[] = [];
   searchAziendaForm: FormGroup = new FormGroup({});
-  aziende:any
+  aziende: any;
   constructor(
     private officeService: OfficeService,
     private toastr: ToastrService,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -123,13 +125,13 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
     }, 1000);
   }
 
-  getAllAnnunci(orderBy: string, ordering?: string, page?: number|string) {
+  getAllAnnunci(orderBy: string, ordering?: string, page?: number | string) {
     this.officeService
       .getAllAnnunci(orderBy, ordering || 'ASC', Number(page) || 0)
       .subscribe({
         next: (data: any) => {
           this.annunci = data;
-          this.pages=[]
+          this.pages = [];
           for (let i = 1; i <= this.annunci.totalPages; i++) {
             this.pages.push(i);
           }
@@ -189,17 +191,26 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
         error: (error: any) => {},
         complete: () => {},
       });
-    this.router.navigate([
-      '/home/chat',
-      { user: JSON.stringify(this.user), chat: this.selectedChat },
-    ]);
+    if (this.user?.role == 'Azienda') {
+      this.chatService.getChatsByAziendaId(this.user.id).subscribe({
+        next: (data: any) => {
+          this.goToChatComponent(data);
+        },
+      });
+    } else {
+      this.chatService.getChatsByTrId(this.user.id).subscribe({
+        next: (data: any) => {
+          this.goToChatComponent(data);
+        },
+      });
+    }
   }
 
-  getSpedizioniByTId(statoSpedizione?: string, page?: any,direction?:string) {
+  getSpedizioniByTId(statoSpedizione?: string, page?: any, direction?: string) {
     let numberPage = Number(page);
     this.isLoading = true;
     this.officeService
-      .getSpedizioniByTrId(this.user.id, statoSpedizione, numberPage,direction)
+      .getSpedizioniByTrId(this.user.id, statoSpedizione, numberPage, direction)
       .pipe(delay(1000))
       .subscribe({
         next: (spedizioni: any) => {
@@ -246,15 +257,21 @@ export class TrasportatoreOfficeComponent implements OnChanges, OnInit {
       )
       .subscribe({
         next: (aziende) => {
-          this.aziende=aziende;
+          this.aziende = aziende;
         },
         error: (error) => {},
         complete: () => {},
       });
   }
-  visualizeAzienda(azienda:any){
-const matDialog = this.matDialog.open(ProfileComponent,{data:azienda})
-matDialog.afterClosed().subscribe(()=>{})
+  visualizeAzienda(azienda: any) {
+    const matDialog = this.matDialog.open(ProfileComponent, { data: azienda });
+    matDialog.afterClosed().subscribe(() => {});
   }
 
+  goToChatComponent(chats: any) {
+    this.chatService.setChats(chats);
+    this.chatService.setSelectedChat(this.selectedChat);
+    localStorage.setItem('selectedChatId', this.selectedChat.id);
+    this.router.navigate(['/home/chat']);
+  }
 }

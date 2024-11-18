@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.user = this.formsService.getUser();
     this.selectedChat = this.chatService.getSelectedChat();
     this.chats = this.chatService.getChats();
+    debugger
   }
   ngAfterViewChecked(): void {
     if (this.selectedChat != null) {
