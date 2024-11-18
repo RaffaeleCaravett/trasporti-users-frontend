@@ -22,6 +22,7 @@ export class FormsComponent implements OnInit {
   submittedLogin: boolean = false;
   loginValue = '';
   showResetPassword: boolean = false;
+  profileImageForm: FormGroup = new FormGroup({});
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -30,6 +31,9 @@ export class FormsComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.clear();
+    this.profileImageForm = new FormGroup({
+      profileImage:new FormControl('',Validators.required)
+    });
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
@@ -274,8 +278,7 @@ export class FormsComponent implements OnInit {
         this.signupForm.controls['cap'].setValue('87050');
         this.signupForm.updateValueAndValidity();
       },
-      error: (err: any) => {
-      },
+      error: (err: any) => {},
       complete: () => {},
     });
   }
@@ -288,5 +291,8 @@ export class FormsComponent implements OnInit {
   }
   onReceiveResetPassword(rP: boolean) {
     this.showResetPassword = rP;
+  }
+  handleProfileImage(){
+
   }
 }

@@ -2,9 +2,7 @@
 <div class="p-2">
 <div class="row text-start p-2 border rounded overflow-auto">
 <div class="row" *ngIf="isTrasportatore else azienda">
-<div class="col-md-12"><span class="text-danger">
-
-</span>{{user?.role}}</div>
+<div class="col-md-12 fw-bold">{{user?.role}}</div>
   <div class="col-md-6"><span class="text-danger">
 Nome :
   </span>{{user?.nome + ' '}} </div>
@@ -38,10 +36,7 @@ C.F.
 </div>
 <ng-template #azienda>
 <div class="row">
-<div class="col-md-12">
-<span class="text-danger">
-Tipo :
-</span>
+<div class="col-md-12 fw-bold">
 {{user?.role}}
 </div>
 <div class="col-md-12">

@@ -396,6 +396,11 @@
               italiana.
             </p>
           </form>
+          <form [formGroup]="profileImageForm">
+            <label for="">Scegli un'immagine del profilo</label>
+            <input type="file" class="form-control d-none" formControlName="profileImage" (change)="handleProfileImage()" #profileImage accept="image/png, image/jpg, image/jpeg">
+            <img src="../../../assets/forms/profile.png" alt="avatar_profilo" class="m-auto w-50 my-3 rounded-circle border shadow profile-image" (click)="profileImage.click()">
+          </form>
           <button class="btn btn-dark w-75 m-auto my-3" (click)="signup()">
             Register
           </button>
@@ -409,7 +414,7 @@
       <mat-spinner class="my-5 m-auto" color="warn"></mat-spinner>
     </div>
     <div class="col-md-6"></div>
-    <div class="col-md-6 my-5">
+    <div class="col-md-6 my-5" *ngIf="section=='login'">
       <p>**Hai dimenticato la password?</p>
       <button class="btn btn-light" (click)="showResetPassword=!showResetPassword">Clicca qui</button>
     </div>
