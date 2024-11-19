@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthGuard } from 'src/app/core/AuthGuard';
@@ -48,13 +48,13 @@ TsignUp(body:any,file:File){
   let formData = new FormData();
   formData.append('trasportatoreDTO',body)
   formData.append('profileImage',file)
-  return this.http.post(environment.API_URL+this.auth+this.Tsignup,formData)
+  return this.http.post(environment.API_URL+this.auth+this.Tsignup,formData,{headers : new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
 }
 AzsignUp(body:any,file:File){
   let formData = new FormData();
   formData.append('aziendaDTO',body)
   formData.append('profileImage',file)
-  return this.http.post(environment.API_URL+this.auth+this.Azsignup,formData)
+  return this.http.post(environment.API_URL+this.auth+this.Azsignup,formData,{headers : new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
 }
 getToken(){
   return this.token;

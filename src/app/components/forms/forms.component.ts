@@ -73,7 +73,8 @@ export class FormsComponent implements OnInit {
       ]),
       partitaIva: new FormControl('', [
         Validators.required,
-        Validators.minLength(11),
+        Validators.min(10000000000),
+        Validators.max(99999999999)
       ]),
       flottaMezzi: new FormControl('', Validators.required),
     });
@@ -84,7 +85,8 @@ export class FormsComponent implements OnInit {
       settore: new FormControl('', [Validators.required]),
       partitaIva: new FormControl('', [
         Validators.required,
-        Validators.minLength(11),
+        Validators.min(10000000000),
+        Validators.max(99999999999)
       ]),
     });
 

@@ -301,6 +301,7 @@
               Inserisci un valore che rispetti il pattern della partita iva
               italiana.
             </p>
+            {{ trasportatoreForm.controls["partitaIva"].invalid }}
             <label for="" class="py-3">Flotta mezzi</label>
             <input
               type="number"
@@ -389,15 +390,17 @@
             <p
               class="text-danger"
               *ngIf="
-                submitted == true && aziendaForm.controls['partitaIva'].invalid
+                submitted == true &&
+                aziendaForm.controls['partitaIva'].invalid
               "
             >
               Inserisci un valore che rispetti il pattern della partita iva
               italiana.
             </p>
+            {{ aziendaForm.controls["partitaIva"].invalid }}
           </form>
           <form [formGroup]="profileImageForm">
-            <label for="">Scegli un'immagine del profilo</label><br>
+            <label for="">Scegli un'immagine del profilo</label><br />
             <input
               type="file"
               class="form-control d-none"
@@ -405,17 +408,25 @@
               (change)="handleProfileImage($event)"
               #profileImage
               accept="image/png, image/jpg, image/jpeg"
-            /> <br>
+            />
+            <br />
             <img
               src="assets/forms/profile.png"
               alt="avatar_profilo"
               class="m-auto my-3 rounded-circle border shadow profile-image"
-              style="height:auto;"
+              style="height: auto"
               (click)="profileImage.click()"
               *ngIf="url == ''"
-            /> <br>
+            />
+            <br />
             <div class="text-end">
-              <button class="btn btn-danger" *ngIf="url!=''" (click)="url = ''">Delete</button>
+              <button
+                class="btn btn-danger"
+                *ngIf="url != ''"
+                (click)="url = ''"
+              >
+                Delete
+              </button>
             </div>
             <img
               [src]="url"
@@ -424,6 +435,12 @@
               (click)="profileImage.click()"
               *ngIf="url != ''"
             />
+            <p
+              *ngIf="submitted && profileImageForm.invalid"
+              class="text-danger"
+            >
+              Inserisci un'immagine.
+            </p>
           </form>
           <button class="btn btn-dark w-75 m-auto my-3" (click)="signup()">
             Register
