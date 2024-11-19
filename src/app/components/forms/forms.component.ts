@@ -23,7 +23,7 @@ export class FormsComponent implements OnInit {
   loginValue = '';
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
-  url:string='';
+  url: string = '';
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -187,7 +187,8 @@ export class FormsComponent implements OnInit {
       let password = this.signupForm.controls['password'].value;
       if (
         this.signupForm.controls['type'].value == 'trasportatore' &&
-        this.trasportatoreForm.valid
+        this.trasportatoreForm.valid &&
+        this.profileImageForm.valid
       ) {
         let nome = this.trasportatoreForm.controls['nome'].value;
         let cognome = this.trasportatoreForm.controls['cognome'].value;
@@ -198,20 +199,23 @@ export class FormsComponent implements OnInit {
         let flottaMezzi = this.trasportatoreForm.controls['flottaMezzi'].value;
 
         this.formsService
-          .TsignUp({
-            citta: citta,
-            regione: regione,
-            indirizzo: indirizzo,
-            cap: cap,
-            email: email,
-            password: password,
-            nome: nome,
-            cognome: cognome,
-            eta: eta,
-            codiceFiscale: codiceFiscale,
-            partitaIva: partitaIva,
-            flottaMezzi: flottaMezzi,
-          })
+          .TsignUp(
+            {
+              citta: citta,
+              regione: regione,
+              indirizzo: indirizzo,
+              cap: cap,
+              email: email,
+              password: password,
+              nome: nome,
+              cognome: cognome,
+              eta: eta,
+              codiceFiscale: codiceFiscale,
+              partitaIva: partitaIva,
+              flottaMezzi: flottaMezzi,
+            },
+            this.profileImageForm.controls['profileImage'].value
+          )
           .subscribe({
             next: (data) => {
               this.toastr.show(
@@ -225,7 +229,8 @@ export class FormsComponent implements OnInit {
       } else {
         if (
           this.aziendaForm.valid &&
-          this.signupForm.controls['type'].value == 'azienda'
+          this.signupForm.controls['type'].value == 'azienda' &&
+          this.profileImageForm.valid
         ) {
           let nomeAzienda = this.aziendaForm.controls['nomeAzienda'].value;
           let fatturatoMedio =
@@ -235,19 +240,22 @@ export class FormsComponent implements OnInit {
           let settore = this.aziendaForm.controls['settore'].value;
           let partitaIva = this.aziendaForm.controls['partitaIva'].value;
           this.formsService
-            .AzsignUp({
-              citta: citta,
-              regione: regione,
-              indirizzo: indirizzo,
-              cap: cap,
-              email: email,
-              password: password,
-              nomeAzienda: nomeAzienda,
-              fatturatoMedio: fatturatoMedio,
-              numeroDipendenti: numeroDipendenti,
-              partitaIva: partitaIva,
-              settore: settore,
-            })
+            .AzsignUp(
+              {
+                citta: citta,
+                regione: regione,
+                indirizzo: indirizzo,
+                cap: cap,
+                email: email,
+                password: password,
+                nomeAzienda: nomeAzienda,
+                fatturatoMedio: fatturatoMedio,
+                numeroDipendenti: numeroDipendenti,
+                partitaIva: partitaIva,
+                settore: settore,
+              },
+              this.profileImageForm.controls['profileImage'].value
+            )
             .subscribe({
               next: (data) => {
                 this.toastr.show(
@@ -294,14 +302,14 @@ export class FormsComponent implements OnInit {
     this.showResetPassword = rP;
   }
   handleProfileImage(event: any) {
-    if (event&&event.target&&event.target.files && event.target.files[0]) {
+    if (event && event.target && event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]);
 
-      reader.onload = (event:any) => {
+      reader.onload = (event: any) => {
         this.url = event.target.result;
-      }
+      };
     }
   }
 }

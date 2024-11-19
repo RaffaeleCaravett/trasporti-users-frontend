@@ -44,11 +44,17 @@ TlogIn(body:any){
 AlogIn(body:any){
   return this.http.post(environment.API_URL+this.auth+this.Alogin,body)
 }
-TsignUp(body:any){
-  return this.http.post(environment.API_URL+this.auth+this.Tsignup,body)
+TsignUp(body:any,file:File){
+  let formData = new FormData();
+  formData.append('trasportatoreDTO',body)
+  formData.append('profileImage',file)
+  return this.http.post(environment.API_URL+this.auth+this.Tsignup,formData)
 }
-AzsignUp(body:any){
-  return this.http.post(environment.API_URL+this.auth+this.Azsignup,body)
+AzsignUp(body:any,file:File){
+  let formData = new FormData();
+  formData.append('aziendaDTO',body)
+  formData.append('profileImage',file)
+  return this.http.post(environment.API_URL+this.auth+this.Azsignup,formData)
 }
 getToken(){
   return this.token;
