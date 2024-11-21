@@ -301,7 +301,6 @@
               Inserisci un valore che rispetti il pattern della partita iva
               italiana.
             </p>
-            {{ trasportatoreForm.controls["partitaIva"].invalid }}
             <label for="" class="py-3">Flotta mezzi</label>
             <input
               type="number"
@@ -397,7 +396,6 @@
               Inserisci un valore che rispetti il pattern della partita iva
               italiana.
             </p>
-            {{ aziendaForm.controls["partitaIva"].invalid }}
           </form>
           <form [formGroup]="profileImageForm">
             <label for="">Scegli un'immagine del profilo</label><br />
@@ -423,7 +421,7 @@
               <button
                 class="btn btn-danger"
                 *ngIf="url != ''"
-                (click)="url = ''"
+                (click)="updateUrl()"
               >
                 Delete
               </button>
