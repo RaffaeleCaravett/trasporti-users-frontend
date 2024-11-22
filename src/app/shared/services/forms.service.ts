@@ -51,30 +51,30 @@ export class FormsService {
   }
   TsignUp(body: any, file: File) {
     let formData = new FormData();
-    formData.append('trasportatoreDTO', body);
+    formData.append(
+      'trasportatoreDTO',
+      new Blob([JSON.stringify(body)], {
+        type: 'application/json',
+      })
+    );
     formData.append('profileImage', file);
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    let options = { headers: headers };
     return this.http.post(
       environment.API_URL + this.auth + this.Tsignup,
-      formData,
-      options
+      formData
     );
   }
   AzsignUp(body: any, file: File) {
     let formData = new FormData();
-    formData.append('aziendaDTO', body);
+    formData.append(
+      'aziendaDTO',
+      new Blob([JSON.stringify(body)], {
+        type: 'application/json',
+      })
+    );
     formData.append('profileImage', file);
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    let options = { headers: headers };
     return this.http.post(
       environment.API_URL + this.auth + this.Azsignup,
-      formData,
-      options
+      formData
     );
   }
   getToken() {
