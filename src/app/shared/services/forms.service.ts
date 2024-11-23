@@ -48,7 +48,7 @@ TsignUp(body:any,file:File){
   let formData = new FormData();
   formData.append('trasportatoreDTO',new Blob([JSON.stringify(body)],{ type: 'application/json' }))
   formData.append('profile_image',file)
-  return this.http.post(environment.API_URL+this.auth+this.Tsignup,formData,{headers : new HttpHeaders({ 'Content-Type': 'multipart/form-data' })})
+  return this.http.post(environment.API_URL+this.auth+this.Tsignup,formData)
 }
 AzsignUp(body:any,file:File){
   let formData = new FormData();
