@@ -25,6 +25,7 @@ export class FormsComponent implements OnInit {
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
+  loginProfileImagePreview:string=''
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -321,5 +322,13 @@ export class FormsComponent implements OnInit {
     this.selectedImage = null;
     this.profileImageForm.controls['profileImage'].setValue(null);
     this.profileImageForm.updateValueAndValidity();
+  }
+
+  showProfileImage(){
+    if(this.loginForm.controls['email'].valid){
+
+    }else{
+      this.loginProfileImagePreview=''
+    }
   }
 }
