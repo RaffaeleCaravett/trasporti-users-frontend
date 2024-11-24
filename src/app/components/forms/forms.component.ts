@@ -25,7 +25,7 @@ export class FormsComponent implements OnInit {
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
-  loginProfileImagePreview:string=''
+  loginProfileImagePreview: string = ''
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -324,11 +324,19 @@ export class FormsComponent implements OnInit {
     this.profileImageForm.updateValueAndValidity();
   }
 
-  showProfileImage(){
-    if(this.loginForm.controls['email'].valid){
-
-    }else{
-      this.loginProfileImagePreview=''
+  showProfileImage() {
+    let email = this.loginForm.controls['email'] as FormControl;
+    let value = this.loginForm.controls['value'] as FormControl
+    if (email.valid && value.value) {
+      this.formsService.getProfileImagePreview(email.value,value.value).subscribe((profileImage: any) => {
+        if (profileImage) {
+          this.loginProfileImagePreview = profileImage;
+        } else {
+          this.loginProfileImagePreview = '';
+        }
+      })
+    } else {
+      this.loginProfileImagePreview = '';
     }
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthGuard } from 'src/app/core/AuthGuard';
 import { environment } from 'src/app/core/environment';
 
@@ -26,6 +26,7 @@ export class FormsService {
   private testSecretCode:string = '/testSecretCode'
   private changePassBySecretCode:string = '/changePassBySecretCode'
   isAuthenticatedUser:BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false)
+  private profileImagePreview:string='/profileImagePreview'
 
   constructor(private http:HttpClient,private authGuard:AuthGuard) { }
 
@@ -93,5 +94,8 @@ verifyCode(code:any){
 }
 changePassword(newPsw:string,email:string,code:string){
   return this.http.get(environment.API_URL+this.auth+this.changePassBySecretCode+`/${newPsw}/${email}/${code}`)
+}
+getProfileImagePreview(userId:string,type:string):Observable<Object>{
+  return this.http.get(environment.API_URL+this.auth+this.profileImagePreview+`/${userId}/${type}`)
 }
 }
