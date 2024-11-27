@@ -24,6 +24,7 @@ export class FormsComponent implements OnInit {
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
+  selectedImage: any = null;
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -74,7 +75,7 @@ export class FormsComponent implements OnInit {
       partitaIva: new FormControl('', [
         Validators.required,
         Validators.min(10000000000),
-        Validators.max(99999999999)
+        Validators.max(99999999999),
       ]),
       flottaMezzi: new FormControl('', Validators.required),
     });
@@ -86,7 +87,7 @@ export class FormsComponent implements OnInit {
       partitaIva: new FormControl('', [
         Validators.required,
         Validators.min(10000000000),
-        Validators.max(99999999999)
+        Validators.max(99999999999),
       ]),
     });
 
@@ -190,7 +191,7 @@ export class FormsComponent implements OnInit {
       if (
         this.signupForm.controls['type'].value == 'trasportatore' &&
         this.trasportatoreForm.valid &&
-        this.profileImageForm.valid
+        this.selectedImage
       ) {
         let nome = this.trasportatoreForm.controls['nome'].value;
         let cognome = this.trasportatoreForm.controls['cognome'].value;
@@ -216,7 +217,7 @@ export class FormsComponent implements OnInit {
               partitaIva: partitaIva,
               flottaMezzi: flottaMezzi,
             },
-            this.profileImageForm.controls['profileImage'].value
+            this.selectedImage
           )
           .subscribe({
             next: (data) => {
@@ -232,7 +233,7 @@ export class FormsComponent implements OnInit {
         if (
           this.aziendaForm.valid &&
           this.signupForm.controls['type'].value == 'azienda' &&
-          this.profileImageForm.valid
+          this.selectedImage
         ) {
           let nomeAzienda = this.aziendaForm.controls['nomeAzienda'].value;
           let fatturatoMedio =
@@ -256,7 +257,7 @@ export class FormsComponent implements OnInit {
                 partitaIva: partitaIva,
                 settore: settore,
               },
-              this.profileImageForm.controls['profileImage'].value
+              this.selectedImage
             )
             .subscribe({
               next: (data) => {
@@ -297,6 +298,8 @@ export class FormsComponent implements OnInit {
   sectionChange(value: string) {
     this.section = '';
     setTimeout(() => {
+      this.selectedImage = null;
+      this.url = '';
       this.section = value;
     }, 2000);
   }
@@ -305,13 +308,19 @@ export class FormsComponent implements OnInit {
   }
   handleProfileImage(event: any) {
     if (event && event.target && event.target.files && event.target.files[0]) {
+      this.selectedImage = event.target.files[0];
+
       var reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]);
 
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
+      reader.onload = (eventR: any) => {
+        this.url = eventR.target.result;
       };
     }
+  }
+  updateUrl() {
+    this.url = '';
+    this.selectedImage = null;
   }
 }
