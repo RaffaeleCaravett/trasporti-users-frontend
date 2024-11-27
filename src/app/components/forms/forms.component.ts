@@ -323,6 +323,8 @@ export class FormsComponent implements OnInit {
 
   cleanProfileImage() {
     this.url = '';
+    this.profileImageForm.controls['profileImage'].setValue(null);
+    this.profileImageForm.updateValueAndValidity();
     this.selectedImage = null;
     this.profileImageForm.controls['profileImage'].setValue(null);
     this.profileImageForm.updateValueAndValidity();
