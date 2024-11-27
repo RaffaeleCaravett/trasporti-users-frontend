@@ -314,8 +314,8 @@ export class FormsComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]);
 
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
+      reader.onload = (eventR: any) => {
+        this.url = eventR.target.result;
       };
     }
   }
