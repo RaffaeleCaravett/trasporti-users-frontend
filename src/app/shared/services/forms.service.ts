@@ -25,6 +25,7 @@ export class FormsService {
   private resetPassword: string = '/resetPassword';
   private testSecretCode: string = '/testSecretCode';
   private changePassBySecretCode: string = '/changePassBySecretCode';
+  private checkProfileImage: string = '/checkProfileImage';
   isAuthenticatedUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -133,5 +134,8 @@ export class FormsService {
         this.changePassBySecretCode +
         `/${newPsw}/${email}/${code}`
     );
+  }
+  checkProfileImageIsPresent(email:string){
+    return this.http.get(environment.API_URL+this.auth+this.checkProfileImage+`/${email}`)
   }
 }
