@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { delay } from 'rxjs';
 import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
@@ -25,7 +26,9 @@ export class FormsComponent implements OnInit {
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
-  loginProfileImagePreview: string = ''
+  selectedImage: any = null;
+  emailIsLoading:boolean=false;
+  profileImagePreview:string='';
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -343,6 +346,32 @@ export class FormsComponent implements OnInit {
       })
     } else {
       this.loginProfileImagePreview = '';
+    }
+  }
+  checkProfileImage(){
+    let email = this.loginForm.controls['email'];
+    this.profileImagePreview='';
+    if(email.valid){
+      this.emailIsLoading=true;
+      this.formsService.checkProfileImageIsPresent(email.value).pipe(delay(1000)).subscribe({
+        next:(value:any)=>{
+          this.profileImagePreview=value;
+          this.emailIsLoading=false;
+        }
+      })
+    }
+  }
+  checkProfileImage(){
+    let email = this.loginForm.controls['email'];
+    this.profileImagePreview='';
+    if(email.valid){
+      this.emailIsLoading=true;
+      this.formsService.checkProfileImageIsPresent(email.value).pipe(delay(1000)).subscribe({
+        next:(value:any)=>{
+          this.profileImagePreview=value;
+          this.emailIsLoading=false;
+        }
+      })
     }
   }
 }
