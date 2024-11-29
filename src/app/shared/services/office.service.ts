@@ -186,7 +186,7 @@ export class OfficeService {
   ) {
     let formData = new FormData();
     formData.append(
-      'aziendaDTO',
+      'trasportatoreDTO',
       new Blob([JSON.stringify(trasportatoreDTO)], {
         type: 'application/json',
       })
