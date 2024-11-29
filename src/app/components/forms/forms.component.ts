@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { delay } from 'rxjs';
 import { FormsService } from 'src/app/shared/services/forms.service';
 
 @Component({
@@ -25,6 +26,8 @@ export class FormsComponent implements OnInit {
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
   selectedImage: any = null;
+  emailIsLoading:boolean=false;
+  profileImagePreview:string='';
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
@@ -324,5 +327,18 @@ export class FormsComponent implements OnInit {
     this.profileImageForm.controls['profileImage'].setValue(null);
     this.profileImageForm.updateValueAndValidity();
     this.selectedImage = null;
+  }
+  checkProfileImage(){
+    let email = this.loginForm.controls['email'];
+    this.profileImagePreview='';
+    if(email.valid){
+      this.emailIsLoading=true;
+      this.formsService.checkProfileImageIsPresent(email.value).pipe(delay(2000)).subscribe({
+        next:(value:any)=>{
+          this.profileImagePreview=value;
+          this.emailIsLoading=false;
+        }
+      })
+    }
   }
 }
