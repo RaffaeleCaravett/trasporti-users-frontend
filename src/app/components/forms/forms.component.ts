@@ -11,6 +11,7 @@ import { FormsService } from 'src/app/shared/services/forms.service';
   styleUrls: ['./forms.component.scss'],
 })
 export class FormsComponent implements OnInit {
+  selectedImage: any = null;
   section: string = 'login';
   loginForm!: FormGroup;
   signupForm!: FormGroup;
@@ -25,14 +26,13 @@ export class FormsComponent implements OnInit {
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
-  selectedImage: any = null;
   emailIsLoading:boolean=false;
   profileImagePreview:string='';
   constructor(
     private formsService: FormsService,
     private toastr: ToastrService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     localStorage.clear();
@@ -98,15 +98,15 @@ export class FormsComponent implements OnInit {
       next: (cities: any) => {
         this.cities = cities;
       },
-      error: (err: any) => {},
-      complete: () => {},
+      error: (err: any) => { },
+      complete: () => { },
     });
     this.formsService.getSettori().subscribe({
       next: (settori: any) => {
         this.settori = settori;
       },
-      error: (err: any) => {},
-      complete: () => {},
+      error: (err: any) => { },
+      complete: () => { },
     });
   }
 
@@ -143,7 +143,7 @@ export class FormsComponent implements OnInit {
               this.formsService.authenticateUser(true);
               this.router.navigate(['/home']);
             },
-            error: (error) => {},
+            error: (error) => { },
           });
       } else {
         this.formsService
@@ -173,7 +173,7 @@ export class FormsComponent implements OnInit {
               this.formsService.authenticateUser(true);
               this.router.navigate(['/home']);
             },
-            error: (error) => {},
+            error: (error) => { },
           });
       }
     } else {
@@ -194,7 +194,7 @@ export class FormsComponent implements OnInit {
       if (
         this.signupForm.controls['type'].value == 'trasportatore' &&
         this.trasportatoreForm.valid &&
-        this.selectedImage
+        this.selectedImage != null
       ) {
         let nome = this.trasportatoreForm.controls['nome'].value;
         let cognome = this.trasportatoreForm.controls['cognome'].value;
@@ -220,8 +220,7 @@ export class FormsComponent implements OnInit {
               partitaIva: partitaIva,
               flottaMezzi: flottaMezzi,
             },
-            this.selectedImage
-          )
+            this.selectedImage)
           .subscribe({
             next: (data) => {
               this.toastr.show(
@@ -229,14 +228,14 @@ export class FormsComponent implements OnInit {
               );
               this.section = 'login';
             },
-            error: (err) => {},
-            complete: () => {},
+            error: (err) => { },
+            complete: () => { },
           });
       } else {
         if (
           this.aziendaForm.valid &&
           this.signupForm.controls['type'].value == 'azienda' &&
-          this.selectedImage
+          this.selectedImage != null
         ) {
           let nomeAzienda = this.aziendaForm.controls['nomeAzienda'].value;
           let fatturatoMedio =
@@ -269,8 +268,8 @@ export class FormsComponent implements OnInit {
                 );
                 this.section = 'login';
               },
-              error: (err) => {},
-              complete: () => {},
+              error: (err) => { },
+              complete: () => { },
             });
         } else {
           this.toastr.error(
@@ -293,8 +292,8 @@ export class FormsComponent implements OnInit {
         this.signupForm.controls['cap'].setValue('87050');
         this.signupForm.updateValueAndValidity();
       },
-      error: (err: any) => {},
-      complete: () => {},
+      error: (err: any) => { },
+      complete: () => { },
     });
   }
 
@@ -315,6 +314,7 @@ export class FormsComponent implements OnInit {
 
       var reader = new FileReader();
 
+      this.selectedImage = event.target.files[0]
       reader.readAsDataURL(event.target.files[0]);
 
       reader.onload = (eventR: any) => {
@@ -322,12 +322,16 @@ export class FormsComponent implements OnInit {
       };
     }
   }
-  updateUrl() {
+
+  cleanProfileImage() {
     this.url = '';
     this.profileImageForm.controls['profileImage'].setValue(null);
     this.profileImageForm.updateValueAndValidity();
     this.selectedImage = null;
+    this.profileImageForm.controls['profileImage'].setValue(null);
+    this.profileImageForm.updateValueAndValidity();
   }
+
   checkProfileImage(){
     let email = this.loginForm.controls['email'];
     this.profileImagePreview='';

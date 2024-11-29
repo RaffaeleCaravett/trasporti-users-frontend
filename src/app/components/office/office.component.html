@@ -65,6 +65,11 @@
       <p class="fs-3">Modifica il tuo profilo</p>
       <form [formGroup]="modifyProfile">
         <div class="row">
+          <div class="col-md-12">
+            <p class="text-end w-100 py-1" *ngIf="selectedImage!=null"><button class="btn text-danger " (click)="deleteSelectedImage()"> Elimina immagine selezionata</button></p>
+            <img [src]="profileImage||'assets/forms/profile.png'" alt="your_profile_image" class="profile-image rounded-circle shadow border" (click)="profImage.click()">
+            <input type="file" class="d-none" #profImage accept="image/png, image/jpg, image/jpeg" (change)="uploadAvatar($event)">
+          </div>
           <div class="col-md-6">
             <label class="py-3">Città</label>
             <select
@@ -305,6 +310,11 @@
       <p class="fs-3">Modifica il tuo profilo</p>
       <form [formGroup]="modifyProfile">
         <div class="row">
+          <div class="col-md-12">
+            <p class="text-end w-100 py-1" *ngIf="selectedImage!=null"><button class="btn text-danger " (click)="deleteSelectedImage()"> Elimina immagine selezionata</button></p>
+            <img [src]="profileImage||'assets/forms/profile.png'" alt="your_profile_image" class="profile-image rounded-circle shadow border" (click)="profImage.click()">
+            <input type="file" class="d-none" #profImage accept="image/png, image/jpg, image/jpeg" (change)="uploadAvatar($event)">
+          </div>
           <div class="col-md-6">
             <label class="py-3">Città</label>
             <select
