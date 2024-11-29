@@ -26,7 +26,6 @@ export class FormsComponent implements OnInit {
   showResetPassword: boolean = false;
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
-  selectedImage: any = null;
   emailIsLoading:boolean=false;
   profileImagePreview:string='';
   constructor(
@@ -331,6 +330,7 @@ export class FormsComponent implements OnInit {
     this.selectedImage = null;
     this.profileImageForm.controls['profileImage'].setValue(null);
     this.profileImageForm.updateValueAndValidity();
+<<<<<<< HEAD
   }
 
   showProfileImage() {
@@ -360,7 +360,10 @@ export class FormsComponent implements OnInit {
         }
       })
     }
+=======
+>>>>>>> profile-image
   }
+
   checkProfileImage(){
     let email = this.loginForm.controls['email'];
     this.profileImagePreview='';

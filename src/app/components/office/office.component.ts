@@ -37,6 +37,8 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
   aggiungiAnnuncioSubmitted: boolean = false;
   stompClient: any;
   msg: string[] = [];
+  profileImage: string = '';
+  selectedImage: any = null;
   constructor(
     private toastr: ToastrService,
     private officeService: OfficeService,
@@ -119,7 +121,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     if (this.modifyProfile.valid) {
       if (!this.isTrasportatore) {
         this.officeService
-          .putAziendaById({
+          .putAziendaById(this.selectedImage,{
             citta: this.modifyProfile.controls['citta'].value,
             regione: this.modifyProfile.controls['regione'].value,
             indirizzo: this.modifyProfile.controls['indirizzo'].value,
@@ -142,7 +144,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
           });
       } else {
         this.officeService
-          .putTrasportatoreById({
+          .putTrasportatoreById(this.selectedImage,{
             citta: this.modifyProfile.controls['citta'].value,
             regione: this.modifyProfile.controls['regione'].value,
             indirizzo: this.modifyProfile.controls['indirizzo'].value,
@@ -215,8 +217,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         this.modifyProfile.controls['cap'].setValue('87050');
         this.modifyProfile.updateValueAndValidity();
       },
-      error: (err: any) => {
-      },
+      error: (err: any) => {},
       complete: () => {},
     });
   }
@@ -263,8 +264,7 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
     } else {
     }
   }
-  initializeWebSocketConnection() {
-  }
+  initializeWebSocketConnection() {}
   updateModifyForm() {
     if (!this.isTrasportatore) {
       this.modifyProfile = new FormGroup({
@@ -330,5 +330,23 @@ export class OfficeComponent implements OnInit, OnDestroy, OnChanges {
         ]),
       });
     }
+    this.profileImage = this.user.profileImage;
+  }
+  uploadAvatar(event: any) {
+    if (event && event.target && event.target.files && event.target.files[0]) {
+      this.selectedImage = event.target.files[0];
+
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = (eventR: any) => {
+        this.profileImage = eventR.target.result;
+      };
+    }
+  }
+  deleteSelectedImage() {
+    this.selectedImage = null;
+    this.profileImage = this.user.profileImage;
   }
 }

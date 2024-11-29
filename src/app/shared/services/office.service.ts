@@ -156,7 +156,15 @@ export class OfficeService {
         `Pubblicata/${aziendaId}`
     );
   }
-  putAziendaById(aziendaDTO: {}, aziendaId?: number) {
+  putAziendaById(profileImage: any, aziendaDTO: {}, aziendaId?: number) {
+    let formData = new FormData();
+    formData.append(
+      'aziendaDTO',
+      new Blob([JSON.stringify(aziendaDTO)], {
+        type: 'application/json',
+      })
+    );
+    formData.append('profileImage', profileImage);
     return this.httpClient.put(
       environment.API_URL +
         this.azienda +
@@ -168,10 +176,22 @@ export class OfficeService {
             ? '/' + aziendaId
             : '/me'
         }`,
-      aziendaDTO
+      formData
     );
   }
-  putTrasportatoreById(trasportatoreDTO: {}, trasportatoreId?: number) {
+  putTrasportatoreById(
+    profileImage: any,
+    trasportatoreDTO: {},
+    trasportatoreId?: number
+  ) {
+    let formData = new FormData();
+    formData.append(
+      'trasportatoreDTO',
+      new Blob([JSON.stringify(trasportatoreDTO)], {
+        type: 'application/json',
+      })
+    );
+    formData.append('profileImage', profileImage);
     return this.httpClient.put(
       environment.API_URL +
         this.trasportatore +
@@ -183,7 +203,7 @@ export class OfficeService {
             ? '/' + trasportatoreId
             : '/me'
         }`,
-      trasportatoreDTO
+      formData
     );
   }
   deleteProfile() {}
@@ -295,7 +315,7 @@ export class OfficeService {
     trasportatoreId: number,
     statoSpedizione?: string,
     page?: number,
-    direction?:string
+    direction?: string
   ) {
     switch (statoSpedizione) {
       case 'In corso':
@@ -326,7 +346,7 @@ export class OfficeService {
         '&page=' +
         (page || 0) +
         '&sort=' +
-        (direction||'ASC')
+        (direction || 'ASC')
     );
   }
   getSpedizioniByStatoAndAziendaId(statoSpedizione: string, aziendaId: number) {
