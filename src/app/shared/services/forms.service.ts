@@ -136,6 +136,7 @@ export class FormsService {
     );
   }
   checkProfileImageIsPresent(email:string){
-    return this.http.get(environment.API_URL+this.auth+this.checkProfileImage+`/${email}`)
+    return this.http.get(environment.API_URL+this.auth+this.checkProfileImage+`/${email}`,
+      { responseType: 'text' })
   }
 }

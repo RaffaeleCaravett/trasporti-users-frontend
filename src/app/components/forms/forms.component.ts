@@ -333,7 +333,7 @@ export class FormsComponent implements OnInit {
     this.profileImagePreview='';
     if(email.valid){
       this.emailIsLoading=true;
-      this.formsService.checkProfileImageIsPresent(email.value).pipe(delay(2000)).subscribe({
+      this.formsService.checkProfileImageIsPresent(email.value).pipe(delay(1000)).subscribe({
         next:(value:any)=>{
           this.profileImagePreview=value;
           this.emailIsLoading=false;
