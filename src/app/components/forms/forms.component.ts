@@ -27,6 +27,7 @@ export class FormsComponent implements OnInit {
   profileImageForm: FormGroup = new FormGroup({});
   url: string = '';
   emailIsLoading:boolean=false;
+  loginProfileImagePreview:string='';
   profileImagePreview:string='';
   constructor(
     private formsService: FormsService,
@@ -330,14 +331,13 @@ export class FormsComponent implements OnInit {
     this.selectedImage = null;
     this.profileImageForm.controls['profileImage'].setValue(null);
     this.profileImageForm.updateValueAndValidity();
-<<<<<<< HEAD
   }
 
   showProfileImage() {
     let email = this.loginForm.controls['email'] as FormControl;
     let value = this.loginForm.controls['value'] as FormControl
     if (email.valid && value.value) {
-      this.formsService.getProfileImagePreview(email.value,value.value).subscribe((profileImage: any) => {
+      this.formsService.checkProfileImageIsPresent(email.value).subscribe((profileImage: any) => {
         if (profileImage) {
           this.loginProfileImagePreview = profileImage;
         } else {
@@ -348,22 +348,6 @@ export class FormsComponent implements OnInit {
       this.loginProfileImagePreview = '';
     }
   }
-  checkProfileImage(){
-    let email = this.loginForm.controls['email'];
-    this.profileImagePreview='';
-    if(email.valid){
-      this.emailIsLoading=true;
-      this.formsService.checkProfileImageIsPresent(email.value).pipe(delay(1000)).subscribe({
-        next:(value:any)=>{
-          this.profileImagePreview=value;
-          this.emailIsLoading=false;
-        }
-      })
-    }
-=======
->>>>>>> profile-image
-  }
-
   checkProfileImage(){
     let email = this.loginForm.controls['email'];
     this.profileImagePreview='';
